@@ -716,13 +716,28 @@ ul {
 }
 
 /* ==========================================
-   Hero Section
-   ========================================== */
+    Hero Section
+    ========================================== */
 .hero {
   position: relative;
   height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   min-height: 600px;
   overflow: hidden;
+}
+
+/* Mobile Background Images for Hero Slides */
+@media (max-width: 768px) {
+  .hero-slide[data-slide="0"] .hero-slide-bg {
+    background-image: url('mobile_1.jpeg') !important;
+  }
+  
+  .hero-slide[data-slide="1"] .hero-slide-bg {
+    background-image: url('mobile_2.jpeg') !important;
+  }
+  
+  .hero-slide[data-slide="2"] .hero-slide-bg {
+    background-image: url('mobile_3.jpeg') !important;
+  }
 }
 
 .hero-slider {
@@ -798,6 +813,7 @@ ul {
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 1.5rem;
+  color: #FFFFFF;
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.6s ease 0.4s;
