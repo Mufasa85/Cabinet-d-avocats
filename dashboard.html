@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin | ELMD Cabinet d'Avocats</title>
+  <meta name="description" content="Tableau de bord administrateur du cabinet ELMD">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --dash-bg: #0A0A0A;
+      --dash-sidebar: #111111;
+      --dash-card: #1A1A1A;
+      --dash-text: #FFFFFF;
+      --dash-muted: #888888;
+      --dash-border: #2A2A2A;
+      --dash-primary: #C9A227;
+      --dash-success: #10B981;
+      --dash-warning: #F59E0B;
+      --dash-danger: #EF4444;
+      --dash-info: #3B82F6;
+    }
+
+    [data-theme="light"] {
+      --dash-bg: #F5F5F5;
+      --dash-sidebar: #FFFFFF;
+      --dash-card: #FFFFFF;
+      --dash-text: #1A1A1A;
+      --dash-muted: #6B6B6B;
+      --dash-border: #E5E5E5;
+      --dash-primary: #C9A227;
+      --dash-success: #059669;
+      --dash-warning: #D97706;
+      --dash-danger: #DC2626;
+      --dash-info: #2563EB;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--dash-bg);
+      color: var(--dash-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    /* Layout */
+    .dash-layout {
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
+    /* Ensure all main containers don't overflow */
+    .dash-main {
+      flex: 1;
+      margin-left: 280px;
+      padding: 24px;
+      overflow-x: hidden;
+      max-width: calc(100vw - 280px);
+    }
+
+    /* Container for stats to prevent overflow */
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+      overflow-x: hidden;
+    }
+
+    /* Content grid */
+    .dash-content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+      overflow-x: hidden;
+    }
+
+    /* Card overflow handling */
+    .dash-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    /* Table wrapper for horizontal scroll */
+    .dash-table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    /* Table */
+    .dash-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 400px;
+    }
+
+    /* Sidebar */
+    .dash-sidebar {
+      width: 280px;
+      background: var(--dash-sidebar);
+      border-right: 1px solid var(--dash-border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .dash-logo {
+      padding: 24px;
+      border-bottom: 1px solid var(--dash-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-logo svg {
+      width: 32px;
+      height: 32px;
+      color: var(--dash-primary);
+    }
+
+    .dash-logo-text {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dash-text);
+    }
+
+    .dash-user {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--dash-border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-user-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--dash-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .dash-user-info h4 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .dash-user-info p {
+      font-size: 0.75rem;
+      color: var(--dash-muted);
+    }
+
+    .dash-nav {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+    }
+
+    .dash-nav-section {
+      margin-bottom: 24px;
+    }
+
+    .dash-nav-title {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--dash-muted);
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .dash-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      color: var(--dash-muted);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .dash-nav-item:hover {
+      background: var(--dash-card);
+      color: var(--dash-text);
+    }
+
+    .dash-nav-item.active {
+      background: rgba(201, 162, 39, 0.1);
+      color: var(--dash-primary);
+    }
+
+    .dash-nav-item svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .dash-nav-item span {
+      flex: 1;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .dash-nav-badge {
+      background: var(--dash-danger);
+      color: #fff;
+      font-size: 0.6875rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .dash-sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--dash-border);
+    }
+
+    .dash-logout {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      color: var(--dash-danger);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+    }
+
+    .dash-logout:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .dash-logout svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .dash-header-left h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .dash-header-left p {
+      color: var(--dash-muted);
+      font-size: 0.875rem;
+    }
+
+    .dash-header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-search {
+      position: relative;
+    }
+
+    .dash-search input {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: 8px;
+      padding: 10px 16px 10px 40px;
+      color: var(--dash-text);
+      font-size: 0.875rem;
+      width: 280px;
+      outline: none;
+    }
+
+    .dash-search input::placeholder {
+      color: var(--dash-muted);
+    }
+
+    .dash-search svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--dash-muted);
+    }
+
+    .dash-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .dash-btn-primary {
+      background: var(--dash-primary);
+      color: #000;
+    }
+
+    .dash-btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .dash-btn-secondary {
+      background: var(--dash-card);
+      color: var(--dash-text);
+      border: 1px solid var(--dash-border);
+    }
+
+    .dash-btn-secondary:hover {
+      border-color: var(--dash-primary);
+    }
+
+    .dash-stat-card {
+      background: var(--dash-card);
+      border: 1px solid var(--dash-border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .dash-stat-card:hover {
+      border-color: var(--dash-primary);
+      transform: translateY(-2px);
+    }
+
+    .dash-stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .dash-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dash-stat-icon.primary { background: rgba(201, 162, 39, 0.15); color: var(--dash-primary); }
+    .dash-stat-icon.success { background: rgba(16, 185, 129, 0.15); color: var(--dash-success); }
+    .dash-stat-icon.warning { background: rgba(245, 158, 11, 0.15); color: var(--dash-warning); }
+    .dash-stat-icon.danger { background: rgba(239, 68, 68, 0.15); color: var(--dash-danger); }
+
+    .dash-stat-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .dash-stat-trend {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .dash-stat-trend.up { color: var(--dash-success); }
+    .dash-stat-trend.down { color: var(--dash-danger); }
+
+    .dash-stat-value {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .dash-stat-label {
+      font-size: 0.875rem;
+      color: var(--dash-muted);
+    }
+
+    .dash-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dash-card-title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--dash-primary);
+    }
+
+    .dash-card-body {
+      padding: 20px 24px;
+    }
+
+    .dash-table th {
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--dash-muted);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-table td {
+      padding: 16px;
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .dash-table tr:hover td {
+      background: rgba(201, 162, 39, 0.05);
+    }
+
+    .dash-table-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-table-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--dash-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .dash-table-name {
+      font-weight: 500;
+    }
+
+    .dash-table-email {
+      font-size: 0.75rem;
+      color: var(--dash-muted);
+    }
+
+    /* Status Badge */
+    .dash-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .dash-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .dash-status.success { background: rgba(16, 185, 129, 0.15); color: var(--dash-success); }
+    .dash-status.success::before { background: var(--dash-success); }
+
+    .dash-status.warning { background: rgba(245, 158, 11, 0.15); color: var(--dash-warning); }
+    .dash-status.warning::before { background: var(--dash-warning); }
+
+    .dash-status.danger { background: rgba(239, 68, 68, 0.15); color: var(--dash-danger); }
+    .dash-status.danger::before { background: var(--dash-danger); }
+
+    .dash-status.info { background: rgba(59, 130, 246, 0.15); color: var(--dash-info); }
+    .dash-status.info::before { background: var(--dash-info); }
+
+    /* Actions */
+    .dash-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dash-action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+      color: var(--dash-muted);
+    }
+
+    .dash-action-btn:hover {
+      background: var(--dash-border);
+      color: var(--dash-text);
+    }
+
+    .dash-action-btn.delete:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--dash-danger);
+    }
+
+    .dash-action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Activity List */
+    .dash-activity-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .dash-activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dash-activity-icon.contact { background: rgba(59, 130, 246, 0.15); color: var(--dash-info); }
+    .dash-activity-icon.stage { background: rgba(245, 158, 11, 0.15); color: var(--dash-warning); }
+    .dash-activity-icon.user { background: rgba(16, 185, 129, 0.15); color: var(--dash-success); }
+
+    .dash-activity-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .dash-activity-content {
+      flex: 1;
+    }
+
+    .dash-activity-text {
+      font-size: 0.875rem;
+      margin-bottom: 4px;
+    }
+
+    .dash-activity-text strong {
+      font-weight: 600;
+    }
+
+    .dash-activity-time {
+      font-size: 0.75rem;
+      color: var(--dash-muted);
+    }
+
+    /* Quick Actions */
+    .dash-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .dash-quick-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 20px;
+      background: var(--dash-bg);
+      border: 1px solid var(--dash-border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .dash-quick-action:hover {
+      border-color: var(--dash-primary);
+      transform: translateY(-2px);
+    }
+
+    .dash-quick-action-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dash-quick-action-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .dash-quick-action span {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--dash-text);
+    }
+
+    /* Tabs */
+    .dash-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--dash-border);
+    }
+
+    .dash-tab {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--dash-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dash-tab:hover {
+      background: var(--dash-bg);
+      color: var(--dash-text);
+    }
+
+    .dash-tab.active {
+      background: var(--dash-primary);
+      color: #000;
+    }
+
+    /* Mobile Toggle */
+    .dash-mobile-toggle {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--dash-primary);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      z-index: 99;
+      box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
+    }
+
+    .dash-mobile-toggle svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Responsive - Tablet */
+    @media (max-width: 1200px) {
+      .dash-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dash-content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dash-table {
+        font-size: 0.8125rem;
+      }
+
+      .dash-table th,
+      .dash-table td {
+        padding: 10px 12px;
+      }
+    }
+
+    /* Responsive - Mobile */
+    @media (max-width: 900px) {
+      html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+
+      .dash-layout {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+
+      .dash-sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+      }
+
+      .dash-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .dash-sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        display: none;
+      }
+
+      .dash-sidebar.open ~ .dash-sidebar-overlay,
+      .dash-sidebar.open + .dash-main ~ .dash-sidebar-overlay {
+        opacity: 1;
+        visibility: visible;
+        display: block;
+      }
+
+      .dash-main {
+        margin-left: 0 !important;
+        padding: 16px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .dash-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        width: 100%;
+      }
+
+      .dash-header-left {
+        width: 100%;
+      }
+
+      .dash-header-right {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+
+      .dash-search {
+        width: 100%;
+      }
+
+      .dash-search input {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .dash-btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .dash-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      .dash-stat-card {
+        padding: 14px;
+      }
+
+      .dash-stat-value {
+        font-size: 1.25rem;
+      }
+
+      .dash-stat-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .dash-stat-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .dash-card-header {
+        padding: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .dash-card-body {
+        padding: 14px;
+      }
+
+      .dash-tabs {
+        padding: 10px 14px;
+        overflow-x: auto;
+        gap: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .dash-tab {
+        white-space: nowrap;
+        padding: 6px 10px;
+        font-size: 0.7rem;
+      }
+
+      .dash-content-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      .dash-card {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
+      .dash-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .dash-table {
+        min-width: 500px;
+      }
+
+      .dash-quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .dash-quick-action {
+        padding: 14px 10px;
+      }
+
+      .dash-quick-action-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .dash-quick-action-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .dash-quick-action span {
+        font-size: 0.75rem;
+        text-align: center;
+      }
+
+      .dash-mobile-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* Responsive - Small Mobile */
+    @media (max-width: 600px) {
+      .dash-main {
+        padding: 12px;
+      }
+
+      .dash-header-left h1 {
+        font-size: 1.25rem;
+      }
+
+      .dash-header-left p {
+        font-size: 0.75rem;
+      }
+
+      .dash-btn {
+        padding: 8px 16px;
+        font-size: 0.8125rem;
+      }
+
+      .dash-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .dash-stat-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .dash-stat-header {
+        margin-bottom: 0;
+      }
+
+      .dash-stat-content {
+        flex: 1;
+        text-align: left;
+      }
+
+      .dash-stat-value {
+        display: inline;
+        margin-right: 8px;
+      }
+
+      .dash-stat-label {
+        display: inline;
+      }
+
+      .dash-stat-trend {
+        display: none;
+      }
+
+      .dash-activity-item {
+        padding: 12px 0;
+      }
+
+      .dash-activity-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .dash-activity-icon svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .dash-activity-text {
+        font-size: 0.8125rem;
+      }
+
+      .dash-activity-time {
+        font-size: 0.6875rem;
+      }
+
+      .dash-actions {
+        gap: 4px;
+      }
+
+      .dash-action-btn {
+        width: 28px;
+        height: 28px;
+      }
+
+      .dash-action-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .dash-quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dash-profile-section {
+        padding: 16px;
+      }
+
+      .dash-profile-info {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* Touch optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .dash-nav-item,
+      .dash-btn,
+      .dash-action-btn,
+      .dash-quick-action,
+      .dash-tab {
+        min-height: 44px;
+      }
+
+      .dash-sidebar {
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .dash-table th,
+      .dash-table td {
+        min-height: 44px;
+      }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .dash-sidebar {
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .dash-stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .dash-profile-section {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-layout">
+    <!-- Sidebar -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
+          <circle cx="12" cy="3" r="1" fill="currentColor"/>
+          <path d="M7 21h10M9 21v-3h6v3"/>
+        </svg>
+        <span class="dash-logo-text">ELMD</span>
+      </div>
+
+      <div class="dash-user">
+        <div class="dash-user-avatar">LM</div>
+        <div class="dash-user-info">
+          <h4>Laurent Mbako</h4>
+          <p>Administrateur</p>
+        </div>
+      </div>
+
+      <nav class="dash-nav">
+        <div class="dash-nav-section">
+          <div class="dash-nav-title">Principal</div>
+          <a href="#" class="dash-nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"/>
+              <rect x="14" y="3" width="7" height="5"/>
+              <rect x="14" y="12" width="7" height="9"/>
+              <rect x="3" y="16" width="7" height="5"/>
+            </svg>
+            <span>Tableau de bord</span>
+          </a>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span>Avocats</span>
+          </a>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <span>Stagiaires</span>
+            <span class="dash-nav-badge">3</span>
+          </a>
+        </div>
+
+        <div class="dash-nav-section">
+          <div class="dash-nav-title">Contenu</div>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            <span>Actualités</span>
+          </a>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            <span>Domaines</span>
+          </a>
+        </div>
+
+        <div class="dash-nav-section">
+          <div class="dash-nav-title">Communication</div>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span>Messages</span>
+            <span class="dash-nav-badge">12</span>
+          </a>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span>Stages</span>
+          </a>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <line x1="2" y1="6" x2="22" y2="6"/>
+              <path d="M7 15h0M12 15h0M17 15h0"/>
+            </svg>
+            <span>Newsletter</span>
+          </a>
+        </div>
+
+        <div class="dash-nav-section">
+          <div class="dash-nav-title">Système</div>
+          <a href="#" class="dash-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Paramètres</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="dash-sidebar-footer">
+        <a href="index.html" class="dash-logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Déconnexion</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dash-main">
+      <header class="dash-header">
+        <div class="dash-header-left">
+          <h1>Tableau de Bord</h1>
+          <p>Bienvenue, Maître Laurent Mbako</p>
+        </div>
+        <div class="dash-header-right">
+          <div class="dash-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" placeholder="Rechercher...">
+          </div>
+          <button class="dash-btn dash-btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            <span>Nouveau</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Stats -->
+      <div class="dash-stats">
+        <div class="dash-stat-card">
+          <div class="dash-stat-header">
+            <div class="dash-stat-icon primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="dash-stat-trend up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              </svg>
+              +12%
+            </div>
+          </div>
+          <div class="dash-stat-value">13</div>
+          <div class="dash-stat-label">Avocats</div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-header">
+            <div class="dash-stat-icon success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <div class="dash-stat-trend up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              </svg>
+              +25%
+            </div>
+          </div>
+          <div class="dash-stat-value">5</div>
+          <div class="dash-stat-label">Stagiaires</div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-header">
+            <div class="dash-stat-icon warning">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="dash-stat-trend down">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+              </svg>
+              -8%
+            </div>
+          </div>
+          <div class="dash-stat-value">47</div>
+          <div class="dash-stat-label">Messages</div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-header">
+            <div class="dash-stat-icon danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div class="dash-stat-trend up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              </svg>
+              +33%
+            </div>
+          </div>
+          <div class="dash-stat-value">8</div>
+          <div class="dash-stat-label">Candidatures</div>
+        </div>
+      </div>
+
+      <!-- Content Grid -->
+      <div class="dash-content-grid">
+        <!-- Recent Avocats -->
+        <div class="dash-card">
+          <div class="dash-tabs">
+            <button class="dash-tab active">Avocats</button>
+            <button class="dash-tab">Stagiaires</button>
+            <button class="dash-tab">Candidatures</button>
+          </div>
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Membre</th>
+                <th>Spécialité</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="dash-table-user">
+                    <div class="dash-table-avatar">JPD</div>
+                    <div>
+                      <div class="dash-table-name">Jean-Pierre Dupont</div>
+                      <div class="dash-table-email">j.p.dupont@elmd.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Droit des Affaires</td>
+                <td><span class="dash-status success">Actif</span></td>
+                <td>
+                  <div class="dash-actions">
+                    <button class="dash-action-btn" title="Modifier">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                    </button>
+                    <button class="dash-action-btn delete" title="Supprimer">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="dash-table-user">
+                    <div class="dash-table-avatar">MCB</div>
+                    <div>
+                      <div class="dash-table-name">Marie-Claire Bernard</div>
+                      <div class="dash-table-email">m.c.bernard@elmd.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Droit Fiscal</td>
+                <td><span class="dash-status success">Actif</span></td>
+                <td>
+                  <div class="dash-actions">
+                    <button class="dash-action-btn" title="Modifier">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                    </button>
+                    <button class="dash-action-btn delete" title="Supprimer">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="dash-table-user">
+                    <div class="dash-table-avatar">AM</div>
+                    <div>
+                      <div class="dash-table-name">Alexandre Martin</div>
+                      <div class="dash-table-email">a.martin@elmd.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Droit International</td>
+                <td><span class="dash-status success">Actif</span></td>
+                <td>
+                  <div class="dash-actions">
+                    <button class="dash-action-btn" title="Modifier">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                    </button>
+                    <button class="dash-action-btn delete" title="Supprimer">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="dash-table-user">
+                    <div class="dash-table-avatar">SL</div>
+                    <div>
+                      <div class="dash-table-name">Sophie Laurent</div>
+                      <div class="dash-table-email">s.laurent@elmd.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Droit Social</td>
+                <td><span class="dash-status info">En formation</span></td>
+                <td>
+                  <div class="dash-actions">
+                    <button class="dash-action-btn" title="Modifier">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                    </button>
+                    <button class="dash-action-btn delete" title="Supprimer">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sidebar Content -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <!-- Activity -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                Activités Récentes
+              </h3>
+            </div>
+            <div class="dash-card-body">
+              <div class="dash-activity-item">
+                <div class="dash-activity-icon contact">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div class="dash-activity-content">
+                  <p class="dash-activity-text"><strong>Pierre Kabongo</strong> a envoyé un message</p>
+                  <span class="dash-activity-time">Il y a 5 minutes</span>
+                </div>
+              </div>
+              <div class="dash-activity-item">
+                <div class="dash-activity-icon stage">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  </svg>
+                </div>
+                <div class="dash-activity-content">
+                  <p class="dash-activity-text"><strong>Marie Nkosi</strong> a postulé pour un stage</p>
+                  <span class="dash-activity-time">Il y a 1 heure</span>
+                </div>
+              </div>
+              <div class="dash-activity-item">
+                <div class="dash-activity-icon user">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="8.5" cy="7" r="4"/>
+                    <line x1="20" y1="8" x2="20" y2="14"/>
+                    <line x1="23" y1="11" x2="17" y2="11"/>
+                  </svg>
+                </div>
+                <div class="dash-activity-content">
+                  <p class="dash-activity-text"><strong>Jean Muteba</strong> a été ajouté comme avocat</p>
+                  <span class="dash-activity-time">Il y a 3 heures</span>
+                </div>
+              </div>
+              <div class="dash-activity-item">
+                <div class="dash-activity-icon contact">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div class="dash-activity-content">
+                  <p class="dash-activity-text"><strong>Claire MWAMBA</strong> a demandé une consultation</p>
+                  <span class="dash-activity-time">Il y a 5 heures</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3 class="dash-card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                Actions Rapides
+              </h3>
+            </div>
+            <div class="dash-card-body">
+              <div class="dash-quick-actions">
+                <div class="dash-quick-action">
+                  <div class="dash-quick-action-icon" style="background: rgba(201, 162, 39, 0.15); color: var(--dash-primary);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="8.5" cy="7" r="4"/>
+                      <line x1="20" y1="8" x2="20" y2="14"/>
+                      <line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                  </div>
+                  <span>Ajouter Avocat</span>
+                </div>
+                <div class="dash-quick-action">
+                  <div class="dash-quick-action-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--dash-success);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                  </div>
+                  <span>Nouveau Stage</span>
+                </div>
+                <div class="dash-quick-action">
+                  <div class="dash-quick-action-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--dash-warning);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                      <line x1="12" y1="18" x2="12" y2="12"/>
+                      <line x1="9" y1="15" x2="15" y2="15"/>
+                    </svg>
+                  </div>
+                  <span>Publier Article</span>
+                </div>
+                <div class="dash-quick-action">
+                  <div class="dash-quick-action-icon" style="background: rgba(59, 130, 246, 0.15); color: var(--dash-info);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </div>
+                  <span>Nouveau Message</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Messages -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <h3 class="dash-card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Messages Récents
+          </h3>
+          <a href="#" class="dash-btn dash-btn-secondary">Voir tout</a>
+        </div>
+        <table class="dash-table">
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Sujet</th>
+              <th>Domaine</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="dash-table-user">
+                  <div class="dash-table-avatar" style="background: #3B82F6;">PK</div>
+                  <div>
+                    <div class="dash-table-name">Pierre Kabongo</div>
+                    <div class="dash-table-email">p.kabongo@entreprise.cd</div>
+                  </div>
+                </div>
+              </td>
+              <td>Consultation en droit minier</td>
+              <td>Droit Minier</td>
+              <td>17 Mai 2026</td>
+              <td><span class="dash-status warning">En attente</span></td>
+              <td>
+                <div class="dash-actions">
+                  <button class="dash-action-btn" title="Voir">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                  <button class="dash-action-btn" title="Répondre">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="dash-table-user">
+                  <div class="dash-table-avatar" style="background: #8B5CF6;">CM</div>
+                  <div>
+                    <div class="dash-table-name">Claire Mwamba</div>
+                    <div class="dash-table-email">c.mwamba@gmail.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>Question sur contrat de travail</td>
+              <td>Droit Travail</td>
+              <td>16 Mai 2026</td>
+              <td><span class="dash-status success">Répondu</span></td>
+              <td>
+                <div class="dash-actions">
+                  <button class="dash-action-btn" title="Voir">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                  <button class="dash-action-btn" title="Répondre">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="dash-table-user">
+                  <div class="dash-table-avatar" style="background: #10B981;">MN</div>
+                  <div>
+                    <div class="dash-table-name">Marie Nkosi</div>
+                    <div class="dash-table-email">m.nkosi@unikin.cd</div>
+                  </div>
+                </div>
+              </td>
+              <td>Candidature stage OHADA</td>
+              <td>Stages</td>
+              <td>15 Mai 2026</td>
+              <td><span class="dash-status info">En examen</span></td>
+              <td>
+                <div class="dash-actions">
+                  <button class="dash-action-btn" title="Voir">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                  <button class="dash-action-btn" title="Répondre">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="dash-table-user">
+                  <div class="dash-table-avatar" style="background: #F59E0B;">JK</div>
+                  <div>
+                    <div class="dash-table-name">Jean Kasaï</div>
+                    <div class="dash-table-email">j.kasai@groupe-industriel.com</div>
+                  </div>
+                </div>
+              </td>
+              <td>Audit fiscal complexité</td>
+              <td>Droit Fiscal</td>
+              <td>14 Mai 2026</td>
+              <td><span class="dash-status danger">Non lu</span></td>
+              <td>
+                <div class="dash-actions">
+                  <button class="dash-action-btn" title="Voir">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
+                  <button class="dash-action-btn" title="Répondre">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Mobile Toggle -->
+    <button class="dash-mobile-toggle" id="dashMobileToggle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Sidebar Overlay -->
+  <div class="dash-sidebar-overlay" id="dashSidebarOverlay"></div>
+  <script>
+    // Mobile menu toggle
+    document.getElementById('dashMobileToggle').addEventListener('click', () => {
+      document.getElementById('dashSidebar').classList.toggle('open');
+    });
+
+    // Navigation active state
+    document.querySelectorAll('.dash-nav-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        if (this.getAttribute('href') === '#') {
+          e.preventDefault();
+          document.querySelectorAll('.dash-nav-item').forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Tabs functionality
+    document.querySelectorAll('.dash-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const parent = this.closest('.dash-tabs');
+        parent.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Search functionality
+    document.querySelector('.dash-search input').addEventListener('input', function(e) {
+      console.log('Recherche:', e.target.value);
+    });
+
+    // Theme toggle integration
+    const themeSwitcherContainer = document.getElementById('theme-switcher-container');
+    if (themeSwitcherContainer) {
+      // Create theme switcher for dashboard
+      const themeSwitcher = document.createElement('div');
+      themeSwitcher.innerHTML = `
+        <button id="dashThemeToggle" class="dash-btn dash-btn-secondary" style="padding: 8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      `;
+      themeSwitcherContainer.appendChild(themeSwitcher);
+
+      document.getElementById('dashThemeToggle').addEventListener('click', () => {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const themes = ['dark', 'light', 'royal'];
+        const currentIndex = themes.indexOf(currentTheme) || 0;
+        const nextTheme = themes[(currentIndex + 1) % themes.length];
+        html.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
+      });
+    }
+
+    // Close sidebar when clicking overlay
+    document.getElementById('dashSidebarOverlay').addEventListener('click', () => {
+      document.getElementById('dashSidebar').classList.remove('open');
+    });
+  </script>
+</body>
+</html>

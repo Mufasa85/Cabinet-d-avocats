@@ -50,6 +50,8 @@
         <a href="#equipe" class="nav-link">Équipe</a>
         <a href="#actualites" class="nav-link">Actualités</a>
         <a href="#contact" class="nav-link">Contact</a>
+        <a href="stages.html" class="nav-link">Stages</a>
+        <a href="connexion.html" class="nav-link nav-link-highlight">Connexion</a>
       </div>
       
       <a href="#contact" class="navbar-cta">Consultation</a>
@@ -109,6 +111,14 @@
         </a>
         <a href="#contact" class="mobile-link">
           <span>Contact</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="stages.html" class="mobile-link">
+          <span>Stages</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="connexion.html" class="mobile-link">
+          <span>Connexion</span>
           <span class="mobile-link-arrow">→</span>
         </a>
       </div>
@@ -214,7 +224,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
         </div>
         
         <div class="about-image animate-on-scroll">
-          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=800&q=80" alt="Cabinet ELMD">
+          <img src="logo.png" alt="Cabinet ELMD">
           <div class="about-image-overlay"></div>
           <div class="about-image-frame"></div>
         </div>
@@ -286,7 +296,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
 
   <!-- Stats Section -->
   <section class="stats-section">
-    <div class="stats-bg" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1920&q=80')"></div>
+    <div class="stats-bg" style="background-image: url('logo.png')"></div>
     <div class="stats-overlay"></div>
     <div class="container stats-container">
       <div class="stat-item animate-on-scroll">
@@ -457,115 +467,151 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
       
       <div class="team-slider" id="team-slider">
         <div class="team-card animate-on-scroll">
-          <div class="team-image">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Jean-Pierre Dupont">
-            <div class="team-overlay">
-              <div class="team-social">
-                <a href="#" class="social-link" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/>
-                    <circle cx="4" cy="4" r="2"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-link" aria-label="Email">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
+          <a href="profile.html?id=1" class="team-card-link">
+            <div class="team-image">
+              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Jean-Pierre Dupont">
+              <div class="team-overlay">
+                <div class="team-social">
+                  <a href="https://linkedin.com/in/jean-pierre-dupont" class="social-link" aria-label="LinkedIn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect x="2" y="9" width="4" height="12"/>
+                      <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  </a>
+                  <a href="mailto:jean-pierre.dupont@elmd.com" class="social-link" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </a>
+                  <span class="social-link view-profile" aria-label="Voir plus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="team-info">
-            <h3 class="team-name">Jean-Pierre Dupont</h3>
-            <p class="team-role">Associé Fondateur</p>
-            <p class="team-specialty">Droit des Affaires</p>
-          </div>
+            <div class="team-info">
+              <h3 class="team-name">Jean-Pierre Dupont</h3>
+              <p class="team-role">Associé Fondateur</p>
+              <p class="team-specialty">Droit des Affaires</p>
+            </div>
+          </a>
         </div>
         
         <div class="team-card animate-on-scroll">
-          <div class="team-image">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Marie-Claire Bernard">
-            <div class="team-overlay">
-              <div class="team-social">
-                <a href="#" class="social-link" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/>
-                    <circle cx="4" cy="4" r="2"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-link" aria-label="Email">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
+          <a href="profile.html?id=2" class="team-card-link">
+            <div class="team-image">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Marie-Claire Bernard">
+              <div class="team-overlay">
+                <div class="team-social">
+                  <a href="https://linkedin.com/in/marie-claire-bernard" class="social-link" aria-label="LinkedIn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect x="2" y="9" width="4" height="12"/>
+                      <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  </a>
+                  <a href="mailto:marie-claire.bernard@elmd.com" class="social-link" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </a>
+                  <span class="social-link view-profile" aria-label="Voir plus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="team-info">
-            <h3 class="team-name">Marie-Claire Bernard</h3>
-            <p class="team-role">Associée Senior</p>
-            <p class="team-specialty">Droit Fiscal</p>
-          </div>
+            <div class="team-info">
+              <h3 class="team-name">Marie-Claire Bernard</h3>
+              <p class="team-role">Associée Senior</p>
+              <p class="team-specialty">Droit Fiscal</p>
+            </div>
+          </a>
         </div>
         
         <div class="team-card animate-on-scroll">
-          <div class="team-image">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Alexandre Martin">
-            <div class="team-overlay">
-              <div class="team-social">
-                <a href="#" class="social-link" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/>
-                    <circle cx="4" cy="4" r="2"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-link" aria-label="Email">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
+          <a href="profile.html?id=3" class="team-card-link">
+            <div class="team-image">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Alexandre Martin">
+              <div class="team-overlay">
+                <div class="team-social">
+                  <a href="https://linkedin.com/in/alexandre-martin" class="social-link" aria-label="LinkedIn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect x="2" y="9" width="4" height="12"/>
+                      <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  </a>
+                  <a href="mailto:alexandre.martin@elmd.com" class="social-link" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </a>
+                  <span class="social-link view-profile" aria-label="Voir plus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="team-info">
-            <h3 class="team-name">Alexandre Martin</h3>
-            <p class="team-role">Associé</p>
-            <p class="team-specialty">Droit International</p>
-          </div>
+            <div class="team-info">
+              <h3 class="team-name">Alexandre Martin</h3>
+              <p class="team-role">Associé</p>
+              <p class="team-specialty">Droit International</p>
+            </div>
+          </a>
         </div>
         
         <div class="team-card animate-on-scroll">
-          <div class="team-image">
-            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80" alt="Sophie Laurent">
-            <div class="team-overlay">
-              <div class="team-social">
-                <a href="#" class="social-link" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/>
-                    <circle cx="4" cy="4" r="2"/>
-                  </svg>
-                </a>
-                <a href="#" class="social-link" aria-label="Email">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                  </svg>
-                </a>
+          <a href="profile.html?id=4" class="team-card-link">
+            <div class="team-image">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80" alt="Sophie Laurent">
+              <div class="team-overlay">
+                <div class="team-social">
+                  <a href="https://linkedin.com/in/sophie-laurent" class="social-link" aria-label="LinkedIn" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect x="2" y="9" width="4" height="12"/>
+                      <circle cx="4" cy="4" r="2"/>
+                    </svg>
+                  </a>
+                  <a href="mailto:sophie.laurent@elmd.com" class="social-link" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  </a>
+                  <span class="social-link view-profile" aria-label="Voir plus">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="12" y1="16" x2="12" y2="12"/>
+                      <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="team-info">
-            <h3 class="team-name">Sophie Laurent</h3>
-            <p class="team-role">Counsel</p>
-            <p class="team-specialty">Droit Social</p>
-          </div>
+            <div class="team-info">
+              <h3 class="team-name">Sophie Laurent</h3>
+              <p class="team-role">Counsel</p>
+              <p class="team-specialty">Droit Social</p>
+            </div>
+          </a>
         </div>
       </div>
       
