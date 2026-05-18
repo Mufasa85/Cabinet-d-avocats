@@ -1,20 +1,108 @@
+<?php
+/**
+ * ELMD - Cabinet d'Avocats
+ * Page de connexion
+ */
+
+// Démarrer la session
+session_start();
+
+// Définir le chemin de base
+define('ELMD_ROOT', __DIR__);
+
+// Titre de la page
+$pageTitle = 'Connexion | ELMD - Cabinet d\'Avocats';
+
+// Vérifier si l'utilisateur est déjà connecté
+if (isset($_SESSION['user_id'])) {
+    // Redirection vers le tableau de bord
+    header('Location: dashboard.php');
+    exit;
+}
+
+// Messages d'erreur et de succès
+$loginError = '';
+$loginSuccess = false;
+
+// Traitement du formulaire de connexion
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $remember = isset($_POST['remember']);
+    
+    // Validation
+    if (empty($email) || empty($password)) {
+        $loginError = 'Veuillez remplir tous les champs.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $loginError = 'Veuillez entrer une adresse email valide.';
+    } else {
+        // Simulation d'authentification (à remplacer par une vraie vérification en base de données)
+        // Exemple:
+        // $user = $db->query("SELECT * FROM users WHERE email = ?", [$email])->fetch();
+        // if ($user && password_verify($password, $user['password'])) {
+        
+        // Pour la démo, acceptons admin@elmd.com / admin123
+        if ($email === 'admin@elmd.com' && $password === 'admin123') {
+            // Connexion réussie
+            $_SESSION['user_id'] = 1;
+            $_SESSION['user_name'] = 'Administrateur';
+            $_SESSION['user_email'] = $email;
+            $_SESSION['user_role'] = 'admin';
+            $_SESSION['user_avatar'] = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80';
+            
+            $loginSuccess = true;
+            
+            // Si "Se souvenir de moi" est coché, créer un cookie
+            if ($remember) {
+                setcookie('remember_email', $email, time() + (86400 * 30), '/'); // 30 jours
+            }
+            
+            // Redirection vers le tableau de bord
+            header('Location: dashboard.php');
+            exit;
+        } elseif ($email === 'avocat@elmd.com' && $password === 'avocat123') {
+            // Connexion avocat
+            $_SESSION['user_id'] = 2;
+            $_SESSION['user_name'] = 'Me. Jean-Pierre Dupont';
+            $_SESSION['user_email'] = $email;
+            $_SESSION['user_role'] = 'lawyer';
+            $_SESSION['lawyer_role'] = 'Associé Fondateur';
+            $_SESSION['user_avatar'] = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
+            
+            $loginSuccess = true;
+            
+            if ($remember) {
+                setcookie('remember_email', $email, time() + (86400 * 30), '/');
+            }
+            
+            header('Location: dashboard.php');
+            exit;
+        } else {
+            $loginError = 'Email ou mot de passe incorrect.';
+        }
+    }
+}
+
+// Récupérer l'email mémorisé
+$rememberedEmail = $_COOKIE['remember_email'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion | ELMD - Cabinet d'Avocats</title>
+    <title><?= htmlspecialchars($pageTitle) ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/connexion.css">
 </head>
-<body>
+<body class="connexion-body">
     <!-- Navigation -->
     <header class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">
+            <a href="index.php" class="logo">
                 <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
                     <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -46,10 +134,20 @@
                     <p>Connectez-vous à votre espace</p>
                 </div>
 
-                <form class="login-form" id="loginForm">
+                <?php if ($loginError): ?>
+                <div class="alert alert-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span><?= htmlspecialchars($loginError) ?></span>
+                </div>
+                <?php endif; ?>
+
+                <form class="login-form" id="loginForm" method="POST" action="">
                     <div class="form-group">
                         <label for="email">Adresse email</label>
-                        <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com" value="<?= htmlspecialchars($rememberedEmail) ?>">
                     </div>
 
                     <div class="form-group">
@@ -67,7 +165,7 @@
 
                     <div class="form-options">
                         <label class="remember-me">
-                            <input type="checkbox" name="remember">
+                            <input type="checkbox" name="remember" id="remember">
                             <span class="checkbox-custom"></span>
                             <span>Se souvenir de moi</span>
                         </label>
@@ -83,7 +181,7 @@
                 </form>
 
                 <div class="register-link">
-                    <p><a href="index.html">Retour à l'accueil</a></p>
+                    <p><a href="index.php">Retour à l'accueil</a></p>
                 </div>
             </div>
         </div>
@@ -91,7 +189,7 @@
 
     <!-- Footer -->
     <footer class="login-footer">
-        <p>&copy; 2024 ELMD & Associés. <a href="#">Politique de confidentialité</a></p>
+        <p>&copy; <?= date('Y') ?> ELMD & Associés. <a href="#">Politique de confidentialité</a></p>
     </footer>
 
     <script type="module" src="js/theme.js"></script>
@@ -112,28 +210,10 @@
             }
         });
 
-        // Form submission
-        const loginForm = document.getElementById('loginForm');
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Simulate login
-            console.log('Login:', email, password);
-            alert('Connexion réussie !');
+        // Animation on scroll - add visible class immediately for login page
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            el.classList.add('visible');
         });
-
-        // Animation on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>

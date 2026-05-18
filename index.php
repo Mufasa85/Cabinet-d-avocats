@@ -1,138 +1,68 @@
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELMD - Cabinet d'Avocats d'Excellence</title>
-  <meta name="description" content="Cabinet d'avocats prestigieux offrant une expertise juridique d'excellence depuis 1985.">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <!-- Loader -->
-  <div id="loader" class="loader">
-    <div class="loader-content">
-      <svg class="loader-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
-        <circle cx="12" cy="3" r="1" fill="currentColor"/>
-        <path d="M7 21h10M9 21v-3h6v3"/>
-      </svg>
-      <div class="loader-text">ELMD</div>
-      <div class="loader-bar">
-        <div class="loader-progress"></div>
-      </div>
-    </div>
-  </div>
+<?php
+/**
+ * ELMD - Cabinet d'Avocats
+ * Page d'accueil
+ */
 
-  <!-- Navbar -->
-  <nav id="navbar" class="navbar">
-    <div class="navbar-container">
-      <a href="#" class="navbar-logo">
-        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
-          <circle cx="12" cy="3" r="1" fill="currentColor"/>
-          <path d="M7 21h10M9 21v-3h6v3"/>
-        </svg>
-        <span class="logo-text">ELMD</span>
-      </a>
-      
-      <!-- Desktop Menu -->
-      <div class="navbar-links">
-        <a href="#accueil" class="nav-link">Accueil</a>
-        <a href="#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="#expertises" class="nav-link">Expertises</a>
-        <a href="#equipe" class="nav-link">Équipe</a>
-        <a href="#actualites" class="nav-link">Actualités</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <a href="stages.html" class="nav-link">Stages</a>
-        <a href="connexion.html" class="nav-link nav-link-highlight">Connexion</a>
-      </div>
-      
-      <a href="#contact" class="navbar-cta">Consultation</a>
-      
-      <!-- Theme Switcher -->
-      <div id="theme-switcher-container" class="theme-switcher-wrapper"></div>
-      
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-    </div>
-  </nav>
+// Démarrer la session
+session_start();
 
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="mobile-menu">
-    <div class="mobile-menu-bg-circle mobile-menu-bg-circle-1"></div>
-    <div class="mobile-menu-bg-circle mobile-menu-bg-circle-2"></div>
-    <div class="mobile-menu-content">
-      <div class="mobile-menu-header">
-        <div class="navbar-logo">
-          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
-            <circle cx="12" cy="3" r="1" fill="currentColor"/>
-            <path d="M7 21h10M9 21v-3h6v3"/>
-          </svg>
-          <span class="logo-text">ELMD</span>
-        </div>
-        <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Fermer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-      <div class="mobile-menu-links">
-        <a href="#accueil" class="mobile-link">
-          <span>Accueil</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="#cabinet" class="mobile-link">
-          <span>Le Cabinet</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="#expertises" class="mobile-link">
-          <span>Expertises</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="#equipe" class="mobile-link">
-          <span>Équipe</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="#actualites" class="mobile-link">
-          <span>Actualités</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="#contact" class="mobile-link">
-          <span>Contact</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="stages.html" class="mobile-link">
-          <span>Stages</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-        <a href="connexion.html" class="mobile-link">
-          <span>Connexion</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
-      </div>
-      <div class="mobile-menu-footer">
-        <a href="#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
-      </div>
-    </div>
-  </div>
+// Définir le chemin de base
+define('ELMD_ROOT', '/home/mufasa/Public/ArcaneCore/Projet/Avocats/Cabinet-d-avocats');
+
+// Titre et description de la page
+$pageTitle = 'ELMD - Cabinet d\'Avocats d\'Excellence';
+$pageDescription = 'Cabinet d\'avocats prestigieux offrant une expertise juridique d\'excellence depuis 1985.';
+
+// Inclure le header avec navbar
+require_once __DIR__ . '/views/layouts/header.php';
+require_once __DIR__ . '/views/layouts/navbar.php';
+
+// Traitement du formulaire de contact
+$contactSuccess = false;
+$contactError = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $subject = trim($_POST['subject'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+    
+    // Validation
+    if (empty($name) || empty($email) || empty($message)) {
+        $contactError = 'Veuillez remplir tous les champs obligatoires.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $contactError = 'Veuillez entrer une adresse email valide.';
+    } else {
+        // Ici, vous pouvez ajouter le code pour enregistrer le message dans la base de données
+        // ou envoyer un email
+        
+        $contactSuccess = true;
+        
+        // Stocker dans la session pour affichage
+        $_SESSION['contact_success'] = true;
+        $_SESSION['contact_name'] = $name;
+        
+        // Redirection pour éviter la resoumission
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    }
+}
+
+// Vérifier si c'est un retour après soumission
+if (isset($_SESSION['contact_success']) && $_SESSION['contact_success']) {
+    $contactSuccess = true;
+    $contactName = $_SESSION['contact_name'] ?? '';
+    unset($_SESSION['contact_success'], $_SESSION['contact_name']);
+}
+?>
 
   <!-- Hero Section -->
   <section id="accueil" class="hero">
     <div class="hero-slider">
       <div class="hero-slide active" data-slide="0">
-        <div class="hero-slide-bg" style="background-image: url('fond_1.jpeg')"></div>
+        <div class="hero-slide-bg" style="background-image: url('images/fond_1.jpeg')"></div>
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Excellence Juridique</span>
@@ -145,11 +75,11 @@
         </div>
       </div>
       <div class="hero-slide" data-slide="1">
-        <div class="hero-slide-bg" style="background-image: url('fond_2.jpeg')"></div>
+        <div class="hero-slide-bg" style="background-image: url('images/fond_2.jpeg')"></div>
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Tradition & Innovation</span>
-          <h1 class="hero-title">40 Ans<br>d'Excellence<br>Juridique</h1>
+          <h1 class="hero-title">19 Ans<br>d'Excellence<br>Juridique</h1>
           <p class="hero-description">Un cabinet fondé sur des valeurs d'intégrité, de rigueur et d'engagement envers nos clients.</p>
           <div class="hero-buttons">
             <a href="#cabinet" class="btn-premium">Notre Histoire</a>
@@ -158,7 +88,7 @@
         </div>
       </div>
       <div class="hero-slide" data-slide="2">
-        <div class="hero-slide-bg" style="background-image: url('fond_3.jpeg')"></div>
+        <div class="hero-slide-bg" style="background-image: url('images/fond_3.jpeg')"></div>
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Rayonnement International</span>
@@ -219,12 +149,11 @@ Créée en 2007 par le Bâtonnier Laurent Mbako Ditend, « Étude Laurent Mbako/
           <p class="about-text">
 Étude Laurent Mbako/Cabinet d’Avocats a pour mission de représenter, d’assister, de postuler, de conseiller, de concilier de conclure et de plaider pour le compte de ses clients ainsi que d’émettre les avis juridiques dans toutes les branches de Droit et le Due Diligent.           </p>
           <p class="about-text">
-A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentiellement à l’évolution du Droit dans plusieurs domaines qui, d’office, la remet à un standard professionnel avisé. ELMD/Cabinet d’avocats est constituée de plusieurs Avocats dont onze Avocats seniors collaborateurs qui assurent la conduite d’une spécialité du Droit lorsque les questions idoines sont posées et deux Avocats collaborateurs en période de stage qui assurent l’appui nécessaire en étude, consultance, rédaction des actes de procédure, de correspondances aux Avocats seniors pour un résultat approprié dans chaque branche du Droit.           </p>
-          <a href="#contact" class="btn-premium">En Savoir Plus</a>
+A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentiellement à l’évolution du Droit dans plusieurs domaines qui, d’office, la remet à un standard professionnel avisé. ELMD/Cabinet d’avocats est constituée de plusieurs Avocats dont onze Avocats seniors collaborateurs qui assurent la conduite d’une spécialité du Droit lorsque les questions idoines sont posées et deux Avocats collaborateurs en période de stage qui assurent l’appui nécessaire en étude, consultance, rédaction des actes de procédure, de correspondances aux Avocats seniors pour un résultat approprié dans chaque branche du Droit. </p>
         </div>
         
         <div class="about-image animate-on-scroll">
-          <img src="logo.png" alt="Cabinet ELMD">
+          <img src="images/logo.png" alt="Cabinet ELMD">
           <div class="about-image-overlay"></div>
           <div class="about-image-frame"></div>
         </div>
@@ -296,7 +225,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
 
   <!-- Stats Section -->
   <section class="stats-section">
-    <div class="stats-bg" style="background-image: url('logo.png')"></div>
+    <div class="stats-bg" style="background-image: url('images/logo.png')"></div>
     <div class="stats-overlay"></div>
     <div class="container stats-container">
       <div class="stat-item animate-on-scroll">
@@ -342,7 +271,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Ohada</h3>
           <p class="service-text">Expertise en droit OHADA pour les entreprises opérant dans les États parties, garantissant conformité et sécurité juridique.</p>
-          <a href="droit-ohada.html" class="service-link">
+          <a href="droit-ohada.php" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -360,7 +289,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Minier</h3>
           <p class="service-text">Accompagnement spécialisé dans l'exploration, l'exploitation et la gestion des ressources minières et minérales.</p>
-          <a href="droit-minier.html" class="service-link">
+          <a href="droit-minier.php" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -379,7 +308,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Travail</h3>
           <p class="service-text">Conseil et défense en droit du travail pour employeurs et salariés, gestion des conflits et négociation collective.</p>
-          <a href="droit-travail.html" class="service-link">
+          <a href="droit-travail.php" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -396,7 +325,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Fiscal</h3>
           <p class="service-text">Optimisation fiscale, conseil en structuration et représentation devant les administrations fiscales.</p>
-          <a href="droit-fiscal.html" class="service-link">
+          <a href="droit-fiscal.php" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -413,7 +342,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Administration des Affaires</h3>
           <p class="service-text">Gestion administrative, gouvernance d'entreprise et conformité réglementaire pour les sociétés.</p>
-          <a href="administration-affaires.html" class="service-link">
+          <a href="administration-affaires.php" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -430,7 +359,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Autres Domaines de Droits</h3>
           <p class="service-text">Large palette de compétences juridiques pour répondre à tous vos besoins spécifiques et cas particuliers.</p>
-          <a href="autres-domaines.html" class="service-link">
+          <a href="autres-domaines.php" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -467,24 +396,11 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
       
       <div class="team-slider" id="team-slider">
         <div class="team-card animate-on-scroll">
-          <a href="profile.html?id=1" class="team-card-link">
+          <a href="profile.php?id=1" class="team-card-link">
             <div class="team-image">
               <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Jean-Pierre Dupont">
               <div class="team-overlay">
                 <div class="team-social">
-                  <a href="https://linkedin.com/in/jean-pierre-dupont" class="social-link" aria-label="LinkedIn" target="_blank">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                      <rect x="2" y="9" width="4" height="12"/>
-                      <circle cx="4" cy="4" r="2"/>
-                    </svg>
-                  </a>
-                  <a href="mailto:jean-pierre.dupont@elmd.com" class="social-link" aria-label="Email">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                      <polyline points="22,6 12,13 2,6"/>
-                    </svg>
-                  </a>
                   <span class="social-link view-profile" aria-label="Voir plus">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <circle cx="12" cy="12" r="10"/>
@@ -504,7 +420,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
         </div>
         
         <div class="team-card animate-on-scroll">
-          <a href="profile.html?id=2" class="team-card-link">
+          <a href="profile.php?id=2" class="team-card-link">
             <div class="team-image">
               <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="Marie-Claire Bernard">
               <div class="team-overlay">
@@ -541,7 +457,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
         </div>
         
         <div class="team-card animate-on-scroll">
-          <a href="profile.html?id=3" class="team-card-link">
+          <a href="profile.php?id=3" class="team-card-link">
             <div class="team-image">
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="Alexandre Martin">
               <div class="team-overlay">
@@ -578,7 +494,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
         </div>
         
         <div class="team-card animate-on-scroll">
-          <a href="profile.html?id=4" class="team-card-link">
+          <a href="profile.php?id=4" class="team-card-link">
             <div class="team-image">
               <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80" alt="Sophie Laurent">
               <div class="team-overlay">
@@ -724,7 +640,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
             <time class="news-date">15 Janvier 2024</time>
             <h3 class="news-title">Réforme Fiscale 2024 : Analyse et Implications</h3>
             <p class="news-excerpt">Notre analyse approfondie des nouvelles dispositions fiscales et leurs impacts sur les entreprises.</p>
-            <a href="#" class="news-link">Lire l'article</a>
+            <a href="articles.php" class="news-link">Lire l'article</a>
           </div>
         </article>
         
@@ -737,7 +653,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
             <time class="news-date">28 Février 2024</time>
             <h3 class="news-title">Conférence sur le Droit International des Affaires</h3>
             <p class="news-excerpt">Rejoignez-nous pour une journée de réflexion sur les enjeux juridiques de la mondialisation.</p>
-            <a href="#" class="news-link">En savoir plus</a>
+            <a href="articles.php" class="news-link">En savoir plus</a>
           </div>
         </article>
         
@@ -750,7 +666,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
             <time class="news-date">10 Mars 2024</time>
             <h3 class="news-title">ELMD Distingué par Legal 500</h3>
             <p class="news-excerpt">Notre cabinet reconnu parmi les meilleurs en droit des affaires pour la 5ème année consécutive.</p>
-            <a href="#" class="news-link">Découvrir</a>
+            <a href="articles.php" class="news-link">Découvrir</a>
           </div>
         </article>
       </div>

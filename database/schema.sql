@@ -95,7 +95,7 @@ CREATE TABLE stagiaires (
     email VARCHAR(255) NOT NULL,
     universite VARCHAR(200) NOT NULL,
     filiere VARCHAR(100) NOT NULL,
-    niveau ENUM('M1', 'M2', 'Doctorat') NOT NULL,
+    niveau ENUM('Licence', 'Master 1', 'Master 2', 'Doctorat') NOT NULL,
     lettre_motivation TEXT NULL,
     statut ENUM('candidature', 'en_cours', 'termine', 'rejete') NOT NULL DEFAULT 'candidature',
     date_debut DATE NULL,

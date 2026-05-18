@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELMD - Droit du Travail</title>
-  <meta name="description" content="Cabinet ELMD - Expertise en Droit du Travail pour employeurs et salariés">
+  <title>ELMD - Autres Domaines de Droits</title>
+  <meta name="description" content="Cabinet ELMD - Expertise en Droit pénal, civil et de la famille">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
   </div>
   <nav id="navbar" class="navbar">
     <div class="navbar-container">
-      <a href="index.html" class="navbar-logo">
+      <a href="index.php" class="navbar-logo">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
           <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -33,14 +33,14 @@
         <span class="logo-text">ELMD</span>
       </a>
       <div class="navbar-links">
-        <a href="index.html#accueil" class="nav-link">Accueil</a>
-        <a href="index.html#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="index.html#expertises" class="nav-link">Expertises</a>
-        <a href="index.html#equipe" class="nav-link">Équipe</a>
-        <a href="index.html#actualites" class="nav-link">Actualités</a>
-        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="index.php#accueil" class="nav-link">Accueil</a>
+        <a href="index.php#cabinet" class="nav-link">Le Cabinet</a>
+        <a href="index.php#expertises" class="nav-link">Expertises</a>
+        <a href="index.php#equipe" class="nav-link">Équipe</a>
+        <a href="index.php#actualites" class="nav-link">Actualités</a>
+        <a href="index.php#contact" class="nav-link">Contact</a>
       </div>
-      <a href="index.html#contact" class="navbar-cta">Consultation</a>
+      <a href="index.php#contact" class="navbar-cta">Consultation</a>
       <div id="theme-switcher-container" class="theme-switcher-wrapper"></div>
       <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
         <span class="hamburger-line"></span>
@@ -67,15 +67,15 @@
         </button>
       </div>
       <div class="mobile-menu-links">
-        <a href="index.html#accueil" class="mobile-link"><span>Accueil</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.html#cabinet" class="mobile-link"><span>Le Cabinet</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.html#expertises" class="mobile-link"><span>Expertises</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.html#equipe" class="mobile-link"><span>Équipe</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.html#actualites" class="mobile-link"><span>Actualités</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.html#contact" class="mobile-link"><span>Contact</span><span class="mobile-link-arrow">→</span></a>
+        <a href="index.php#accueil" class="mobile-link"><span>Accueil</span><span class="mobile-link-arrow">→</span></a>
+        <a href="index.php#cabinet" class="mobile-link"><span>Le Cabinet</span><span class="mobile-link-arrow">→</span></a>
+        <a href="index.php#expertises" class="mobile-link"><span>Expertises</span><span class="mobile-link-arrow">→</span></a>
+        <a href="index.php#equipe" class="mobile-link"><span>Équipe</span><span class="mobile-link-arrow">→</span></a>
+        <a href="index.php#actualites" class="mobile-link"><span>Actualités</span><span class="mobile-link-arrow">→</span></a>
+        <a href="index.php#contact" class="mobile-link"><span>Contact</span><span class="mobile-link-arrow">→</span></a>
       </div>
       <div class="mobile-menu-footer">
-        <a href="index.html#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
+        <a href="index.php#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
       </div>
     </div>
   </div>
@@ -85,8 +85,8 @@
     <div class="domain-hero-overlay"></div>
     <div class="domain-hero-content">
       <span class="domain-subtitle">Expertise Juridique</span>
-      <h1 class="domain-title">Droit du Travail</h1>
-      <p class="domain-description">Droit du travail - Relations sociales et contentieux laboral</p>
+      <h1 class="domain-title">Autres Domaines de Droits</h1>
+      <p class="domain-description">Droit pénal, civil et de la famille</p>
     </div>
   </section>
 
@@ -94,17 +94,47 @@
     <div class="container">
       <div class="domain-intro animate-on-scroll">
         <p class="domain-intro-text">
-          Le droit du travail est une matière très vivante qui est, à tort ou à raison, victime d'une forte inflation législative. D'un côté, tous les dirigeants d'entreprises doivent maîtriser l'entretien d'embauche, la rédaction des contrats de travail, les domaines et limites de leurs pouvoirs et autorités hiérarchique et disciplinaire. Ainsi, les relations sociales influent fortement sur le quotidien des entreprises et peuvent constituer tant un moteur qu'un frein à l'activité.
+          Le cabinet ELMD assure conseil, assistance et représentation dans l'ensemble des litiges et procédures relevant du droit civil congolais, tant en phase précontentieuse que contentieuse.
         </p>
         <p class="domain-intro-text">
-          D'un autre côté, tous les salariés doivent franchir les étapes professionnelles du recrutement, de la négociation du contrat de travail dans ses clauses les plus spécifiques, patrimoniales et extra-patrimoniales, jusqu'à la rupture de leur relation conventionnelle par exemple par démission ou licenciement. En définitive, pour les dirigeants de petites ou de moyennes entreprises, comme pour les salariés, la connaissance ou l'application de l'ensemble des dispositions du Code du travail relève de l'illusion tant le législateur a complexifié et multiplié les textes.
+          Il intervient à tous les stades de la procédure pénale, pour la défense des intérêts des prévenus, victimes et parties civiles.
         </p>
         <p class="domain-intro-text">
-          Faire le choix d'un Avocat vous permettra de cerner les risques qui peuvent vous menacer ou encore de faire face à un contentieux imminent.
+          Le cabinet ELMD intervient également dans les litiges fonciers et dans les contentieux relevant du droit de la famille en RDC.
         </p>
       </div>
 
       <div class="domain-grid">
+        <div class="domain-card animate-on-scroll">
+          <div class="domain-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="domain-card-title">Droit pénal</h3>
+          <ul class="domain-card-list">
+            <li>Défense des prévenus</li>
+            <li>Représentation des victimes</li>
+            <li>Partie civile</li>
+          </ul>
+        </div>
+
+        <div class="domain-card animate-on-scroll">
+          <div class="domain-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="9" y1="21" x2="9" y2="9"/>
+            </svg>
+          </div>
+          <h3 class="domain-card-title">Droit civil</h3>
+          <ul class="domain-card-list">
+            <li>Phase précontentieuse</li>
+            <li>Phase contentieuse</li>
+            <li>Litiges et procédures</li>
+          </ul>
+        </div>
+
         <div class="domain-card animate-on-scroll">
           <div class="domain-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -114,26 +144,26 @@
               <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
           </div>
-          <h3 class="domain-card-title">Recrutement et embauche</h3>
+          <h3 class="domain-card-title">Droit de la famille</h3>
           <ul class="domain-card-list">
-            <li>Entretiens d'embauche</li>
-            <li>Rédaction des contrats de travail</li>
-            <li>Clauses spécifiques et rémunération</li>
+            <li>Mariage et divorce</li>
+            <li>Filiation et adoption</li>
+            <li>Successions</li>
           </ul>
         </div>
 
         <div class="domain-card animate-on-scroll">
           <div class="domain-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
             </svg>
           </div>
-          <h3 class="domain-card-title">Gestion des relations sociales</h3>
+          <h3 class="domain-card-title">Droit foncier</h3>
           <ul class="domain-card-list">
-            <li>Pouvoir hiérarchique et disciplinaire</li>
-            <li>Négociation collective</li>
-            <li>Conflits au quotidien</li>
+            <li>Litiges fonciers</li>
+            <li>Propriété et possession</li>
+            <li>Bornage et servitude</li>
           </ul>
         </div>
 
@@ -146,25 +176,11 @@
               <line x1="16" y1="17" x2="8" y2="17"/>
             </svg>
           </div>
-          <h3 class="domain-card-title">Contrats de travail</h3>
+          <h3 class="domain-card-title">Procédure pénale</h3>
           <ul class="domain-card-list">
-            <li>Clauses patrimoniales</li>
-            <li>Clauses extra-patrimoniales</li>
-            <li>Modification du contrat</li>
-          </ul>
-        </div>
-
-        <div class="domain-card animate-on-scroll">
-          <div class="domain-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <h3 class="domain-card-title">Rupture du contrat</h3>
-          <ul class="domain-card-list">
-            <li>Licenciement</li>
-            <li>Démission</li>
-            <li>Rupture conventionnelle</li>
+            <li>Garde à vue</li>
+            <li>Instruction</li>
+            <li>Jugement</li>
           </ul>
         </div>
 
@@ -175,26 +191,11 @@
               <path d="M12 6v6l4 2"/>
             </svg>
           </div>
-          <h3 class="domain-card-title">Contentieux laboral</h3>
+          <h3 class="domain-card-title">Régimes matrimoniaux</h3>
           <ul class="domain-card-list">
-            <li>Représentation devant les conseils</li>
-            <li>Contentieux prud'homal</li>
-            <li>Défense des employeurs et salariés</li>
-          </ul>
-        </div>
-
-        <div class="domain-card animate-on-scroll">
-          <div class="domain-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-          </div>
-          <h3 class="domain-card-title">Conseil et prévention</h3>
-          <ul class="domain-card-list">
-            <li>Audit des pratiques</li>
-            <li>Formation des dirigeants</li>
-            <li>Prévention des risques juridiques</li>
+            <li>Contrat de mariage</li>
+            <li>Communauté et séparation</li>
+            <li>Liquidations</li>
           </ul>
         </div>
       </div>
@@ -204,11 +205,11 @@
   <section class="section domain-cta-section">
     <div class="container">
       <div class="domain-cta-content animate-on-scroll">
-        <h2 class="domain-cta-title">Besoin d'un accompagnement en Droit du Travail ?</h2>
-        <p class="domain-cta-text">Notre équipe est disponible pour vous conseiller et vous défendre.</p>
+        <h2 class="domain-cta-title">Besoin d'un accompagnement juridique ?</h2>
+        <p class="domain-cta-text">Notre équipe est disponible pour vous conseiller et vous accompagner.</p>
         <div class="domain-cta-buttons">
-          <a href="index.html#contact" class="btn-premium">Nous Contacter</a>
-          <a href="index.html#expertises" class="btn-outline">Autres Expertises</a>
+          <a href="index.php#contact" class="btn-premium">Nous Contacter</a>
+          <a href="index.php#expertises" class="btn-outline">Autres Expertises</a>
         </div>
       </div>
     </div>
@@ -218,7 +219,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="navbar-logo">
+          <a href="index.php" class="navbar-logo">
             <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
               <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -231,12 +232,12 @@
         <div class="footer-links">
           <h4>Expertises</h4>
           <ul>
-            <li><a href="droit-ohada.html">Droit OHADA</a></li>
-            <li><a href="droit-minier.html">Droit Minier</a></li>
-            <li><a href="droit-travail.html">Droit Travail</a></li>
-            <li><a href="droit-fiscal.html">Droit Fiscal</a></li>
-            <li><a href="administration-affaires.html">Administration des Affaires</a></li>
-            <li><a href="autres-domaines.html">Autres Domaines</a></li>
+            <li><a href="droit-ohada.php">Droit OHADA</a></li>
+            <li><a href="droit-minier.php">Droit Minier</a></li>
+            <li><a href="droit-travail.php">Droit Travail</a></li>
+            <li><a href="droit-fiscal.php">Droit Fiscal</a></li>
+            <li><a href="administration-affaires.php">Administration des Affaires</a></li>
+            <li><a href="autres-domaines.php">Autres Domaines</a></li>
           </ul>
         </div>
         <div class="footer-links">
@@ -254,7 +255,7 @@
     </div>
   </footer>
 
-  <script type="module" src="js/theme.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="theme.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>

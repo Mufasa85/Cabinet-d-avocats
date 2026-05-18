@@ -34,7 +34,7 @@
   <!-- Navbar -->
   <nav id="navbar" class="navbar">
     <div class="navbar-container">
-      <a href="index.html" class="navbar-logo">
+      <a href="index.php" class="navbar-logo">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
           <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -45,13 +45,13 @@
       
       <!-- Desktop Menu -->
       <div class="navbar-links">
-        <a href="index.html" class="nav-link">Accueil</a>
-        <a href="index.html#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="index.html#expertises" class="nav-link">Expertises</a>
-        <a href="index.html#equipe" class="nav-link">Équipe</a>
-        <a href="articles.html" class="nav-link active">Actualités</a>
-        <a href="index.html#contact" class="nav-link">Contact</a>
-        <a href="connexion.html" class="nav-link nav-link-highlight">Connexion</a>
+        <a href="index.php" class="nav-link">Accueil</a>
+        <a href="index.php#cabinet" class="nav-link">Le Cabinet</a>
+        <a href="index.php#expertises" class="nav-link">Expertises</a>
+        <a href="index.php#equipe" class="nav-link">Équipe</a>
+        <a href="articles.php" class="nav-link active">Actualités</a>
+        <a href="index.php#contact" class="nav-link">Contact</a>
+        <a href="connexion.php" class="nav-link nav-link-highlight">Connexion</a>
       </div>
       
       <!-- Theme Switcher -->
@@ -87,37 +87,37 @@
         </button>
       </div>
       <div class="mobile-menu-links">
-        <a href="index.html" class="mobile-link">
+        <a href="index.php" class="mobile-link">
           <span>Accueil</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#cabinet" class="mobile-link">
+        <a href="index.php#cabinet" class="mobile-link">
           <span>Le Cabinet</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#expertises" class="mobile-link">
+        <a href="index.php#expertises" class="mobile-link">
           <span>Expertises</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#equipe" class="mobile-link">
+        <a href="index.php#equipe" class="mobile-link">
           <span>Équipe</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="articles.html" class="mobile-link">
+        <a href="articles.php" class="mobile-link">
           <span>Actualités</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#contact" class="mobile-link">
+        <a href="index.php#contact" class="mobile-link">
           <span>Contact</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="connexion.html" class="mobile-link">
+        <a href="connexion.php" class="mobile-link">
           <span>Connexion</span>
           <span class="mobile-link-arrow">→</span>
         </a>
       </div>
       <div class="mobile-menu-footer">
-        <a href="index.html#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
+        <a href="index.php#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
       </div>
     </div>
   </div>
@@ -569,24 +569,24 @@
         <div class="footer-links">
           <h4>Navigation</h4>
           <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="index.html#cabinet">Le Cabinet</a></li>
-            <li><a href="index.html#expertises">Expertises</a></li>
-            <li><a href="index.html#equipe">Équipe</a></li>
-            <li><a href="articles.html">Actualités</a></li>
-            <li><a href="stages.html">Stages</a></li>
+            <li><a href="index.php">Accueil</a></li>
+            <li><a href="index.php#cabinet">Le Cabinet</a></li>
+            <li><a href="index.php#expertises">Expertises</a></li>
+            <li><a href="index.php#equipe">Équipe</a></li>
+            <li><a href="articles.php">Actualités</a></li>
+            <li><a href="stages.php">Stages</a></li>
           </ul>
         </div>
         
         <div class="footer-links">
           <h4>Domaines</h4>
           <ul>
-            <li><a href="administration-affaires.html">Droit des Affaires</a></li>
-            <li><a href="droit-minier.html">Droit Minier</a></li>
-            <li><a href="droit-fiscal.html">Droit Fiscal</a></li>
-            <li><a href="droit-travail.html">Droit du Travail</a></li>
-            <li><a href="droit-ohada.html">Droit OHADA</a></li>
-            <li><a href="autres-domaines.html">Autres Domaines</a></li>
+            <li><a href="administration-affaires.php">Droit des Affaires</a></li>
+            <li><a href="droit-minier.php">Droit Minier</a></li>
+            <li><a href="droit-fiscal.php">Droit Fiscal</a></li>
+            <li><a href="droit-travail.php">Droit du Travail</a></li>
+            <li><a href="droit-ohada.php">Droit OHADA</a></li>
+            <li><a href="autres-domaines.php">Autres Domaines</a></li>
           </ul>
         </div>
         
@@ -611,8 +611,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script type="module" src="theme.js"></script>
-  <script src="main.js"></script>
+  <script type="module" src="js/theme.js"></script>
+  <script src="js/main.js"></script>
   <script>
     // Articles data
     const articlesData = [

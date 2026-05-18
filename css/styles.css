@@ -728,15 +728,15 @@ ul {
 /* Mobile Background Images for Hero Slides */
 @media (max-width: 768px) {
   .hero-slide[data-slide="0"] .hero-slide-bg {
-    background-image: url('mobile_1.jpeg') !important;
+    background-image: url('../images/mobile_1.jpeg') !important;
   }
   
   .hero-slide[data-slide="1"] .hero-slide-bg {
-    background-image: url('mobile_2.jpeg') !important;
+    background-image: url('../images/mobile_2.jpeg') !important;
   }
   
   .hero-slide[data-slide="2"] .hero-slide-bg {
-    background-image: url('mobile_3.jpeg') !important;
+    background-image: url('../images/mobile_3.jpeg') !important;
   }
 }
 

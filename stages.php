@@ -26,7 +26,7 @@
     <!-- Navigation -->
     <header id="navbar" class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">
+            <a href="index.php" class="logo">
                 <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
                     <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -35,12 +35,12 @@
                 <span class="logo-text">ELMD</span>
             </a>
             <nav class="nav-desktop">
-                <a href="index.html">Accueil</a>
-                <a href="index.html#about">Cabinet</a>
-                <a href="index.html#services">Expertises</a>
+                <a href="index.php">Accueil</a>
+                <a href="index.php#about">Cabinet</a>
+                <a href="index.php#services">Expertises</a>
                 <a href="#programme">Programme</a>
                 <a href="#postuler">Postuler</a>
-                <a href="connexion.html">Connexion</a>
+                <a href="connexion.php">Connexion</a>
             </nav>
             <a href="#postuler" class="btn-premium nav-cta">Candidater</a>
             <!-- Theme Switcher -->
@@ -71,12 +71,12 @@
             </button>
         </div>
         <nav class="mobile-nav">
-            <a href="index.html">Accueil</a>
-            <a href="index.html#about">Cabinet</a>
-            <a href="index.html#services">Expertises</a>
+            <a href="index.php">Accueil</a>
+            <a href="index.php#about">Cabinet</a>
+            <a href="index.php#services">Expertises</a>
             <a href="#programme">Programme</a>
             <a href="#postuler">Postuler</a>
-            <a href="connexion.html">Connexion</a>
+            <a href="connexion.php">Connexion</a>
         </nav>
         <a href="#postuler" class="btn-premium mobile-cta">Candidater Maintenant</a>
     </div>
@@ -919,10 +919,10 @@
                 <div class="footer-links">
                     <div class="footer-column">
                         <h4>Navigation</h4>
-                        <a href="index.html">Accueil</a>
-                        <a href="index.html#about">Cabinet</a>
-                        <a href="index.html#services">Expertises</a>
-                        <a href="index.html#contact">Contact</a>
+                        <a href="index.php">Accueil</a>
+                        <a href="index.php#about">Cabinet</a>
+                        <a href="index.php#services">Expertises</a>
+                        <a href="index.php#contact">Contact</a>
                     </div>
                     <div class="footer-column">
                         <h4>Stage</h4>

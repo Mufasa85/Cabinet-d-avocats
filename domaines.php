@@ -34,21 +34,21 @@
   <!-- Navbar -->
   <nav id="navbar" class="navbar">
     <div class="navbar-container">
-      <a href="index.html" class="navbar-logo">
+      <a href="index.php" class="navbar-logo">
         <img src="logo.png" alt="ELMD" class="logo-icon">
         <span class="logo-text">ELMD</span>
       </a>
       
       <div class="navbar-links">
-        <a href="index.html" class="nav-link">Accueil</a>
-        <a href="index.html#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="domaines.html" class="nav-link">Expertises</a>
-        <a href="index.html#equipe" class="nav-link">Équipe</a>
-        <a href="index.html#actualites" class="nav-link">Actualités</a>
-        <a href="index.html#contact" class="nav-link">Contact</a>
+        <a href="index.php" class="nav-link">Accueil</a>
+        <a href="index.php#cabinet" class="nav-link">Le Cabinet</a>
+        <a href="domaines.php" class="nav-link">Expertises</a>
+        <a href="index.php#equipe" class="nav-link">Équipe</a>
+        <a href="index.php#actualites" class="nav-link">Actualités</a>
+        <a href="index.php#contact" class="nav-link">Contact</a>
       </div>
       
-      <a href="index.html#contact" class="navbar-cta">Consultation</a>
+      <a href="index.php#contact" class="navbar-cta">Consultation</a>
       
       <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
         <span class="hamburger-line"></span>
@@ -64,7 +64,7 @@
     <div class="mobile-menu-bg-circle mobile-menu-bg-circle-2"></div>
     <div class="mobile-menu-content">
       <div class="mobile-menu-header">
-        <a href="index.html" class="navbar-logo">
+        <a href="index.php" class="navbar-logo">
           <img src="logo.png" alt="ELMD" class="logo-icon">
           <span class="logo-text">ELMD</span>
         </a>
@@ -75,33 +75,33 @@
         </button>
       </div>
       <div class="mobile-menu-links">
-        <a href="index.html" class="mobile-link">
+        <a href="index.php" class="mobile-link">
           <span>Accueil</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#cabinet" class="mobile-link">
+        <a href="index.php#cabinet" class="mobile-link">
           <span>Le Cabinet</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="domaines.html" class="mobile-link">
+        <a href="domaines.php" class="mobile-link">
           <span>Expertises</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#equipe" class="mobile-link">
+        <a href="index.php#equipe" class="mobile-link">
           <span>Équipe</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#actualites" class="mobile-link">
+        <a href="index.php#actualites" class="mobile-link">
           <span>Actualités</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#contact" class="mobile-link">
+        <a href="index.php#contact" class="mobile-link">
           <span>Contact</span>
           <span class="mobile-link-arrow">→</span>
         </a>
       </div>
       <div class="mobile-menu-footer">
-        <a href="index.html#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
+        <a href="index.php#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
       </div>
     </div>
   </div>
@@ -223,7 +223,7 @@
           </p>
           
           <div class="domaine-cta">
-            <a href="index.html#contact" class="btn-premium">Demander une Consultation</a>
+            <a href="index.php#contact" class="btn-premium">Demander une Consultation</a>
             <a href="#minier" class="btn-outline">Suivant →</a>
           </div>
         </div>
@@ -320,7 +320,7 @@
           </div>
           
           <div class="domaine-cta">
-            <a href="index.html#contact" class="btn-premium">Demander une Consultation</a>
+            <a href="index.php#contact" class="btn-premium">Demander une Consultation</a>
             <a href="#travail" class="btn-outline">Suivant →</a>
           </div>
         </div>
@@ -378,7 +378,7 @@
           </div>
           
           <div class="domaine-cta">
-            <a href="index.html#contact" class="btn-premium">Demander une Consultation</a>
+            <a href="index.php#contact" class="btn-premium">Demander une Consultation</a>
             <a href="#affaires" class="btn-outline">Suivant →</a>
           </div>
         </div>
@@ -453,7 +453,7 @@
           </div>
           
           <div class="domaine-cta">
-            <a href="index.html#contact" class="btn-premium">Demander une Consultation</a>
+            <a href="index.php#contact" class="btn-premium">Demander une Consultation</a>
             <a href="#autres" class="btn-outline">Suivant →</a>
           </div>
         </div>
@@ -626,7 +626,7 @@
           </div>
           
           <div class="domaine-cta">
-            <a href="index.html#contact" class="btn-premium">Demander une Consultation</a>
+            <a href="index.php#contact" class="btn-premium">Demander une Consultation</a>
             <a href="#ohada" class="btn-outline">↑ Retour au début</a>
           </div>
         </div>
@@ -643,7 +643,7 @@
       <p style="max-width: 600px; margin: 1.5rem auto 2rem; color: var(--color-muted-foreground);">
         Nos avocats sont disponibles pour vous accompagner dans tous vos projets juridiques. Contactez-nous pour une consultation personnalisée.
       </p>
-      <a href="index.html#contact" class="btn-premium">Prendre Rendez-vous</a>
+      <a href="index.php#contact" class="btn-premium">Prendre Rendez-vous</a>
     </div>
   </section>
 
@@ -652,7 +652,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="navbar-logo">
+          <a href="index.php" class="navbar-logo">
             <img src="logo.png" alt="ELMD" class="logo-icon">
             <span class="logo-text">ELMD</span>
           </a>

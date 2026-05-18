@@ -12,14 +12,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
   <!-- Navigation -->
   <nav class="navbar">
     <div class="navbar-container">
-      <a href="index.html" class="navbar-logo">
+      <a href="index.php" class="navbar-logo">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
           <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -27,28 +27,11 @@
         </svg>
         <span class="logo-text">ELMD</span>
       </a>
-      
       <!-- Desktop Menu -->
-      <div class="navbar-links">
-        <a href="index.html" class="nav-link">Accueil</a>
-        <a href="index.html#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="index.html#expertises" class="nav-link">Expertises</a>
-        <a href="index.html#equipe" class="nav-link">Équipe</a>
-        <a href="index.html#actualites" class="nav-link">Actualités</a>
-        <a href="index.html#contact" class="nav-link">Contact</a>
-        <a href="stages.html" class="nav-link">Stages</a>
-        <a href="connexion.html" class="nav-link nav-link-highlight">Connexion</a>
-      </div>
       
       <!-- Theme Switcher -->
       <div id="theme-switcher-container" class="theme-switcher-wrapper"></div>
-      
       <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
     </div>
   </nav>
 
@@ -58,7 +41,7 @@
     <div class="mobile-menu-bg-circle mobile-menu-bg-circle-2"></div>
     <div class="mobile-menu-content">
       <div class="mobile-menu-header">
-        <a href="index.html" class="navbar-logo">
+        <a href="index.php" class="navbar-logo">
           <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
             <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -73,41 +56,41 @@
         </button>
       </div>
       <div class="mobile-menu-links">
-        <a href="index.html" class="mobile-link">
+        <a href="index.php" class="mobile-link">
           <span>Accueil</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#cabinet" class="mobile-link">
+        <a href="index.php#cabinet" class="mobile-link">
           <span>Le Cabinet</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#expertises" class="mobile-link">
+        <a href="index.php#expertises" class="mobile-link">
           <span>Expertises</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#equipe" class="mobile-link">
+        <a href="index.php#equipe" class="mobile-link">
           <span>Équipe</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#actualites" class="mobile-link">
+        <a href="index.php#actualites" class="mobile-link">
           <span>Actualités</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.html#contact" class="mobile-link">
+        <a href="index.php#contact" class="mobile-link">
           <span>Contact</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="stages.html" class="mobile-link">
+        <a href="stages.php" class="mobile-link">
           <span>Stages</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="connexion.html" class="mobile-link">
+        <a href="connexion.php" class="mobile-link">
           <span>Connexion</span>
           <span class="mobile-link-arrow">→</span>
         </a>
       </div>
       <div class="mobile-menu-footer">
-        <a href="index.html#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
+        <a href="index.php#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
       </div>
     </div>
   </div>
@@ -115,7 +98,7 @@
   <!-- Profile Hero -->
   <section class="profile-hero">
     <div class="profile-container">
-      <a href="index.html#equipe" class="profile-back">
+      <a href="index.php#equipe" class="profile-back">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
@@ -399,7 +382,7 @@
   </section>
 
   <!-- Scripts -->
-  <script type="module" src="theme.js"></script>
+  <script type="module" src="js/theme.js"></script>
   <script>
     // Données des avocats (simulées - à remplacer par des données réelles depuis la base)
     const avocatsData = {
