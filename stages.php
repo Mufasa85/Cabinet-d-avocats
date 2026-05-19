@@ -107,8 +107,8 @@
                     <span class="stat-label">Stagiaires formés</span>
                 </div>
                 <div class="hero-stat">
-                    <span class="stat-number" data-count="6">0</span>
-                    <span class="stat-label">Places disponibles</span>
+                    <span class="stat-number" data-count="10">0</span>
+                    <span class="stat-label">Stagiaires cette année</span>
                 </div>
             </div>
             <div class="hero-actions animate-on-scroll">
@@ -317,189 +317,252 @@
         </div>
     </section>
 
-    <!-- Places Disponibles Section -->
+    <!-- Anciens Stagiaires Section -->
     <section id="places" class="section-places">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <span class="section-tag">Disponibilités</span>
-                <h2 class="section-title">Places Ouvertes</h2>
+                <span class="section-tag">Témoignages</span>
+                <h2 class="section-title">Nos Derniers Stagiaires</h2>
                 <p class="section-description">
-                    Consultez les opportunités de stage actuellement disponibles dans nos différents départements.
+                    Découvrez les jeunes talents qui ont contribué au cabinet cette année.
                 </p>
             </div>
 
-            <!-- Places Carousel -->
-            <div class="places-carousel">
-                <div class="places-slider" id="placesSlider">
-                    <!-- Slide 1 -->
-                    <div class="place-card animate-on-scroll" data-delay="0">
-                        <div class="place-header">
-                            <div class="place-department">Droit des Affaires</div>
-                            <div class="place-status available">
-                                <span class="status-dot"></span>
-                                <span>2 places</span>
+            <!-- Stagiaires Slider -->
+            <div class="stagiaires-slider" id="stagiaires-slider">
+                <!-- Stagiaire 1 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Jean Mukamba">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <h3 class="place-title">Stage M&A / Private Equity</h3>
-                        <p class="place-description">
-                            Participation aux opérations de fusions-acquisitions et de capital-investissement 
-                            pour des clients internationaux.
-                        </p>
-                        <div class="place-details">
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span>Janvier - Juin 2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span>Kolwezi, Lualaba</span>
-                            </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Jean Mukamba</h3>
+                            <p class="stagiaire-univ">Université de Kinshasa</p>
+                            <span class="stagiaire-badge">Master II</span>
                         </div>
-                        <a href="#postuler" class="place-apply">
-                            <span>Postuler</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <!-- Slide 2 -->
-                    <div class="place-card animate-on-scroll" data-delay="100">
-                        <div class="place-header">
-                            <div class="place-department">Droit Fiscal</div>
-                            <div class="place-status available">
-                                <span class="status-dot"></span>
-                                <span>1 place</span>
-                            </div>
-                        </div>
-                        <h3 class="place-title">Stage Fiscalité Internationale</h3>
-                        <p class="place-description">
-                            Conseil en structuration fiscale et accompagnement de groupes multinationaux 
-                            dans leurs obligations déclaratives.
-                        </p>
-                        <div class="place-details">
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span>Février - Juillet 2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span>Kolwezi, Lualaba</span>
-                            </div>
-                        </div>
-                        <a href="#postuler" class="place-apply">
-                            <span>Postuler</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="place-card animate-on-scroll" data-delay="200">
-                        <div class="place-header">
-                            <div class="place-department">Contentieux</div>
-                            <div class="place-status available">
-                                <span class="status-dot"></span>
-                                <span>2 places</span>
-                            </div>
-                        </div>
-                        <h3 class="place-title">Stage Arbitrage International</h3>
-                        <p class="place-description">
-                            Assistance dans les procédures d'arbitrage commercial international et 
-                            rédaction de mémoires contentieux.
-                        </p>
-                        <div class="place-details">
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span>Mars - Août 2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span>Kolwezi, Lualaba</span>
-                            </div>
-                        </div>
-                        <a href="#postuler" class="place-apply">
-                            <span>Postuler</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                    </div>
-
-                    <!-- Slide 4 -->
-                    <div class="place-card animate-on-scroll" data-delay="300">
-                        <div class="place-header">
-                            <div class="place-department">Propriété Intellectuelle</div>
-                            <div class="place-status limited">
-                                <span class="status-dot"></span>
-                                <span>1 place</span>
-                            </div>
-                        </div>
-                        <h3 class="place-title">Stage PI / IT</h3>
-                        <p class="place-description">
-                            Conseil en propriété intellectuelle, contrats technologiques et 
-                            protection des données personnelles (RGPD).
-                        </p>
-                        <div class="place-details">
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                                <span>Avril - Septembre 2024</span>
-                            </div>
-                            <div class="detail-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                                <span>Kolwezi, Lualaba</span>
-                            </div>
-                        </div>
-                        <a href="#postuler" class="place-apply">
-                            <span>Postuler</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                    </div>
+                    </a>
                 </div>
-                
-                <!-- Carousel Controls -->
-                <button class="carousel-btn carousel-prev" id="placesPrev">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <button class="carousel-btn carousel-next" id="placesNext">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                
-                <!-- Carousel Dots -->
-                <div class="carousel-dots" id="placesDots">
-                    <span class="dot active" data-index="0"></span>
-                    <span class="dot" data-index="1"></span>
-                    <span class="dot" data-index="2"></span>
-                    <span class="dot" data-index="3"></span>
+
+                <!-- Stagiaire 2 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Aminata Ngalulu">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Aminata Ngalulu</h3>
+                            <p class="stagiaire-univ">Université Catholique</p>
+                            <span class="stagiaire-badge">Master I</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 3 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Pierre Mbuyi">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Pierre Mbuyi</h3>
+                            <p class="stagiaire-univ">Université Protestante</p>
+                            <span class="stagiaire-badge">Master II</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 4 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Marie Kabongo">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Marie Kabongo</h3>
+                            <p class="stagiaire-univ">Université de Lubumbashi</p>
+                            <span class="stagiaire-badge">Master I</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 5 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="David Tshilombo">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">David Tshilombo</h3>
+                            <p class="stagiaire-univ">Université de Kinshasa</p>
+                            <span class="stagiaire-badge">Master II</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 6 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Sophie Muteba">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Sophie Muteba</h3>
+                            <p class="stagiaire-univ">Université Catholique</p>
+                            <span class="stagiaire-badge">Master I</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 7 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Marc Kalala">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Marc Kalala</h3>
+                            <p class="stagiaire-univ">Université de Goma</p>
+                            <span class="stagiaire-badge">Master II</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 8 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Claire Mwape">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Claire Mwape</h3>
+                            <p class="stagiaire-univ">Université de Kinshasa</p>
+                            <span class="stagiaire-badge">Master I</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 9 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Antoine Kabamba">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Antoine Kabamba</h3>
+                            <p class="stagiaire-univ">Université Protestante</p>
+                            <span class="stagiaire-badge">Master II</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Stagiaire 10 -->
+                <div class="stagiaire-card animate-on-scroll">
+                    <a href="#" class="stagiaire-card-link">
+                        <div class="stagiaire-image">
+                            <img src="images/placeholder-user.jpg" alt="Grace Bwika">
+                            <div class="stagiaire-overlay">
+                                <div class="stagiaire-social">
+                                    <span class="social-link view-profile">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stagiaire-info">
+                            <h3 class="stagiaire-nom">Grace Bwika</h3>
+                            <p class="stagiaire-univ">Université de Lubumbashi</p>
+                            <span class="stagiaire-badge">Master I</span>
+                        </div>
+                    </a>
                 </div>
             </div>
+
+            <!-- Slider Navigation -->
+            
         </div>
     </section>
 

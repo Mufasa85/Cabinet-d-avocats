@@ -5,6 +5,227 @@
    ======================================== */
 
 /* ----------------------------------------
+   STAGIAIRES SLIDER (Team Card Style)
+   ---------------------------------------- */
+.stagiaires-slider {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 16px 0;
+}
+
+.stagiaires-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.stagiaire-card {
+    flex: 0 0 calc(20% - 20px);
+    min-width: 200px;
+    scroll-snap-align: start;
+}
+
+.stagiaire-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.stagiaire-image {
+    position: relative;
+    height: 220px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.stagiaire-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.stagiaire-card:hover .stagiaire-image img {
+    transform: scale(1.05);
+}
+
+.stagiaire-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.stagiaire-card:hover .stagiaire-overlay {
+    opacity: 1;
+}
+
+.stagiaire-social {
+    display: flex;
+    gap: 8px;
+}
+
+.stagiaire-social .social-link {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+}
+
+.stagiaire-social .social-link:hover {
+    background: var(--color-primary);
+}
+
+.stagiaire-social .social-link svg {
+    width: 14px;
+    height: 14px;
+    color: white;
+}
+
+.stagiaire-info {
+    text-align: center;
+}
+
+.stagiaire-nom {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-foreground);
+    margin-bottom: 2px;
+    transition: color var(--transition-fast);
+}
+
+.stagiaire-card:hover .stagiaire-nom {
+    color: var(--color-primary);
+}
+
+.stagiaire-univ {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin-bottom: 6px;
+}
+
+.stagiaire-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(201, 162, 39, 0.1);
+    color: var(--color-primary);
+    border: 1px solid rgba(201, 162, 39, 0.2);
+    border-radius: 50px;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Slider Navigation */
+.slider-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.slider-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.slider-btn:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-background);
+}
+
+.slider-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.slider-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.slider-dots .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.slider-dots .dot:hover {
+    background: var(--color-muted);
+}
+
+.slider-dots .dot.active {
+    background: var(--color-primary);
+    width: 20px;
+    border-radius: 3px;
+}
+
+/* Responsive for Stagiaires Slider */
+@media (max-width: 1200px) {
+    .stagiaire-card {
+        flex: 0 0 calc(25% - 18px);
+    }
+}
+
+@media (max-width: 992px) {
+    .stagiaire-card {
+        flex: 0 0 calc(33.333% - 16px);
+        min-width: 180px;
+    }
+    
+    .stagiaire-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .stagiaire-card {
+        flex: 0 0 calc(50% - 12px);
+        min-width: 160px;
+    }
+    
+    .stagiaire-image {
+        height: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stagiaire-card {
+        flex: 0 0 calc(70%);
+    }
+}
+
+/* ----------------------------------------
    CSS Variables
    ---------------------------------------- */
 :root {

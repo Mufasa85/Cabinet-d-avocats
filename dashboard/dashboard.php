@@ -1,278 +1,825 @@
 <?php
 /**
- * ELMD - Cabinet d'Avocats
- * Tableau de bord
+ * ==============================================
+ * ADMIN DASHBOARD - MAIN PAGE
+ * Cabinet d'Avocats
+ * ==============================================
  */
 
-// Démarrer la session
-session_start();
-
-// Définir le chemin de base
-define('ELMD_ROOT', __DIR__);
-
-// Titre de la page
-$pageTitle = 'Tableau de bord | ELMD - Cabinet d\'Avocats';
-
-// Récupérer les infos utilisateur (valeurs par défaut pour le design)
-$userId = $_SESSION['user_id'] ?? 1;
-$userName = $_SESSION['user_name'] ?? 'Laurent Mbako';
-$userEmail = $_SESSION['user_email'] ?? 'laurentmbako@etudelmbako.com';
-$userRole = $_SESSION['user_role'] ?? 'admin';
-$userAvatar = $_SESSION['user_avatar'] ?? 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80';
-
-// Déterminer le type de sidebar selon le rôle
-$isAdmin = ($userRole === 'admin');
-$isLawyer = ($userRole === 'lawyer');
-
-// Données simulées pour le tableau de bord (à remplacer par des requêtes en base de données)
-$stats = [
-    'dossiers' => 12,
-    'rdv_aujourdhui' => 3,
-    'messages_non_lus' => 5,
-    'taches_en_cours' => 8
+// Données statiques pour démonstration
+$stats = ['users' => 156, 'lawyers' => 24, 'cases' => 89, 'pending' => 12];
+$recentActivity = [
+    ['title' => 'Nouveau client', 'description' => 'Maître Diallo a ajouté un client', 'time' => 'Il y a 5 min', 'icon' => 'fa-user-plus'],
+    ['title' => 'Document uploadé', 'description' => 'Nouveau contrat ajouté', 'time' => 'Il y a 23 min', 'icon' => 'fa-file-upload'],
 ];
-
-$rendezVous = [
-    ['heure' => '09:00', 'client' => 'Pierre Moreau', 'type' => 'Consultation initiale', 'statut' => 'confirmed'],
-    ['heure' => '11:30', 'client' => 'Claire Dubois', 'type' => 'Révision contrat', 'statut' => 'confirmed'],
-    ['heure' => '14:00', 'client' => 'Marc Lefebvre', 'type' => 'Audience tribunal', 'statut' => 'pending']
-];
-
-$taches = [
-    ['titre' => 'Préparer dossier Moreau', 'deadline' => 'Aujourd\'hui', 'priorite' => 'high'],
-    ['titre' => 'Réviser contrat TechVision', 'deadline' => 'Demain', 'priorite' => 'medium'],
-    ['titre' => 'Appeler client Dubois', 'deadline' => 'Cette semaine', 'priorite' => 'low']
-];
-
-$dernieresActivites = [
-    ['action' => 'Nouveau message de Pierre Moreau', 'temps' => 'Il y a 15 min'],
-    ['action' => 'Rendez-vous confirmé avec Claire Dubois', 'temps' => 'Il y a 1h'],
-    ['action' => 'Document ajouté au dossier Lefebvre', 'temps' => 'Il y a 3h'],
-    ['action' => 'Tâche complétée: Réviser mémoire', 'temps' => 'Hier']
-];
+$pendingApplications = [];
 ?>
+
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($pageTitle) ?></title>
+    <title>Dashboard Administrateur | Cabinet d'Avocats</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
-    <div class="dashboard-wrapper">
-        <!-- Sidebar -->
-        <?php if ($isAdmin): ?>
-            <?php include dirname(__DIR__) . '/views/layouts/sidebar-admin.php'; ?>
-        <?php else: ?>
-            <?php include dirname(__DIR__) . '/views/layouts/sidebar-lawyer.php'; ?>
-        <?php endif; ?>
-
-        <!-- Main Content -->
-        <main class="dashboard-main">
-            <!-- Header -->
-            <header class="dashboard-header">
+<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null }">
+    
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" :class="{ 'active': sidebarOpen }" @click="sidebarOpen = false"></div>
+    
+    <div class="admin-wrapper">
+        <!-- SIDEBAR -->
+        <?php include __DIR__ . '/../views/layouts/sidebar-admin.php'; ?>
+        
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="admin-header">
                 <div class="header-left">
-                    <h1>Bienvenue, <?= htmlspecialchars(explode(' ', $userName)[0]) ?></h1>
-                    <p class="header-subtitle">Voici un aperçu de votre activité</p>
-                </div>
-                <div class="header-right">
-                    <div class="header-date">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6"/>
-                            <line x1="8" y1="2" x2="8" y2="6"/>
-                            <line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                        <span><?= date('d/m/Y') ?></span>
+                    <button class="header-toggle" @click="document.dispatchEvent(new CustomEvent('sidebar:toggle'))">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1 class="header-title">Tableau de Bord</h1>
+                        <nav class="header-breadcrumb">
+                            <a href="#">Accueil</a>
+                            <span>/</span>
+                            <span>Dashboard</span>
+                        </nav>
                     </div>
-                    <a href="deconnexion.php" class="btn-logout">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                            <polyline points="16 17 21 12 16 7"/>
-                            <line x1="21" y1="12" x2="9" y2="12"/>
-                        </svg>
-                        Déconnexion
-                    </a>
+                </div>
+                
+                <div class="header-search">
+                    <i class="fas fa-search header-search-icon"></i>
+                    <input type="text" class="header-search-input" placeholder="Rechercher...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="header-action" @click="activeModal = 'notifications'; modalOpen = true">
+                        <i class="fas fa-bell"></i>
+                        <span class="header-action-badge">5</span>
+                    </button>
+                    <button class="header-action">
+                        <i class="fas fa-envelope"></i>
+                        <span class="header-action-badge">3</span>
+                    </button>
+                    <button class="header-action">
+                        <i class="fas fa-cog"></i>
+                    </button>
                 </div>
             </header>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon stat-icon-blue">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <span class="stat-number"><?= $stats['dossiers'] ?></span>
-                        <span class="stat-label">Dossiers actifs</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon stat-icon-green">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6"/>
-                            <line x1="8" y1="2" x2="8" y2="6"/>
-                            <line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <span class="stat-number"><?= $stats['rdv_aujourdhui'] ?></span>
-                        <span class="stat-label">Rendez-vous aujourd'hui</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon stat-icon-orange">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <span class="stat-number"><?= $stats['messages_non_lus'] ?></span>
-                        <span class="stat-label">Messages non lus</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon stat-icon-purple">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11l3 3L22 4"/>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                        </svg>
-                    </div>
-                    <div class="stat-content">
-                        <span class="stat-number"><?= $stats['taches_en_cours'] ?></span>
-                        <span class="stat-label">Tâches en cours</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Grid -->
-            <div class="content-grid">
-                <!-- Rendez-vous du jour -->
-                <div class="card rendez-vous-card">
-                    <div class="card-header">
-                        <h2>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                            Rendez-vous du jour
-                        </h2>
-                        <a href="#" class="card-link">Voir tout</a>
-                    </div>
-                    <div class="card-body">
-                        <?php foreach ($rendezVous as $rdv): ?>
-                        <div class="rdv-item <?= $rdv['statut'] ?>">
-                            <div class="rdv-time"><?= $rdv['heure'] ?></div>
-                            <div class="rdv-details">
-                                <span class="rdv-client"><?= htmlspecialchars($rdv['client']) ?></span>
-                                <span class="rdv-type"><?= htmlspecialchars($rdv['type']) ?></span>
-                            </div>
-                            <span class="rdv-status <?= $rdv['statut'] ?>">
-                                <?= $rdv['statut'] === 'confirmed' ? 'Confirmé' : 'En attente' ?>
-                            </span>
+            
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                <!-- STATS CARDS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-icon icon-gold">
+                            <i class="fas fa-users"></i>
                         </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- Tâches à faire -->
-                <div class="card tasks-card">
-                    <div class="card-header">
-                        <h2>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 11l3 3L22 4"/>
-                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                            </svg>
-                            Tâches à faire
-                        </h2>
-                        <a href="#" class="card-link">Voir tout</a>
-                    </div>
-                    <div class="card-body">
-                        <?php foreach ($taches as $tache): ?>
-                        <div class="task-item priority-<?= $tache['priorite'] ?>">
-                            <label class="task-checkbox">
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <div class="task-details">
-                                <span class="task-title"><?= htmlspecialchars($tache['titre']) ?></span>
-                                <span class="task-deadline">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <polyline points="12 6 12 12 16 14"/>
-                                    </svg>
-                                    <?= htmlspecialchars($tache['deadline']) ?>
-                                </span>
-                            </div>
-                            <span class="task-priority <?= $tache['priorite'] ?>">
-                                <?= $tache['priorite'] === 'high' ? 'Urgent' : ($tache['priorite'] === 'medium' ? 'Normal' : 'Bas') ?>
-                            </span>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- Activités récentes -->
-                <div class="card activities-card">
-                    <div class="card-header">
-                        <h2>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                            </svg>
-                            Activités récentes
-                        </h2>
-                    </div>
-                    <div class="card-body">
-                        <?php foreach ($dernieresActivites as $activite): ?>
-                        <div class="activity-item">
-                            <div class="activity-dot"></div>
-                            <div class="activity-content">
-                                <span class="activity-action"><?= htmlspecialchars($activite['action']) ?></span>
-                                <span class="activity-time"><?= htmlspecialchars($activite['temps']) ?></span>
+                        <div class="stat-card-content">
+                            <span class="stat-card-label">Utilisateurs</span>
+                            <span class="stat-card-value" data-count="156"><?= $stats['users'] ?? 156 ?></span>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% ce mois</span>
                             </div>
                         </div>
-                        <?php endforeach; ?>
+                        <div class="stat-card-bg">
+                            <i class="fas fa-users fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-icon icon-success">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <span class="stat-card-label">Avocats</span>
+                            <span class="stat-card-value" data-count="24"><?= $stats['lawyers'] ?? 24 ?></span>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+3 ce mois</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-bg">
+                            <i class="fas fa-gavel fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-icon icon-info">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <span class="stat-card-label">Dossiers</span>
+                            <span class="stat-card-value" data-count="89"><?= $stats['cases'] ?? 89 ?></span>
+                            <div class="stat-card-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8% ce mois</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-bg">
+                            <i class="fas fa-file-alt fa-3x"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-icon icon-warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-card-content">
+                            <span class="stat-card-label">En Attente</span>
+                            <span class="stat-card-value" data-count="12"><?= $stats['pending'] ?? 12 ?></span>
+                            <div class="stat-card-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-5% cette semaine</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-bg">
+                            <i class="fas fa-clock fa-3x"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONTENT GRID -->
+                <div class="content-grid">
+                    <!-- MAIN COLUMN -->
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <!-- RECENT ACTIVITY -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <i class="fas fa-history"></i>
+                                    Activité Récente
+                                </h2>
+                                <button class="btn btn-sm btn-secondary" @click="activeModal = 'activity'; modalOpen = true">
+                                    Voir Tout
+                                </button>
+                            </div>
+                            <div class="card-body" style="padding: 0;">
+                                <div class="activity-list">
+                                    <?php foreach ($recentActivity as $activity): ?>
+                                    <div class="activity-item">
+                                        <div class="activity-icon <?= $activity['icon_class'] ?? 'icon-gold' ?>">
+                                            <i class="<?= $activity['icon'] ?? 'fas fa-circle' ?>"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h4><?= htmlspecialchars($activity['title']) ?></h4>
+                                            <p><?= htmlspecialchars($activity['description']) ?></p>
+                                        </div>
+                                        <span class="activity-time"><?= htmlspecialchars($activity['time']) ?></span>
+                                    </div>
+                                    <?php endforeach; ?>
+                                    
+                                    <!-- Sample Data -->
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h4>Nouveau client enregistré</h4>
+                                            <p>Maître Diallo a ajouté un nouveau client pour le dossier #1245</p>
+                                        </div>
+                                        <span class="activity-time">Il y a 5 min</span>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
+                                            <i class="fas fa-file-upload"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h4>Document téléchargé</h4>
+                                            <p>Un nouveau contrat a été uploadé dans le dossier fiscal</p>
+                                        </div>
+                                        <span class="activity-time">Il y a 23 min</span>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h4>Rendez-vous confirmé</h4>
+                                            <p>Consultation prévue avec le client Mwamba pour le 20 Mai</p>
+                                        </div>
+                                        <span class="activity-time">Il y a 1h</span>
+                                    </div>
+                                    
+                                    <div class="activity-item">
+                                        <div class="activity-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <h4>Délai approaching</h4>
+                                            <p>Échéance proche pour le dossier #892 - Droit des sociétés</p>
+                                        </div>
+                                        <span class="activity-time">Il y a 2h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- PENDING APPLICATIONS -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <i class="fas fa-inbox"></i>
+                                    Candidatures en Attente
+                                </h2>
+                                <a href="applications.php" class="btn btn-sm btn-secondary">
+                                    Voir Toutes
+                                </a>
+                            </div>
+                            <div class="card-body" style="padding: 0;">
+                                <div class="table-container">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Candidat</th>
+                                                <th>Université</th>
+                                                <th>Date</th>
+                                                <th>Statut</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="user-info">
+                                                        <div class="avatar">JM</div>
+                                                        <div class="user-details">
+                                                            <h4>Jean Mukamba</h4>
+                                                            <span>Université de Kinshasa</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Université de Kinshasa</td>
+                                                <td>15 Mai 2026</td>
+                                                <td>
+                                                    <span class="badge badge-warning">En attente</span>
+                                                </td>
+                                                <td>
+                                                    <div class="flex gap-sm">
+                                                        <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview-application'; modalOpen = true" title="Voir">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success" title="Accepter">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger" title="Refuser">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="user-info">
+                                                        <div class="avatar">AN</div>
+                                                        <div class="user-details">
+                                                            <h4>Aminata Ngalulu</h4>
+                                                            <span>Université Catholique</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Université Catholique</td>
+                                                <td>14 Mai 2026</td>
+                                                <td>
+                                                    <span class="badge badge-warning">En attente</span>
+                                                </td>
+                                                <td>
+                                                    <div class="flex gap-sm">
+                                                        <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview-application'; modalOpen = true" title="Voir">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success" title="Accepter">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger" title="Refuser">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="user-info">
+                                                        <div class="avatar">PM</div>
+                                                        <div class="user-details">
+                                                            <h4>Pierre Mbuyi</h4>
+                                                            <span>Université Protestante</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>Université Protestante</td>
+                                                <td>13 Mai 2026</td>
+                                                <td>
+                                                    <span class="badge badge-warning">En attente</span>
+                                                </td>
+                                                <td>
+                                                    <div class="flex gap-sm">
+                                                        <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview-application'; modalOpen = true" title="Voir">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-success" title="Accepter">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-danger" title="Refuser">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SIDEBAR COLUMN -->
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <!-- QUICK ACTIONS -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <i class="fas fa-bolt"></i>
+                                    Actions Rapides
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="quick-actions">
+                                    <a href="users.php" class="quick-action">
+                                        <div class="quick-action-icon">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <span>Ajouter Utilisateur</span>
+                                    </a>
+                                    <a href="lawyers.php" class="quick-action">
+                                        <div class="quick-action-icon">
+                                            <i class="fas fa-user-tie"></i>
+                                        </div>
+                                        <span>Nouvel Avocat</span>
+                                    </a>
+                                    <a href="publications.php" class="quick-action">
+                                        <div class="quick-action-icon">
+                                            <i class="fas fa-newspaper"></i>
+                                        </div>
+                                        <span>Publication</span>
+                                    </a>
+                                    <a href="documents.php" class="quick-action">
+                                        <div class="quick-action-icon">
+                                            <i class="fas fa-upload"></i>
+                                        </div>
+                                        <span>Upload Doc</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- QUICK NOTIFICATIONS -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <i class="fas fa-bell"></i>
+                                    Notifications
+                                </h2>
+                                <button class="btn btn-sm btn-ghost" @click="activeModal = 'notifications'; modalOpen = true">
+                                    Tout Voir
+                                </button>
+                            </div>
+                            <div class="card-body" style="padding: 0;">
+                                <div class="notification-list">
+                                    <div class="notification-item unread">
+                                        <div class="notification-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <h4>Dossier urgent</h4>
+                                            <p>Le dossier #1457 nécessite votre attention immédiate</p>
+                                            <span class="notification-time">Il y a 10 min</span>
+                                        </div>
+                                    </div>
+                                    <div class="notification-item unread">
+                                        <div class="notification-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <h4>Nouveau rendez-vous</h4>
+                                            <p>Rendez-vous prévu demain à 10h avec Maître Kabongo</p>
+                                            <span class="notification-time">Il y a 1h</span>
+                                        </div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <h4>Candidature acceptée</h4>
+                                            <p>La candidature de Jean Mukamba a été traitée</p>
+                                            <span class="notification-time">Il y a 3h</span>
+                                        </div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
+                                            <i class="fas fa-file-signature"></i>
+                                        </div>
+                                        <div class="notification-content">
+                                            <h4>Document signé</h4>
+                                            <p>Le contrat avec Solar Corp a été signé numériquement</p>
+                                            <span class="notification-time">Il y a 5h</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </main>
     </div>
-
-    <script type="module" src="../js/theme.js"></script>
+    
+    <!-- MODAL OVERLAY -->
+    <div class="modal-overlay" :class="{ 'active': modalOpen }" @click="modalOpen = false"></div>
+    
+    <!-- NOTIFICATIONS MODAL -->
+    <div class="modal modal-lg" :class="{ 'active': activeModal === 'notifications' && modalOpen }">
+        <div class="modal-header">
+            <div class="modal-header-content">
+                <div class="modal-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div>
+                    <h3 class="modal-title">Toutes les Notifications</h3>
+                    <p class="modal-subtitle">Vous avez 5 notifications non lues</p>
+                </div>
+            </div>
+            <button class="modal-close" @click="modalOpen = false; activeModal = null">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body" style="padding: 0;">
+            <div class="notification-list">
+                <div class="notification-item unread">
+                    <div class="notification-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Dossier urgent - Action requise</h4>
+                        <p>Le dossier #1457 en Droit des Sociétés nécessite une révision immédiate. Le client attend une réponse pour demain.</p>
+                        <span class="notification-time">Il y a 10 min</span>
+                    </div>
+                </div>
+                <div class="notification-item unread">
+                    <div class="notification-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Nouveau rendez-vous confirmé</h4>
+                        <p>Rendez-vous prévu demain à 10h avec Maître Kabongo pour une consultation en Droit Fiscal.</p>
+                        <span class="notification-time">Il y a 1h</span>
+                    </div>
+                </div>
+                <div class="notification-item unread">
+                    <div class="notification-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Nouvelle candidature reçue</h4>
+                        <p>Jean Mukamba a postulé pour le poste de stagiaire en Droit des Affaires.</p>
+                        <span class="notification-time">Il y a 2h</span>
+                    </div>
+                </div>
+                <div class="notification-item unread">
+                    <div class="notification-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Candidature acceptée</h4>
+                        <p>La candidature de Aminata Ngalulu a été acceptée et envoyée à Maître Lukoji.</p>
+                        <span class="notification-time">Il y a 3h</span>
+                    </div>
+                </div>
+                <div class="notification-item unread">
+                    <div class="notification-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>Rappel d'échéance</h4>
+                        <p>Le dossier #892 arrive à échéance dans 3 jours. Merci de procéder aux dernières vérifications.</p>
+                        <span class="notification-time">Il y a 5h</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary">Tout marquer comme lu</button>
+            <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
+        </div>
+    </div>
+    
+    <!-- ACTIVITY MODAL -->
+    <div class="modal modal-lg" :class="{ 'active': activeModal === 'activity' && modalOpen }">
+        <div class="modal-header">
+            <div class="modal-header-content">
+                <div class="modal-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div>
+                    <h3 class="modal-title">Activité Récente</h3>
+                    <p class="modal-subtitle">Historique complet des 30 derniers jours</p>
+                </div>
+            </div>
+            <button class="modal-close" @click="modalOpen = false; activeModal = null">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Nouveau client enregistré</h4>
+                        <p>Maître Diallo a ajouté un nouveau client pour le dossier #1245</p>
+                    </div>
+                    <span class="activity-time">Il y a 5 min</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Document téléchargé</h4>
+                        <p>Un nouveau contrat a été uploadé dans le dossier fiscal</p>
+                    </div>
+                    <span class="activity-time">Il y a 23 min</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Rendez-vous confirmé</h4>
+                        <p>Consultation prévue avec le client Mwamba pour le 20 Mai</p>
+                    </div>
+                    <span class="activity-time">Il y a 1h</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Délai approaching</h4>
+                        <p>Échéance proche pour le dossier #892 - Droit des sociétés</p>
+                    </div>
+                    <span class="activity-time">Il y a 2h</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h4>Dossier fermé</h4>
+                        <p>Le dossier #756 en Droit du Travail a été finalisé avec succès</p>
+                    </div>
+                    <span class="activity-time">Il y a 4h</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary">Exporter en PDF</button>
+            <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
+        </div>
+    </div>
+    
+    <!-- STATS DETAILS MODAL -->
+    <div class="modal" :class="{ 'active': activeModal === 'stats-details' && modalOpen }">
+        <div class="modal-header">
+            <div class="modal-header-content">
+                <div class="modal-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <div>
+                    <h3 class="modal-title">Statistiques Détaillées</h3>
+                    <p class="modal-subtitle">Analyse complète de l'activité</p>
+                </div>
+            </div>
+            <button class="modal-close" @click="modalOpen = false; activeModal = null">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: rgba(212, 175, 55, 0.05); padding: 1.5rem; border-radius: 0.75rem; text-align: center;">
+                    <h4 style="font-size: 2rem; font-weight: 700; color: var(--gold-primary); font-family: 'Playfair Display', serif;">156</h4>
+                    <p style="color: var(--gray-400); font-size: 0.875rem;">Utilisateurs Totaux</p>
+                </div>
+                <div style="background: rgba(34, 197, 94, 0.05); padding: 1.5rem; border-radius: 0.75rem; text-align: center;">
+                    <h4 style="font-size: 2rem; font-weight: 700; color: var(--success); font-family: 'Playfair Display', serif;">24</h4>
+                    <p style="color: var(--gray-400); font-size: 0.875rem;">Avocats Actifs</p>
+                </div>
+                <div style="background: rgba(59, 130, 246, 0.05); padding: 1.5rem; border-radius: 0.75rem; text-align: center;">
+                    <h4 style="font-size: 2rem; font-weight: 700; color: var(--info); font-family: 'Playfair Display', serif;">89</h4>
+                    <p style="color: var(--gray-400); font-size: 0.875rem;">Dossiers Totaux</p>
+                </div>
+                <div style="background: rgba(245, 158, 11, 0.05); padding: 1.5rem; border-radius: 0.75rem; text-align: center;">
+                    <h4 style="font-size: 2rem; font-weight: 700; color: var(--warning); font-family: 'Playfair Display', serif;">12</h4>
+                    <p style="color: var(--gray-400); font-size: 0.875rem;">En Attente</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <h4 style="color: var(--white); margin-bottom: 1rem;">Répartition par Domaine</h4>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <div class="flex justify-between mb-sm">
+                            <span style="font-size: 0.875rem; color: var(--gray-400);">Droit des Affaires</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--white);">35%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-sm">
+                            <span style="font-size: 0.875rem; color: var(--gray-400);">Droit Fiscal</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--white);">25%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-sm">
+                            <span style="font-size: 0.875rem; color: var(--gray-400);">Droit du Travail</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--white);">20%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-sm">
+                            <span style="font-size: 0.875rem; color: var(--gray-400);">Droit Minier</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--white);">12%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 12%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-sm">
+                            <span style="font-size: 0.875rem; color: var(--gray-400);">Autres</span>
+                            <span style="font-size: 0.875rem; font-weight: 600; color: var(--white);">8%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 8%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary">
+                <i class="fas fa-download"></i> Exporter
+            </button>
+            <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
+        </div>
+    </div>
+    
+    <!-- PREVIEW APPLICATION MODAL -->
+    <div class="modal modal-lg" :class="{ 'active': activeModal === 'preview-application' && modalOpen }">
+        <div class="modal-header">
+            <div class="modal-header-content">
+                <div class="modal-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div>
+                    <h3 class="modal-title">Candidature - Jean Mukamba</h3>
+                    <p class="modal-subtitle">Université de Kinshasa - Master II en Droit des Affaires</p>
+                </div>
+            </div>
+            <button class="modal-close" @click="modalOpen = false; activeModal = null">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                <div>
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <div class="avatar avatar-xl" style="margin: 0 auto 1rem;">JM</div>
+                        <h4 style="color: var(--white); font-size: 1.125rem;">Jean Mukamba</h4>
+                        <p style="color: var(--gray-500); font-size: 0.875rem;">Candidat Stagiaire</p>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div>
+                            <p style="color: var(--gray-500); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Email</p>
+                            <p style="color: var(--white); font-size: 0.875rem;">jean.mukamba@student.unikin.ac.cd</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--gray-500); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Téléphone</p>
+                            <p style="color: var(--white); font-size: 0.875rem;">+243 81 234 5678</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--gray-500); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Date de Candidature</p>
+                            <p style="color: var(--white); font-size: 0.875rem;">15 Mai 2026</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--white); margin-bottom: 0.5rem;">Lettre de Motivation</h4>
+                        <p style="color: var(--gray-400); font-size: 0.875rem; line-height: 1.7;">
+                            Madame, Monsieur,<br><br>
+                            Ayant terminé ma formation en Master II en Droit des Affaires à l'Université de Kinshasa, 
+                            je suis vivement intéressé par une opportunité de stage au sein de votre cabinet reconnu pour son excellence en conseil juridique.<br><br>
+                            Mon mémoire de fin d'études portait sur les aspects juridiques des fusions-acquisitions en République Démocratique du Congo, 
+                            ce qui m'a permis de développer une solide compréhension des défis réglementaires auxquels font face les entreprises locales.<br><br>
+                            Je suis convaincu que mon profil correspond aux attentes de votre cabinet et serais honoré de contribuer à vos activités.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--white); margin-bottom: 0.5rem;">Documents Attachés</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
+                                <i class="fas fa-file-pdf" style="color: var(--danger);"></i>
+                                <span style="color: var(--gray-300); font-size: 0.875rem; flex: 1;">CV_JeanMukamba.pdf</span>
+                                <button class="btn btn-sm btn-ghost"><i class="fas fa-download"></i></button>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
+                                <i class="fas fa-file-pdf" style="color: var(--danger);"></i>
+                                <span style="color: var(--gray-300); font-size: 0.875rem; flex: 1;">Diplomes_MASTER.pdf</span>
+                                <button class="btn btn-sm btn-ghost"><i class="fas fa-download"></i></button>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
+                                <i class="fas fa-file-pdf" style="color: var(--danger);"></i>
+                                <span style="color: var(--gray-300); font-size: 0.875rem; flex: 1;">Lettre_Motivation.pdf</span>
+                                <button class="btn btn-sm btn-ghost"><i class="fas fa-download"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger">
+                <i class="fas fa-times"></i> Refuser
+            </button>
+            <button class="btn btn-success">
+                <i class="fas fa-check"></i> Accepter
+            </button>
+        </div>
+    </div>
+    
     <script>
-        // Toggle sidebar
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebar = document.querySelector('.sidebar-admin, .sidebar-lawyer');
-        
-        if (sidebarToggle && sidebar) {
-            sidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('collapsed');
-                document.body.classList.toggle('sidebar-collapsed');
+        // Animated counters
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.stat-card-value[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                updateCounter();
             });
-        }
-
-        // Animation on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
+        });
+        
+        // Sidebar toggle for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992) {
+                    sidebar.classList.remove('active');
                 }
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        });
     </script>
+    
+    <!-- Admin Dashboard JavaScript -->
+    <script src="../js/dash_admin.js"></script>
 </body>
 </html>
