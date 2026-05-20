@@ -341,10 +341,7 @@ $pendingApplications = [];
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- SIDEBAR COLUMN -->
-                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                   
                         <!-- QUICK ACTIONS -->
                         <div class="card">
                             <div class="card-header">
