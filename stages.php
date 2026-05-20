@@ -747,41 +747,9 @@
                                     <span class="form-error"></span>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="department">Département souhaité *</label>
-                                    <select id="department" name="department" required>
-                                        <option value="">Sélectionnez un département</option>
-                                        <option value="ma">M&A / Private Equity</option>
-                                        <option value="fiscal">Fiscalité Internationale</option>
-                                        <option value="arbitrage">Arbitrage International</option>
-                                        <option value="pi">Propriété Intellectuelle / IT</option>
-                                    </select>
-                                    <span class="form-error"></span>
-                                </div>
                             </div>
                         </div>
 
-                        <!-- Motivation Section -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                <span class="section-icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                    </svg>
-                                </span>
-                                Lettre de Motivation
-                            </h3>
-                            
-                            <div class="form-group full-width">
-                                <label for="motivation">Présentez votre motivation *</label>
-                                <textarea id="motivation" name="motivation" rows="6" required 
-                                    placeholder="Expliquez pourquoi vous souhaitez rejoindre notre cabinet et ce que vous pouvez apporter à notre équipe..."></textarea>
-                                <div class="textarea-counter">
-                                    <span id="charCount">0</span> / 2000 caractères
-                                </div>
-                                <span class="form-error"></span>
-                            </div>
-                        </div>
 
                         <!-- Documents Upload Section -->
                         <div class="form-section">

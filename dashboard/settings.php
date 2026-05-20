@@ -12,6 +12,7 @@ $pageTitle = 'Paramètres';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="../js/theme.js"></script>
 </head>
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null }">
     <div class="admin-wrapper">
@@ -37,7 +38,36 @@ $pageTitle = 'Paramètres';
                         <div class="card-header"><h2 class="card-title"><i class="fas fa-key"></i> Sécurité</h2></div>
                         <div class="card-body">
                             <button class="settings-btn hover-lift" @click="activeModal = 'password'; modalOpen = true"><i class="fas fa-lock"></i><div><h3>Changer Mot de Passe</h3><p>Modifier votre mot de passe</p></div></button>
-                            <button class="settings-btn hover-lift" @click="activeModal = '2fa'; modalOpen = true"><i class="fas fa-shield-alt"></i><div><h3>Authentification 2FA</h3><p>Activer la double authentification</p></div></button>
+                        </div>
+                    </div>
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <div class="card-header"><h2 class="card-title"><i class="fas fa-palette"></i> Apparence</h2></div>
+                        <div class="card-body">
+                            <div class="theme-selector">
+                                <p class="theme-label">Thème du Dashboard</p>
+                                <div class="theme-options">
+                                    <button class="theme-btn" data-theme-btn="dark" title="Mode Sombre">
+                                        <i class="fas fa-moon"></i>
+                                        <span>Sombre</span>
+                                    </button>
+                                    <button class="theme-btn" data-theme-btn="light" title="Mode Clair">
+                                        <i class="fas fa-sun"></i>
+                                        <span>Clair</span>
+                                    </button>
+                                    <button class="theme-btn" data-theme-btn="royal" title="Mode Royal">
+                                        <i class="fas fa-crown"></i>
+                                        <span>Royal</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group mt-lg">
+                                <label class="form-label">Taille de police</label>
+                                <div class="font-size-options">
+                                    <button class="font-btn" onclick="document.body.style.fontSize='14px'">A-</button>
+                                    <button class="font-btn active" onclick="document.body.style.fontSize='16px'">A</button>
+                                    <button class="font-btn" onclick="document.body.style.fontSize='18px'">A+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,7 +83,21 @@ $pageTitle = 'Paramètres';
             <div class="form-group"><label class="form-label">Nouveau</label><input type="password" class="form-input" placeholder="Nouveau mot de passe"></div>
             <div class="form-group"><label class="form-label">Confirmer</label><input type="password" class="form-input" placeholder="Confirmer le mot de passe"></div>
         </div>
-        <div class="modal-footer"><button class="btn btn-secondary" @click="modalOpen = false">Annuler</button><button class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button></div>
+    <div class="modal-footer"><button class="btn btn-secondary" @click="modalOpen = false">Annuler</button><button class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button></div>
     </div>
+
+    <script>
+        // Wait for theme.js to initialize ThemeManager
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme is already initialized by theme.js
+            // Just add font size functionality
+            document.querySelectorAll('.font-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -11,9 +11,9 @@ $dashboardPath = '/dashboard';
 <!-- Sidebar Admin Premium -->
 <aside class="sidebar" :class="{ 'collapsed': sidebarOpen }">
     <div class="sidebar-header">
-        <a href="<?= $dashboardPath ?>/dashboard.php" class="sidebar-logo">
-            <span class="logo-icon"><i class="fas fa-balance-scale"></i></span>
-            <span class="logo-text">Cabinet</span>
+        <a href="<?= $dashboardPath ?>/dashboard.php" class="sidebar-logo" style="display: flex; align-items: center; gap: 10px;">
+            <span class="logo-icon" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--gold-gradient); border-radius: 8px; font-size: 1.2rem;"><i class="fas fa-balance-scale"></i></span>
+            <span class="logo-text" style="font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--white);">Cabinet</span>
         </a>
     </div>
 
@@ -88,10 +88,10 @@ $dashboardPath = '/dashboard';
     </nav>
 
     <div class="sidebar-footer">
-        <div class="sidebar-user">
-            <div class="sidebar-user-avatar">AD</div>
-            <div class="sidebar-user-info">
-                <span class="sidebar-user-name">Administrateur</span>
+        <div class="sidebar-user-row">
+            <div class="sidebar-user-avatar">RN</div>
+            <div class="sidebar-user-info-row">
+                <span class="sidebar-user-name">Randy N</span>
                 <span class="sidebar-user-role">Admin Système</span>
             </div>
         </div>

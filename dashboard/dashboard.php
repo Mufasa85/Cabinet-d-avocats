@@ -25,6 +25,7 @@ $pendingApplications = [];
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
+    <script src="../js/theme.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null }">
@@ -84,7 +85,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">Utilisateurs</span>
-                            <span class="stat-card-value" data-count="156"><?= $stats['users'] ?? 156 ?></span>
+                            <span class="stat-card-value" data-count="156"><?= $stats['users'] ?? 0 ?></span>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
                                 <span>+12% ce mois</span>
@@ -101,7 +102,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">Avocats</span>
-                            <span class="stat-card-value" data-count="24"><?= $stats['lawyers'] ?? 24 ?></span>
+                            <span class="stat-card-value" data-count="24"><?= $stats['lawyers'] ?? 0 ?></span>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
                                 <span>+3 ce mois</span>
@@ -118,7 +119,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">Dossiers</span>
-                            <span class="stat-card-value" data-count="89"><?= $stats['cases'] ?? 89 ?></span>
+                            <span class="stat-card-value" data-count="89"><?= $stats['cases'] ?? 0 ?></span>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
                                 <span>+8% ce mois</span>
@@ -135,7 +136,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">En Attente</span>
-                            <span class="stat-card-value" data-count="12"><?= $stats['pending'] ?? 12 ?></span>
+                            <span class="stat-card-value" data-count="12"><?= $stats['pending'] ?? 0 ?></span>
                             <div class="stat-card-change negative">
                                 <i class="fas fa-arrow-down"></i>
                                 <span>-5% cette semaine</span>
@@ -150,7 +151,7 @@ $pendingApplications = [];
                 <!-- CONTENT GRID -->
                 <div class="content-grid">
                     <!-- MAIN COLUMN -->
-                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    <div style="display: flex; flex-direction: column; gap: 2rem; width: 100%;">
                         <!-- RECENT ACTIVITY -->
                         <div class="card">
                             <div class="card-header">

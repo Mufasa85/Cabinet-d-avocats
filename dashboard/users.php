@@ -28,6 +28,7 @@ $users = [
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
+    <script src="../js/theme.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedUser: null }">
@@ -143,14 +144,7 @@ $users = [
                     </div>
                     <div class="card-footer">
                         <div class="flex justify-between items-center">
-                            <span style="color: var(--gray-500); font-size: 0.875rem;">Affichage de 1 à 8 sur 156 utilisateurs</span>
-                            <div class="pagination">
-                                <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
-                                <button class="pagination-btn active">1</button>
-                                <button class="pagination-btn">2</button>
-                                <button class="pagination-btn">3</button>
-                                <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
-                            </div>
+                            <span style="color: var(--gray-500); font-size: 0.875rem;">Affichage des utilisateurs</span>
                         </div>
                     </div>
                 </div>
