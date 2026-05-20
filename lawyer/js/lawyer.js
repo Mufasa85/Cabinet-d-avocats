@@ -90,13 +90,21 @@ const initThemeSwitcher = () => {
         // Apply theme-specific colors
         if (theme === 'light') {
             html.style.setProperty('--primary-black', '#FFFFFF');
-            html.style.setProperty('--secondary-black', '#F5F5F5');
+            html.style.setProperty('--secondary-black', '#F8F8F8');
+            html.style.setProperty('--white', '#171717');
+            html.style.setProperty('--modal-bg', 'rgba(250, 250, 250, 0.98)');
+            html.style.setProperty('--modal-overlay', 'rgba(0, 0, 0, 0.5)');
         } else if (theme === 'royal') {
             html.style.setProperty('--primary-black', '#0F172A');
             html.style.setProperty('--secondary-black', '#1E293B');
+            html.style.setProperty('--modal-bg', 'rgba(30, 41, 59, 0.98)');
+            html.style.setProperty('--modal-overlay', 'rgba(15, 23, 42, 0.7)');
         } else {
             html.style.setProperty('--primary-black', '#0A0A0A');
             html.style.setProperty('--secondary-black', '#141414');
+            html.style.setProperty('--white', '#FFFFFF');
+            html.style.setProperty('--modal-bg', 'rgba(20, 20, 20, 0.98)');
+            html.style.setProperty('--modal-overlay', 'rgba(0, 0, 0, 0.7)');
         }
     }
 };

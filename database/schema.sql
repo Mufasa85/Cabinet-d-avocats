@@ -128,7 +128,6 @@ ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-
 -- =====================================================
 -- ARTICLES
 -- =====================================================
@@ -267,8 +266,6 @@ statut ENUM(
 'refuse'
 )
 DEFAULT 'en_attente',
-
-commentaire_admin TEXT NULL,
 
 created_at TIMESTAMP
 DEFAULT CURRENT_TIMESTAMP,
