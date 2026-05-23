@@ -9,49 +9,49 @@ use Override;
 
     public function index()
     {
-      
-    }
-     public function dashboard()
-     {
         View::view('admin.dashboard');
-     }
-
-     public function users()
+    }
+  
+    public function users()
+    {
+       View::view('admin.users');
+    }
+    public function settings()
+    {
+       View::view('admin.settings');
+    }
+    public function reports()
+    {
+       View::view('admin.reports');
+    }
+    public function analytics()
+    {
+       View::view('admin.analytics');
+    }
+    public function notifications()
+    {
+       View::view('admin.notifications');
+    }
+    public function lawyers()
+    {
+       View::view('admin.lawyers');
+    }
+    public function publications()
+    {
+       View::view('admin.publications');
+    }
+    public function contacts()
+    {
+       View::view('admin.contacts');
+    }
+     public function documents()
      {
-        View::view('admin.users');
+        View::view('admin.documents');
      }
-     public function settings()
+     public function candidatures()
      {
-        View::view('admin.settings');
+        View::view('admin.candidatures');
      }
-     public function reports()
-     {
-        View::view('admin.reports');
-     }
-     public function analytics()
-     {
-        View::view('admin.analytics');
-     }
-     public function notifications()
-     {
-        View::view('admin.notifications');
-     }
-     public function profile()
-     {
-        View::view('admin.profile');
-     }
-     public function publications()
-     {
-        View::view('admin.publications');
-     }
-     public function contacts()
-     {
-        View::view('admin.contacts');
-     }
-      public function documents()
-      {
-         View::view('admin.documents');
-      }
 
  }
 ?>
