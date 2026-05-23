@@ -1,11 +1,11 @@
 {
-    "name": "hnc450/framework",
+    "name": "cabinets/avocat",
     "type": "framework",
-    "description": "PHP framework project",
+    "description": "A simple web application ",
     "authors": [
         {
-            "name":"Henock",
-            "email":"henoctumonakiese@gmail.com"
+            "name":"rhandy",
+            "email":"exemple@gmail.com"
         }
     ],
     "autoload": {

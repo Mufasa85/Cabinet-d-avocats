@@ -35,8 +35,7 @@ $pendingApplications = [];
     
     <div class="admin-wrapper">
         <!-- SIDEBAR -->
-        <?php include __DIR__ . '/../views/layouts/sidebar-admin.php'; ?>
-        
+        <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <!-- HEADER -->

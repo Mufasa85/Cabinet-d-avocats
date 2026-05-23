@@ -1,11 +1,5 @@
 <?php
-/**
- * ELMD - Cabinet d'Avocats
- * Page de connexion
- */
 
-// Démarrer la session
-session_start();
 
 // Définir le chemin de base
 define('ELMD_ROOT', __DIR__);

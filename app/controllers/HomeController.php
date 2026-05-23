@@ -8,12 +8,17 @@ class HomeController extends Controller
 {
     public function index()
     {
-
+       View::view('index');
     }
-
-    public function test()
+    public function login()
     {
-        View::view('test');
+       View::view('login');
     }
+    
+    public function stages()
+    {
+       View::view('stages');
+    }
+
 
 }

@@ -23,7 +23,7 @@ $applications = [
 </head>
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedApp: null }">
     <div class="admin-wrapper">
-        <?php include __DIR__ . '/../views/layouts/sidebar-admin.php'; ?>
+     <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
         <main class="main-content">
             <header class="admin-header">
                 <div class="header-left">
