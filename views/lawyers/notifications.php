@@ -4,8 +4,6 @@
  * Lawyer Notifications Page
  */
 
-session_start();
-
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
 }
@@ -26,7 +24,7 @@ $notifications = [
     ['id' => 6, 'type' => 'warning', 'title' => 'Document à signer', 'message' => 'Un document en attente de signature: Contrat_de_prestation.pdf', 'time' => 'Il y a 4 jours', 'read' => true],
 ];
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Page Header -->

@@ -4,7 +4,7 @@
  * Lawyer Settings Page
  */
 
-session_start();
+
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
@@ -16,7 +16,7 @@ $currentPage = 'settings';
 $lawyerName = $_SESSION['lawyer_name'] ?? 'Me. Laurent Mbako';
 $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Page Header -->

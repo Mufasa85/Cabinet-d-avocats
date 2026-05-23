@@ -4,7 +4,7 @@
  * Lawyer Articles Page
  */
 
-session_start();
+
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
@@ -25,7 +25,7 @@ $articles = [
     ['id' => 5, 'title' => 'La médiation en droit civil', 'category' => 'Droit Civil', 'date' => '15 Déc 2023', 'status' => 'archived', 'views' => 156],
 ];
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Page Header -->

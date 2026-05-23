@@ -26,10 +26,10 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="<?= ELMD_ROOT ?>/lawyer/css/lawyer.css">
+  <link rel="stylesheet" href="../css/lawyer.css">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="<?= ELMD_ROOT ?>/images/logo.png">
+  <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
 <body>
   <!-- Sidebar Overlay for Mobile -->

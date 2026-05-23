@@ -4,7 +4,7 @@
  * Lawyer Documents Page
  */
 
-session_start();
+
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
@@ -26,7 +26,7 @@ $documents = [
     ['id' => 6, 'name' => 'Tableau_récapitulatif.xlsx', 'type' => 'xlsx', 'size' => '1.2 MB', 'date' => '15 Déc 2023', 'category' => 'Comptabilité'],
 ];
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Page Header -->

@@ -4,7 +4,7 @@
  * Lawyer Profile Page
  */
 
-session_start();
+
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
@@ -32,7 +32,7 @@ $lawyer = [
     'publications' => 24
 ];
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Profile Header -->

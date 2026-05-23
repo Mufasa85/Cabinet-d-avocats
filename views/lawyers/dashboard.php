@@ -4,7 +4,7 @@
  * Lawyer Dashboard
  */
 
-session_start();
+
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
@@ -55,7 +55,7 @@ $availableTrainings = [
     ['title' => 'Négociation internationale', 'duration' => '16 heures', 'progress' => 0]
 ];
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Stats Grid -->

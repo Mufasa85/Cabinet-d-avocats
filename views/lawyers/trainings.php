@@ -4,7 +4,7 @@
  * Lawyer Trainings Page
  */
 
-session_start();
+
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
@@ -25,7 +25,7 @@ $trainings = [
     ['id' => 5, 'title' => 'Droit du travail approfondi', 'description' => 'Maîtrisez les aspects complexes du droit du travail congolais.', 'duration' => '14 heures', 'progress' => 100, 'lessons' => 9, 'completed' => 9, 'status' => 'completed'],
 ];
 
-require_once __DIR__ . '/views/layouts/header.php';
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
 ?>
 
 <!-- Page Header -->
