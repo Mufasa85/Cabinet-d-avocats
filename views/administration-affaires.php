@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <div id="loader" class="loader">
@@ -24,7 +24,7 @@
   </div>
   <nav id="navbar" class="navbar">
     <div class="navbar-container">
-      <a href="index.php" class="navbar-logo">
+      <a href="<?= Router\Router::route('/') ?>"" class="navbar-logo">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
           <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -33,14 +33,14 @@
         <span class="logo-text">ELMD</span>
       </a>
       <div class="navbar-links">
-        <a href="index.php#accueil" class="nav-link">Accueil</a>
-        <a href="index.php#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="index.php#expertises" class="nav-link">Expertises</a>
-        <a href="index.php#equipe" class="nav-link">Équipe</a>
-        <a href="index.php#actualites" class="nav-link">Actualités</a>
-        <a href="index.php#contact" class="nav-link">Contact</a>
+        <a href="<?= Router\Router::route('/') ?>"#accueil" class="nav-link">Accueil</a>
+        <a href="<?= Router\Router::route('/') ?>"#cabinet" class="nav-link">Le Cabinet</a>
+        <a href="<?= Router\Router::route('/') ?>"#expertises" class="nav-link">Expertises</a>
+        <a href="<?= Router\Router::route('/') ?>"#equipe" class="nav-link">Équipe</a>
+        <a href="<?= Router\Router::route('/') ?>"#actualites" class="nav-link">Actualités</a>
+        <a href="<?= Router\Router::route('/') ?>"#contact" class="nav-link">Contact</a>
       </div>
-      <a href="index.php#contact" class="navbar-cta">Consultation</a>
+      <a href="<?= Router\Router::route('/') ?>"#contact" class="navbar-cta">Consultation</a>
       <div id="theme-switcher-container" class="theme-switcher-wrapper"></div>
       <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
         <span class="hamburger-line"></span>
@@ -67,15 +67,15 @@
         </button>
       </div>
       <div class="mobile-menu-links">
-        <a href="index.php#accueil" class="mobile-link"><span>Accueil</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.php#cabinet" class="mobile-link"><span>Le Cabinet</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.php#expertises" class="mobile-link"><span>Expertises</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.php#equipe" class="mobile-link"><span>Équipe</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.php#actualites" class="mobile-link"><span>Actualités</span><span class="mobile-link-arrow">→</span></a>
-        <a href="index.php#contact" class="mobile-link"><span>Contact</span><span class="mobile-link-arrow">→</span></a>
+        <a href="<?= Router\Router::route('/') ?>"#accueil" class="mobile-link"><span>Accueil</span><span class="mobile-link-arrow">→</span></a>
+        <a href="<?= Router\Router::route('/') ?>"#cabinet" class="mobile-link"><span>Le Cabinet</span><span class="mobile-link-arrow">→</span></a>
+        <a href="<?= Router\Router::route('/') ?>"#expertises" class="mobile-link"><span>Expertises</span><span class="mobile-link-arrow">→</span></a>
+        <a href="<?= Router\Router::route('/') ?>"#equipe" class="mobile-link"><span>Équipe</span><span class="mobile-link-arrow">→</span></a>
+        <a href="<?= Router\Router::route('/') ?>"#actualites" class="mobile-link"><span>Actualités</span><span class="mobile-link-arrow">→</span></a>
+        <a href="<?= Router\Router::route('/') ?>"#contact" class="mobile-link"><span>Contact</span><span class="mobile-link-arrow">→</span></a>
       </div>
       <div class="mobile-menu-footer">
-        <a href="index.php#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
+        <a href="<?= Router\Router::route('/') ?>"#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
       </div>
     </div>
   </div>
@@ -206,8 +206,8 @@
         <h2 class="domain-cta-title">Besoin d'un accompagnement en Administration des Affaires ?</h2>
         <p class="domain-cta-text">Notre équipe est disponible pour vous conseiller et vous accompagner.</p>
         <div class="domain-cta-buttons">
-          <a href="index.php#contact" class="btn-premium">Nous Contacter</a>
-          <a href="index.php#expertises" class="btn-outline">Autres Expertises</a>
+          <a href="<?= Router\Router::route('/') ?>"#contact" class="btn-premium">Nous Contacter</a>
+          <a href="<?= Router\Router::route('/') ?>"#expertises" class="btn-outline">Autres Expertises</a>
         </div>
       </div>
     </div>
@@ -217,7 +217,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.php" class="navbar-logo">
+          <a href="<?= Router\Router::route('/') ?>"" class="navbar-logo">
             <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
               <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -230,12 +230,12 @@
         <div class="footer-links">
           <h4>Expertises</h4>
           <ul>
-            <li><a href="droit-ohada.php">Droit OHADA</a></li>
-            <li><a href="droit-minier.php">Droit Minier</a></li>
-            <li><a href="droit-travail.php">Droit Travail</a></li>
-            <li><a href="droit-fiscal.php">Droit Fiscal</a></li>
-            <li><a href="administration-affaires.php">Administration des Affaires</a></li>
-            <li><a href="autres-domaines.php">Autres Domaines</a></li>
+            <li><a href="<?= Router\Router::route('/droit-ohada') ?>">Droit OHADA</a></li>
+            <li><a href="<?= Router\Router::route('/droit-minier') ?>">Droit Minier</a></li>
+            <li><a href="<?= Router\Router::route('/droit-travail') ?>">Droit Travail</a></li>
+            <li><a href="<?= Router\Router::route('/droit-fiscal') ?>">Droit Fiscal</a></li>
+            <li><a href="<?= Router\Router::route('/administration-affaires') ?>">Administration des Affaires</a></li>
+            <li><a href="<?= Router\Router::route('/autres-domaines') ?>">Autres Domaines</a></li>
           </ul>
         </div>
         <div class="footer-links">

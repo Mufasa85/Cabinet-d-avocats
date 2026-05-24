@@ -9,6 +9,13 @@ use Router\Router;
 Router::get('/', [HomeController::class,'index']);
 Router::get('/login', [HomeController::class,'login']);
 Router::get('/stages', [HomeController::class,'stages']);
+Router::get('/domaines', [HomeController::class,'domaines']);
+Router::get('/droit-ohada', [HomeController::class,'droitOhada']);
+Router::get('/droit-minier', [HomeController::class,'droitMinier']);
+Router::get('/droit-travail', [HomeController::class,'droitTravail']);
+Router::get('/droit-fiscal', [HomeController::class,'droitFiscal']);
+Router::get('/administration-affaires', [HomeController::class,'administrationAffaires']);
+Router::get('/autres-domaines', [HomeController::class,'autresDomaines']);
 
 Router::get('/lawyers/dashboard', [LawyerController::class,'index']);
 Router::get('/lawyers/documents', [LawyerController::class,'documents']);

@@ -12,23 +12,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <!-- Loader -->
-  <div id="loader" class="loader">
-    <div class="loader-content">
-      <svg class="loader-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
-        <circle cx="12" cy="3" r="1" fill="currentColor"/>
-        <path d="M7 21h10M9 21v-3h6v3"/>
-      </svg>
-      <div class="loader-text">ELMD</div>
-      <div class="loader-bar">
-        <div class="loader-progress"></div>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Navbar -->
   <nav id="navbar" class="navbar">
@@ -45,7 +33,7 @@
       <!-- Desktop Menu -->
       <div class="navbar-links">
         <a href="#accueil" class="nav-link">Accueil</a>
-        <a href="#cabinet" class="nav-link">Le Cabinet</a>
+        <a href="#cabinet" class="nav-link">Cabinet</a>
         <a href="#expertises" class="nav-link">Expertises</a>
         <a href="#equipe" class="nav-link">Équipe</a>
         <a href="#actualites" class="nav-link">Actualités</a>
@@ -132,7 +120,7 @@
   <section id="accueil" class="hero">
     <div class="hero-slider">
       <div class="hero-slide active" data-slide="0">
-        <div class="hero-slide-bg" style="background-image: url('fond_1.jpeg')"></div>
+        <div class="hero-slide-bg" style="background-image: url('/assets/images/fond_1.jpeg')"></div>
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Excellence Juridique</span>
@@ -145,7 +133,7 @@
         </div>
       </div>
       <div class="hero-slide" data-slide="1">
-        <div class="hero-slide-bg" style="background-image: url('fond_2.jpeg')"></div>
+        <div class="hero-slide-bg" style="background-image: url('/assets/images/fond_2.jpeg')"></div>
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Tradition & Innovation</span>
@@ -158,7 +146,7 @@
         </div>
       </div>
       <div class="hero-slide" data-slide="2">
-        <div class="hero-slide-bg" style="background-image: url('fond_3.jpeg')"></div>
+        <div class="hero-slide-bg" style="background-image: url('/assets/images/fond_3.jpeg')"></div>
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Rayonnement International</span>
@@ -220,11 +208,11 @@ Créée en 2007 par le Bâtonnier Laurent Mbako Ditend, « Étude Laurent Mbako/
 Étude Laurent Mbako/Cabinet d’Avocats a pour mission de représenter, d’assister, de postuler, de conseiller, de concilier de conclure et de plaider pour le compte de ses clients ainsi que d’émettre les avis juridiques dans toutes les branches de Droit et le Due Diligent.           </p>
           <p class="about-text">
 A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentiellement à l’évolution du Droit dans plusieurs domaines qui, d’office, la remet à un standard professionnel avisé. ELMD/Cabinet d’avocats est constituée de plusieurs Avocats dont onze Avocats seniors collaborateurs qui assurent la conduite d’une spécialité du Droit lorsque les questions idoines sont posées et deux Avocats collaborateurs en période de stage qui assurent l’appui nécessaire en étude, consultance, rédaction des actes de procédure, de correspondances aux Avocats seniors pour un résultat approprié dans chaque branche du Droit.           </p>
-          <a href="#contact" class="btn-premium">En Savoir Plus</a>
+
         </div>
         
         <div class="about-image animate-on-scroll">
-          <img src="logo.png" alt="Cabinet ELMD">
+          <img src="/assets/images/logo.png" alt="Cabinet ELMD">
           <div class="about-image-overlay"></div>
           <div class="about-image-frame"></div>
         </div>
@@ -296,7 +284,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
 
   <!-- Stats Section -->
   <section class="stats-section">
-    <div class="stats-bg" style="background-image: url('logo.png')"></div>
+    <div class="stats-bg" style="background-image: url('/assets/images/logo.png')"></div>
     <div class="stats-overlay"></div>
     <div class="container stats-container">
       <div class="stat-item animate-on-scroll">
@@ -342,7 +330,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Ohada</h3>
           <p class="service-text">Expertise en droit OHADA pour les entreprises opérant dans les États parties, garantissant conformité et sécurité juridique.</p>
-          <a href="droit-ohada.html" class="service-link">
+          <a href="<?= Router\Router::route('/droit-ohada') ?>" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -360,7 +348,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Minier</h3>
           <p class="service-text">Accompagnement spécialisé dans l'exploration, l'exploitation et la gestion des ressources minières et minérales.</p>
-          <a href="droit-minier.html" class="service-link">
+          <a href="<?= Router\Router::route('/droit-minier') ?>" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -379,7 +367,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Travail</h3>
           <p class="service-text">Conseil et défense en droit du travail pour employeurs et salariés, gestion des conflits et négociation collective.</p>
-          <a href="droit-travail.html" class="service-link">
+          <a href="<?= Router\Router::route('/droit-travail') ?>" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -396,7 +384,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Droit Fiscal</h3>
           <p class="service-text">Optimisation fiscale, conseil en structuration et représentation devant les administrations fiscales.</p>
-          <a href="droit-fiscal.html" class="service-link">
+          <a href="<?= Router\Router::route('/droit-fiscal') ?>" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -413,7 +401,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Administration des Affaires</h3>
           <p class="service-text">Gestion administrative, gouvernance d'entreprise et conformité réglementaire pour les sociétés.</p>
-          <a href="administration-affaires.html" class="service-link">
+          <a href="<?= Router\Router::route('/administration-affaires') ?>" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -430,7 +418,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
           </div>
           <h3 class="service-title">Autres Domaines de Droits</h3>
           <p class="service-text">Large palette de compétences juridiques pour répondre à tous vos besoins spécifiques et cas particuliers.</p>
-          <a href="autres-domaines.html" class="service-link">
+          <a href="<?= Router\Router::route('/autres-domaines') ?>" class="service-link">
             <span>En savoir plus</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -467,7 +455,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
       
       <div class="team-slider" id="team-slider">
         <div class="team-card animate-on-scroll">
-          <a href="profile.html?id=1" class="team-card-link">
+          <a href="profile.php?id=1" class="team-card-link">
             <div class="team-image">
               <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80" alt="Jean-Pierre Dupont">
               <div class="team-overlay">
@@ -935,7 +923,7 @@ A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentielle
   </footer>
 
   <!-- Scripts -->
-  <script type="module" src="js/theme.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="/js/theme.js"></script>
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>

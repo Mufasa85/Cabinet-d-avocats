@@ -13,7 +13,7 @@ $errorMessage = $errorMessage ?? 'Une erreur est survenue lors du traitement de 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="/css/styles.css">
   <style>
     body {
       min-height: 100vh;
@@ -21,22 +21,21 @@ $errorMessage = $errorMessage ?? 'Une erreur est survenue lors du traitement de 
       align-items: center;
       justify-content: center;
       padding: 2rem;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.18), transparent 28%),
-                  linear-gradient(180deg, #0f172a 0%, #010817 100%);
-      color: #f8fafc;
-      font-family: 'Inter', sans-serif;
+      background: var(--color-background);
+      color: var(--color-foreground);
+      font-family: var(--font-sans);
     }
     .error-page {
       width: min(980px, 100%);
       text-align: center;
       padding: 3rem 2rem;
-      border: 1px solid rgba(148,163,184,0.22);
-      border-radius: 28px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
       backdrop-filter: blur(18px);
-      background: rgba(15, 23, 42, 0.85);
-      box-shadow: 0 32px 120px rgba(15, 23, 42, 0.45);
+      background: var(--color-card);
+      box-shadow: var(--shadow-lg);
     }
-    .error-code {
+    .error-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -44,23 +43,33 @@ $errorMessage = $errorMessage ?? 'Une erreur est survenue lors du traitement de 
       height: 120px;
       margin-bottom: 1.5rem;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba(236,72,153,0.95), rgba(59,130,246,0.95));
-      font-size: clamp(3rem, 5vw, 4.8rem);
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.04em;
-      box-shadow: 0 24px 80px rgba(59,130,246,0.22);
+      background: linear-gradient(135deg, var(--color-primary), #b8911f);
+      color: var(--color-primary-foreground);
+    }
+    .error-icon svg {
+      width: 60px;
+      height: 60px;
     }
     .error-title {
-      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-family: var(--font-serif);
+      font-size: clamp(4rem, 10vw, 6rem);
       font-weight: 700;
-      margin-bottom: 1rem;
-      line-height: 1.05;
+      margin-bottom: 0.5rem;
+      line-height: 1;
+      color: var(--color-primary);
+      letter-spacing: -0.04em;
+    }
+    .error-subtitle {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      color: var(--color-muted-foreground);
     }
     .error-description {
       max-width: 720px;
       margin: 0 auto 2rem;
-      color: #cbd5e1;
+      color: var(--color-muted-foreground);
       font-size: 1rem;
       line-height: 1.8;
     }
@@ -71,24 +80,35 @@ $errorMessage = $errorMessage ?? 'Une erreur est survenue lors du traitement de 
       justify-content: center;
     }
     .error-actions a {
+      display: inline-block;
       min-width: 170px;
-      padding: 0.95rem 1.35rem;
-      border-radius: 999px;
+      padding: 0.875rem 2rem;
+      border-radius: 4px;
       font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       text-decoration: none;
-      color: #fff;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: all var(--transition-medium);
     }
     .error-actions a:hover {
       transform: translateY(-2px);
-      box-shadow: 0 18px 48px rgba(59,130,246,0.2);
     }
     .error-actions .btn-primary {
-      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      background: linear-gradient(135deg, var(--color-primary), #b8911f);
+      color: var(--color-primary-foreground);
+    }
+    .error-actions .btn-primary:hover {
+      box-shadow: 0 10px 30px rgba(201, 162, 39, 0.3);
     }
     .error-actions .btn-secondary {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(148,163,184,0.25);
+      background: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+    .error-actions .btn-secondary:hover {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
     }
     @media (max-width: 640px) {
       .error-page { padding: 2rem 1.25rem; }
@@ -98,11 +118,18 @@ $errorMessage = $errorMessage ?? 'Une erreur est survenue lors du traitement de 
 </head>
 <body>
   <main class="error-page">
-    <div class="error-code"><?= htmlspecialchars($statusCode) ?></div>
-    <h1 class="error-title">Oops. <?= htmlspecialchars($errorMessage) ?></h1>
-    <p class="error-description">Le site ELMD a rencontré un problème lors du chargement de cette page. Vous pouvez revenir à l’accueil ou contacter l’équipe si le problème persiste.</p>
+    <div class="error-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
+        <circle cx="12" cy="3" r="1" fill="currentColor"/>
+        <path d="M7 21h10M9 21v-3h6v3"/>
+      </svg>
+    </div>
+    <h1 class="error-title"><?= htmlspecialchars($statusCode) ?></h1>
+    <h2 class="error-subtitle"><?= htmlspecialchars($errorMessage) ?></h2>
+    <p class="error-description">Le site ELMD a rencontré un problème lors du chargement de cette page. Vous pouvez revenir à l'accueil ou contacter l'équipe si le problème persiste.</p>
     <div class="error-actions">
-      <a class="btn-primary" href="<?= Router::route('/') ?>">Retour à l’accueil</a>
+      <a class="btn-primary" href="<?= Router::route('/') ?>">Retour à l'accueil</a>
       <a class="btn-secondary" href="<?= Router::route('/login') ?>">Connexion</a>
     </div>
   </main>

@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setcookie('remember_email', $email, time() + (86400 * 30), '/'); // 30 jours
             }
             
-            // Redirection vers le tableau de bord
-            header('Location: dashboard.php');
+            // Redirection vers le tableau de bord admin
+            header('Location: /admin/dashboard');
             exit;
         } elseif ($email === 'avocat@elmd.com' && $password === 'avocat123') {
             // Connexion avocat
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 setcookie('remember_email', $email, time() + (86400 * 30), '/');
             }
             
-            header('Location: dashboard.php');
+            header('Location: /lawyers/dashboard');
             exit;
         } else {
             $loginError = 'Email ou mot de passe incorrect.';
@@ -66,11 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title) ?></title>
+    <title>Connexion | ELMD Cabinet d'Avocats</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="css/connexion.css">
 </head>
 <body class="connexion-body">
@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
 
                 <div class="register-link">
-                    <p><a href="index.php">Retour à l'accueil</a></p>
+                    <p><a href="<?= Router\Router::route('/') ?>">Retour à l'accueil</a></p>
                 </div>
             </div>
         </div>

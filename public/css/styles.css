@@ -735,15 +735,15 @@ ul {
 /* Mobile Background Images for Hero Slides */
 @media (max-width: 768px) {
   .hero-slide[data-slide="0"] .hero-slide-bg {
-    background-image: url('../images/mobile_1.jpeg') !important;
+    background-image: url('/assets/images/mobile_1.jpeg') !important;
   }
   
   .hero-slide[data-slide="1"] .hero-slide-bg {
-    background-image: url('../images/mobile_2.jpeg') !important;
+    background-image: url('/assets/images/mobile_2.jpeg') !important;
   }
   
   .hero-slide[data-slide="2"] .hero-slide-bg {
-    background-image: url('../images/mobile_3.jpeg') !important;
+    background-image: url('/assets/images/mobile_3.jpeg') !important;
   }
 }
 
@@ -1018,11 +1018,19 @@ ul {
 
 .about-content {
   order: 2;
+  padding: 0 1rem;
+}
+
+@media (min-width: 480px) {
+  .about-content {
+    padding: 0 1.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .about-content {
     order: 1;
+    padding: 0;
   }
 }
 
@@ -1030,6 +1038,31 @@ ul {
   color: var(--color-muted-foreground);
   margin-bottom: 1.5rem;
   line-height: 1.8;
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+/* Mobile improvements for about text - TEXTE JUSTIFIÉ */
+@media (max-width: 768px) {
+  .about-text {
+    text-align: justify;
+    text-align-last: justify;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    padding: 0 0.5rem;
+    word-spacing: 0.05em;
+  }
+}
+
+@media (min-width: 769px) {
+  .about-text {
+    font-size: 1rem;
+  }
 }
 
 .about-image {
