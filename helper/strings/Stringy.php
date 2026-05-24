@@ -3,9 +3,9 @@
 
    class Stringy 
    {
-      public static function empty(string $str):string | bool
+      public static function empty(string $str):bool
       {
-        return $str ? $str : false;
+        return empty($str) ? true : false;
       }
 
       public static function filled(string $str):bool
@@ -25,8 +25,7 @@
 
       public static function lengthError(string $str, int $minLength = 3,int $maxLength = 8):string
       {
-        return strlen($str) < $minLength || strlen($str) > $maxLength ?
-                "The string must have  >" . $minLength ."  and   <= ". $maxLength : $str;
+         return strlen($str) < $minLength || strlen($str) > $maxLength ? false : true;
       }
       
       public static function randUUID(int $length = 20):string

@@ -3,6 +3,7 @@
 use App\controllers\AdminController;
 use App\controllers\HomeController;
 use App\controllers\LawyerController;
+use App\controllers\AuthController;
 use Router\Router;
 
 Router::get('/', [HomeController::class,'index']);
@@ -27,3 +28,6 @@ Router::get('/admin/notifications', [AdminController::class,'notifications']);
 Router::get('/admin/publications', [AdminController::class,'publications']);
 Router::get('/admin/lawyers', [AdminController::class,'lawyers']);
 Router::get('/admin/documents', [AdminController::class,'documents']);
+
+
+Router::post('/login', [AuthController::class,'login']);

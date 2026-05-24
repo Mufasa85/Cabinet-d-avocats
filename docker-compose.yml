@@ -1,4 +1,14 @@
 services:
-   web:
-
    database:
+      image:  mysql:8.0
+      build: .
+      container_name: cabinet
+      restart: always
+      environment:
+         MYSQL_ROOT_PASSWORD: root
+         MYSQL_DATABASE: cabinet
+         MYSQL_USER: cabinet
+         MYSQL_PASSWORD: root1234
+      ports:
+         - "3307:3306"
+      

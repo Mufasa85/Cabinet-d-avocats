@@ -24,7 +24,7 @@ HTML;
 
     public static function verify_csrf_token(): bool
     {
-        if ($_POST['csrf_token'] != $_SESSION['csrf']) {
+        if ($_POST['csrf_token'] !== $_SESSION['csrf'] || !isset($_POST['csrf_token']) || !isset($_SESSION['csrf'])) {
             return false;
         }
         return true;

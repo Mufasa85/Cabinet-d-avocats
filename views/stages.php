@@ -26,7 +26,7 @@
     <!-- Navigation -->
     <header id="navbar" class="navbar">
         <div class="container">
-            <a href="index.php" class="logo">
+            <a href="<?= Router\Router::route('/') ?>" class="logo">
                 <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
                     <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -35,12 +35,12 @@
                 <span class="logo-text">ELMD</span>
             </a>
             <nav class="nav-desktop">
-                <a href="index.php">Accueil</a>
-                <a href="index.php#about">Cabinet</a>
-                <a href="index.php#services">Expertises</a>
+                <a href="<?= Router\Router::route('/') ?>">Accueil</a>
+                <a href="<?= Router\Router::route('/#about') ?>">Cabinet</a>
+                <a href="<?= Router\Router::route('/#services') ?>">Expertises</a>
                 <a href="#programme">Programme</a>
                 <a href="#postuler">Postuler</a>
-                <a href="connexion.php">Connexion</a>
+                <a href="<?= Router\Router::route('/login') ?>">Connexion</a>
             </nav>
             <a href="#postuler" class="btn-premium nav-cta">Candidater</a>
             <!-- Theme Switcher -->

@@ -33,6 +33,16 @@
       return $datas;
     }
 
+    public function redirect(string $url)
+    {
+      header("Location: $url");
+    }
+
+    public function error(string $message)
+    {
+       $_SESSION['error'] = $message;
+    }
+
     public function create(){}
     public function delete(){}
     public function  index(){}

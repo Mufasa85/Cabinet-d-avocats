@@ -50,8 +50,8 @@
         <a href="#equipe" class="nav-link">Équipe</a>
         <a href="#actualites" class="nav-link">Actualités</a>
         <a href="#contact" class="nav-link">Contact</a>
-        <a href="stages.html" class="nav-link">Stages</a>
-        <a href="connexion.html" class="nav-link nav-link-highlight">Connexion</a>
+        <a href="<?= Router\Router::route('/stages') ?>" class="nav-link">Stages</a>
+        <a href="<?= Router\Router::route('/login') ?>" class="nav-link nav-link-highlight">Connexion</a>
       </div>
       
       <a href="#contact" class="navbar-cta">Consultation</a>
@@ -113,11 +113,11 @@
           <span>Contact</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="stages.html" class="mobile-link">
+        <a href="<?= Router\Router::route('/stages') ?>" class="mobile-link">
           <span>Stages</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="connexion.html" class="mobile-link">
+        <a href="<?= Router\Router::route('/login') ?>" class="mobile-link">
           <span>Connexion</span>
           <span class="mobile-link-arrow">→</span>
         </a>

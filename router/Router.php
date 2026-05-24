@@ -2,6 +2,7 @@
  namespace Router;
 
  use App\App;
+ use App\controllers\Controller;
 
    class Router
    {
@@ -30,7 +31,7 @@
         self::$route_name = $name;
       }
 
-      public static function route(string $route)
+      public static function route(string $route):string
       {
           return self::$uri . $route ;
       }
@@ -84,11 +85,59 @@
 
        private static function respondNotFound()
        {
-           http_response_code(404);
-           echo json_encode([
-               'status' => 404,
-               'message' => 'Route introuvable'
-           ]);
+           if (self::isApiRequest()) {
+               Controller::status(404)->json([
+                   'error' => 'Not Found'
+               ]);
+               return;
+           }
+
+           self::respondWithError(404, 'La page que vous recherchez est introuvable.');
+       }
+
+       public static function respondWithError(int $statusCode, string $message = '')
+       {
+           Controller::status($statusCode);
+           $statusText = $message ?: self::getStatusText($statusCode);
+           $viewPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'error.php';
+           if (file_exists($viewPath))
+          {
+               $errorCode = $statusCode;
+               $errorMessage = $statusText;
+               require $viewPath;
+               return;
+           }
+
+           header('Content-Type: text/html; charset=utf-8');
+           echo "<h1>$statusCode</h1><p>$statusText</p>";
+       }
+
+       private static function isApiRequest(): bool
+       {
+           $uri = $_SERVER['REQUEST_URI'] ?? '';
+           $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+           return str_starts_with($uri, '/api') || str_contains($accept, 'application/json');
+       }
+
+       private static function getStatusText(int $statusCode): string
+       {
+           return match ($statusCode) {
+               400 => 'Requête incorrecte.',
+               401 => 'Accès non autorisé.',
+               403 => 'Accès refusé.',
+               404 => 'Page introuvable.',
+               405 => 'Méthode non autorisée.',
+               409 => 'Conflit de ressources.',
+               410 => 'Ressource supprimée.',
+               415 => 'Type de média non supporté.',
+               419 => 'Token CSRF expiré.',
+               422 => 'Entité non traitable.',
+               500 => 'Erreur interne du serveur.',
+               502 => 'Mauvaise passerelle.',
+               503 => 'Service indisponible.',
+               504 => 'Délai d’attente dépassé.',
+               default => 'Une erreur est survenue.'
+           };
        }
 
    }

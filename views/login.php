@@ -1,21 +1,5 @@
 <?php
-
-
-// Définir le chemin de base
-define('ELMD_ROOT', __DIR__);
-
-// Titre de la page
-$pageTitle = 'Connexion | ELMD - Cabinet d\'Avocats';
-
-// Vérifier si l'utilisateur est déjà connecté
-if (isset($_SESSION['user_id'])) {
-    // Redirection vers le tableau de bord
-    header('Location: dashboard.php');
-    exit;
-}
-
-// Messages d'erreur et de succès
-$loginError = '';
+$error = '';
 $loginSuccess = false;
 
 // Traitement du formulaire de connexion
@@ -32,9 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Simulation d'authentification (à remplacer par une vraie vérification en base de données)
         // Exemple:
-        // $user = $db->query("SELECT * FROM users WHERE email = ?", [$email])->fetch();
-        // if ($user && password_verify($password, $user['password'])) {
-        
+      
         // Pour la démo, acceptons admin@elmd.com / admin123
         if ($email === 'admin@elmd.com' && $password === 'admin123') {
             // Connexion réussie
@@ -77,15 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Récupérer l'email mémorisé
-$rememberedEmail = $_COOKIE['remember_email'] ?? '';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($pageTitle) ?></title>
+    <title><?= htmlspecialchars($title) ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -96,7 +77,7 @@ $rememberedEmail = $_COOKIE['remember_email'] ?? '';
     <!-- Navigation -->
     <header class="navbar">
         <div class="container">
-            <a href="index.php" class="logo">
+            <a href="<?= Router\Router::route('/') ?>" class="logo">
                 <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13"/>
                     <circle cx="12" cy="3" r="1" fill="currentColor"/>
@@ -128,20 +109,21 @@ $rememberedEmail = $_COOKIE['remember_email'] ?? '';
                     <p>Connectez-vous à votre espace</p>
                 </div>
 
-                <?php if ($loginError): ?>
+                <?php if ($error): ?>
                 <div class="alert alert-error">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                         <circle cx="12" cy="12" r="3"/>
                     </svg>
-                    <span><?= htmlspecialchars($loginError) ?></span>
+                    <span><?= htmlspecialchars($error) ?></span>
                 </div>
                 <?php endif; ?>
 
-                <form class="login-form" id="loginForm" method="POST" action="">
+                <form class="login-form" id="loginForm" method="POST" action="<?= Router\Router::route('/login') ?>">
+                    <?= \Core\Security::csrf_tokken() ?>
                     <div class="form-group">
                         <label for="email">Adresse email</label>
-                        <input type="email" id="email" name="email" required placeholder="votre@email.com" value="<?= htmlspecialchars($rememberedEmail) ?>">
+                        <input type="email" id="email" name="email" required placeholder="votre@email.com" >
                     </div>
 
                     <div class="form-group">
