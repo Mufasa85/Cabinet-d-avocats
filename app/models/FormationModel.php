@@ -8,8 +8,8 @@ class FormationModel extends Model
 
     public function all(?string $public = null): array
     {
-        $sql = 'SELECT * FROM formations WHERE statut != :archive';
-        $params = [':archive' => 'archivee'];
+        $sql = 'SELECT * FROM formations WHERE statut = :archive';
+        $params = [':archive' => 'ouverte'];
         if ($public) {
             $sql .= " AND (public_cible = :pub OR public_cible = 'tous')";
             $params[':pub'] = $public;
@@ -27,17 +27,19 @@ class FormationModel extends Model
     public function create(array $data): int
     {
         $slug = $this->uniqueSlug($data['titre'] ?? 'formation');
+        $dateDebut = isset($data['date_debut']) && $data['date_debut'] !== '' ? $data['date_debut'] : null;
+        $dateFin = isset($data['date_fin']) && $data['date_fin'] !== '' ? $data['date_fin'] : null;
+
         $this->db()->prepare(
-            'INSERT INTO formations (titre, slug, description, contenu, image_couverture, date_debut, date_fin, lieu, places_max, public_cible, statut)
-             VALUES (:titre, :slug, :description, :contenu, :image, :date_debut, :date_fin, :lieu, :places_max, :public, :statut)',
+            'INSERT INTO formations (titre, slug, description, contenu, date_debut, date_fin, lieu, places_max, public_cible, statut)
+             VALUES (:titre, :slug, :description, :contenu, :date_debut, :date_fin, :lieu, :places_max, :public, :statut)',
             [
                 ':titre' => $data['titre'],
                 ':slug' => $slug,
                 ':description' => $data['description'] ?? null,
                 ':contenu' => $data['contenu'] ?? null,
-                ':image' => $data['image_couverture'] ?? null,
-                ':date_debut' => $data['date_debut'] ?? null,
-                ':date_fin' => $data['date_fin'] ?? null,
+                ':date_debut' => $dateDebut,
+                ':date_fin' => $dateFin,
                 ':lieu' => $data['lieu'] ?? null,
                 ':places_max' => (int) ($data['places_max'] ?? 20),
                 ':public' => $data['public_cible'] ?? 'tous',
@@ -49,6 +51,13 @@ class FormationModel extends Model
 
     public function update(int $id, array $data): void
     {
+        if (array_key_exists('date_debut', $data) && $data['date_debut'] === '') {
+            $data['date_debut'] = null;
+        }
+        if (array_key_exists('date_fin', $data) && $data['date_fin'] === '') {
+            $data['date_fin'] = null;
+        }
+
         $fields = [];
         $params = [':id' => $id];
         foreach (['titre', 'description', 'contenu', 'image_couverture', 'date_debut', 'date_fin', 'lieu', 'places_max', 'public_cible', 'statut', 'places_reservees'] as $col) {

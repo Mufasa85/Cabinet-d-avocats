@@ -24,12 +24,10 @@ class LawyerController extends Controller
             exit;
         }
         $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
+        
         if (!$this->avocat) {
-            (new AvocatModel())->createForUser((int) Auth::id(), [
-                'titre' => 'Avocat',
-                'email_professionnel' => $_SESSION['user_email'] ?? null,
-            ]);
-            $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
+            $this->redirect(Router::route('/login'));
+            exit;
         }
     }
 

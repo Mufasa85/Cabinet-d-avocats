@@ -1,4 +1,8 @@
 <?php
+// echo "<pre>";
+// var_dump($avocat);
+// echo "</pre>";
+// die;
 /**
  * ELMD - Cabinet d'Avocats
  * Lawyer Profile Page
@@ -13,17 +17,17 @@ if (!defined('ELMD_ROOT')) {
 $pageTitle = 'Mon Profil';
 $currentPage = 'profile';
 
-$lawyerName = $_SESSION['lawyer_name'] ?? 'Me. Laurent Mbako';
-$lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80';
+$lawyerName = $avocat['fullname'] ?? 'Me. Laurent Mbako';
+$lawyerAvatar = $avocat['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80';
 
 // Données avocat
 $lawyer = [
-    'name' => 'Me. Laurent Mbako',
-    'email' => 'laurent.mbako@elmd-law.com',
-    'phone' => '+243 81 234 5678',
-    'role' => 'Avocat Principal',
-    'specialties' => ['Droit OHADA', 'Droit Fiscal', 'Droit Minier', 'Droit du Travail'],
-    'bio' => 'Avocat avec plus de 15 ans d\'expérience dans les domaines du droit des affaires, droit fiscal et droit minier en République Démocratique du Congo.',
+    'name' => $avocat['fullname'] ?? 'Me. Laurent Mbako',
+    'email' => $avocat['email_professionnel'] ?? 'laurent.mbako@elmd-law.com',
+    'phone' => $avocat['telephone'] ?? '+243 81 234 5678',
+    'role' => $avocat['titre'] ?? 'Avocat Principal',
+    'specialties' => $avocat['specialties'] ?? ['Droit OHADA', 'Droit Fiscal', 'Droit Minier', 'Droit du Travail'],
+    'bio' => $avocat['biographie'] ?? 'Avocat avec plus de 15 ans d\'expérience dans les domaines du droit des affaires, droit fiscal et droit minier en République Démocratique du Congo.',
     'location' => 'Kinshasa, RDC',
     'bar' => 'Barreau de Kinshasa',
     'joined' => '2018',
