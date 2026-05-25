@@ -194,7 +194,7 @@ require dirname(__DIR__) . '/layouts/lawyer/header.php';
 
 </div><!-- End page-content -->
 
-<script src="<?= ELMD_ROOT ?>/lawyer/js/lawyer.js"></script>
+<script src="../js/lawyer.js"></script>
 
 </body>
 </html>

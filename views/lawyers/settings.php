@@ -259,7 +259,7 @@ input:checked + .slider:before {
 }
 </style>
 
-<script src="<?= ELMD_ROOT ?>/lawyer/js/lawyer.js"></script>
+<script src="../js/lawyer.js"></script>
 
 </body>
 </html>

@@ -60,11 +60,11 @@ Router::get('/admin/lawyers', [AdminController::class,'lawyers']);
 Router::post('/admin/lawyers', [AdminController::class,'storeLawyer']);
 Router::post('/admin/lawyers/[i:id]/update', [AdminController::class,'updateLawyer']);
 Router::get('/admin/documents', [AdminController::class,'documents']);
-Router::post('/admin/documents/[i:id]/valider', [AdminController::class,'validateDocument']);
 Router::get('/admin/trainings', [AdminController::class,'trainings']);
+
+Router::post('/admin/documents/[i:id]/valider', [AdminController::class,'validateDocument']);
 Router::post('/admin/trainings', [AdminController::class,'storeFormation']);
 Router::post('/admin/inscriptions/[i:id]/statut', [AdminController::class,'updateInscription']);
-
 Router::post('/login', [AuthController::class,'login']);
 Router::post('/register', [AuthController::class,'register']);
 Router::post('/admin/users/create', [AdminController::class,'create']);

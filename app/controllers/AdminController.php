@@ -23,10 +23,10 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        if (!Auth::hasRole(Auth::ROLE_ADMIN)) {
-            $this->redirect(Router::route('/login'));
-            exit;
-        }
+        // if (!Auth::hasRole(Auth::ROLE_ADMIN)) {
+        //     $this->redirect(Router::route('/login'));
+        //     exit;
+        // }
     }
 
     public function index()
