@@ -1,13 +1,5 @@
 <?php
-/**
- * ELMD - Cabinet d'Avocats
- * Lawyer Header Layout
- */
-
-if (!defined('ELMD_ROOT')) {
-    define('ELMD_ROOT', dirname(__DIR__, 3));
-}
-
+$currentPage = $_SERVER['REQUEST_URI']   ?? '';
 $pageTitle = $pageTitle ?? 'Espace Avocat - ELMD';
 $lawyerName = $_SESSION['lawyer_name'] ?? $_SESSION['user_name'] ?? 'Avocat';
 $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
@@ -41,7 +33,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
     <!-- Sidebar -->
     <aside class="lawyer-sidebar" id="lawyer-sidebar">
       <div class="sidebar-header">
-        <a href="<?= ELMD_ROOT ?>/index.php" class="sidebar-brand">
+        <a href="<?= Router\Router::route('/') ?>" class="sidebar-brand">
           <div class="sidebar-logo">E</div>
           <div class="sidebar-brand-text">
             <h1>ELMD</h1>
@@ -57,7 +49,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
       
       <nav class="sidebar-nav">
         <div class="nav-section">
-          <a href="<?= ELMD_ROOT ?>/lawyer/dashboard.php" class="nav-item <?= $currentPage === 'dashboard' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/dashboard') ?>" class="nav-item <?= $currentPage === 'dashboard' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <rect x="3" y="3" width="7" height="7"/>
@@ -69,7 +61,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
             <span class="nav-text">Tableau de bord</span>
           </a>
           
-          <a href="<?= ELMD_ROOT ?>/lawyer/profile.php" class="nav-item <?= $currentPage === 'profile' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/profile') ?>" class="nav-item <?= $currentPage === 'profile' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -83,7 +75,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
         <div class="nav-section">
           <div class="nav-section-title">Contenu</div>
           
-          <a href="<?= ELMD_ROOT ?>/lawyer/articles.php" class="nav-item <?= $currentPage === 'articles' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/articles') ?>" class="nav-item <?= $currentPage === 'articles' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -96,7 +88,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
             <span class="nav-item-badge">3</span>
           </a>
           
-          <a href="<?= ELMD_ROOT ?>/lawyer/documents.php" class="nav-item <?= $currentPage === 'documents' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/documents') ?>" class="nav-item <?= $currentPage === 'documents' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -108,7 +100,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
             <span class="nav-text">Documents</span>
           </a>
           
-          <a href="<?= ELMD_ROOT ?>/lawyer/trainings.php" class="nav-item <?= $currentPage === 'trainings' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/trainings') ?>" class="nav-item <?= $currentPage === 'trainings' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
@@ -122,7 +114,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
         <div class="nav-section">
           <div class="nav-section-title"> Système</div>
           
-          <a href="<?= ELMD_ROOT ?>/lawyer/notifications.php" class="nav-item <?= $currentPage === 'notifications' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/notifications') ?>" class="nav-item <?= $currentPage === 'notifications' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
@@ -133,7 +125,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
             <span class="nav-item-badge">5</span>
           </a>
           
-          <a href="<?= ELMD_ROOT ?>/lawyer/settings.php" class="nav-item <?= $currentPage === 'settings' ? 'active' : '' ?>">
+          <a href="<?= Router\Router::route('/lawyers/settings') ?>" class="nav-item <?= $currentPage === 'settings' ? 'active' : '' ?>">
             <span class="nav-item-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <circle cx="12" cy="12" r="3"/>

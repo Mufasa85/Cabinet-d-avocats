@@ -19,18 +19,18 @@ class LawyerController extends Controller
 
     public function __construct()
     {
-        if (!Auth::hasRole(Auth::ROLE_LAWYER)) {
-            $this->redirect(Router::route('/login'));
-            exit;
-        }
-        $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
-        if (!$this->avocat) {
-            (new AvocatModel())->createForUser((int) Auth::id(), [
-                'titre' => 'Avocat',
-                'email_professionnel' => $_SESSION['user_email'] ?? null,
-            ]);
-            $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
-        }
+        // if (!Auth::hasRole(Auth::ROLE_LAWYER)) {
+        //     $this->redirect(Router::route('/login'));
+        //     exit;
+        // }
+        // $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
+        // if (!$this->avocat) {
+        //     (new AvocatModel())->createForUser((int) Auth::id(), [
+        //         'titre' => 'Avocat',
+        //         'email_professionnel' => $_SESSION['user_email'] ?? null,
+        //     ]);
+        //     $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
+        // }
     }
 
     public function index()
