@@ -33,23 +33,23 @@ class Auth
     }
 
     /** Convertit le rôle BDD vers le rôle de session */
-    public static function sessionRoleFromDb(string $dbRole): string
+    public static function sessionRoleFromDb(string $role): string
     {
-        return match ($dbRole) {
+        return match ($role) {
             'avocat' => self::ROLE_LAWYER,
             'stagiaire' => self::ROLE_INTERN,
-            default => $dbRole,
+            default => $role,
         };
     }
 
-    public static function label(string $dbRole): string
+    public static function label(string $role): string
     {
-        return match ($dbRole) {
+        return match ($role) {
             'admin' => 'Administrateur',
             'avocat' => 'Avocat',
             'secretaire' => 'Secrétaire',
             'stagiaire' => 'Stagiaire',
-            default => ucfirst($dbRole),
+            default => ucfirst($role),
         };
     }
 
@@ -82,6 +82,10 @@ class Auth
 
     public static function logout(): void
     {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         $_SESSION = [];
 
         if (ini_get('session.use_cookies')) {
@@ -90,11 +94,16 @@ class Auth
                 session_name(),
                 '',
                 time() - 42000,
-                $params['path'],
-                $params['domain'],
-                $params['secure'],
-                $params['httponly']
+                $params['path'] ?? '/', 
+                $params['domain'] ?? '',
+                $params['secure'] ?? false,
+                $params['httponly'] ?? true
             );
+        }
+
+        if (isset($_COOKIE['remember_email'])) {
+            setcookie('remember_email', '', time() - 3600, '/');
+            unset($_COOKIE['remember_email']);
         }
 
         session_destroy();
