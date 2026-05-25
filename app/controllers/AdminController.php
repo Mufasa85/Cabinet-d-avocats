@@ -9,18 +9,19 @@
 
      public function __construct()
      {
-         // Vérifier si l'utilisateur est connecté et a le rôle admin
-         if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? '') !== 'admin') {
-             // Redirection vers la page de connexion
-             $this->redirect('/login');
-             exit;
-         }
+         // // Vérifier si l'utilisateur est connecté et a le rôle admin
+         // if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? '') !== 'admin') {
+         //     // Redirection vers la page de connexion
+         //     $this->redirect('/login');
+         //     exit;
+         // }
      }
 
      public function index()
      {
          View::view('admin.dashboard');
      }
+    
   
     public function users()
     {

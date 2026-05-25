@@ -2,6 +2,7 @@
 -- DATABASE
 -- =====================================================
 
+DROP DATABASE IF EXISTS cabinet_platform;
 CREATE DATABASE IF NOT EXISTS cabinet_platform
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
@@ -18,27 +19,20 @@ CREATE TABLE users (
 
 id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 
-nom VARCHAR(100) NOT NULL,
-post_nom VARCHAR(100),
-prenom VARCHAR(100),
-
+fullname VARCHAR(100) NOT NULL,
 email VARCHAR(255) NOT NULL UNIQUE,
 passwords VARCHAR(255) NOT NULL,
 
-roles ENUM('admin','avocat','secretaire','stagiaire') NOT NULL,
+roles ENUM('admin','avocat','secretaire', 'stagiaire') NOT NULL,
 telephone VARCHAR(20),
 avatar VARCHAR(500),
 is_active BOOLEAN DEFAULT TRUE,
 
 email_verified_at TIMESTAMP NULL,
 
-last_login TIMESTAMP NULL,
-
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-deleted_at TIMESTAMP NULL,
 
 INDEX idx_role(roles)
 

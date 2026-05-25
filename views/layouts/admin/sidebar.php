@@ -15,22 +15,22 @@
         <div class="nav-section">
             <span class="nav-section-title">Principal</span>
             
-            <a href="<?= Router\Router::route('/dashboard') ?>" class="nav-item <?= $currentPage === 'dashboard' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/dashboard') ?>" class="nav-item <?= $currentPage === 'dashboard' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-chart-pie"></i></span>
                 <span class="nav-item-text">Tableau de Bord</span>
             </a>
             
-            <a href="<?= Router\Router::route('/users') ?>" class="nav-item <?= $currentPage === 'users' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/users') ?>" class="nav-item <?= $currentPage === 'users' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-users"></i></span>
                 <span class="nav-item-text">Utilisateurs</span>
             </a>
             
-            <a href="<?= Router\Router::route('/lawyers') ?>" class="nav-item <?= $currentPage === 'lawyers' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/lawyers') ?>" class="nav-item <?= $currentPage === 'lawyers' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-user-tie"></i></span>
                 <span class="nav-item-text">Avocats</span>
             </a>
             
-            <a href="<?= Router\Router::route('/applications') ?>" class="nav-item <?= $currentPage === 'applications' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/applications') ?>" class="nav-item <?= $currentPage === 'applications' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-file-alt"></i></span>
                 <span class="nav-item-text">Candidatures</span>
                 <span class="nav-item-badge">5</span>
@@ -40,17 +40,17 @@
         <div class="nav-section">
             <span class="nav-section-title">Contenu</span>
             
-            <a href="<?= Router\Router::route('/trainings') ?>" class="nav-item <?= $currentPage === 'trainings' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/trainings') ?>" class="nav-item <?= $currentPage === 'trainings' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-graduation-cap"></i></span>
                 <span class="nav-item-text">Formations</span>
             </a>
             
-            <a href="<?= Router\Router::route('/publications') ?>" class="nav-item <?= $currentPage === 'publications' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/publications') ?>" class="nav-item <?= $currentPage === 'publications' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-newspaper"></i></span>
                 <span class="nav-item-text">Publications</span>
             </a>
             
-            <a href="<?= Router\Router::route('/documents') ?>" class="nav-item <?= $currentPage === 'documents' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/documents') ?>" class="nav-item <?= $currentPage === 'documents' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-folder-open"></i></span>
                 <span class="nav-item-text">Documents</span>
             </a>
@@ -59,12 +59,12 @@
         <div class="nav-section">
             <span class="nav-section-title">Analyse</span>
             
-            <a href="<?= Router\Router::route('/reports') ?>" class="nav-item <?= $currentPage === 'reports' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/reports') ?>" class="nav-item <?= $currentPage === 'reports' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-chart-bar"></i></span>
                 <span class="nav-item-text">Rapports</span>
             </a>
             
-            <a href="<?= Router\Router::route('/notifications') ?>" class="nav-item <?= $currentPage === 'notifications' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/notifications') ?>" class="nav-item <?= $currentPage === 'notifications' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-bell"></i></span>
                 <span class="nav-item-text">Notifications</span>
                 <span class="nav-item-badge">3</span>
@@ -74,7 +74,7 @@
         <div class="nav-section">
             <span class="nav-section-title">Système</span>
             
-            <a href="<?= Router\Router::route('/settings') ?> " class="nav-item <?= $currentPage === 'settings' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/settings') ?> " class="nav-item <?= $currentPage === 'settings' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-cog"></i></span>
                 <span class="nav-item-text">Paramètres</span>
             </a>

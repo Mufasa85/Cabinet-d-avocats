@@ -156,6 +156,8 @@ $users = [
     
     <!-- ADD USER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'add-user' && modalOpen }">
+        <form method="POST" action="<?= Router\Router::route('/register') ?>">
+        <?= \Core\Security::csrf_tokken() ?>
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-user-plus"></i></div>
@@ -170,21 +172,21 @@ $users = [
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Nom Complet</label>
-                    <input type="text" class="form-input" placeholder="Entrez le nom complet">
+                    <input type="text" name="fullname" class="form-input" placeholder="Entrez le nom complet" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-input" placeholder="exemple@email.com">
+                    <input type="email" name="email" class="form-input" placeholder="exemple@email.com" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-input" placeholder="+243 XX XXX XXXX">
+                    <input type="tel" name="telephone" class="form-input" placeholder="+243 XX XXX XXXX">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Rôle</label>
-                    <select class="form-select">
+                    <select name="role" class="form-select">
                         <option value="">Sélectionner un rôle</option>
                         <option value="admin">Administrateur</option>
                         <option value="avocat">Avocat</option>
@@ -197,26 +199,27 @@ $users = [
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Mot de Passe</label>
-                    <input type="password" class="form-input" placeholder="Minimum 8 caractères">
+                    <input type="password" name="password" class="form-input" placeholder="Minimum 8 caractères" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Confirmer Mot de Passe</label>
-                    <input type="password" class="form-input" placeholder="Confirmez le mot de passe">
+                    <input type="password" name="password_confirmation" class="form-input" placeholder="Confirmez le mot de passe" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="form-label">Statut</label>
-                <select class="form-select">
-                    <option value="active">Actif</option>
-                    <option value="pending">En Attente</option>
-                    <option value="inactive">Inactif</option>
+                <select name="is_active" class="form-select">
+                    <option value="1">Actif</option>
+                    <option value="0">En Attente</option>
+                    <option value="0">Inactif</option>
                 </select>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-save"></i> Créer l'Utilisateur</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Créer l'Utilisateur</button>
         </div>
+        </form>
     </div>
     
     <!-- EDIT USER MODAL -->

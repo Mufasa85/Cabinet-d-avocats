@@ -38,3 +38,4 @@ Router::get('/admin/documents', [AdminController::class,'documents']);
 
 
 Router::post('/login', [AuthController::class,'login']);
+Router::post('/register', [AuthController::class,'register']);
