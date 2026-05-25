@@ -1,68 +1,483 @@
-<?php 
-  namespace App\controllers;
+<?php
+namespace App\controllers;
 
- use App\View;
- use Override;
+use App\models\AvocatModel;
+use App\models\FormationModel;
+use App\models\InscriptionModel;
+use App\models\InternshipApplicationModel;
+use App\models\InternshipDocumentModel;
+use App\models\NotificationModel;
+use App\models\PublicationModel;
+use App\models\SpecialiteModel;
+use App\models\StagiaireDocumentModel;
+use App\models\StagiaireModel;
+use App\models\UserModel;
+use App\View;
+use Core\Auth;
+use Core\Security;
+use Router\Router;
+use Service\FileStorage;
+use Service\Messagerie;
 
-  class AdminController extends Controller
-  {
+class AdminController extends Controller
+{
+    public function __construct()
+    {
+        if (!Auth::hasRole(Auth::ROLE_ADMIN)) {
+            $this->redirect(Router::route('/login'));
+            exit;
+        }
+    }
 
-     public function __construct()
-     {
-         // // Vérifier si l'utilisateur est connecté et a le rôle admin
-         // if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? '') !== 'admin') {
-         //     // Redirection vers la page de connexion
-         //     $this->redirect('/login');
-         //     exit;
-         // }
-     }
+    public function index()
+    {
+        $userModel = new UserModel();
+        $avocatModel = new AvocatModel();
+        $appModel = new InternshipApplicationModel();
+        $inscriptionModel = new InscriptionModel();
 
-     public function index()
-     {
-         View::view('admin.dashboard');
-     }
-    
-  
+        View::view('admin.dashboard', [
+            'stats' => [
+                'users' => $userModel->count(),
+                'lawyers' => $avocatModel->count(),
+                'pending' => $appModel->countPending() + $inscriptionModel->countPending(),
+                'documents' => count((new StagiaireDocumentModel())->allForAdmin('en_attente')),
+            ],
+            'recentApplications' => $appModel->recent(5),
+        ]);
+    }
+
     public function users()
     {
-       View::view('admin.users');
+        $userModel = new UserModel();
+        View::view('admin.users', [
+            'users' => $userModel->all(),
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
     }
-    public function settings()
+
+    public function create()
     {
-       View::view('admin.settings');
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        $fullname = $this->sanitaze($_POST['fullname'] ?? '');
+        $email = $this->sanitaze($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $role = $this->sanitaze($_POST['role'] ?? 'stagiaire');
+        $telephone = $this->sanitaze($_POST['telephone'] ?? '');
+        $is_active = isset($_POST['is_active']) ? (int) $_POST['is_active'] : 1;
+
+        if (!in_array($role, Auth::DB_ROLES, true)) {
+            $this->error('Rôle invalide.');
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        $userModel = new UserModel();
+        if ($userModel->findByEmail($email)) {
+            $this->error('Cet email est déjà utilisé.');
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        $userModel->create([
+            'fullname' => $fullname,
+            'email' => $email,
+            'password' => $password,
+            'roles' => $role,
+            'telephone' => $telephone ?: null,
+            'is_active' => $is_active,
+        ]);
+
+        $_SESSION['success'] = 'Utilisateur créé.';
+        $this->redirect(Router::route('/admin/users'));
     }
-    public function reports()
+
+    public function updateUser($params)
     {
-       View::view('admin.reports');
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id <= 0) {
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        $role = $this->sanitaze($_POST['role'] ?? '');
+        if ($role !== '' && !in_array($role, Auth::DB_ROLES, true)) {
+            $this->error('Rôle invalide.');
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        (new UserModel())->update($id, [
+            'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
+            'email' => $this->sanitaze($_POST['email'] ?? ''),
+            'password' => $_POST['password'] ?? '',
+            'roles' => $role,
+            'telephone' => $this->sanitaze($_POST['telephone'] ?? ''),
+            'is_active' => isset($_POST['is_active']) ? (int) $_POST['is_active'] : null,
+        ]);
+
+        $_SESSION['success'] = 'Utilisateur mis à jour.';
+        $this->redirect(Router::route('/admin/users'));
     }
-    public function analytics()
+
+    public function deleteUser($params)
     {
-       View::view('admin.analytics');
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/users'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id > 0 && $id !== Auth::id()) {
+            (new UserModel())->delete($id);
+            $_SESSION['success'] = 'Utilisateur supprimé.';
+        }
+        $this->redirect(Router::route('/admin/users'));
     }
-    public function notifications()
-    {
-       View::view('admin.notifications');
-    }
+
     public function lawyers()
     {
-       View::view('admin.lawyers');
+        View::view('admin.lawyers', [
+            'lawyers' => (new AvocatModel())->allWithUser(),
+            'specialites' => (new SpecialiteModel())->all(),
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
     }
+
+    public function storeLawyer()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $userModel = new UserModel();
+        $email = $this->sanitaze($_POST['email'] ?? '');
+        if ($userModel->findByEmail($email)) {
+            $this->error('Email déjà utilisé.');
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $userModel->create([
+            'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
+            'email' => $email,
+            'password' => $_POST['password'] ?? 'avocat123',
+            'roles' => 'avocat',
+            'telephone' => $this->sanitaze($_POST['telephone'] ?? ''),
+            'is_active' => 1,
+        ]);
+
+        $user = $userModel->findByEmail($email);
+        $userId = (int) ($user['id'] ?? 0);
+        if (!$userId) {
+            $this->error('Erreur création utilisateur.');
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $avocatId = (new AvocatModel())->createForUser($userId, [
+            'titre' => $this->sanitaze($_POST['titre'] ?? 'Avocat'),
+            'email_professionnel' => $email,
+            'bio' => $this->sanitaze($_POST['bio'] ?? ''),
+            'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
+            'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
+        ]);
+
+        $specIds = array_map('intval', $_POST['specialites'] ?? []);
+        if ($specIds) {
+            (new AvocatModel())->setSpecialites($avocatId, $specIds);
+        }
+
+        $_SESSION['success'] = 'Avocat ajouté.';
+        $this->redirect(Router::route('/admin/lawyers'));
+    }
+
+    public function updateLawyer($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        (new AvocatModel())->update($id, [
+            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
+            'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
+            'bio' => $this->sanitaze($_POST['bio'] ?? ''),
+            'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
+            'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
+        ]);
+
+        $specIds = array_map('intval', $_POST['specialites'] ?? []);
+        (new AvocatModel())->setSpecialites($id, $specIds);
+
+        $_SESSION['success'] = 'Profil avocat mis à jour.';
+        $this->redirect(Router::route('/admin/lawyers'));
+    }
+
+    public function candidatures()
+    {
+        $appModel = new InternshipApplicationModel();
+        $docModel = new InternshipDocumentModel();
+        $applications = $appModel->all();
+        foreach ($applications as &$app) {
+            $app['documents'] = $docModel->byApplicationId((int) $app['id']);
+        }
+
+        View::view('admin.candidatures', [
+            'applications' => $applications,
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
+    }
+
+    public function updateCandidature($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/candidatures'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        $statut = $this->sanitaze($_POST['statut'] ?? '');
+        $motif = $this->sanitaze($_POST['motif'] ?? '');
+
+        if (!in_array($statut, ['en_attente', 'analyse', 'retenu', 'refuse'], true)) {
+            $this->error('Statut invalide.');
+            $this->redirect(Router::route('/admin/candidatures'));
+            return;
+        }
+
+        $appModel = new InternshipApplicationModel();
+        $app = $appModel->findById($id);
+        if (!$app) {
+            $this->redirect(Router::route('/admin/candidatures'));
+            return;
+        }
+
+        $appModel->updateStatus($id, $statut);
+
+        $name = trim(($app['prenom'] ?? '') . ' ' . ($app['nom'] ?? ''));
+        (new Messagerie())->notifyApplicationStatus($app['email'], $name, $statut, $motif ?: null);
+
+        $_SESSION['success'] = 'Candidature mise à jour.';
+        $this->redirect(Router::route('/admin/candidatures'));
+    }
+
+    public function trainings()
+    {
+        View::view('admin.trainings', [
+            'formations' => (new FormationModel())->all(),
+            'inscriptions' => (new InscriptionModel())->pending(),
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
+    }
+
+    public function storeFormation()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/trainings'));
+            return;
+        }
+
+        (new FormationModel())->create([
+            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
+            'description' => $this->sanitaze($_POST['description'] ?? ''),
+            'date_debut' => $_POST['date_debut'] ?? null,
+            'date_fin' => $_POST['date_fin'] ?? null,
+            'lieu' => $this->sanitaze($_POST['lieu'] ?? ''),
+            'places_max' => (int) ($_POST['places_max'] ?? 20),
+            'public_cible' => $this->sanitaze($_POST['public_cible'] ?? 'tous'),
+            'statut' => $this->sanitaze($_POST['statut'] ?? 'ouverte'),
+        ]);
+
+        $_SESSION['success'] = 'Formation créée.';
+        $this->redirect(Router::route('/admin/trainings'));
+    }
+
+    public function updateInscription($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/trainings'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        $statut = $this->sanitaze($_POST['statut'] ?? '');
+        if (!in_array($statut, ['acceptee', 'refusee'], true)) {
+            $this->redirect(Router::route('/admin/trainings'));
+            return;
+        }
+
+        $inscriptionModel = new InscriptionModel();
+        $inscription = $inscriptionModel->findById($id);
+        $inscriptionModel->updateStatus($id, $statut, $this->sanitaze($_POST['motif'] ?? ''));
+
+        if ($inscription) {
+            $user = (new UserModel())->findById((int) $inscription['user_id']);
+            $formation = (new FormationModel())->findById((int) $inscription['formation_id']);
+            if ($user && $formation) {
+                (new Messagerie())->notifyInscriptionStatus(
+                    $user['email'],
+                    $user['fullname'],
+                    $formation['titre'],
+                    $statut
+                );
+                (new NotificationModel())->create(
+                    (int) $user['id'],
+                    'inscription_formation',
+                    'Inscription formation',
+                    'Votre inscription à « ' . $formation['titre'] . ' » a été ' . ($statut === 'acceptee' ? 'acceptée' : 'refusée') . '.',
+                    Router::route('/interns/trainings')
+                );
+            }
+        }
+
+        $_SESSION['success'] = 'Inscription traitée.';
+        $this->redirect(Router::route('/admin/trainings'));
+    }
+
     public function publications()
     {
-       View::view('admin.publications');
+        View::view('admin.publications', [
+            'publications' => (new PublicationModel())->all(),
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
     }
-    public function contacts()
-    {
-       View::view('admin.contacts');
-    }
-     public function documents()
-     {
-        View::view('admin.documents');
-     }
-     public function candidatures()
-     {
-        View::view('admin.candidatures');
-     }
 
- }
-?>
+    public function storePublication()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/publications'));
+            return;
+        }
+
+        $data = [
+            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
+            'description' => $this->sanitaze($_POST['description'] ?? ''),
+            'contenu' => $_POST['contenu'] ?? '',
+            'type' => $this->sanitaze($_POST['type'] ?? 'autre'),
+            'statut' => $this->sanitaze($_POST['statut'] ?? 'publie'),
+            'cree_par' => Auth::id(),
+        ];
+
+        try {
+            if (!empty($_FILES['fichier']['name'])) {
+                $stored = FileStorage::storeUpload($_FILES['fichier'], 'documents/publications', 'pub');
+                $data['fichier'] = $stored['fichier'];
+            }
+            if (!empty($_FILES['image']['name'])) {
+                $img = FileStorage::storeUpload($_FILES['image'], 'images/publications', 'cover');
+                $data['image_couverture'] = $img['fichier'];
+            }
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
+            $this->redirect(Router::route('/admin/publications'));
+            return;
+        }
+
+        (new PublicationModel())->create($data);
+        $_SESSION['success'] = 'Publication enregistrée.';
+        $this->redirect(Router::route('/admin/publications'));
+    }
+
+    public function documents()
+    {
+        View::view('admin.documents', [
+            'documents' => (new StagiaireDocumentModel())->allForAdmin(),
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
+    }
+
+    public function validateDocument($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/documents'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        $statut = $this->sanitaze($_POST['statut'] ?? '');
+        $motif = $this->sanitaze($_POST['motif'] ?? '');
+
+        if (!in_array($statut, ['valide', 'rejete'], true)) {
+            $this->redirect(Router::route('/admin/documents'));
+            return;
+        }
+
+        $docModel = new StagiaireDocumentModel();
+        $doc = $docModel->findById($id);
+        if (!$doc) {
+            $this->redirect(Router::route('/admin/documents'));
+            return;
+        }
+
+        $docModel->updateStatus($id, $statut, (int) Auth::id(), $motif ?: null);
+
+        (new Messagerie())->notifyDocumentStatus(
+            $doc['email'],
+            $doc['fullname'],
+            $statut,
+            $motif ?: null
+        );
+
+        (new NotificationModel())->create(
+            (int) $doc['user_id'],
+            $statut === 'valide' ? 'validation_document' : 'rejet_document',
+            $statut === 'valide' ? 'Document validé' : 'Document refusé',
+            'Votre document « ' . $doc['titre'] . ' » a été ' . ($statut === 'valide' ? 'validé' : 'refusé') . '.',
+            Router::route('/interns/documents')
+        );
+
+        $_SESSION['success'] = 'Document traité.';
+        $this->redirect(Router::route('/admin/documents'));
+    }
+
+    public function notifications()
+    {
+        $notifModel = new NotificationModel();
+        View::view('admin.notifications', [
+            'notifications' => $notifModel->byUserId((int) Auth::id()),
+            'unread' => $notifModel->unreadCount((int) Auth::id()),
+        ]);
+    }
+
+    public function settings()
+    {
+        View::view('admin.settings');
+    }
+
+    public function reports()
+    {
+        View::view('admin.reports', [
+            'stats' => [
+                'users' => (new UserModel())->count(),
+                'avocats' => (new AvocatModel())->count(),
+                'stagiaires' => (new StagiaireModel())->count(),
+                'candidatures' => count((new InternshipApplicationModel())->all()),
+                'inscriptions_pending' => (new InscriptionModel())->countPending(),
+            ],
+        ]);
+    }
+}

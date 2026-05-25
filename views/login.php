@@ -1,5 +1,5 @@
 <?php
-$error = '';
+$error = $_SESSION['error'] ?? null;
 $loginSuccess = false;
 
 // Traitement du formulaire de connexion

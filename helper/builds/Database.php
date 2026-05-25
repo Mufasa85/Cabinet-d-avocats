@@ -49,5 +49,10 @@ use Helper\Log\LogManagement;
         $smt->execute($params);
         return $smt;
     }
+
+    public function lastInsertId(): string
+    {
+        return $this->connexion->lastInsertId();
+    }
   }
 ?>

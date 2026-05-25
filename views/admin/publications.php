@@ -1,10 +1,9 @@
 <?php
+use Core\Security;
+use Service\FileStorage;
+
 $pageTitle = 'Publications';
-$publications = [
-    ['id' => 1, 'title' => 'Guide du Droit des Sociétés en RDC', 'author' => 'Maître Kabongo', 'date' => '10 Mai 2026', 'status' => 'published', 'views' => 1250],
-    ['id' => 2, 'title' => 'Fiscalité des Entreprises Mining', 'author' => 'Maître Lukoji', 'date' => '05 Mai 2026', 'status' => 'published', 'views' => 890],
-    ['id' => 3, 'title' => 'Nouveau Cadre Réglementaire', 'author' => 'Maître Ngalulu', 'date' => '28 Avril 2026', 'status' => 'draft', 'views' => 0],
-];
+$publications = $publications ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +32,7 @@ $publications = [
                 </div>
             </header>
             <div class="page-content">
+                <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
                 <div class="filter-bar">
                     <div class="search-input"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher..."></div>
                     <select class="filter-select"><option value="">Tous</option><option value="published">Publié</option><option value="draft">Brouillon</option></select>
@@ -45,11 +45,13 @@ $publications = [
                                 <tbody>
                                     <?php foreach ($publications as $p): ?>
                                     <tr>
-                                        <td><h4 style="color: var(--white);"><?= htmlspecialchars($p['title']) ?></h4></td>
-                                        <td><?= htmlspecialchars($p['author']) ?></td>
-                                        <td><?= $p['date'] ?></td>
-                                        <td><span class="badge <?= $p['status'] === 'published' ? 'badge-success' : 'badge-warning' ?>"><?= $p['status'] === 'published' ? 'Publié' : 'Brouillon' ?></span></td>
-                                        <td><?= $p['views'] ?></td>
+                                        <td><h4 style="color: var(--white);"><?= htmlspecialchars($p['titre']) ?></h4>
+                                            <?php if (!empty($p['fichier'])): ?><a href="<?= FileStorage::url($p['fichier']) ?>" target="_blank" class="btn btn-sm btn-ghost">PDF</a><?php endif; ?>
+                                        </td>
+                                        <td><?= htmlspecialchars($p['auteur_nom'] ?? '—') ?></td>
+                                        <td><?= $p['publie_le'] ? date('d/m/Y', strtotime($p['publie_le'])) : date('d/m/Y', strtotime($p['created_at'])) ?></td>
+                                        <td><span class="badge <?= $p['statut'] === 'publie' ? 'badge-success' : 'badge-warning' ?>"><?= htmlspecialchars($p['statut']) ?></span></td>
+                                        <td>—</td>
                                         <td>
                                             <div class="flex gap-sm">
                                                 <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview'"><i class="fas fa-eye"></i></button>
@@ -74,15 +76,36 @@ $publications = [
             <div class="modal-header-content"><div class="modal-icon"><i class="fas fa-newspaper"></i></div><div><h3 class="modal-title">Nouvel Article</h3><p class="modal-subtitle">Créer une publication</p></div></div>
             <button class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
         </div>
+        <form method="post" action="<?= Router\Router::route('/admin/publications') ?>" enctype="multipart/form-data">
+        <?= Security::csrf_tokken() ?>
         <div class="modal-body">
-            <div class="form-group"><label class="form-label">Titre</label><input type="text" class="form-input" placeholder="Titre de l'article"></div>
-            <div class="form-group"><label class="form-label">Contenu</label><textarea class="form-textarea" rows="6" placeholder="Contenu de l'article..."></textarea></div>
-            <div class="form-group"><label class="form-label">Statut</label><select class="form-select"><option value="draft">Brouillon</option><option value="published">Publié</option></select></div>
+            <div class="form-group"><label class="form-label">Titre</label><input type="text" name="titre" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">Description</label><textarea name="description" class="form-textarea" rows="3"></textarea></div>
+            <div class="form-group"><label class="form-label">Contenu</label><textarea name="contenu" class="form-textarea" rows="6"></textarea></div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Type</label>
+                    <select name="type" class="form-select">
+                        <option value="brochure">Brochure</option>
+                        <option value="etude_cas">Étude de cas</option>
+                        <option value="distinction">Distinction</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">Statut</label>
+                    <select name="statut" class="form-select">
+                        <option value="publie">Publié</option>
+                        <option value="brouillon">Brouillon</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label class="form-label">Fichier PDF (optionnel)</label><input type="file" name="fichier" accept=".pdf"></div>
+            <div class="form-group"><label class="form-label">Image couverture (optionnel)</label><input type="file" name="image" accept="image/*"></div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-save"></i> Publier</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
         </div>
+        </form>
     </div>
 
     <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete' && modalOpen }">

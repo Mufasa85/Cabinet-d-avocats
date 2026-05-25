@@ -6,13 +6,14 @@
  * ==============================================
  */
 
-// Données statiques pour démonstration
-$stats = ['users' => 156, 'lawyers' => 24, 'cases' => 89, 'pending' => 12];
-$recentActivity = [
-    ['title' => 'Nouveau client', 'description' => 'Maître Diallo a ajouté un client', 'time' => 'Il y a 5 min', 'icon' => 'fa-user-plus'],
-    ['title' => 'Document uploadé', 'description' => 'Nouveau contrat ajouté', 'time' => 'Il y a 23 min', 'icon' => 'fa-file-upload'],
+$stats = $stats ?? ['users' => 0, 'lawyers' => 0, 'pending' => 0, 'documents' => 0];
+$recentApplications = $recentApplications ?? [];
+$statutCandidature = [
+    'en_attente' => ['label' => 'En attente', 'class' => 'badge-warning'],
+    'analyse' => ['label' => 'En analyse', 'class' => 'badge-info'],
+    'retenu' => ['label' => 'Retenu', 'class' => 'badge-success'],
+    'refuse' => ['label' => 'Refusé', 'class' => 'badge-danger'],
 ];
-$pendingApplications = [];
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +85,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">Utilisateurs</span>
-                            <span class="stat-card-value" data-count="156"><?= $stats['users'] ?? 0 ?></span>
+                            <span class="stat-card-value" data-count="<?= (int)($stats['users'] ?? 0) ?>"><?= (int)($stats['users'] ?? 0) ?></span>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
                                 <span>+12% ce mois</span>
@@ -101,7 +102,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">Avocats</span>
-                            <span class="stat-card-value" data-count="24"><?= $stats['lawyers'] ?? 0 ?></span>
+                            <span class="stat-card-value" data-count="<?= (int)($stats['lawyers'] ?? 0) ?>"><?= (int)($stats['lawyers'] ?? 0) ?></span>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
                                 <span>+3 ce mois</span>
@@ -117,8 +118,8 @@ $pendingApplications = [];
                             <i class="fas fa-file-alt"></i>
                         </div>
                         <div class="stat-card-content">
-                            <span class="stat-card-label">Dossiers</span>
-                            <span class="stat-card-value" data-count="89"><?= $stats['cases'] ?? 0 ?></span>
+                            <span class="stat-card-label">Documents en attente</span>
+                            <span class="stat-card-value" data-count="<?= (int)($stats['documents'] ?? 0) ?>"><?= (int)($stats['documents'] ?? 0) ?></span>
                             <div class="stat-card-change positive">
                                 <i class="fas fa-arrow-up"></i>
                                 <span>+8% ce mois</span>
@@ -135,7 +136,7 @@ $pendingApplications = [];
                         </div>
                         <div class="stat-card-content">
                             <span class="stat-card-label">En Attente</span>
-                            <span class="stat-card-value" data-count="12"><?= $stats['pending'] ?? 0 ?></span>
+                            <span class="stat-card-value" data-count="<?= (int)($stats['pending'] ?? 0) ?>"><?= (int)($stats['pending'] ?? 0) ?></span>
                             <div class="stat-card-change negative">
                                 <i class="fas fa-arrow-down"></i>
                                 <span>-5% cette semaine</span>
@@ -232,7 +233,7 @@ $pendingApplications = [];
                                     <i class="fas fa-inbox"></i>
                                     Candidatures en Attente
                                 </h2>
-                                <a href="applications.php" class="btn btn-sm btn-secondary">
+                                <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="btn btn-sm btn-secondary">
                                     Voir Toutes
                                 </a>
                             </div>
@@ -249,93 +250,32 @@ $pendingApplications = [];
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php foreach ($recentApplications as $app):
+                                                $name = trim(($app['prenom'] ?? '') . ' ' . ($app['nom'] ?? ''));
+                                                $initials = \Core\Auth::initials($name);
+                                                $st = $statutCandidature[$app['statut']] ?? ['label' => $app['statut'], 'class' => 'badge-warning'];
+                                            ?>
                                             <tr>
                                                 <td>
                                                     <div class="user-info">
-                                                        <div class="avatar">JM</div>
+                                                        <div class="avatar"><?= htmlspecialchars($initials) ?></div>
                                                         <div class="user-details">
-                                                            <h4>Jean Mukamba</h4>
-                                                            <span>Université de Kinshasa</span>
+                                                            <h4><?= htmlspecialchars($name) ?></h4>
+                                                            <span><?= htmlspecialchars($app['universite']) ?></span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>Université de Kinshasa</td>
-                                                <td>15 Mai 2026</td>
+                                                <td><?= htmlspecialchars($app['universite']) ?></td>
+                                                <td><?= date('d M Y', strtotime($app['created_at'])) ?></td>
+                                                <td><span class="badge <?= $st['class'] ?>"><?= htmlspecialchars($st['label']) ?></span></td>
                                                 <td>
-                                                    <span class="badge badge-warning">En attente</span>
-                                                </td>
-                                                <td>
-                                                    <div class="flex gap-sm">
-                                                        <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview-application'; modalOpen = true" title="Voir">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-success" title="Accepter">
-                                                            <i class="fas fa-check"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-danger" title="Refuser">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
+                                                    <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="btn btn-sm btn-ghost" title="Voir"><i class="fas fa-eye"></i></a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="user-info">
-                                                        <div class="avatar">AN</div>
-                                                        <div class="user-details">
-                                                            <h4>Aminata Ngalulu</h4>
-                                                            <span>Université Catholique</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Université Catholique</td>
-                                                <td>14 Mai 2026</td>
-                                                <td>
-                                                    <span class="badge badge-warning">En attente</span>
-                                                </td>
-                                                <td>
-                                                    <div class="flex gap-sm">
-                                                        <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview-application'; modalOpen = true" title="Voir">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-success" title="Accepter">
-                                                            <i class="fas fa-check"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-danger" title="Refuser">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="user-info">
-                                                        <div class="avatar">PM</div>
-                                                        <div class="user-details">
-                                                            <h4>Pierre Mbuyi</h4>
-                                                            <span>Université Protestante</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Université Protestante</td>
-                                                <td>13 Mai 2026</td>
-                                                <td>
-                                                    <span class="badge badge-warning">En attente</span>
-                                                </td>
-                                                <td>
-                                                    <div class="flex gap-sm">
-                                                        <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview-application'; modalOpen = true" title="Voir">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-success" title="Accepter">
-                                                            <i class="fas fa-check"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-danger" title="Refuser">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <?php endforeach; ?>
+                                            <?php if (empty($recentApplications)): ?>
+                                            <tr><td colspan="5" style="text-align:center;color:var(--gray-500);">Aucune candidature récente</td></tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>

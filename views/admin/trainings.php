@@ -1,11 +1,9 @@
 <?php
+use Core\Security;
+
 $pageTitle = 'Formations';
-$trainings = [
-    ['id' => 1, 'title' => 'Formation Droit des Sociétés', 'date' => '20 Juin 2026', 'duration' => '3 jours', 'participants' => 15, 'status' => 'upcoming'],
-    ['id' => 2, 'title' => 'Séminaire Fiscalité Internationale', 'date' => '25 Juin 2026', 'duration' => '2 jours', 'participants' => 20, 'status' => 'upcoming'],
-    ['id' => 3, 'title' => 'Atelier Propriété Intellectuelle', 'date' => '10 Mai 2026', 'duration' => '1 jour', 'participants' => 12, 'status' => 'completed'],
-    ['id' => 4, 'title' => 'Conférence Droit Minier', 'date' => '05 Avril 2026', 'duration' => '1 jour', 'participants' => 30, 'status' => 'completed'],
-];
+$formations = $formations ?? [];
+$inscriptions = $inscriptions ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +35,31 @@ $trainings = [
                 </div>
             </header>
             <div class="page-content">
+                <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
+                <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
+                <?php if (!empty($inscriptions)): ?>
+                <div class="card mb-4">
+                    <div class="card-header"><h2 class="card-title">Inscriptions en attente</h2></div>
+                    <div class="card-body" style="padding:0;">
+                        <table class="table">
+                            <thead><tr><th>Formation</th><th>Candidat</th><th>Date</th><th>Actions</th></tr></thead>
+                            <tbody>
+                            <?php foreach ($inscriptions as $ins): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($ins['formation_titre']) ?></td>
+                                    <td><?= htmlspecialchars($ins['fullname']) ?> (<?= htmlspecialchars($ins['email']) ?>)</td>
+                                    <td><?= date('d/m/Y', strtotime($ins['created_at'])) ?></td>
+                                    <td class="flex gap-sm">
+                                        <form method="post" action="<?= Router\Router::route('/admin/inscriptions/' . (int)$ins['id'] . '/statut') ?>"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="acceptee"><button type="submit" class="btn btn-sm btn-success">Accepter</button></form>
+                                        <form method="post" action="<?= Router\Router::route('/admin/inscriptions/' . (int)$ins['id'] . '/statut') ?>"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="refusee"><button type="submit" class="btn btn-sm btn-danger">Refuser</button></form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="filter-bar">
                     <div class="search-input"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher..."></div>
                     <select class="filter-select">
@@ -46,22 +69,17 @@ $trainings = [
                     </select>
                 </div>
                 <div class="grid-2">
-                    <?php foreach ($trainings as $t): ?>
+                    <?php foreach ($formations as $t): ?>
                     <div class="card hover-lift">
                         <div class="card-body">
                             <div class="flex justify-between items-center mb-md">
-                                <span class="badge <?= $t['status'] === 'upcoming' ? 'badge-gold' : 'badge-success' ?>"><?= $t['status'] === 'upcoming' ? 'À venir' : 'Terminée' ?></span>
-                                <div class="flex gap-sm">
-                                    <button class="btn btn-sm btn-ghost" @click="activeModal = 'edit'"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-ghost" @click="activeModal = 'details'"><i class="fas fa-eye"></i></button>
-                                    <button class="btn btn-sm btn-ghost" @click="activeModal = 'delete'"><i class="fas fa-trash"></i></button>
-                                </div>
+                                <span class="badge badge-gold"><?= htmlspecialchars($t['statut']) ?></span>
                             </div>
-                            <h4 style="color: var(--white); font-size: 1.125rem; margin-bottom: 1rem;"><?= htmlspecialchars($t['title']) ?></h4>
+                            <h4 style="color: var(--white); font-size: 1.125rem; margin-bottom: 1rem;"><?= htmlspecialchars($t['titre']) ?></h4>
                             <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--gray-400); font-size: 0.875rem;">
-                                <p><i class="fas fa-calendar" style="margin-right: 0.5rem; color: var(--gold-primary);"></i><?= $t['date'] ?></p>
-                                <p><i class="fas fa-clock" style="margin-right: 0.5rem; color: var(--gold-primary);"></i><?= $t['duration'] ?></p>
-                                <p><i class="fas fa-users" style="margin-right: 0.5rem; color: var(--gold-primary);"></i><?= $t['participants'] ?> participants</p>
+                                <p><i class="fas fa-calendar" style="margin-right: 0.5rem; color: var(--gold-primary);"></i><?= $t['date_debut'] ? date('d/m/Y', strtotime($t['date_debut'])) : '—' ?></p>
+                                <p><i class="fas fa-users" style="margin-right: 0.5rem; color: var(--gold-primary);"></i><?= (int)$t['places_reservees'] ?>/<?= (int)$t['places_max'] ?> places</p>
+                                <p><i class="fas fa-user-tag" style="margin-right: 0.5rem; color: var(--gold-primary);"></i><?= htmlspecialchars($t['public_cible']) ?></p>
                             </div>
                         </div>
                     </div>
@@ -77,19 +95,32 @@ $trainings = [
             <div class="modal-header-content"><div class="modal-icon"><i class="fas fa-graduation-cap"></i></div><div><h3 class="modal-title">Nouvelle Formation</h3><p class="modal-subtitle">Créer une nouvelle formation</p></div></div>
             <button class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
         </div>
+        <form method="post" action="<?= Router\Router::route('/admin/trainings') ?>">
+        <?= Security::csrf_tokken() ?>
         <div class="modal-body">
-            <div class="form-group"><label class="form-label">Titre</label><input type="text" class="form-input" placeholder="Titre de la formation"></div>
+            <div class="form-group"><label class="form-label">Titre</label><input type="text" name="titre" class="form-input" required></div>
             <div class="form-row">
-                <div class="form-group"><label class="form-label">Date</label><input type="date" class="form-input"></div>
-                <div class="form-group"><label class="form-label">Durée</label><input type="text" class="form-input" placeholder="Ex: 3 jours"></div>
+                <div class="form-group"><label class="form-label">Date début</label><input type="date" name="date_debut" class="form-input"></div>
+                <div class="form-group"><label class="form-label">Date fin</label><input type="date" name="date_fin" class="form-input"></div>
             </div>
-            <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" placeholder="Description de la formation..."></textarea></div>
-            <div class="form-group"><label class="form-label">Nombre de places</label><input type="number" class="form-input" placeholder="30"></div>
+            <div class="form-group"><label class="form-label">Lieu</label><input type="text" name="lieu" class="form-input"></div>
+            <div class="form-group"><label class="form-label">Description</label><textarea name="description" class="form-textarea"></textarea></div>
+            <div class="form-row">
+                <div class="form-group"><label class="form-label">Places max</label><input type="number" name="places_max" class="form-input" value="20"></div>
+                <div class="form-group"><label class="form-label">Public</label>
+                    <select name="public_cible" class="form-select">
+                        <option value="tous">Tous</option>
+                        <option value="avocat">Avocats</option>
+                        <option value="stagiaire">Stagiaires</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-save"></i> Créer</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Créer</button>
         </div>
+        </form>
     </div>
 
     <div class="modal" :class="{ 'active': activeModal === 'details' && modalOpen }">

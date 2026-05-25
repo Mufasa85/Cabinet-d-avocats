@@ -43,7 +43,7 @@
        $_SESSION['error'] = $message;
     }
     
-    public function create(array $data){}
+    public function create(){}
     public function delete(){}
     public function  index(){}
     public function update(){}

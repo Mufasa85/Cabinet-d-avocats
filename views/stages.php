@@ -669,7 +669,8 @@
                 </div>
 
                 <div class="application-form-wrapper animate-on-scroll">
-                    <form id="applicationForm" class="application-form">
+                    <form id="applicationForm" class="application-form" method="post" action="<?= htmlspecialchars($applyUrl ?? Router\Router::route('/stages/candidature')) ?>" enctype="multipart/form-data">
+                        <?= $csrf ?? '' ?>
                         <!-- Personal Info Section -->
                         <div class="form-section">
                             <h3 class="form-section-title">
@@ -750,6 +751,13 @@
                             </div>
                         </div>
 
+                        <div class="form-section">
+                            <h3 class="form-section-title">Lettre de motivation</h3>
+                            <div class="form-group">
+                                <label for="motivation">Motivation *</label>
+                                <textarea id="motivation" name="motivation" rows="5" required placeholder="Expliquez votre motivation pour rejoindre le cabinet..."></textarea>
+                            </div>
+                        </div>
 
                         <!-- Documents Upload Section -->
                         <div class="form-section">

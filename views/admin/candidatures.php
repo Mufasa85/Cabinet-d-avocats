@@ -1,12 +1,16 @@
 <?php
+use Core\Auth;
+use Core\Security;
+use Service\FileStorage;
+
 $pageTitle = 'Candidatures';
-$applications = [
-    ['id' => 1, 'name' => 'Jean Mukamba', 'university' => 'Université de Kinshasa', 'field' => 'Droit des Affaires', 'date' => '15 Mai 2026', 'status' => 'pending', 'avatar' => 'JM'],
-    ['id' => 2, 'name' => 'Aminata Ngalulu', 'university' => 'Université Catholique', 'field' => 'Droit Fiscal', 'date' => '14 Mai 2026', 'status' => 'pending', 'avatar' => 'AN'],
-    ['id' => 3, 'name' => 'Pierre Mbuyi', 'university' => 'Université Protestante', 'field' => 'Droit du Travail', 'date' => '13 Mai 2026', 'status' => 'pending', 'avatar' => 'PM'],
-    ['id' => 4, 'name' => 'Marie Kasaï', 'university' => 'Université de Lubumbashi', 'field' => 'Droit Minier', 'date' => '10 Mai 2026', 'status' => 'accepted', 'avatar' => 'MK'],
-    ['id' => 5, 'name' => 'Robert Diallo', 'university' => 'Université de Kinshasa', 'field' => 'Droit des Sociétés', 'date' => '08 Mai 2026', 'status' => 'rejected', 'avatar' => 'RD'],
+$statutMap = [
+    'en_attente' => ['label' => 'En attente', 'badge' => 'badge-warning'],
+    'analyse' => ['label' => 'En analyse', 'badge' => 'badge-info'],
+    'retenu' => ['label' => 'Retenu', 'badge' => 'badge-success'],
+    'refuse' => ['label' => 'Refusé', 'badge' => 'badge-danger'],
 ];
+$applications = $applications ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +42,8 @@ $applications = [
                 </div>
             </header>
             <div class="page-content">
+                <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
+                <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
                 <div class="filter-bar">
                     <div class="search-input"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher une candidature..."></div>
                     <select class="filter-select">
@@ -53,19 +59,32 @@ $applications = [
                             <table class="table">
                                 <thead><tr><th>Candidat</th><th>Université</th><th>Domaine</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
                                 <tbody>
-                                    <?php foreach ($applications as $app): ?>
+                                    <?php foreach ($applications as $app):
+                                        $name = trim(($app['prenom'] ?? '') . ' ' . ($app['nom'] ?? ''));
+                                        $initials = Auth::initials($name);
+                                        $st = $statutMap[$app['statut']] ?? ['label' => $app['statut'], 'badge' => 'badge-warning'];
+                                        $appJson = htmlspecialchars(json_encode([
+                                            'id' => $app['id'],
+                                            'name' => $name,
+                                            'email' => $app['email'],
+                                            'university' => $app['universite'],
+                                            'field' => $app['departement_souhaite'],
+                                            'motivation' => $app['motivation'],
+                                            'documents' => $app['documents'] ?? [],
+                                        ]), ENT_QUOTES, 'UTF-8');
+                                    ?>
                                     <tr>
-                                        <td><div class="user-info"><div class="avatar"><?= $app['avatar'] ?></div><div class="user-details"><h4><?= htmlspecialchars($app['name']) ?></h4></div></div></td>
-                                        <td><?= htmlspecialchars($app['university']) ?></td>
-                                        <td><?= htmlspecialchars($app['field']) ?></td>
-                                        <td><?= $app['date'] ?></td>
-                                        <td><span class="badge <?= $app['status'] === 'pending' ? 'badge-warning' : ($app['status'] === 'accepted' ? 'badge-success' : 'badge-danger') ?>"><?= ucfirst($app['status']) ?></span></td>
+                                        <td><div class="user-info"><div class="avatar"><?= htmlspecialchars($initials) ?></div><div class="user-details"><h4><?= htmlspecialchars($name) ?></h4><span><?= htmlspecialchars($app['email']) ?></span></div></div></td>
+                                        <td><?= htmlspecialchars($app['universite']) ?></td>
+                                        <td><?= htmlspecialchars($app['departement_souhaite']) ?></td>
+                                        <td><?= date('d M Y', strtotime($app['created_at'])) ?></td>
+                                        <td><span class="badge <?= $st['badge'] ?>"><?= htmlspecialchars($st['label']) ?></span></td>
                                         <td>
                                             <div class="flex gap-sm">
-                                                <button class="btn btn-sm btn-ghost" @click="selectedApp = <?= htmlspecialchars(json_encode($app)) ?>; activeModal = 'preview'; modalOpen = true"><i class="fas fa-eye"></i></button>
-                                                <?php if ($app['status'] === 'pending'): ?>
-                                                <button class="btn btn-sm btn-success" title="Accepter"><i class="fas fa-check"></i></button>
-                                                <button class="btn btn-sm btn-danger" title="Refuser" @click="selectedApp = <?= htmlspecialchars(json_encode($app)) ?>; activeModal = 'reject'; modalOpen = true"><i class="fas fa-times"></i></button>
+                                                <button type="button" class="btn btn-sm btn-ghost" @click="selectedApp = <?= $appJson ?>; activeModal = 'preview'; modalOpen = true"><i class="fas fa-eye"></i></button>
+                                                <?php if (in_array($app['statut'], ['en_attente', 'analyse'], true)): ?>
+                                                <form method="post" action="<?= Router\Router::route('/admin/candidatures/' . (int)$app['id'] . '/statut') ?>" style="display:inline;"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="retenu"><button type="submit" class="btn btn-sm btn-success" title="Accepter"><i class="fas fa-check"></i></button></form>
+                                                <button type="button" class="btn btn-sm btn-danger" @click="selectedApp = <?= $appJson ?>; activeModal = 'reject'; modalOpen = true"><i class="fas fa-times"></i></button>
                                                 <?php endif; ?>
                                             </div>
                                         </td>
@@ -105,21 +124,29 @@ $applications = [
                 </div>
                 <div>
                     <h4 style="color: var(--white); margin-bottom: 0.5rem;">Lettre de Motivation</h4>
-                    <p style="color: var(--gray-400); line-height: 1.7; margin-bottom: 1.5rem;">Madame, Monsieur, Ayant terminé ma formation en Master II, je suis vivement intéressé par une opportunité de stage au sein de votre cabinet...</p>
+                    <p style="color: var(--gray-400); line-height: 1.7; margin-bottom: 1.5rem;" x-text="selectedApp ? selectedApp.motivation : ''"></p>
                     <h4 style="color: var(--white); margin-bottom: 0.5rem;">Documents</h4>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
-                            <i class="fas fa-file-pdf" style="color: var(--danger);"></i>
-                            <span style="color: var(--gray-300); font-size: 0.875rem; flex: 1;">CV_Complete.pdf</span>
-                            <button class="btn btn-sm btn-ghost"><i class="fas fa-download"></i></button>
+                    <template x-if="selectedApp && selectedApp.documents">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <template x-for="doc in selectedApp.documents" :key="doc.id">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
+                                    <i class="fas fa-file-pdf" style="color: var(--danger);"></i>
+                                    <span style="color: var(--gray-300); font-size: 0.875rem; flex: 1;" x-text="doc.type"></span>
+                                    <a :href="'<?= Router\Router::route('/resources/') ?>' + doc.fichier" class="btn btn-sm btn-ghost" target="_blank"><i class="fas fa-download"></i></a>
+                                </div>
+                            </template>
                         </div>
-                    </div>
+                    </template>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-danger" @click="activeModal = 'reject'"><i class="fas fa-times"></i> Refuser</button>
-            <button class="btn btn-success"><i class="fas fa-check"></i> Accepter</button>
+            <button type="button" class="btn btn-danger" @click="activeModal = 'reject'"><i class="fas fa-times"></i> Refuser</button>
+            <form method="post" :action="'<?= Router\Router::route('/admin/candidatures/') ?>' + (selectedApp ? selectedApp.id : '') + '/statut'" x-show="selectedApp">
+                <?= Security::csrf_tokken() ?>
+                <input type="hidden" name="statut" value="retenu">
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Accepter</button>
+            </form>
         </div>
     </div>
 
@@ -139,8 +166,15 @@ $applications = [
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
-            <button class="btn btn-danger"><i class="fas fa-paper-plane"></i> Envoyer</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
+            <form method="post" :action="'<?= Router\Router::route('/admin/candidatures/') ?>' + (selectedApp ? selectedApp.id : '') + '/statut'" x-show="selectedApp">
+                <?= Security::csrf_tokken() ?>
+                <input type="hidden" name="statut" value="refuse">
+                <div class="form-group" style="text-align:left;margin-bottom:1rem;">
+                    <textarea name="motif" class="form-textarea" placeholder="Motif du refus..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-paper-plane"></i> Envoyer</button>
+            </form>
         </div>
     </div>
 </body>

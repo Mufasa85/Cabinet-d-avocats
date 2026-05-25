@@ -30,7 +30,7 @@
                 <span class="nav-item-text">Avocats</span>
             </a>
             
-            <a href="<?= Router\Router::route('/admin/applications') ?>" class="nav-item <?= $currentPage === 'applications' ? 'active' : '' ?>">
+            <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="nav-item <?= $currentPage === 'candidatures' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-file-alt"></i></span>
                 <span class="nav-item-text">Candidatures</span>
                 <span class="nav-item-badge">5</span>
@@ -89,7 +89,7 @@
                 <span class="sidebar-user-role">Admin Système</span>
             </div>
         </div>
-        <a href="../deconnexion.php" class="sidebar-logout">
+        <a href="<?= Router\Router::route('/logout') ?>" class="sidebar-logout">
             <i class="fas fa-sign-out-alt"></i>
             <span>Déconnexion</span>
         </a>

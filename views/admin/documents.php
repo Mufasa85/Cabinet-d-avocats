@@ -1,11 +1,10 @@
 <?php
-$pageTitle = 'Documents';
-$documents = [
-    ['id' => 1, 'name' => 'Contrat_SolarCorp.pdf', 'type' => 'PDF', 'size' => '2.4 MB', 'date' => '15 Mai 2026', 'category' => 'Contrats'],
-    ['id' => 2, 'name' => 'Plaidoirie_DroitTravail.pdf', 'type' => 'PDF', 'size' => '1.8 MB', 'date' => '12 Mai 2026', 'category' => 'Plaidoiries'],
-    ['id' => 3, 'name' => 'Note_Fiscale_2026.pdf', 'type' => 'PDF', 'size' => '890 KB', 'date' => '10 Mai 2026', 'category' => 'Notes'],
-    ['id' => 4, 'name' => 'Accord_MiningCorp.pdf', 'type' => 'PDF', 'size' => '3.2 MB', 'date' => '08 Mai 2026', 'category' => 'Accords'],
-];
+use Core\Security;
+use Service\FileStorage;
+
+$pageTitle = 'Documents stagiaires';
+$documents = $documents ?? [];
+$statutLabels = ['en_attente' => 'En attente', 'valide' => 'Validé', 'rejete' => 'Refusé'];
 ?>
 
 <!DOCTYPE html>
@@ -34,31 +33,34 @@ $documents = [
                 </div>
             </header>
             <div class="page-content">
-                <div class="filter-bar">
-                    <div class="search-input"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher..."></div>
-                    <select class="filter-select"><option value="">Tous</option><option value="contrats">Contrats</option><option value="notes">Notes</option></select>
-                </div>
+                <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
                 <div class="card">
                     <div class="card-body" style="padding: 0;">
                         <div class="table-container">
                             <table class="table">
-                                <thead><tr><th>Fichier</th><th>Catégorie</th><th>Taille</th><th>Date</th><th>Actions</th></tr></thead>
+                                <thead><tr><th>Stagiaire</th><th>Titre</th><th>Type</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
                                 <tbody>
                                     <?php foreach ($documents as $d): ?>
                                     <tr>
-                                        <td><div class="flex items-center gap-md"><i class="fas fa-file-pdf" style="color: var(--danger); font-size: 1.5rem;"></i><span style="color: var(--white);"><?= htmlspecialchars($d['name']) ?></span></div></td>
-                                        <td><span class="badge badge-gold"><?= $d['category'] ?></span></td>
-                                        <td><?= $d['size'] ?></td>
-                                        <td><?= $d['date'] ?></td>
+                                        <td><?= htmlspecialchars($d['stagiaire_nom']) ?></td>
+                                        <td><?= htmlspecialchars($d['titre']) ?></td>
+                                        <td><?= htmlspecialchars($d['type']) ?></td>
+                                        <td><span class="badge badge-<?= $d['statut'] === 'valide' ? 'success' : ($d['statut'] === 'rejete' ? 'danger' : 'warning') ?>"><?= $statutLabels[$d['statut']] ?? $d['statut'] ?></span></td>
+                                        <td><?= date('d/m/Y', strtotime($d['created_at'])) ?></td>
                                         <td>
                                             <div class="flex gap-sm">
-                                                <button class="btn btn-sm btn-ghost" @click="activeModal = 'preview'"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-ghost"><i class="fas fa-download"></i></button>
-                                                <button class="btn btn-sm btn-ghost" @click="activeModal = 'delete'"><i class="fas fa-trash"></i></button>
+                                                <a href="<?= FileStorage::url($d['fichier']) ?>" class="btn btn-sm btn-ghost" target="_blank"><i class="fas fa-download"></i></a>
+                                                <?php if ($d['statut'] === 'en_attente'): ?>
+                                                <form method="post" action="<?= Router\Router::route('/admin/documents/' . (int)$d['id'] . '/valider') ?>"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="valide"><button type="submit" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button></form>
+                                                <form method="post" action="<?= Router\Router::route('/admin/documents/' . (int)$d['id'] . '/valider') ?>" class="flex gap-sm"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="rejete"><input type="text" name="motif" class="form-input" placeholder="Motif" style="max-width:120px;"><button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button></form>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
+                                    <?php if (empty($documents)): ?>
+                                    <tr><td colspan="6" style="text-align:center;color:var(--gray-500);">Aucun document</td></tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>

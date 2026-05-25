@@ -1,12 +1,106 @@
-<?php 
-  namespace Service;
+<?php
 
-  class Messagerie{
-    # id : origine
-    # id : destination
-    # message : message
+namespace Service;
 
-    public function send($origine,$destination,string $message){}
-    public function receive(){}
-  }
-?>
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as MailException;
+
+class Messagerie
+{
+    public function send(string $toEmail, string $toName, string $subject, string $bodyHtml): bool
+    {
+        if (empty($_ENV['MAIL_HOST']) || empty($_ENV['MAIL_USER'])) {
+            error_log("[Messagerie] Mail non configuré — sujet: {$subject}, destinataire: {$toEmail}");
+            return false;
+        }
+
+        try {
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host = $_ENV['MAIL_HOST'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['MAIL_USER'];
+            $mail->Password = $_ENV['MAIL_PASS'] ?? '';
+            $mail->SMTPSecure = $_ENV['MAIL_ENCRYPTION'] ?? PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = (int) ($_ENV['MAIL_PORT'] ?? 587);
+            $mail->CharSet = 'UTF-8';
+
+            $mail->setFrom($_ENV['MAIL_FROM'] ?? $_ENV['MAIL_USER'], $_ENV['MAIL_FROM_NAME'] ?? 'Cabinet ELMD');
+            $mail->addAddress($toEmail, $toName);
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body = $bodyHtml;
+            $mail->AltBody = strip_tags($bodyHtml);
+
+            $mail->send();
+            return true;
+        } catch (MailException $e) {
+            error_log('[Messagerie] ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function notifyApplicationReceived(string $email, string $name): void
+    {
+        $this->send(
+            $email,
+            $name,
+            'Candidature de stage reçue — Cabinet ELMD',
+            '<p>Bonjour ' . htmlspecialchars($name) . ',</p>'
+            . '<p>Nous avons bien reçu votre candidature de stage. Notre équipe l\'examinera sous 15 jours ouvrés.</p>'
+            . '<p>Cordialement,<br>Cabinet ELMD</p>'
+        );
+    }
+
+    public function notifyApplicationStatus(string $email, string $name, string $statut, ?string $motif = null): void
+    {
+        $labels = [
+            'retenu' => 'acceptée',
+            'refuse' => 'refusée',
+            'analyse' => 'en cours d\'analyse',
+        ];
+        $label = $labels[$statut] ?? $statut;
+        $body = '<p>Bonjour ' . htmlspecialchars($name) . ',</p>'
+            . '<p>Votre candidature de stage a été <strong>' . htmlspecialchars($label) . '</strong>.</p>';
+        if ($motif) {
+            $body .= '<p><strong>Motif :</strong> ' . nl2br(htmlspecialchars($motif)) . '</p>';
+        }
+        $body .= '<p>Cordialement,<br>Cabinet ELMD</p>';
+
+        $this->send($email, $name, 'Décision candidature stage — Cabinet ELMD', $body);
+    }
+
+    public function notifyDocumentStatus(string $email, string $name, string $statut, ?string $motif = null): void
+    {
+        $subject = $statut === 'valide'
+            ? 'Document validé — Cabinet ELMD'
+            : 'Document refusé — Cabinet ELMD';
+
+        $body = '<p>Bonjour ' . htmlspecialchars($name) . ',</p>';
+        if ($statut === 'valide') {
+            $body .= '<p>Votre document a été <strong>validé</strong> par l\'administration du cabinet.</p>';
+        } else {
+            $body .= '<p>Votre document a été <strong>refusé</strong>.</p>';
+            if ($motif) {
+                $body .= '<p><strong>Motif :</strong> ' . nl2br(htmlspecialchars($motif)) . '</p>';
+            }
+        }
+        $body .= '<p>Cordialement,<br>Cabinet ELMD</p>';
+
+        $this->send($email, $name, $subject, $body);
+    }
+
+    public function notifyInscriptionStatus(string $email, string $name, string $formationTitre, string $statut): void
+    {
+        $accepted = $statut === 'acceptee';
+        $this->send(
+            $email,
+            $name,
+            ($accepted ? 'Inscription confirmée' : 'Inscription refusée') . ' — ' . $formationTitre,
+            '<p>Bonjour ' . htmlspecialchars($name) . ',</p>'
+            . '<p>Votre inscription à la formation <strong>' . htmlspecialchars($formationTitre) . '</strong> a été '
+            . ($accepted ? '<strong>confirmée</strong>.' : '<strong>refusée</strong>.')
+            . '</p><p>Cordialement,<br>Cabinet ELMD</p>'
+        );
+    }
+}

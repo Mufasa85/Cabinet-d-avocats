@@ -341,17 +341,13 @@ function initForm() {
     const motivationField = document.getElementById('motivation');
     const charCount = document.getElementById('charCount');
     
-    // Character counter
-    motivationField.addEventListener('input', () => {
-        const count = motivationField.value.length;
-        charCount.textContent = count;
-        
-        if (count > 2000) {
-            charCount.style.color = 'var(--color-error)';
-        } else {
-            charCount.style.color = 'var(--color-muted)';
-        }
-    });
+    if (motivationField && charCount) {
+        motivationField.addEventListener('input', () => {
+            const count = motivationField.value.length;
+            charCount.textContent = count;
+            charCount.style.color = count > 2000 ? 'var(--color-error)' : 'var(--color-muted)';
+        });
+    }
     
     // Form submission
     form.addEventListener('submit', async (e) => {
@@ -366,27 +362,35 @@ function initForm() {
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        submitBtn.classList.remove('loading');
-        submitBtn.classList.add('success');
-        
-        // Show success modal
-        setTimeout(() => {
-            showModal();
-            submitBtn.classList.remove('success');
-            submitBtn.disabled = false;
-            form.reset();
-            
-            // Reset upload zones
-            document.querySelectorAll('.upload-zone').forEach(zone => {
-                const type = zone.dataset.type;
-                resetUploadZone(zone, type);
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
             });
-            
-            charCount.textContent = '0';
-        }, 1000);
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || 'Erreur lors de l\'envoi.');
+            }
+
+            submitBtn.classList.remove('loading');
+            submitBtn.classList.add('success');
+
+            setTimeout(() => {
+                showModal();
+                submitBtn.classList.remove('success');
+                submitBtn.disabled = false;
+                form.reset();
+                document.querySelectorAll('.upload-zone').forEach(zone => {
+                    resetUploadZone(zone, zone.dataset.type);
+                });
+                if (charCount) charCount.textContent = '0';
+            }, 800);
+        } catch (err) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+            showError(err.message || 'Une erreur est survenue.');
+        }
     });
 }
 
