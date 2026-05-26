@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ==============================================
  * ADMIN USERS MANAGEMENT
@@ -7,19 +8,49 @@
  */
 
 $pageTitle = 'Gestion des Utilisateurs';
-$users = [
-    ['id' => 1, 'name' => 'Maître Jean Kabongo', 'email' => 'jean.kabongo@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'JK'],
-    ['id' => 2, 'name' => 'Marie Lukoji', 'email' => 'marie.lukoj@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'ML'],
-    ['id' => 3, 'name' => 'Pierre Diallo', 'email' => 'pierre.diallo@cabinet.cd', 'role' => 'Admin', 'status' => 'active', 'avatar' => 'PD'],
-    ['id' => 4, 'name' => 'Aminata Mwamba', 'email' => 'aminata.mwamba@cabinet.cd', 'role' => 'Secrétaire', 'status' => 'active', 'avatar' => 'AM'],
-    ['id' => 5, 'name' => 'Jean Mukamba', 'email' => 'jean.mukamba@gmail.com', 'role' => 'Stagiaire', 'status' => 'pending', 'avatar' => 'JM'],
-    ['id' => 6, 'name' => 'Sophie Kasaï', 'email' => 'sophie.kasai@cabinet.cd', 'role' => 'Juriste', 'status' => 'active', 'avatar' => 'SK'],
-    ['id' => 7, 'name' => 'Robert Ngalulu', 'email' => 'robert.ngalulu@cabinet.cd', 'role' => 'Avocat', 'status' => 'inactive', 'avatar' => 'RN'],
-    ['id' => 8, 'name' => 'Claire Bemba', 'email' => 'claire.bemba@cabinet.cd', 'role' => 'Comptable', 'status' => 'active', 'avatar' => 'CB'],
-];
 
-?><!DOCTYPE html>
+// Formater les utilisateurs pour la vue (adapter les champs DB)
+$formattedUsers = array_map(function ($user) {
+    // Générer les initiales pour l'avatar
+    $names = explode(' ', $user['fullname'] ?? '');
+    $initials = '';
+    foreach (array_slice($names, 0, 2) as $n) {
+        $initials .= mb_strtoupper(mb_substr($n, 0, 1));
+    }
+
+    // Mapper les rôles DB aux labels français
+    $roleLabels = [
+        'admin' => 'Admin',
+        'avocat' => 'Avocat',
+        'juriste' => 'Juriste',
+        'secretaire' => 'Secrétaire',
+        'stagiaire' => 'Stagiaire',
+    ];
+
+    // Mapper le statut DB au format de la vue
+    $statusMap = [
+        1 => 'active',
+        0 => 'inactive',
+    ];
+
+    return [
+        'id' => (int) $user['id'],
+        'name' => $user['fullname'] ?? '',
+        'email' => $user['email'] ?? '',
+        'role' => $roleLabels[$user['roles']] ?? ucfirst($user['roles'] ?? ''),
+        'status' => $statusMap[$user['is_active']] ?? 'pending',
+        'avatar' => $initials ?: '??',
+        'telephone' => $user['telephone'] ?? '',
+        'created_at' => $user['created_at'] ?? null,
+        'is_active' => (int) ($user['is_active'] ?? 1),
+        'roles' => $user['roles'] ?? 'stagiaire', // garder pour les formulaires
+    ];
+}, $users ?? []);
+
+?>
+<!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,11 +62,12 @@ $users = [
     <script src="../js/theme.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
+
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedUser: null }">
-    
+
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
-        
+
         <main class="main-content">
             <header class="admin-header">
                 <div class="header-left">
@@ -51,12 +83,12 @@ $users = [
                         </nav>
                     </div>
                 </div>
-                
+
                 <div class="header-search">
                     <i class="fas fa-search header-search-icon"></i>
                     <input type="text" class="header-search-input" placeholder="Rechercher un utilisateur...">
                 </div>
-                
+
                 <div class="header-actions">
                     <button class="btn btn-primary" @click="activeModal = 'add-user'; modalOpen = true">
                         <i class="fas fa-plus"></i>
@@ -64,7 +96,7 @@ $users = [
                     </button>
                 </div>
             </header>
-            
+
             <div class="page-content">
                 <div class="filter-bar">
                     <div class="search-input">
@@ -86,7 +118,7 @@ $users = [
                         <option value="inactive">Inactif</option>
                     </select>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-body" style="padding: 0;">
                         <div class="table-container">
@@ -101,42 +133,42 @@ $users = [
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($users as $user): ?>
-                                    <tr>
-                                        <td>
-                                            <div class="user-info">
-                                                <div class="avatar"><?= $user['avatar'] ?></div>
-                                                <div class="user-details">
-                                                    <h4><?= htmlspecialchars($user['name']) ?></h4>
+                                    <?php foreach ($formattedUsers as $user): ?>
+                                        <tr>
+                                            <td>
+                                                <div class="user-info">
+                                                    <div class="avatar"><?= $user['avatar'] ?></div>
+                                                    <div class="user-details">
+                                                        <h4><?= htmlspecialchars($user['name']) ?></h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td><?= htmlspecialchars($user['email']) ?></td>
-                                        <td>
-                                            <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
-                                                <?= htmlspecialchars($user['role']) ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="badge <?= $user['status'] === 'active' ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
-                                                <span class="status-dot <?= $user['status'] === 'active' ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
-                                                <?= ucfirst($user['status']) ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="flex gap-sm">
-                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'view-user'; modalOpen = true" title="Voir">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td><?= htmlspecialchars($user['email']) ?></td>
+                                            <td>
+                                                <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
+                                                    <?= htmlspecialchars($user['role']) ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge <?= $user['status'] === 'active' ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
+                                                    <span class="status-dot <?= $user['status'] === 'active' ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
+                                                    <?= ucfirst($user['status']) ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="flex gap-sm">
+                                                    <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'view-user'; modalOpen = true" title="Voir">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -151,77 +183,77 @@ $users = [
             </div>
         </main>
     </div>
-    
+
     <div class="modal-overlay" :class="{ 'active': modalOpen }" @click="modalOpen = false; activeModal = null"></div>
-    
+
     <!-- ADD USER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'add-user' && modalOpen }">
         <form method="POST" action="<?= Router\Router::route('/register') ?>">
-        <?= \Core\Security::csrf_tokken() ?>
-        <div class="modal-header">
-            <div class="modal-header-content">
-                <div class="modal-icon"><i class="fas fa-user-plus"></i></div>
-                <div>
-                    <h3 class="modal-title">Nouvel Utilisateur</h3>
-                    <p class="modal-subtitle">Créer un nouveau compte utilisateur</p>
+            <?= \Core\Security::csrf_tokken() ?>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon"><i class="fas fa-user-plus"></i></div>
+                    <div>
+                        <h3 class="modal-title">Nouvel Utilisateur</h3>
+                        <p class="modal-subtitle">Créer un nouveau compte utilisateur</p>
+                    </div>
                 </div>
+                <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Nom Complet</label>
-                    <input type="text" name="fullname" class="form-input" placeholder="Entrez le nom complet" required>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nom Complet</label>
+                        <input type="text" name="fullname" class="form-input" placeholder="Entrez le nom complet" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-input" placeholder="exemple@email.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" name="telephone" class="form-input" placeholder="+243 XX XXX XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rôle</label>
+                        <select name="role" class="form-select">
+                            <option value="">Sélectionner un rôle</option>
+                            <option value="admin">Administrateur</option>
+                            <option value="avocat">Avocat</option>
+                            <option value="juriste">Juriste</option>
+                            <option value="secretaire">Secrétaire</option>
+                            <option value="stagiaire">Stagiaire</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Mot de Passe</label>
+                        <input type="password" name="password" class="form-input" placeholder="Minimum 8 caractères" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirmer Mot de Passe</label>
+                        <input type="password" name="password_confirmation" class="form-input" placeholder="Confirmez le mot de passe" required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-input" placeholder="exemple@email.com" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
-                    <input type="tel" name="telephone" class="form-input" placeholder="+243 XX XXX XXXX">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Rôle</label>
-                    <select name="role" class="form-select">
-                        <option value="">Sélectionner un rôle</option>
-                        <option value="admin">Administrateur</option>
-                        <option value="avocat">Avocat</option>
-                        <option value="juriste">Juriste</option>
-                        <option value="secretaire">Secrétaire</option>
-                        <option value="stagiaire">Stagiaire</option>
+                    <label class="form-label">Statut</label>
+                    <select name="is_active" class="form-select">
+                        <option value="1">Actif</option>
+                        <option value="0">En Attente</option>
+                        <option value="0">Inactif</option>
                     </select>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Mot de Passe</label>
-                    <input type="password" name="password" class="form-input" placeholder="Minimum 8 caractères" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Confirmer Mot de Passe</label>
-                    <input type="password" name="password_confirmation" class="form-input" placeholder="Confirmez le mot de passe" required>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Créer l'Utilisateur</button>
             </div>
-            <div class="form-group">
-                <label class="form-label">Statut</label>
-                <select name="is_active" class="form-select">
-                    <option value="1">Actif</option>
-                    <option value="0">En Attente</option>
-                    <option value="0">Inactif</option>
-                </select>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Créer l'Utilisateur</button>
-        </div>
         </form>
     </div>
-    
+
     <!-- EDIT USER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'edit-user' && modalOpen }">
         <div class="modal-header">
@@ -285,7 +317,7 @@ $users = [
             <button class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
         </div>
     </div>
-    
+
     <!-- VIEW USER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'view-user' && modalOpen }">
         <div class="modal-header">
@@ -332,7 +364,7 @@ $users = [
             <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
         </div>
     </div>
-    
+
     <!-- DELETE USER MODAL -->
     <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete-user' && modalOpen }">
         <div class="modal-header">
@@ -354,6 +386,7 @@ $users = [
             <button class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
         </div>
     </div>
-    
+
 </body>
+
 </html>
