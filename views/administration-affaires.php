@@ -253,7 +253,7 @@
     </div>
   </footer>
 
-  <script type="module" src="theme.js"></script>
-  <script type="module" src="main.js"></script>
+ <script type="module" src="js/theme.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
