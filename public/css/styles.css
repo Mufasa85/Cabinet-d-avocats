@@ -2483,6 +2483,13 @@ ul {
   border-radius: 50%;
 }
 
+.domain-card-description {
+  font-size: 0.875rem;
+  color: var(--color-muted-foreground);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
 .domain-cta-section {
   background: var(--color-muted);
 }

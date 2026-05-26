@@ -112,6 +112,7 @@
             </svg>
           </div>
           <h3 class="domain-card-title">Droit pénal</h3>
+          <p class="domain-card-description">Le Droit pénal est une matière exigeante qui touche directement à la liberté, à la responsabilité et à la protection des droits fondamentaux. Il requiert une parfaite maîtrise des règles procédurales et des infractions applicables, mais également une analyse globale de chaque situation afin d'anticiper les conséquences humaines, sociales et professionnelles des décisions prises. Cette matière implique un accompagnement rigoureux aussi bien en prévention qu'en défense des intérêts des personnes concernées.</p>
           <ul class="domain-card-list">
             <li>Défense des prévenus</li>
             <li>Représentation des victimes</li>
@@ -128,6 +129,7 @@
             </svg>
           </div>
           <h3 class="domain-card-title">Droit civil</h3>
+          <p class="domain-card-description">Le Droit civil constitue le socle des relations entre les personnes et encadre les droits et obligations de chacun dans la vie quotidienne. Il nécessite une connaissance approfondie des règles juridiques applicables ainsi qu'une approche stratégique permettant de préserver les intérêts personnels et patrimoniaux des parties. Cette matière demande une attention particulière aux conséquences juridiques et économiques des engagements pris.</p>
           <ul class="domain-card-list">
             <li>Phase précontentieuse</li>
             <li>Phase contentieuse</li>
@@ -145,6 +147,7 @@
             </svg>
           </div>
           <h3 class="domain-card-title">Droit de la famille</h3>
+          <p class="domain-card-description">Le Droit de la famille est une matière profondément humaine. Elle nécessite non seulement une solide connaissance des règles techniques applicables mais également une vision globale de la situation, afin de s'attacher aux répercussions indirectes, notamment à l'égard des proches. Cette matière implique une attention particulière sur les conséquences fiscales et patrimoniales de la prise de décision plus particulièrement lors d'une séparation.</p>
           <ul class="domain-card-list">
             <li>Mariage et divorce</li>
             <li>Filiation et adoption</li>
@@ -160,6 +163,7 @@
             </svg>
           </div>
           <h3 class="domain-card-title">Droit foncier</h3>
+          <p class="domain-card-description">Le Droit foncier est une matière essentielle qui organise les rapports liés à la propriété, à l'occupation et à l'exploitation des biens immobiliers. Il exige une maîtrise des règles administratives, cadastrales et contractuelles afin de sécuriser les droits des propriétaires et des investisseurs. Cette matière implique une vigilance particulière sur les conséquences patrimoniales, économiques et successorales des décisions relatives au foncier.</p>
           <ul class="domain-card-list">
             <li>Litiges fonciers</li>
             <li>Propriété et possession</li>
@@ -170,17 +174,18 @@
         <div class="domain-card animate-on-scroll">
           <div class="domain-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M12 8v4M12 16h.01"/>
             </svg>
           </div>
-          <h3 class="domain-card-title">Procédure pénale</h3>
+          <h3 class="domain-card-title">Droit de l'environnement</h3>
+          <p class="domain-card-description">Notre équipe d'avocats et juristes bénéficie d'une sérieuse expérience dans les domaines du droit de l'aménagement et du droit de l'environnement. Le Cabinet accompagne ainsi de nombreux acteurs publics et aménageurs dans leurs projets, tant en région parisienne que sur l'ensemble du territoire national. Il intervient à toutes les étapes des procédures environnementales imposées par le code de l'environnement et le code de l'urbanisme.</p>
           <ul class="domain-card-list">
-            <li>Garde à vue</li>
-            <li>Instruction</li>
-            <li>Jugement</li>
+            <li>Élaboration de calendriers procéduraux</li>
+            <li>Suivi des procédures de concertation</li>
+            <li>Évaluation environnementale</li>
+            <li>Sécurisation des enquêtes publiques</li>
+            <li>Procédures d'autorisation environnementale</li>
           </ul>
         </div>
 
@@ -192,6 +197,7 @@
             </svg>
           </div>
           <h3 class="domain-card-title">Régimes matrimoniaux</h3>
+          <p class="domain-card-description">Les Régimes matrimoniaux encadrent les relations patrimoniales entre époux tout au long de leur vie commune et lors de sa dissolution. Cette matière nécessite une connaissance approfondie des mécanismes juridiques relatifs aux biens, aux dettes et à leur répartition, ainsi qu'une vision d'ensemble des intérêts familiaux et économiques. Elle requiert une attention particulière aux conséquences patrimoniales, successorales et fiscales des choix opérés par les époux.</p>
           <ul class="domain-card-list">
             <li>Contrat de mariage</li>
             <li>Communauté et séparation</li>
