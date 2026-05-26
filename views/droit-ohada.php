@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <section class="domain-hero">
+  <section class="domain-hero" style="background-image: url('/assets/images/4.jpeg'); background-size: cover; background-position: center;">
     <div class="domain-hero-bg"></div>
     <div class="domain-hero-overlay"></div>
     <div class="domain-hero-content">

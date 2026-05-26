@@ -2344,6 +2344,10 @@ ul {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, var(--color-muted) 0%, var(--color-background) 100%);
+  background-image: url('/assets/images/test_2.png');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .domain-hero-overlay {
