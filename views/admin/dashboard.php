@@ -8,6 +8,7 @@
 
 $stats = $stats ?? ['users' => 0, 'lawyers' => 0, 'pending' => 0, 'documents' => 0];
 $recentApplications = $recentApplications ?? [];
+$recentActivity = $recentActivity ?? [];
 $statutCandidature = [
     'en_attente' => ['label' => 'En attente', 'class' => 'badge-warning'],
     'analyse' => ['label' => 'En analyse', 'class' => 'badge-info'],
@@ -40,9 +41,9 @@ $statutCandidature = [
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <!-- HEADER -->
-            <header class="admin-header">
+            <header class="admin-header" x-data="{ mobileMenuOpen: false }">
                 <div class="header-left">
-                    <button class="header-toggle" @click="document.dispatchEvent(new CustomEvent('sidebar:toggle'))">
+                    <button class="header-toggle" @click="mobileMenuOpen = !mobileMenuOpen">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div>
@@ -52,6 +53,64 @@ $statutCandidature = [
                             <span>/</span>
                             <span>Dashboard</span>
                         </nav>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Dropdown -->
+                <div class="mobile-dropdown" :class="{ 'active': mobileMenuOpen }" @click.away="mobileMenuOpen = false" x-show="mobileMenuOpen" x-transition>
+                    <div class="mobile-dropdown-header">
+                        <span class="mobile-dropdown-title">Menu Navigation</span>
+                        <button @click="mobileMenuOpen = false" class="mobile-dropdown-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <nav class="mobile-nav">
+                        <a href="<?= Router\Router::route('/admin/dashboard') ?>" class="mobile-nav-item">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Tableau de Bord</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/users') ?>" class="mobile-nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Utilisateurs</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/lawyers') ?>" class="mobile-nav-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Avocats</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="mobile-nav-item">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Candidatures</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/trainings') ?>" class="mobile-nav-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Formations</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/publications') ?>" class="mobile-nav-item">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Publications</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/documents') ?>" class="mobile-nav-item">
+                            <i class="fas fa-folder-open"></i>
+                            <span>Documents</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/reports') ?>" class="mobile-nav-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Rapports</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/notifications') ?>" class="mobile-nav-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                        </a>
+                        <a href="<?= Router\Router::route('/admin/settings') ?>" class="mobile-nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Paramètres</span>
+                        </a>
+                    </nav>
+                    <div class="mobile-dropdown-footer">
+                        <a href="<?= Router\Router::route('/logout') ?>" class="mobile-nav-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Déconnexion</span>
+                        </a>
                     </div>
                 </div>
                 

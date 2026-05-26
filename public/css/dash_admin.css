@@ -2015,9 +2015,119 @@ img {
     background: var(--gold-primary);
 }
 
-/* ==========================================
-   UTILITY CLASSES
-   ========================================== */
+        /* ==========================================
+           MOBILE DROPDOWN MENU
+           ========================================== */
+        .mobile-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--secondary-black);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        @media (max-width: 1023px) {
+            .mobile-dropdown {
+                display: block;
+            }
+        }
+
+        .mobile-dropdown.active {
+            display: block;
+        }
+
+        .mobile-dropdown-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-md);
+            background: rgba(212, 175, 55, 0.05);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .mobile-dropdown-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+
+        .mobile-dropdown-close {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            background: rgba(255, 255, 255, 0.05);
+            transition: var(--transition-base);
+        }
+
+        .mobile-dropdown-close:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .mobile-nav {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            color: var(--gray-300);
+            transition: var(--transition-base);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.05);
+        }
+
+        .mobile-nav-item:hover {
+            background: rgba(212, 175, 55, 0.05);
+            color: var(--gold-primary);
+        }
+
+        .mobile-nav-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--gold-primary);
+        }
+
+        .mobile-nav-item span {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .mobile-dropdown-footer {
+            padding: var(--space-md);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .mobile-nav-item.logout {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-radius: var(--radius-md);
+            margin-top: var(--space-sm);
+        }
+
+        .mobile-nav-item.logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .mobile-nav-item.logout i {
+            color: var(--danger);
+        }
+
+        /* ==========================================
+           UTILITY CLASSES
+           ========================================== */
 .text-gold { color: var(--gold-primary); }
 .text-white { color: var(--white); }
 .text-gray { color: var(--gray-500); }

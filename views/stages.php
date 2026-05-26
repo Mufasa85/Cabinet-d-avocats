@@ -71,12 +71,14 @@
             </button>
         </div>
         <nav class="mobile-nav">
-            <a href="index.php">Accueil</a>
-            <a href="index.php#about">Cabinet</a>
-            <a href="index.php#services">Expertises</a>
-            <a href="#programme">Programme</a>
-            <a href="#postuler">Postuler</a>
-            <a href="connexion.php">Connexion</a>
+            <a href="<?= Router\Router::route('/') ?>">Accueil</a>
+            <a href="<?= Router\Router::route('/#about') ?>">Cabinet</a>
+            <a href="<?= Router\Router::route('/#services') ?>">Expertises</a>
+            <a href="<?= Router\Router::route('/stages#programme') ?>">Programme</a>
+            <a href="<?= Router\Router::route('/stages#conditions') ?>">Conditions</a>
+            <a href="<?= Router\Router::route('/stages#places') ?>">Stagiaires</a>
+            <a href="<?= Router\Router::route('/stages#postuler') ?>">Postuler</a>
+            <a href="<?= Router\Router::route('/login') ?>">Connexion</a>
         </nav>
         <a href="#postuler" class="btn-premium mobile-cta">Candidater Maintenant</a>
     </div>
@@ -751,14 +753,6 @@
                             </div>
                         </div>
 
-                        <div class="form-section">
-                            <h3 class="form-section-title">Lettre de motivation</h3>
-                            <div class="form-group">
-                                <label for="motivation">Motivation *</label>
-                                <textarea id="motivation" name="motivation" rows="5" required placeholder="Expliquez votre motivation pour rejoindre le cabinet..."></textarea>
-                            </div>
-                        </div>
-
                         <!-- Documents Upload Section -->
                         <div class="form-section">
                             <h3 class="form-section-title">
@@ -958,17 +952,17 @@
                 <div class="footer-links">
                     <div class="footer-column">
                         <h4>Navigation</h4>
-                        <a href="index.php">Accueil</a>
-                        <a href="index.php#about">Cabinet</a>
-                        <a href="index.php#services">Expertises</a>
-                        <a href="index.php#contact">Contact</a>
+                        <a href="<?= Router\Router::route('/') ?>">Accueil</a>
+                        <a href="<?= Router\Router::route('/#about') ?>">Cabinet</a>
+                        <a href="<?= Router\Router::route('/#services') ?>">Expertises</a>
+                        <a href="<?= Router\Router::route('/#contact') ?>">Contact</a>
                     </div>
                     <div class="footer-column">
                         <h4>Stage</h4>
-                        <a href="#programme">Programme</a>
-                        <a href="#conditions">Conditions</a>
-                        <a href="#places">Places</a>
-                        <a href="#postuler">Postuler</a>
+                        <a href="<?= Router\Router::route('/stages#programme') ?>">Programme</a>
+                        <a href="<?= Router\Router::route('/stages#conditions') ?>">Conditions</a>
+                        <a href="<?= Router\Router::route('/stages#places') ?>">Places</a>
+                        <a href="<?= Router\Router::route('/stages#postuler') ?>">Postuler</a>
                     </div>
                     <div class="footer-column">
                         <h4>Contact</h4>

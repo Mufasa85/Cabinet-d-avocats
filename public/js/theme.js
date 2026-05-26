@@ -310,6 +310,42 @@ document.addEventListener('DOMContentLoaded', () => {
     themeCurrent.textContent = themeNames[currentTheme] || 'Dark';
   }
 
+  // ==========================================
+  // Themes Showcase in About Section
+  // ==========================================
+  const themesShowcase = document.querySelector('.themes-showcase');
+  const themeItems = document.querySelectorAll('.theme-item');
+
+  // Function to update visible theme
+  const updateThemesShowcase = (activeTheme) => {
+    if (!themesShowcase) return;
+
+    // Add active class to showcase
+    themesShowcase.classList.add('active');
+
+    themeItems.forEach(item => {
+      // Determine which theme this item represents
+      let itemThemeKey = 'dark';
+      if (item.hasAttribute('data-theme-light')) itemThemeKey = 'light';
+      else if (item.hasAttribute('data-theme-royal')) itemThemeKey = 'royal';
+
+      // Show only the active theme, hide others
+      if (itemThemeKey === activeTheme) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  };
+
+  // Initialize showcase on load
+  updateThemesShowcase(currentTheme);
+
+  // Listen for theme changes
+  window.addEventListener('themechange', (e) => {
+    updateThemesShowcase(e.detail.theme);
+  });
+
   // Add CSS for theme transition
   const style = document.createElement('style');
   style.textContent = `

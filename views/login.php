@@ -109,13 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p>Connectez-vous à votre espace</p>
                 </div>
 
-                <?php if ($error): ?>
+                <?php if ($error || isset($loginError)): ?>
                 <div class="alert alert-error">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M12 8v4"/>
+                        <path d="M12 16h.01"/>
                     </svg>
-                    <span><?= htmlspecialchars($error) ?></span>
+                    <span><?= htmlspecialchars($error ?? $loginError ?? '') ?></span>
                 </div>
                 <?php endif; ?>
 

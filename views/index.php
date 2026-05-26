@@ -208,11 +208,23 @@ Créée en 2007 par le Bâtonnier Laurent Mbako Ditend, « Étude Laurent Mbako/
 Étude Laurent Mbako/Cabinet d’Avocats a pour mission de représenter, d’assister, de postuler, de conseiller, de concilier de conclure et de plaider pour le compte de ses clients ainsi que d’émettre les avis juridiques dans toutes les branches de Droit et le Due Diligent.           </p>
           <p class="about-text">
 A ce jour, ELMD/Cabinet d’Avocats connait une redynamisation liée essentiellement à l’évolution du Droit dans plusieurs domaines qui, d’office, la remet à un standard professionnel avisé. ELMD/Cabinet d’avocats est constituée de plusieurs Avocats dont onze Avocats seniors collaborateurs qui assurent la conduite d’une spécialité du Droit lorsque les questions idoines sont posées et deux Avocats collaborateurs en période de stage qui assurent l’appui nécessaire en étude, consultance, rédaction des actes de procédure, de correspondances aux Avocats seniors pour un résultat approprié dans chaque branche du Droit.           </p>
-
         </div>
         
         <div class="about-image animate-on-scroll">
-          <img src="/assets/images/logo.png" alt="Cabinet ELMD">
+          <div class="themes-showcase">
+            <div class="theme-item" data-theme-default>
+              <img src="/assets/images/sombre.png" alt="Theme Sombre">
+              <span class="theme-label">Theme Sombre</span>
+            </div>
+            <div class="theme-item" data-theme-light>
+              <img src="/assets/images/claire.png" alt="Theme Clair">
+              <span class="theme-label">Theme Clair</span>
+            </div>
+            <div class="theme-item" data-theme-royal>
+              <img src="/assets/images/royal.png" alt="Theme Royal">
+              <span class="theme-label">Theme Royal</span>
+            </div>
+          </div>
           <div class="about-image-overlay"></div>
           <div class="about-image-frame"></div>
         </div>
