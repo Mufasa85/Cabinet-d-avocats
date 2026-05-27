@@ -11,7 +11,7 @@ class UserModel extends Model
     public function all(): array
     {
         $stmt = Dic::get(Database::class)->prepare(
-            'SELECT id, fullname, email, roles, telephone, avatar, is_active, created_at FROM users ORDER BY fullname ASC'
+            'SELECT * FROM users ORDER BY name ASC'
         );
         return $stmt->fetchAll() ?: [];
     }
@@ -19,7 +19,7 @@ class UserModel extends Model
     public function findById(int $id): ?array
     {
         $stmt = Dic::get(Database::class)->prepare(
-            'SELECT id, fullname, email, roles, telephone, avatar, is_active, created_at FROM users WHERE id = :id LIMIT 1',
+            'SELECT id, name, email, role, telephone, avatar, status, created_at FROM users WHERE id = :id LIMIT 1',
             [':id' => $id]
         );
         $row = $stmt->fetch();
@@ -38,15 +38,15 @@ class UserModel extends Model
 
     public function create(array $data)
     {
-        $sql = 'INSERT INTO users (fullname, email, passwords, roles, telephone, avatar, is_active) VALUES (:fullname, :email, :passwords, :roles, :telephone, :avatar, :is_active)';
+        $sql = 'INSERT INTO users (name, email, passwords, role, telephone, avatar, status) VALUES (:name, :email, :passwords, :role, :telephone, :avatar, :status)';
         $params = [
-            ':fullname' => $data['fullname'] ?? null,
+            ':name' => $data['name'] ?? $data['fullname'] ?? null,
             ':email' => $data['email'] ?? null,
             ':passwords' => isset($data['password']) ? password_hash($data['password'], PASSWORD_BCRYPT) : null,
-            ':roles' => $data['roles'] ?? 'stagiaire',
+            ':role' => $data['role'] ?? $data['roles'] ?? 'stagiaire',
             ':telephone' => $data['telephone'] ?? null,
             ':avatar' => $data['avatar'] ?? null,
-            ':is_active' => isset($data['is_active']) ? (int) $data['is_active'] : 1,
+            ':status' => isset($data['status']) ? (int) $data['status'] : (isset($data['is_active']) ? (int) $data['is_active'] : 1),
         ];
 
         return Dic::get(Database::class)->prepare($sql, $params);
@@ -57,8 +57,11 @@ class UserModel extends Model
         $fields = [];
         $params = [':id' => $id];
 
-        if (isset($data['fullname'])) {
-            $fields[] = 'fullname = :fullname';
+        if (isset($data['name'])) {
+            $fields[] = 'name = :name';
+            $params[':name'] = $data['name'];
+        } elseif (isset($data['fullname'])) {
+            $fields[] = 'name = :fullname';
             $params[':fullname'] = $data['fullname'];
         }
         if (isset($data['email'])) {
@@ -69,9 +72,12 @@ class UserModel extends Model
             $fields[] = 'passwords = :passwords';
             $params[':passwords'] = password_hash($data['password'], PASSWORD_BCRYPT);
         }
-        if (isset($data['roles'])) {
-            $fields[] = 'roles = :roles';
-            $params[':roles'] = $data['roles'];
+        if (isset($data['role'])) {
+            $fields[] = 'role = :role';
+            $params[':role'] = $data['role'];
+        } elseif (isset($data['roles'])) {
+            $fields[] = 'role = :role';
+            $params[':role'] = $data['roles'];
         }
         if (array_key_exists('telephone', $data)) {
             $fields[] = 'telephone = :telephone';
@@ -81,9 +87,12 @@ class UserModel extends Model
             $fields[] = 'avatar = :avatar';
             $params[':avatar'] = $data['avatar'];
         }
-        if (isset($data['is_active'])) {
-            $fields[] = 'is_active = :is_active';
-            $params[':is_active'] = (int) $data['is_active'];
+        if (isset($data['status'])) {
+            $fields[] = 'status = :status';
+            $params[':status'] = (int) $data['status'];
+        } elseif (isset($data['is_active'])) {
+            $fields[] = 'status = :status';
+            $params[':status'] = (int) $data['is_active'];
         }
 
         if (empty($fields)) {

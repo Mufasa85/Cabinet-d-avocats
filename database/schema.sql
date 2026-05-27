@@ -19,14 +19,14 @@ CREATE TABLE users (
 
 id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 
-fullname VARCHAR(100) NOT NULL,
+name VARCHAR(100) NOT NULL,
 email VARCHAR(255) NOT NULL UNIQUE,
 passwords VARCHAR(255) NOT NULL,
 
-roles ENUM('admin','avocat','secretaire', 'stagiaire') NOT NULL,
-telephone VARCHAR(20),
+role ENUM('admin','avocat','secretaire', 'stagiaire') NOT NULL,
+phone VARCHAR(20),
 avatar VARCHAR(500),
-is_active BOOLEAN DEFAULT TRUE,
+status BOOLEAN DEFAULT TRUE,
 
 email_verified_at TIMESTAMP NULL,
 
@@ -34,7 +34,7 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-INDEX idx_role(roles)
+INDEX idx_role(role)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

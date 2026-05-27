@@ -1,28 +1,14 @@
 <?php
-// echo "<pre>";
-// var_dump($avocat);
-// echo "</pre>";
-// die;
-/**
- * ELMD - Cabinet d'Avocats
- * Lawyer Profile Page
- */
-
-
-
-if (!defined('ELMD_ROOT')) {
-    define('ELMD_ROOT', dirname(__DIR__, 2));
-}
 
 $pageTitle = 'Mon Profil';
 $currentPage = 'profile';
 
-$lawyerName = $avocat['fullname'] ?? 'Me. Laurent Mbako';
+$lawyerName = $avocat['name'] ?? 'Me. Laurent Mbako';
 $lawyerAvatar = $avocat['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80';
 
 // Données avocat
 $lawyer = [
-    'name' => $avocat['fullname'] ?? 'Me. Laurent Mbako',
+    'name' => $avocat['name'] ?? 'Me. Laurent Mbako',
     'email' => $avocat['email_professionnel'] ?? 'laurent.mbako@elmd-law.com',
     'phone' => $avocat['telephone'] ?? '+243 81 234 5678',
     'role' => $avocat['titre'] ?? 'Avocat Principal',

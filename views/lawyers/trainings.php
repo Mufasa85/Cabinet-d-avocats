@@ -1,10 +1,4 @@
 <?php
-/**
- * ELMD - Cabinet d'Avocats
- * Lawyer Trainings Page
- */
-
-
 
 if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));

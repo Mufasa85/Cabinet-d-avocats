@@ -8,6 +8,19 @@
  */
 
 $pageTitle = 'Gestion des Utilisateurs';
+<<<<<<< HEAD
+=======
+// $users = [
+//     ['id' => 1, 'fullname' => 'Maître Jean Kabongo', 'email' => 'jean.kabongo@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'JK'],
+//     ['id' => 2, 'name' => 'Marie Lukoji', 'email' => 'marie.lukoj@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'ML'],
+//     ['id' => 3, 'name' => 'Pierre Diallo', 'email' => 'pierre.diallo@cabinet.cd', 'role' => 'Admin', 'status' => 'active', 'avatar' => 'PD'],
+//     ['id' => 4, 'name' => 'Aminata Mwamba', 'email' => 'aminata.mwamba@cabinet.cd', 'role' => 'Secrétaire', 'status' => 'active', 'avatar' => 'AM'],
+//     ['id' => 5, 'name' => 'Jean Mukamba', 'email' => 'jean.mukamba@gmail.com', 'role' => 'Stagiaire', 'status' => 'pending', 'avatar' => 'JM'],
+//     ['id' => 6, 'name' => 'Sophie Kasaï', 'email' => 'sophie.kasai@cabinet.cd', 'role' => 'Juriste', 'status' => 'active', 'avatar' => 'SK'],
+//     ['id' => 7, 'name' => 'Robert Ngalulu', 'email' => 'robert.ngalulu@cabinet.cd', 'role' => 'Avocat', 'status' => 'inactive', 'avatar' => 'RN'],
+//     ['id' => 8, 'name' => 'Claire Bemba', 'email' => 'claire.bemba@cabinet.cd', 'role' => 'Comptable', 'status' => 'active', 'avatar' => 'CB'],
+// ];
+>>>>>>> 56ac707 (fix(auth,users): Resolve error)
 
 // Formater les utilisateurs pour la vue (adapter les champs DB)
 $formattedUsers = array_map(function ($user) {
@@ -142,6 +155,7 @@ $formattedUsers = array_map(function ($user) {
                                                         <h4><?= htmlspecialchars($user['name']) ?></h4>
                                                     </div>
                                                 </div>
+<<<<<<< HEAD
                                             </td>
                                             <td><?= htmlspecialchars($user['email']) ?></td>
                                             <td>
@@ -169,6 +183,36 @@ $formattedUsers = array_map(function ($user) {
                                                 </div>
                                             </td>
                                         </tr>
+=======
+                                            </div>
+                                        </td>
+                                        <td><?= htmlspecialchars($user['email']) ?></td>
+                                        <td>
+                                            <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
+                                                <?= htmlspecialchars($user['role']) ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge <?= $user['status'] === 1 ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
+                                                <span class="status-dot <?= $user['status'] === 1 ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
+                                                <?=  $user['status'] === 1 ? 'active': 'inative' ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="flex gap-sm">
+                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'view-user'; modalOpen = true" title="Voir">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+>>>>>>> 56ac707 (fix(auth,users): Resolve error)
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>

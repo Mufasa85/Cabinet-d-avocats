@@ -68,10 +68,10 @@ class Auth
     public static function login(array $user): void
     {
         $_SESSION['user_id'] = (int) $user['id'];
-        $_SESSION['user_name'] = $user['fullname'];
+        $_SESSION['user_name'] = $user['name'];
         $_SESSION['user_email'] = $user['email'];
-        $_SESSION['user_role'] = self::sessionRoleFromDb($user['roles']);
-        $_SESSION['user_db_role'] = $user['roles'];
+        $_SESSION['user_role'] = self::sessionRoleFromDb($user['role']);
+        $_SESSION['user_db_role'] = $user['role'];
 
         if (!empty($user['avatar'])) {
             $_SESSION['user_avatar'] = $user['avatar'];

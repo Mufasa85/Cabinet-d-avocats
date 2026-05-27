@@ -44,7 +44,6 @@ Router::get('/interns/trainings', [InternController::class,'trainings']);
 Router::post('/interns/trainings/inscrire', [InternController::class,'enrollTraining']);
 Router::get('/interns/notifications', [InternController::class,'notifications']);
 
-Router::get('/logout', [AuthController::class,'logout']);
 Router::post('/logout', [AuthController::class,'logout']);
 
 Router::get('/admin/dashboard', [AdminController::class,'index']);

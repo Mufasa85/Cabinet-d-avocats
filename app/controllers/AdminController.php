@@ -25,10 +25,10 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        // if (!Auth::hasRole(Auth::ROLE_ADMIN)) {
-        //     $this->redirect(Router::route('/login'));
-        //     exit;
-        // }
+        if (!Auth::hasRole(Auth::ROLE_ADMIN)) {
+            $this->redirect(Router::route('/login'));
+            exit;
+        }
     }
 
     public function index()
@@ -51,9 +51,9 @@ class AdminController extends Controller
 
     public function users()
     {
-        $userModel = new UserModel();
+        $users = new UserModel();
         View::view('admin.users', [
-            'users' => $userModel->all(),
+            'users' => $users->all(),
             'success' => $_SESSION['success'] ?? null,
             'error' => $_SESSION['error'] ?? null,
         ]);

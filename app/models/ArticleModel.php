@@ -9,7 +9,7 @@ class ArticleModel extends Model
     public function published(?string $categorySlug = null): array
     {
         $sql = 'SELECT ar.*, c.nom AS category_nom, c.slug AS category_slug,
-                       u.fullname AS avocat_nom
+                       u.name AS avocat_nom
                 FROM articles ar
                 JOIN avocats av ON av.id = ar.avocat_id
                 JOIN users u ON u.id = av.user_id
@@ -40,7 +40,7 @@ class ArticleModel extends Model
     public function findBySlug(string $slug): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT ar.*, c.nom AS category_nom, c.slug AS category_slug, u.fullname AS avocat_nom
+            'SELECT ar.*, c.nom AS category_nom, c.slug AS category_slug, u.name AS avocat_nom
              FROM articles ar
              JOIN avocats av ON av.id = ar.avocat_id
              JOIN users u ON u.id = av.user_id

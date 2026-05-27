@@ -9,7 +9,7 @@ class StagiaireModel extends Model
     public function findByUserId(int $userId): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT st.*, u.fullname, u.email
+            'SELECT st.*, u.name AS fullname, u.email
              FROM stagiaires st
              JOIN users u ON u.id = st.user_id
              WHERE st.user_id = :uid LIMIT 1',
@@ -21,10 +21,10 @@ class StagiaireModel extends Model
     public function allWithUser(): array
     {
         $stmt = $this->db()->prepare(
-            'SELECT st.*, u.fullname, u.email, u.telephone, u.is_active
+            'SELECT st.*, u.name AS fullname, u.email, u.telephone, u.is_active
              FROM stagiaires st
              JOIN users u ON u.id = st.user_id
-             ORDER BY u.fullname ASC'
+             ORDER BY u.name ASC'
         );
         return $stmt->fetchAll() ?: [];
     }

@@ -7,13 +7,13 @@
  */
 
 $pageTitle = 'Gestion des Avocats';
-$lawyers = [
-    ['id' => 1, 'name' => 'Maître Jean Kabongo', 'specialty' => 'Droit des Affaires', 'phone' => '+243 81 234 5678', 'email' => 'jean.kabongo@cabinet.cd', 'status' => 'available', 'avatar' => 'JK', 'cases' => 12],
-    ['id' => 2, 'name' => 'Maître Marie Lukoji', 'specialty' => 'Droit Fiscal', 'phone' => '+243 81 345 6789', 'email' => 'marie.lukoj@cabinet.cd', 'status' => 'available', 'avatar' => 'ML', 'cases' => 8],
-    ['id' => 3, 'name' => 'Maître Robert Ngalulu', 'specialty' => 'Droit du Travail', 'phone' => '+243 81 456 7890', 'email' => 'robert.ngalulu@cabinet.cd', 'status' => 'busy', 'avatar' => 'RN', 'cases' => 15],
-    ['id' => 4, 'name' => 'Maître Sophie Kasaï', 'specialty' => 'Droit Minier', 'phone' => '+243 81 567 8901', 'email' => 'sophie.kasai@cabinet.cd', 'status' => 'available', 'avatar' => 'SK', 'cases' => 6],
-    ['id' => 5, 'name' => 'Maître Pierre Diallo', 'specialty' => 'Droit des Sociétés', 'phone' => '+243 81 678 9012', 'email' => 'pierre.diallo@cabinet.cd', 'status' => 'unavailable', 'avatar' => 'PD', 'cases' => 0],
-];
+// $lawyers = [
+//     ['id' => 1, 'name' => 'Maître Jean Kabongo', 'specialty' => 'Droit des Affaires', 'phone' => '+243 81 234 5678', 'email' => 'jean.kabongo@cabinet.cd', 'status' => 'available', 'avatar' => 'JK', 'cases' => 12],
+//     ['id' => 2, 'name' => 'Maître Marie Lukoji', 'specialty' => 'Droit Fiscal', 'phone' => '+243 81 345 6789', 'email' => 'marie.lukoj@cabinet.cd', 'status' => 'available', 'avatar' => 'ML', 'cases' => 8],
+//     ['id' => 3, 'name' => 'Maître Robert Ngalulu', 'specialty' => 'Droit du Travail', 'phone' => '+243 81 456 7890', 'email' => 'robert.ngalulu@cabinet.cd', 'status' => 'busy', 'avatar' => 'RN', 'cases' => 15],
+//     ['id' => 4, 'name' => 'Maître Sophie Kasaï', 'specialty' => 'Droit Minier', 'phone' => '+243 81 567 8901', 'email' => 'sophie.kasai@cabinet.cd', 'status' => 'available', 'avatar' => 'SK', 'cases' => 6],
+//     ['id' => 5, 'name' => 'Maître Pierre Diallo', 'specialty' => 'Droit des Sociétés', 'phone' => '+243 81 678 9012', 'email' => 'pierre.diallo@cabinet.cd', 'status' => 'unavailable', 'avatar' => 'PD', 'cases' => 0],
+// ];
 
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -95,7 +95,7 @@ $lawyers = [
                                     </div>
                                     <p style="color: var(--gold-primary); font-size: 0.875rem; margin-bottom: 0.5rem;">
                                         <i class="fas fa-briefcase" style="margin-right: 0.25rem;"></i>
-                                        <?= htmlspecialchars($lawyer['specialty']) ?>
+                                        <?= htmlspecialchars($lawyer['specialty']?? 'Aucune specialité renseigner') ?>
                                     </p>
                                     <div style="font-size: 0.8125rem; color: var(--gray-500); margin-bottom: 1rem;">
                                         <p><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i><?= htmlspecialchars($lawyer['email']) ?></p>
@@ -104,7 +104,7 @@ $lawyers = [
                                     <div class="flex justify-between items-center">
                                         <span style="color: var(--gray-400); font-size: 0.875rem;">
                                             <i class="fas fa-folder" style="margin-right: 0.25rem;"></i>
-                                            <?= $lawyer['cases'] ?> dossiers actifs
+                                            <?= $lawyer['cases'] ?? 'Aucun' ?> dossiers actifs
                                         </span>
                                         <div class="flex gap-sm">
                                             <button class="btn btn-sm btn-ghost" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'view-lawyer'; modalOpen = true" title="Voir">

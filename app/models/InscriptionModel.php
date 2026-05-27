@@ -22,7 +22,7 @@ class InscriptionModel extends Model
     public function byFormationId(int $formationId): array
     {
         $stmt = $this->db()->prepare(
-            'SELECT i.*, u.fullname, u.email, u.roles
+            'SELECT i.*, u.name AS fullname, u.email, u.roles
              FROM inscriptions i
              JOIN users u ON u.id = i.user_id
              WHERE i.formation_id = :fid
@@ -35,7 +35,7 @@ class InscriptionModel extends Model
     public function pending(): array
     {
         $stmt = $this->db()->prepare(
-            "SELECT i.*, f.titre AS formation_titre, u.fullname, u.email
+            "SELECT i.*, f.titre AS formation_titre, u.name AS fullname, u.email
              FROM inscriptions i
              JOIN formations f ON f.id = i.formation_id
              JOIN users u ON u.id = i.user_id
