@@ -39,7 +39,11 @@
         <a href="#actualites" class="nav-link">Actualités</a>
         <a href="#contact" class="nav-link">Contact</a>
         <a href="<?= Router\Router::route('/stages') ?>" class="nav-link">Stages</a>
-        <a href="<?= Router\Router::route('/login') ?>" class="nav-link nav-link-highlight">Connexion</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <a href="<?= Core\Auth::redirectUrlForDbRole(Core\Auth::role()) ?>" class="nav-link">Tableau de bord</a>
+        <?php else: ?>
+          <a href="<?= Router\Router::route('/login') ?>" class="nav-link nav-link-highlight">Connexion</a>
+        <?php endif; ?>
       </div>
       
       <a href="#contact" class="navbar-cta">Consultation</a>

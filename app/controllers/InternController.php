@@ -74,9 +74,28 @@ class InternController extends Controller
 
     public function trainings()
     {
+        $inscriptions = (new InscriptionModel())->byUserId((int) Auth::id());
+        $inscriptionsEnCours = array_values(array_filter(
+            $inscriptions,
+            static fn (array $inscription): bool => in_array($inscription['statut'], ['en_attente', 'acceptee'], true)
+        ));
+
+        $inscriptionsFormationIds = [];
+        foreach ($inscriptionsEnCours as $inscription) {
+            $inscriptionsFormationIds[] = (int) ($inscription['formation_id'] ?? 0);
+        }
+
+        $formationsDisponibles = [];
+        foreach ((new FormationModel())->availableForPublic('stagiaire') as $formation) {
+            if (!in_array((int) ($formation['id'] ?? 0), $inscriptionsFormationIds, true)) {
+                $formationsDisponibles[] = $formation;
+            }
+        }
+
         View::view('interns.trainings', [
-            'formations' => (new FormationModel())->all('stagiaire'),
-            'inscriptions' => (new InscriptionModel())->byUserId((int) Auth::id()),
+            'formationsDisponibles' => $formationsDisponibles,
+            'inscriptionsEnCours' => $inscriptionsEnCours,
+            'inscriptions' => $inscriptions,
             'csrf' => Security::csrf_tokken(),
         ]);
     }
@@ -97,14 +116,32 @@ class InternController extends Controller
             return;
         }
 
-        if (!(new FormationModel())->hasPlaces($formationId)) {
+        $formationModel = new FormationModel();
+        if (!$formationModel->findAvailableForPublic($formationId, 'stagiaire')) {
             $this->error('Plus de places disponibles.');
             $this->redirect(Router::route('/interns/trainings'));
             return;
         }
 
-        $inscriptionModel->create($formationId, (int) Auth::id(), $this->sanitaze($_POST['message'] ?? ''));
-        $_SESSION['success'] = 'Demande d\'inscription envoyée.';
+        if (!$formationModel->reservePlace($formationId)) {
+            $this->error('Plus de places disponibles.');
+            $this->redirect(Router::route('/interns/trainings'));
+            return;
+        }
+
+        try {
+            $inscriptionModel->create(
+                $formationId,
+                (int) Auth::id(),
+                $this->sanitaze($_POST['message'] ?? ''),
+                'acceptee'
+            );
+            $_SESSION['success'] = 'Inscription validée. Formation ajoutée dans "En cours".';
+        } catch (\Throwable $e) {
+            $formationModel->releasePlace($formationId);
+            $this->error('Inscription impossible pour le moment. Veuillez réessayer.');
+        }
+
         $this->redirect(Router::route('/interns/trainings'));
     }
 

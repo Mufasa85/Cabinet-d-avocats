@@ -35,8 +35,10 @@ $uri = $_SERVER['REQUEST_URI'] ?? '';
                 <span class="sidebar-user-role">Stagiaire</span>
             </div>
         </div>
-        <a href="<?= Router\Router::route('/logout') ?>" class="sidebar-logout">
-            <i class="fas fa-sign-out-alt"></i><span>Déconnexion</span>
-        </a>
+        <form action="<?= Router\Router::route('/logout') ?>" method="post">
+            <button class="sidebar-logout" type="submit">
+                <i class="fas fa-sign-out-alt"></i><span>Déconnexion</span>
+            </button>
+        </form>
     </div>
 </aside>

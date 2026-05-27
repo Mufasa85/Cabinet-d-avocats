@@ -254,6 +254,30 @@ class AdminController extends Controller
         $this->redirect(Router::route('/admin/lawyers'));
     }
 
+    public function deleteLawyer($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id <= 0) {
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $avocat = (new AvocatModel())->findById($id);
+        $userId = (int) ($avocat['user_id'] ?? 0);
+        if ($userId > 0) {
+            // Supprimer l'utilisateur supprime l'avocat (FK ON DELETE CASCADE).
+            (new UserModel())->delete($userId);
+            $_SESSION['success'] = 'Avocat supprimé.';
+        }
+
+        $this->redirect(Router::route('/admin/lawyers'));
+    }
+
     public function candidatures()
     {
         $appModel = new InternshipApplicationModel();
@@ -429,10 +453,53 @@ class AdminController extends Controller
     {
         View::view('admin.documents', [
             'documents' => (new StagiaireDocumentModel())->allForAdmin(),
+            'stagiaires' => (new StagiaireModel())->allWithUser(),
             'success' => $_SESSION['success'] ?? null,
             'error' => $_SESSION['error'] ?? null,
+            'csrf' => Security::csrf_tokken(),
         ]);
         unset($_SESSION['success'], $_SESSION['error']);
+    }
+
+    public function uploadDocument()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/documents'));
+            return;
+        }
+
+        $stagiaireId = (int) ($_POST['stagiaire_id'] ?? 0);
+        $titre = $this->sanitaze($_POST['titre'] ?? '');
+        $type = $this->sanitaze($_POST['type'] ?? 'autre');
+
+        if ($stagiaireId <= 0 || $titre === '') {
+            $this->error('Stagiaire et titre sont obligatoires.');
+            $this->redirect(Router::route('/admin/documents'));
+            return;
+        }
+
+        $stagiaire = (new StagiaireModel())->findById($stagiaireId);
+        if (!$stagiaire) {
+            $this->error('Stagiaire introuvable.');
+            $this->redirect(Router::route('/admin/documents'));
+            return;
+        }
+
+        try {
+            if (empty($_FILES['fichier']['name'])) {
+                throw new \RuntimeException('Veuillez sélectionner un fichier PDF.');
+            }
+            $stored = FileStorage::storeUpload($_FILES['fichier'], 'documents/stagiaires', 'adm_stg_' . $stagiaireId);
+            (new StagiaireDocumentModel())->create($stagiaireId, [
+                'type' => $type,
+                'titre' => $titre,
+            ], $stored);
+            $_SESSION['success'] = 'Document uploadé avec succès.';
+        } catch (\Throwable $e) {
+            $this->error($e->getMessage());
+        }
+
+        $this->redirect(Router::route('/admin/documents'));
     }
 
     public function validateDocument($params)
@@ -490,18 +557,117 @@ class AdminController extends Controller
 
     public function settings()
     {
-        View::view('admin.settings');
+        View::view('admin.settings', [
+            'admin' => (new UserModel())->findById((int) Auth::id()),
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null,
+            'csrf' => Security::csrf_tokken(),
+        ]);
+        unset($_SESSION['success'], $_SESSION['error']);
+    }
+
+    public function updateSettingsProfile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        $userId = (int) Auth::id();
+        $name = trim($this->sanitaze($_POST['name'] ?? ''));
+        $email = trim($this->sanitaze($_POST['email'] ?? ''));
+
+        if ($name === '' || $email === '') {
+            $this->error('Nom et email sont obligatoires.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->error('Format d\'email invalide.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        $userModel = new UserModel();
+        $existing = $userModel->findByEmail($email);
+        if ($existing && (int) $existing['id'] !== $userId) {
+            $this->error('Cet email est déjà utilisé.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        $userModel->update($userId, [
+            'name' => $name,
+            'email' => $email,
+        ]);
+
+        $_SESSION['user_name'] = $name;
+        $_SESSION['user_email'] = $email;
+
+        $_SESSION['success'] = 'Profil mis à jour.';
+        $this->redirect(Router::route('/admin/settings'));
+    }
+
+    public function updateSettingsPassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+
+        if ($currentPassword === '' || $newPassword === '' || $confirmPassword === '') {
+            $this->error('Tous les champs mot de passe sont obligatoires.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        if ($newPassword !== $confirmPassword) {
+            $this->error('Le nouveau mot de passe et sa confirmation ne correspondent pas.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        if (!Stringy::lengthError($newPassword, 8, 64)) {
+            $this->error('Le mot de passe doit contenir entre 8 et 64 caractères.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->findAuthById((int) Auth::id());
+        if (!$user || !password_verify($currentPassword, $user['passwords'])) {
+            $this->error('Mot de passe actuel incorrect.');
+            $this->redirect(Router::route('/admin/settings'));
+            return;
+        }
+
+        $userModel->update((int) Auth::id(), ['password' => $newPassword]);
+        $_SESSION['success'] = 'Mot de passe modifié avec succès.';
+        $this->redirect(Router::route('/admin/settings'));
     }
 
     public function reports()
     {
+        $applications = (new InternshipApplicationModel())->all();
+        $inscriptionsPending = (new InscriptionModel())->countPending();
+        $documents = (new StagiaireDocumentModel())->allForAdmin();
+        $documentsValides = count(array_filter($documents, static fn (array $d): bool => ($d['statut'] ?? '') === 'valide'));
+        $documentsAttente = count(array_filter($documents, static fn (array $d): bool => ($d['statut'] ?? '') === 'en_attente'));
+
         View::view('admin.reports', [
             'stats' => [
                 'users' => (new UserModel())->count(),
                 'avocats' => (new AvocatModel())->count(),
                 'stagiaires' => (new StagiaireModel())->count(),
-                'candidatures' => count((new InternshipApplicationModel())->all()),
-                'inscriptions_pending' => (new InscriptionModel())->countPending(),
+                'candidatures' => count($applications),
+                'inscriptions_pending' => $inscriptionsPending,
+                'documents_valides' => $documentsValides,
+                'documents_attente' => $documentsAttente,
             ],
         ]);
     }

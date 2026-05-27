@@ -3,6 +3,13 @@ $currentPage = $_SERVER['REQUEST_URI']   ?? '';
 $pageTitle = $pageTitle ?? 'Espace Avocat - ELMD';
 $lawyerName = $_SESSION['lawyer_name'] ?? $_SESSION['user_name'] ?? 'Avocat';
 $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
+$articleCount = 0;
+if (\Core\Auth::id()) {
+    $avocatForBadge = (new \App\models\AvocatModel())->findByUserId((int) \Core\Auth::id());
+    if ($avocatForBadge) {
+        $articleCount = count((new \App\models\ArticleModel())->byAvocatId((int) $avocatForBadge['id']));
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
@@ -85,7 +92,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo
               </svg>
             </span>
             <span class="nav-text">Articles</span>
-            <span class="nav-item-badge">3</span>
+            <span class="nav-item-badge"><?= (int) $articleCount ?></span>
           </a>
           
           <a href="<?= Router\Router::route('/lawyers/documents') ?>" class="nav-item <?= $currentPage === 'documents' ? 'active' : '' ?>">

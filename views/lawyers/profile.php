@@ -1,4 +1,94 @@
 <?php
+$pageTitle = 'Mon Profil';
+$currentPage = 'profile';
+$stats = $stats ?? [];
+$selectedSpecialites = $selectedSpecialites ?? [];
+require dirname(__DIR__) . '/layouts/lawyer/header.php';
+?>
+
+<div class="page-header">
+    <div class="page-header-content">
+        <div>
+            <h1 class="page-title">Mon Profil</h1>
+            <p class="page-subtitle">Informations personnelles et professionnelles</p>
+        </div>
+    </div>
+</div>
+
+<?php if (!empty($_SESSION['success'])): ?><div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div><?php unset($_SESSION['success']); endif; ?>
+<?php if (!empty($_SESSION['error'])): ?><div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']) ?></div><?php unset($_SESSION['error']); endif; ?>
+
+<div class="content-grid grid-2">
+    <div class="card">
+        <div class="card-header"><h2 class="card-title">Profil avocat</h2></div>
+        <div class="card-body">
+            <form method="post" action="<?= Router\Router::route('/lawyers/profile') ?>">
+                <?= $csrf ?? '' ?>
+                <div class="form-group">
+                    <label class="form-label">Nom complet</label>
+                    <input type="text" class="form-input" value="<?= htmlspecialchars($avocat['name'] ?? '') ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email compte</label>
+                    <input type="email" class="form-input" value="<?= htmlspecialchars($avocat['email'] ?? '') ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Téléphone</label>
+                    <input type="text" class="form-input" value="<?= htmlspecialchars($avocat['phone'] ?? '') ?>" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Titre</label>
+                    <input type="text" class="form-input" name="titre" value="<?= htmlspecialchars($avocat['titre'] ?? '') ?>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email professionnel</label>
+                    <input type="email" class="form-input" name="email_professionnel" value="<?= htmlspecialchars($avocat['email_professionnel'] ?? '') ?>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bureau</label>
+                    <input type="text" class="form-input" name="bureau" value="<?= htmlspecialchars($avocat['bureau'] ?? '') ?>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Expérience (années)</label>
+                    <input type="number" class="form-input" name="experience" min="0" value="<?= (int) ($avocat['experience'] ?? 0) ?>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Spécialités</label>
+                    <select class="form-select" name="specialites[]" multiple>
+                        <?php foreach (($specialites ?? []) as $s): ?>
+                            <option value="<?= (int) ($s['id'] ?? 0) ?>" <?= in_array((int) ($s['id'] ?? 0), $selectedSpecialites, true) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($s['nom'] ?? '') ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-textarea" name="bio" rows="5"><?= htmlspecialchars($avocat['bio'] ?? '') ?></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h2 class="card-title">Statistiques</h2></div>
+        <div class="card-body">
+            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="stat-card"><div class="stat-card-content"><h3><?= (int) ($stats['articles'] ?? 0) ?></h3><p>Articles</p></div></div>
+                <div class="stat-card"><div class="stat-card-content"><h3><?= (int) ($stats['published'] ?? 0) ?></h3><p>Publiés</p></div></div>
+                <div class="stat-card"><div class="stat-card-content"><h3><?= (int) ($stats['draft'] ?? 0) ?></h3><p>Brouillons</p></div></div>
+                <div class="stat-card"><div class="stat-card-content"><h3><?= (int) ($stats['documents'] ?? 0) ?></h3><p>Documents</p></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="../js/lawyer.js"></script>
+</body>
+</html>
+<?php
 
 $pageTitle = 'Mon Profil';
 $currentPage = 'profile';
@@ -10,7 +100,7 @@ $lawyerAvatar = $avocat['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1
 $lawyer = [
     'name' => $avocat['name'] ?? 'Me. Laurent Mbako',
     'email' => $avocat['email_professionnel'] ?? 'laurent.mbako@elmd-law.com',
-    'phone' => $avocat['telephone'] ?? '+243 81 234 5678',
+    'phone' => $avocat['phone'] ?? '+243 81 234 5678',
     'role' => $avocat['titre'] ?? 'Avocat Principal',
     'specialties' => $avocat['specialties'] ?? ['Droit OHADA', 'Droit Fiscal', 'Droit Minier', 'Droit du Travail'],
     'bio' => $avocat['biographie'] ?? 'Avocat avec plus de 15 ans d\'expérience dans les domaines du droit des affaires, droit fiscal et droit minier en République Démocratique du Congo.',

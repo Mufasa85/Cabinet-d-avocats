@@ -1,10 +1,5 @@
 <?php
-/**
- * ==============================================
- * ADMIN LAWYERS MANAGEMENT
- * Cabinet d'Avocats
- * ==============================================
- */
+
 
 $pageTitle = 'Gestion des Avocats';
 // $lawyers = [
@@ -28,7 +23,13 @@ $pageTitle = 'Gestion des Avocats';
     <script src="../js/theme.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedLawyer: null }">
+<body x-data="{
+    sidebarOpen: false,
+    modalOpen: false,
+    activeModal: null,
+    selectedLawyer: { id: null, user_id: null, name: '', email: '', telephone: '', titre: '', email_professionnel: '', bio: '', experience: '', bureau: '', specialites: '' },
+    lawyersBaseUrl: '<?= Router\Router::route('/admin/lawyers') ?>'
+}">
     
     <div class="admin-wrapper">
    <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
@@ -107,13 +108,13 @@ $pageTitle = 'Gestion des Avocats';
                                             <?= $lawyer['cases'] ?? 'Aucun' ?> dossiers actifs
                                         </span>
                                         <div class="flex gap-sm">
-                                            <button class="btn btn-sm btn-ghost" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'view-lawyer'; modalOpen = true" title="Voir">
+                                            <button class="btn btn-sm btn-ghost" @click="selectedLawyer = { ...selectedLawyer, ...<?= htmlspecialchars(json_encode($lawyer)) ?> }; activeModal = 'view-lawyer'; modalOpen = true" title="Voir">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-ghost" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'edit-lawyer'; modalOpen = true" title="Modifier">
+                                            <button class="btn btn-sm btn-ghost" @click="selectedLawyer = { ...selectedLawyer, ...<?= htmlspecialchars(json_encode($lawyer)) ?> }; activeModal = 'edit-lawyer'; modalOpen = true" title="Modifier">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-ghost" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'delete-lawyer'; modalOpen = true" title="Supprimer">
+                                            <button class="btn btn-sm btn-ghost" @click="selectedLawyer = { ...selectedLawyer, ...<?= htmlspecialchars(json_encode($lawyer)) ?> }; activeModal = 'delete-lawyer'; modalOpen = true" title="Supprimer">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -132,6 +133,8 @@ $pageTitle = 'Gestion des Avocats';
     
     <!-- ADD LAWYER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'add-lawyer' && modalOpen }">
+        <form method="POST" action="<?= Router\Router::route('/admin/lawyers') ?>">
+        <?= \Core\Security::csrf_tokken() ?>
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-user-tie"></i></div>
@@ -140,57 +143,63 @@ $pageTitle = 'Gestion des Avocats';
                     <p class="modal-subtitle">Ajouter un nouveau avocat au cabinet</p>
                 </div>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+            <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body">
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Nom Complet</label>
-                    <input type="text" class="form-input" placeholder="Maître Nom Prénom">
+                    <input type="text" class="form-input" name="fullname" placeholder="Maître Nom Prénom" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Spécialité</label>
-                    <select class="form-select">
-                        <option value="">Sélectionner</option>
-                        <option value="affaires">Droit des Affaires</option>
-                        <option value="fiscal">Droit Fiscal</option>
-                        <option value="travail">Droit du Travail</option>
-                        <option value="minier">Droit Minier</option>
-                        <option value="societes">Droit des Sociétés</option>
+                    <label class="form-label">Spécialités</label>
+                    <select class="form-select" name="specialites[]" multiple>
+                        <?php foreach (($specialites ?? []) as $s): ?>
+                            <option value="<?= (int) ($s['id'] ?? 0) ?>"><?= htmlspecialchars($s['nom'] ?? '') ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-input" placeholder="avocat@cabinet.cd">
+                    <input type="email" class="form-input" name="email" placeholder="avocat@cabinet.cd" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-input" placeholder="+243 XX XXX XXXX">
+                    <input type="tel" class="form-input" name="telephone" placeholder="+243 XX XXX XXXX">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" class="form-input" name="password" placeholder="Laisser vide = mot de passe par défaut">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Titre</label>
+                    <input type="text" class="form-input" name="titre" placeholder="Avocat">
                 </div>
             </div>
             <div class="form-group">
-                <label class="form-label">Barreau</label>
-                <input type="text" class="form-input" placeholder="Barreau de Kinshasa">
+                <label class="form-label">Bureau</label>
+                <input type="text" class="form-input" name="bureau" placeholder="Bureau / adresse interne">
             </div>
             <div class="form-group">
-                <label class="form-label">Disponibilité</label>
-                <select class="form-select">
-                    <option value="available">Disponible</option>
-                    <option value="busy">Occupé</option>
-                    <option value="unavailable">Indisponible</option>
-                </select>
+                <label class="form-label">Bio</label>
+                <textarea class="form-input" name="bio" rows="3" placeholder="Bio (optionnel)"></textarea>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
         </div>
+        </form>
     </div>
     
     <!-- EDIT LAWYER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'edit-lawyer' && modalOpen }">
+        <form method="POST" :action="lawyersBaseUrl + '/' + selectedLawyer.id + '/update'">
+        <?= \Core\Security::csrf_tokken() ?>
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-user-edit"></i></div>
@@ -199,48 +208,47 @@ $pageTitle = 'Gestion des Avocats';
                     <p class="modal-subtitle" x-text="selectedLawyer ? selectedLawyer.name : ''"></p>
                 </div>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+            <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body">
             <div class="form-row">
                 <div class="form-group">
-                    <label class="form-label">Nom Complet</label>
-                    <input type="text" class="form-input" x-model="selectedLawyer.name" placeholder="Maître Nom Prénom">
+                    <label class="form-label">Titre</label>
+                    <input type="text" class="form-input" name="titre" x-model="selectedLawyer.titre" placeholder="Avocat">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Spécialité</label>
-                    <select class="form-select">
-                        <option value="affaires">Droit des Affaires</option>
-                        <option value="fiscal">Droit Fiscal</option>
-                        <option value="travail">Droit du Travail</option>
-                        <option value="minier">Droit Minier</option>
-                        <option value="societes">Droit des Sociétés</option>
+                    <label class="form-label">Spécialités</label>
+                    <select class="form-select" name="specialites[]" multiple>
+                        <?php foreach (($specialites ?? []) as $s): ?>
+                            <option value="<?= (int) ($s['id'] ?? 0) ?>"><?= htmlspecialchars($s['nom'] ?? '') ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" x-model="selectedLawyer.email" placeholder="avocat@cabinet.cd">
+                    <label class="form-label">Email professionnel</label>
+                    <input type="email" class="form-input" name="email_professionnel" x-model="selectedLawyer.email_professionnel" placeholder="avocat@cabinet.cd">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-input" x-model="selectedLawyer.phone" placeholder="+243 XX XXX XXXX">
+                    <input type="tel" class="form-input" x-model="selectedLawyer.telephone" placeholder="+243 XX XXX XXXX" disabled>
                 </div>
             </div>
             <div class="form-group">
-                <label class="form-label">Disponibilité</label>
-                <select class="form-select">
-                    <option value="available">Disponible</option>
-                    <option value="busy">Occupé</option>
-                    <option value="unavailable">Indisponible</option>
-                </select>
+                <label class="form-label">Bureau</label>
+                <input type="text" class="form-input" name="bureau" x-model="selectedLawyer.bureau" placeholder="Bureau / adresse interne">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Bio</label>
+                <textarea class="form-input" name="bio" rows="3" x-model="selectedLawyer.bio" placeholder="Bio"></textarea>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
         </div>
+        </form>
     </div>
     
     <!-- VIEW LAWYER MODAL -->
@@ -300,6 +308,8 @@ $pageTitle = 'Gestion des Avocats';
     
     <!-- DELETE LAWYER MODAL -->
     <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete-lawyer' && modalOpen }">
+        <form method="POST" :action="lawyersBaseUrl + '/' + selectedLawyer.id + '/delete'">
+        <?= \Core\Security::csrf_tokken() ?>
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
@@ -308,16 +318,17 @@ $pageTitle = 'Gestion des Avocats';
                     <p class="modal-subtitle">Action irréversible</p>
                 </div>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+            <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body">
             <p>Êtes-vous sûr de vouloir supprimer <strong x-text="selectedLawyer ? selectedLawyer.name : ''"></strong> ?</p>
             <p style="color: var(--gray-500); margin-top: 0.5rem; font-size: 0.875rem;">Cette action désassociera tous les dossiers de cet avocat.</p>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+            <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
         </div>
+        </form>
     </div>
     
 </body>

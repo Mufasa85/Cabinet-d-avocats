@@ -29,6 +29,18 @@ class StagiaireModel extends Model
         return $stmt->fetchAll() ?: [];
     }
 
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db()->prepare(
+            'SELECT st.*, u.name AS fullname, u.email
+             FROM stagiaires st
+             JOIN users u ON u.id = st.user_id
+             WHERE st.id = :id LIMIT 1',
+            [':id' => $id]
+        );
+        return $stmt->fetch() ?: null;
+    }
+
     public function create(array $data): int
     {
         $this->db()->prepare(

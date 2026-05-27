@@ -1,131 +1,101 @@
 <?php
-
-if (!defined('ELMD_ROOT')) {
-    define('ELMD_ROOT', dirname(__DIR__, 2));
-}
-
 $pageTitle = 'Formations';
-$currentPage = 'trainings';
-
-$lawyerName = $_SESSION['lawyer_name'] ?? 'Me. Laurent Mbako';
-$lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
-
-// Formations
-$trainings = [
-    ['id' => 1, 'title' => 'Droit minier avancé', 'description' => 'Maîtrisez les subtilités du droit minier en RDC, des contrats aux litiges.', 'duration' => '12 heures', 'progress' => 75, 'lessons' => 8, 'completed' => 6, 'status' => 'in_progress'],
-    ['id' => 2, 'title' => 'Procédures OHADA', 'description' => 'Comprendre et appliquer les procédures OHADA dans votre pratique quotidienne.', 'duration' => '8 heures', 'progress' => 30, 'lessons' => 6, 'completed' => 2, 'status' => 'in_progress'],
-    ['id' => 3, 'title' => 'Négociation internationale', 'description' => 'Développez vos compétences en négociation pour des transactions internationales.', 'duration' => '16 heures', 'progress' => 0, 'lessons' => 10, 'completed' => 0, 'status' => 'available'],
-    ['id' => 4, 'title' => 'Fiscalité des entreprises', 'description' => 'Les bases de la fiscalité des entreprises en République Démocratique du Congo.', 'duration' => '10 heures', 'progress' => 100, 'lessons' => 7, 'completed' => 7, 'status' => 'completed'],
-    ['id' => 5, 'title' => 'Droit du travail approfondi', 'description' => 'Maîtrisez les aspects complexes du droit du travail congolais.', 'duration' => '14 heures', 'progress' => 100, 'lessons' => 9, 'completed' => 9, 'status' => 'completed'],
-];
-
-require dirname(__DIR__) . '/layouts/lawyer/header.php';
+$inscStatuts = ['en_attente' => 'En attente', 'acceptee' => 'Acceptée', 'refusee' => 'Refusée', 'annulee' => 'Annulée'];
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($pageTitle) ?> | Cabinet ELMD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/dash_admin.css">
+</head>
+<body>
+<div class="admin-wrapper">
+    <?php require dirname(__DIR__) . '/layouts/lawyer/sidebar.php'; ?>
+    <main class="main-content">
+        <header class="admin-header"><h1 class="header-title">Formations avocat</h1></header>
+        <div class="page-content">
+            <?php if (!empty($_SESSION['success'])): ?><div class="alert alert-success"><?= htmlspecialchars($_SESSION['success']) ?></div><?php unset($_SESSION['success']); endif; ?>
+            <?php if (!empty($_SESSION['error'])): ?><div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']) ?></div><?php unset($_SESSION['error']); endif; ?>
 
-<!-- Page Header -->
-<div class="page-header">
-    <div class="page-header-content">
-        <div>
-            <h1 class="page-title">Formations</h1>
-            <p class="page-subtitle">Développez vos compétences juridiques</p>
-        </div>
-    </div>
-</div>
+            <div class="mb-4">
+                <h2 class="card-title">En cours</h2>
+                <div class="grid-2">
+                    <?php if (empty($inscriptionsEnCours ?? [])): ?>
+                        <div class="card"><div class="card-body"><p style="color:var(--gray-500);">Aucune formation en cours.</p></div></div>
+                    <?php endif; ?>
+                    <?php foreach (($inscriptionsEnCours ?? []) as $i): ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="flex justify-between items-center mb-sm">
+                                    <span class="badge badge-warning">En cours</span>
+                                    <span style="font-size:0.8125rem;color:var(--gray-500);">
+                                        <?= $inscStatuts[$i['statut']] ?? htmlspecialchars($i['statut']) ?>
+                                    </span>
+                                </div>
+                                <h4 style="color:var(--white);"><?= htmlspecialchars($i['formation_titre']) ?></h4>
+                                <p style="font-size:0.8125rem;color:var(--gray-500);">
+                                    Début : <?= !empty($i['date_debut']) ? date('d/m/Y', strtotime($i['date_debut'])) : '—' ?>
+                                    <?php if (!empty($i['lieu'])): ?> · Lieu : <?= htmlspecialchars($i['lieu']) ?><?php endif; ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
 
-<!-- Progress Overview -->
-<div class="card mb-4">
-    <div class="card-body">
-        <div class="content-grid grid-4">
-            <div class="text-center">
-                <h3 class="font-display text-gold" style="font-size: 2rem;">2/5</h3>
-                <p class="text-muted">Formations complétées</p>
+            <div class="mb-4">
+                <h2 class="card-title">Formations disponibles</h2>
+                <div class="grid-2">
+                    <?php if (empty($formationsDisponibles ?? [])): ?>
+                        <div class="card"><div class="card-body"><p style="color:var(--gray-500);">Aucune formation disponible pour le moment.</p></div></div>
+                    <?php endif; ?>
+                    <?php foreach (($formationsDisponibles ?? []) as $f): ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 style="color:var(--white);"><?= htmlspecialchars($f['titre']) ?></h4>
+                                <p style="color:var(--gray-400);font-size:0.875rem;"><?= htmlspecialchars($f['description'] ?? '') ?></p>
+                                <p style="font-size:0.8125rem;color:var(--gray-500);">
+                                    <?= !empty($f['date_debut']) ? date('d/m/Y', strtotime($f['date_debut'])) : '—' ?>
+                                    · Places : <?= (int) $f['places_reservees'] ?>/<?= (int) $f['places_max'] ?>
+                                    <?php if (!empty($f['lieu'])): ?> · <?= htmlspecialchars($f['lieu']) ?><?php endif; ?>
+                                </p>
+                                <form method="post" action="<?= Router\Router::route('/lawyers/trainings/inscrire') ?>" class="mt-2">
+                                    <?= $csrf ?? '' ?>
+                                    <input type="hidden" name="formation_id" value="<?= (int) $f['id'] ?>">
+                                    <button type="submit" class="btn btn-primary btn-sm">Rejoindre</button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-            <div class="text-center">
-                <h3 class="font-display text-gold" style="font-size: 2rem;">50h</h3>
-                <p class="text-muted">Heures de formation</p>
-            </div>
-            <div class="text-center">
-                <h3 class="font-display text-gold" style="font-size: 2rem;">2</h3>
-                <p class="text-muted">En cours</p>
-            </div>
-            <div class="text-center">
-                <h3 class="font-display text-gold" style="font-size: 2rem;">3</h3>
-                <p class="text-muted">Certificats obtenus</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- In Progress -->
-<div class="mb-4">
-    <h2 class="font-display mb-3">En cours</h2>
-    <div class="content-grid grid-2">
-        <?php foreach (array_filter($trainings, fn($t) => $t['status'] === 'in_progress') as $training): ?>
-        <div class="card">
-            <div class="card-body">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="badge badge-warning">En cours</span>
-                    <span class="text-sm text-muted"><?= $training['completed'] ?>/<?= $training['lessons'] ?> leçons</span>
+            <div class="card mt-4">
+                <div class="card-header"><h2 class="card-title">Historique de mes inscriptions</h2></div>
+                <div class="card-body" style="padding:0;">
+                    <table class="table">
+                        <thead><tr><th>Formation</th><th>Statut</th><th>Date d'inscription</th></tr></thead>
+                        <tbody>
+                        <?php foreach (($inscriptions ?? []) as $i): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($i['formation_titre']) ?></td>
+                                <td><?= $inscStatuts[$i['statut']] ?? htmlspecialchars($i['statut']) ?></td>
+                                <td><?= date('d/m/Y', strtotime($i['created_at'])) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php if (empty($inscriptions ?? [])): ?>
+                            <tr><td colspan="3" style="color:var(--gray-500);">Aucune inscription.</td></tr>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
-                <h3 class="font-display mb-2"><?= htmlspecialchars($training['title']) ?></h3>
-                <p class="text-muted mb-3"><?= htmlspecialchars($training['description']) ?></p>
-                <div class="mb-3">
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="text-sm">Progression</span>
-                        <span class="text-sm text-gold"><?= $training['progress'] ?>%</span>
-                    </div>
-                    <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;">
-                        <div style="height: 100%; width: <?= $training['progress'] ?>%; background: var(--gold-gradient); border-radius: 3px;"></div>
-                    </div>
-                </div>
-                <div class="flex gap-2">
-                    <button class="btn btn-primary flex-1">Continuer</button>
-                    <button class="btn btn-secondary">Vue d'ensemble</button>
-                </div>
-            </div>
-        </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-
-<!-- Available & Completed -->
-<div>
-    <h2 class="font-display mb-3">Toutes les formations</h2>
-    <div class="content-grid grid-3">
-        <?php foreach ($trainings as $training): ?>
-        <div class="card">
-            <div class="card-body">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="badge <?= $training['status'] === 'completed' ? 'badge-success' : 'badge-info' ?>">
-                        <?= $training['status'] === 'completed' ? 'Complété' : 'Disponible' ?>
-                    </span>
-                    <span class="text-sm text-muted"><?= $training['duration'] ?></span>
-                </div>
-                <h4 class="font-display mb-2"><?= htmlspecialchars($training['title']) ?></h4>
-                <p class="text-muted text-sm mb-3"><?= htmlspecialchars($training['description']) ?></p>
-                <?php if ($training['status'] === 'completed'): ?>
-                <div class="flex items-center gap-2 mb-3">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-success" width="20" height="20">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                        <polyline points="22 4 12 14.01 9 11.01"/>
-                    </svg>
-                    <span class="text-sm text-success">Certificat obtenu</span>
-                </div>
-                <button class="btn btn-secondary w-full">Voir le certificat</button>
-                <?php else: ?>
-                <div class="flex gap-2">
-                    <button class="btn btn-primary w-full">Commencer</button>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
-        <?php endforeach; ?>
-    </div>
+    </main>
 </div>
-
-</div><!-- End page-content -->
-
-<script src="../js/lawyer.js"></script>
-
 </body>
 </html>

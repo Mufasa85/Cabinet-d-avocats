@@ -93,6 +93,16 @@ class AvocatModel extends Model
         }
     }
 
+    public function specialiteIds(int $avocatId): array
+    {
+        $stmt = $this->db()->prepare(
+            'SELECT specialite_id FROM avocat_specialites WHERE avocat_id = :id',
+            [':id' => $avocatId]
+        );
+        $rows = $stmt->fetchAll() ?: [];
+        return array_map(static fn (array $row): int => (int) ($row['specialite_id'] ?? 0), $rows);
+    }
+
     public function count(): int
     {
         return (int) ($this->db()->prepare('SELECT COUNT(*) AS c FROM avocats')->fetch()['c'] ?? 0);

@@ -19,7 +19,17 @@ class UserModel extends Model
     public function findById(int $id): ?array
     {
         $stmt = Dic::get(Database::class)->prepare(
-            'SELECT id, name, email, role, telephone, avatar, status, created_at FROM users WHERE id = :id LIMIT 1',
+            'SELECT id, name, email, role, phone AS telephone, avatar, status, created_at FROM users WHERE id = :id LIMIT 1',
+            [':id' => $id]
+        );
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
+
+    public function findAuthById(int $id): ?array
+    {
+        $stmt = Dic::get(Database::class)->prepare(
+            'SELECT id, name, email, role, phone, avatar, status, passwords FROM users WHERE id = :id LIMIT 1',
             [':id' => $id]
         );
         $row = $stmt->fetch();
@@ -38,13 +48,13 @@ class UserModel extends Model
 
     public function create(array $data)
     {
-        $sql = 'INSERT INTO users (name, email, passwords, role, telephone, avatar, status) VALUES (:name, :email, :passwords, :role, :telephone, :avatar, :status)';
+        $sql = 'INSERT INTO users (name, email, passwords, role, phone, avatar, status) VALUES (:name, :email, :passwords, :role, :phone, :avatar, :status)';
         $params = [
             ':name' => $data['name'] ?? $data['fullname'] ?? null,
             ':email' => $data['email'] ?? null,
             ':passwords' => isset($data['password']) ? password_hash($data['password'], PASSWORD_BCRYPT) : null,
             ':role' => $data['role'] ?? $data['roles'] ?? 'stagiaire',
-            ':telephone' => $data['telephone'] ?? null,
+            ':phone' => $data['telephone'] ?? null,
             ':avatar' => $data['avatar'] ?? null,
             ':status' => isset($data['status']) ? (int) $data['status'] : (isset($data['is_active']) ? (int) $data['is_active'] : 1),
         ];

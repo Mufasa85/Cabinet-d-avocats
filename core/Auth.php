@@ -114,6 +114,7 @@ class Auth
         return match ($dbRole) {
             'admin' => \Router\Router::route('/admin/dashboard'),
             'avocat' => \Router\Router::route('/lawyers/dashboard'),
+            'lawyer' => \Router\Router::route('/lawyers/dashboard'),
             'stagiaire' => \Router\Router::route('/interns/dashboard'),
             'secretaire' => \Router\Router::route('/admin/dashboard'),
             default => \Router\Router::route('/'),

@@ -45,7 +45,7 @@ class InscriptionModel extends Model
         return $stmt->fetchAll() ?: [];
     }
 
-    public function create(int $formationId, int $userId, ?string $message = null): int
+    public function create(int $formationId, int $userId, ?string $message = null, string $statut = 'en_attente'): int
     {
         $this->db()->prepare(
             'INSERT INTO inscriptions (formation_id, user_id, message, statut)
@@ -54,7 +54,7 @@ class InscriptionModel extends Model
                 ':fid' => $formationId,
                 ':uid' => $userId,
                 ':message' => $message,
-                ':statut' => 'en_attente',
+                ':statut' => $statut,
             ]
         );
         return (int) $this->db()->lastInsertId();
@@ -75,6 +75,11 @@ class InscriptionModel extends Model
         if ($statut === 'acceptee' && $inscription['statut'] !== 'acceptee') {
             $this->db()->prepare(
                 'UPDATE formations SET places_reservees = places_reservees + 1 WHERE id = :fid',
+                [':fid' => $inscription['formation_id']]
+            );
+        } elseif ($inscription['statut'] === 'acceptee' && in_array($statut, ['refusee', 'annulee'], true)) {
+            $this->db()->prepare(
+                'UPDATE formations SET places_reservees = GREATEST(places_reservees - 1, 0) WHERE id = :fid',
                 [':fid' => $inscription['formation_id']]
             );
         }
