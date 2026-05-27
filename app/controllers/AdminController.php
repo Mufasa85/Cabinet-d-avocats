@@ -1,4 +1,5 @@
 <?php
+
 namespace App\controllers;
 
 use App\models\AvocatModel;
@@ -15,6 +16,7 @@ use App\models\UserModel;
 use App\View;
 use Core\Auth;
 use Core\Security;
+use Helper\String\Stringy;
 use Router\Router;
 use Service\FileStorage;
 use Service\Messagerie;
@@ -111,6 +113,23 @@ class AdminController extends Controller
             return;
         }
 
+        // Validation du mot de passe si fourni
+        $password = $_POST['password'] ?? '';
+        $confirmPassword = $_POST['password_confirmation'] ?? '';
+
+        if (!empty($password) || !empty($confirmPassword)) {
+            if ($password !== $confirmPassword) {
+                $this->error('Les mots de passe ne correspondent pas.');
+                $this->redirect(Router::route('/admin/users'));
+                return;
+            }
+            if (!Stringy::lengthError($password, 8, 64)) {
+                $this->error('Le mot de passe doit contenir entre 8 et 64 caractères.');
+                $this->redirect(Router::route('/admin/users'));
+                return;
+            }
+        }
+
         $role = $this->sanitaze($_POST['role'] ?? '');
         if ($role !== '' && !in_array($role, Auth::DB_ROLES, true)) {
             $this->error('Rôle invalide.');
@@ -118,14 +137,20 @@ class AdminController extends Controller
             return;
         }
 
-        (new UserModel())->update($id, [
+        $updateData = [
             'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
             'email' => $this->sanitaze($_POST['email'] ?? ''),
-            'password' => $_POST['password'] ?? '',
             'roles' => $role,
             'telephone' => $this->sanitaze($_POST['telephone'] ?? ''),
             'is_active' => isset($_POST['is_active']) ? (int) $_POST['is_active'] : null,
-        ]);
+        ];
+
+        // Ajouter le password seulement s'il est fourni
+        if (!empty($password)) {
+            $updateData['password'] = $password;
+        }
+
+        (new UserModel())->update($id, $updateData);
 
         $_SESSION['success'] = 'Utilisateur mis à jour.';
         $this->redirect(Router::route('/admin/users'));

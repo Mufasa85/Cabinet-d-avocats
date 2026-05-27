@@ -69,3 +69,7 @@ INSERT INTO formations (titre, slug, description, places_max, public_cible, stat
   '2026-05-31'
 )
 ON DUPLICATE KEY UPDATE titre = titre;
+
+
+INSERT INTO users (fullname, email, passwords, roles, is_active) 
+VALUES ('Admin', 'admin@test.com', '$2y$10$...', 'admin', 1);

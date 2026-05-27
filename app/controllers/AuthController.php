@@ -1,4 +1,5 @@
 <?php
+
 namespace App\controllers;
 
 use App\models\UserModel;
@@ -61,7 +62,17 @@ class AuthController extends Controller
         }
 
         if (!$user || !password_verify($password, $user['passwords'])) {
-            $this->error('Email ou mot de passe incorrect.');
+            // Log pour débugger le problème d'authentification
+            $log = Dic::get(LogManagement::class);
+            $log->create("DEBUG LOGIN: email=$email, password_reçu=$password, user_trouvé=" . ($user ? 'oui' : 'non') . ", hash_en_db=" . ($user['passwords'] ?? 'n/a'));
+
+            if (!$user) {
+                $this->error('Email ou mot de passe incorrect.');
+            } else {
+                $verif = password_verify($password, $user['passwords']);
+                $log->create("DEBUG PASSWORD: verify_result=$verif, hash_db=" . $user['passwords']);
+                $this->error('Email ou mot de passe incorrect.');
+            }
             $this->redirect(Router::route('/login'));
             return;
         }

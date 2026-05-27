@@ -256,66 +256,70 @@ $formattedUsers = array_map(function ($user) {
 
     <!-- EDIT USER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'edit-user' && modalOpen }">
-        <div class="modal-header">
-            <div class="modal-header-content">
-                <div class="modal-icon"><i class="fas fa-user-edit"></i></div>
-                <div>
-                    <h3 class="modal-title">Modifier l'Utilisateur</h3>
-                    <p class="modal-subtitle" x-text="selectedUser ? selectedUser.name : ''"></p>
+        <form method="POST" :action="'/admin/users/' + selectedUser?.id + '/update'">
+            <?= \Core\Security::csrf_tokken() ?>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon"><i class="fas fa-user-edit"></i></div>
+                    <div>
+                        <h3 class="modal-title">Modifier l'Utilisateur</h3>
+                        <p class="modal-subtitle" x-text="selectedUser ? selectedUser.name : ''"></p>
+                    </div>
                 </div>
+                <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Nom Complet</label>
-                    <input type="text" class="form-input" x-model="selectedUser.name" placeholder="Entrez le nom complet">
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nom Complet</label>
+                        <input type="text" name="fullname" class="form-input" x-model="selectedUser.name" placeholder="Entrez le nom complet" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-input" x-model="selectedUser.email" placeholder="exemple@email.com" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" name="telephone" class="form-input" x-model="selectedUser.telephone" placeholder="+243 XX XXX XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rôle</label>
+                        <select name="role" class="form-select" x-model="selectedUser.roles">
+                            <option value="admin">Administrateur</option>
+                            <option value="avocat">Avocat</option>
+                            <option value="juriste">Juriste</option>
+                            <option value="secretaire">Secrétaire</option>
+                            <option value="stagiaire">Stagiaire</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" x-model="selectedUser.email" placeholder="exemple@email.com">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-input" placeholder="+243 XX XXX XXXX">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Rôle</label>
-                    <select class="form-select">
-                        <option value="avocat">Avocat</option>
-                        <option value="juriste">Juriste</option>
-                        <option value="secretaire">Secrétaire</option>
-                        <option value="stagiaire">Stagiaire</option>
+                    <label class="form-label">Statut</label>
+                    <select name="is_active" class="form-select" x-model="selectedUser.is_active">
+                        <option value="1">Actif</option>
+                        <option value="0">Inactif</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Statut</label>
-                <select class="form-select">
-                    <option value="active">Actif</option>
-                    <option value="pending">En Attente</option>
-                    <option value="inactive">Inactif</option>
-                </select>
-            </div>
-            <div style="background: rgba(212, 175, 55, 0.05); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
-                <h4 style="color: var(--white); font-size: 0.875rem; margin-bottom: 0.5rem;"><i class="fas fa-key" style="margin-right: 0.5rem;"></i> Changer le Mot de Passe</h4>
-                <div class="form-row">
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <input type="password" class="form-input" placeholder="Nouveau mot de passe">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <input type="password" class="form-input" placeholder="Confirmer">
+                <div style="background: rgba(212, 175, 55, 0.05); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
+                    <h4 style="color: var(--white); font-size: 0.875rem; margin-bottom: 0.5rem;"><i class="fas fa-key" style="margin-right: 0.5rem;"></i> Changer le Mot de Passe</h4>
+                    <p style="color: var(--gray-500); font-size: 0.75rem; margin-bottom: 0.5rem;">Laisser vide pour ne pas modifier</p>
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="password" name="password" class="form-input" placeholder="Nouveau mot de passe">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="password" name="password_confirmation" class="form-input" placeholder="Confirmer">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
+            </div>
+        </form>
     </div>
 
     <!-- VIEW USER MODAL -->
@@ -367,24 +371,27 @@ $formattedUsers = array_map(function ($user) {
 
     <!-- DELETE USER MODAL -->
     <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete-user' && modalOpen }">
-        <div class="modal-header">
-            <div class="modal-header-content">
-                <div class="modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                <div>
-                    <h3 class="modal-title">Confirmer la Suppression</h3>
-                    <p class="modal-subtitle">Cette action est irréversible</p>
+        <form method="POST" :action="'/admin/users/' + selectedUser?.id + '/delete'">
+            <?= \Core\Security::csrf_tokken() ?>
+            <div class="modal-header">
+                <div class="modal-header-content">
+                    <div class="modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div>
+                        <h3 class="modal-title">Confirmer la Suppression</h3>
+                        <p class="modal-subtitle">Cette action est irréversible</p>
+                    </div>
                 </div>
+                <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong x-text="selectedUser ? selectedUser.name : ''"></strong> ?</p>
-            <p style="color: var(--gray-500); margin-top: 0.5rem; font-size: 0.875rem;">Toutes les données associées seront définitivement supprimées.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
-            <button class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
-        </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong x-text="selectedUser ? selectedUser.name : ''"></strong> ?</p>
+                <p style="color: var(--gray-500); margin-top: 0.5rem; font-size: 0.875rem;">Toutes les données associées seront définitivement supprimées.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+            </div>
+        </form>
     </div>
 
 </body>
