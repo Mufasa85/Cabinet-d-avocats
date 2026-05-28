@@ -1,4 +1,5 @@
 <?php
+
 namespace App\models;
 
 use Container\Dic;
@@ -36,7 +37,7 @@ class UserModel extends Model
         return $row ?: null;
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         $sql = 'INSERT INTO users (fullname, email, passwords, roles, telephone, avatar, is_active) VALUES (:fullname, :email, :passwords, :roles, :telephone, :avatar, :is_active)';
         $params = [
@@ -49,7 +50,8 @@ class UserModel extends Model
             ':is_active' => isset($data['is_active']) ? (int) $data['is_active'] : 1,
         ];
 
-        return Dic::get(Database::class)->prepare($sql, $params);
+        Dic::get(Database::class)->prepare($sql, $params);
+        return (int) Dic::get(Database::class)->lastInsertId();
     }
 
     public function update(int $id, array $data)

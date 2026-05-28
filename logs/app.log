@@ -1,0 +1,32 @@
+[2026-05-27 23:46:59] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"f6d126a9c49f8110737eab50cdf48373f146e881557d8ced0d5ffd7f69ac7682","fullname":"César Paysayo","email":"16paysayocesar@gmail.com","telephone":"+243895511485","titre":"Avocat","experience":"5","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-05-27 23:46:59] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"16paysayocesar@gmail.com"}
+[2026-05-27 23:46:59] [WARNING] storeLawyer: Email deja utilise | Context: {"email":"16paysayocesar@gmail.com"}
+[2026-05-27 23:47:52] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"f6d126a9c49f8110737eab50cdf48373f146e881557d8ced0d5ffd7f69ac7682","fullname":"César Paysayo","email":"cesar@gmail.com","telephone":"+243895511485","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-05-27 23:47:52] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"cesar@gmail.com"}
+[2026-05-27 23:47:52] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"César Paysayo","email":"cesar@gmail.com","roles":"avocat"}
+[2026-05-27 23:47:52] [DEBUG] storeLawyer: User cree | Context: {"userId":3}
+[2026-05-27 23:47:52] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":3}
+[2026-05-27 23:47:52] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":1}
+[2026-05-27 23:47:52] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":1}
+[2026-05-28 00:41:48] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 00:41:48] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 00:41:48] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_d577bbda2a3b5f64.jpg"}
+[2026-05-28 00:41:48] [INFO] updateAvatar: succes
+[2026-05-28 00:49:40] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 00:49:40] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 00:49:40] [ERROR] updateAvatar: erreur | Context: {"message":"Seuls les fichiers PDF sont acceptés."}
+[2026-05-28 00:50:25] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 00:50:25] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 00:50:25] [ERROR] updateAvatar: erreur | Context: {"message":"Seuls les fichiers PDF sont acceptés."}
+[2026-05-28 00:52:45] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 00:52:45] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 00:52:45] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_645401fc863e0a75.jpg"}
+[2026-05-28 00:52:45] [INFO] updateAvatar: succes
+[2026-05-28 00:54:26] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 00:54:26] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 00:54:26] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_a7086a01525a98f6.jpg"}
+[2026-05-28 00:54:26] [INFO] updateAvatar: succes
+[2026-05-28 01:13:10] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 01:13:10] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 01:13:10] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_c14301644ed8d73b.png"}
+[2026-05-28 01:13:10] [INFO] updateAvatar: succes

@@ -97,4 +97,12 @@ class AvocatModel extends Model
     {
         return (int) ($this->db()->prepare('SELECT COUNT(*) AS c FROM avocats')->fetch()['c'] ?? 0);
     }
+
+    public function delete(int $id): void
+    {
+        // Supprimer d'abord les specialites associees
+        $this->db()->prepare('DELETE FROM avocat_specialites WHERE avocat_id = :id', [':id' => $id]);
+        // Puis supprimer l'avocat
+        $this->db()->prepare('DELETE FROM avocats WHERE id = :id', [':id' => $id]);
+    }
 }

@@ -9,3 +9,4 @@
 [2026-05-27 | 14:33:28] DEBUG PASSWORD: verify_result=, hash_db=$2y$10$kcUqkzvBO1fmFVzwSmO7GuVhAw42p3buZ48HqyQUQCeTxcta0D1Ni
 [2026-05-27 | 14:33:41] DEBUG LOGIN: email=16paysayocesar@gmail.com, password_reçu=12345678, user_trouvé=oui, hash_en_db=$2y$10$kcUqkzvBO1fmFVzwSmO7GuVhAw42p3buZ48HqyQUQCeTxcta0D1Ni
 [2026-05-27 | 14:33:41] DEBUG PASSWORD: verify_result=, hash_db=$2y$10$kcUqkzvBO1fmFVzwSmO7GuVhAw42p3buZ48HqyQUQCeTxcta0D1Ni
+[2026-05-27 | 23:16:57] SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
