@@ -1,9 +1,11 @@
 <?php
+
 namespace App\controllers;
 
 use App\models\ArticleModel;
 use App\models\AvocatModel;
 use App\models\CategoryModel;
+use App\models\UserModel;
 use App\models\FormationModel;
 use App\models\InscriptionModel;
 use App\models\NotificationModel;
@@ -24,7 +26,7 @@ class LawyerController extends Controller
             exit;
         }
         $this->avocat = (new AvocatModel())->findByUserId((int) Auth::id());
-        
+
         if (!$this->avocat) {
             $this->redirect(Router::route('/login'));
             exit;
@@ -139,18 +141,78 @@ class LawyerController extends Controller
             return;
         }
 
+        // Update users table (fullname, telephone)
+        $userData = [];
+        if (!empty($_POST['fullname'])) {
+            $userData['fullname'] = $this->sanitaze($_POST['fullname']);
+        }
+        if (!empty($_POST['telephone'])) {
+            $userData['telephone'] = $this->sanitaze($_POST['telephone']);
+        }
+        if (!empty($userData)) {
+            (new UserModel())->update((int) Auth::id(), $userData);
+        }
+
+        // Update avocats table (email_professionnel, bio, bureau)
         (new AvocatModel())->update((int) $this->avocat['id'], [
-            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
             'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
             'bio' => $this->sanitaze($_POST['bio'] ?? ''),
-            'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
             'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
         ]);
 
-        $specIds = array_map('intval', $_POST['specialites'] ?? []);
-        (new AvocatModel())->setSpecialites((int) $this->avocat['id'], $specIds);
-
         $_SESSION['success'] = 'Profil mis à jour.';
+        $this->redirect(Router::route('/lawyers/profile'));
+    }
+
+    public function updateAvatar()
+    {
+        // Debug logging
+        \Helper\Log\Logger::info('updateAvatar: debut', [
+            'method' => $_SERVER['REQUEST_METHOD'],
+            'files' => !empty($_FILES) ? array_keys($_FILES) : 'empty',
+            'post' => isset($_POST) ? 'has post data' : 'no post data'
+        ]);
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            \Helper\Log\Logger::warning('updateAvatar: pas POST');
+            $this->redirect(Router::route('/lawyers/profile'));
+            return;
+        }
+
+        if (!Security::verify_csrf_token()) {
+            \Helper\Log\Logger::warning('updateAvatar: CSRF invalide');
+            $_SESSION['error'] = 'Token de sécurité invalide.';
+            $this->redirect(Router::route('/lawyers/profile'));
+            return;
+        }
+
+        if (empty($_FILES['avatar']) || empty($_FILES['avatar']['name'])) {
+            \Helper\Log\Logger::warning('updateAvatar: pas de fichier');
+            $_SESSION['error'] = 'Aucune image sélectionnée.';
+            $this->redirect(Router::route('/lawyers/profile'));
+            return;
+        }
+
+        try {
+            $userId = (int) Auth::id();
+            \Helper\Log\Logger::debug('updateAvatar: upload pour user', ['userId' => $userId]);
+
+            $stored = FileStorage::storeUpload($_FILES['avatar'], 'images/avatars', 'avatar_' . $userId);
+
+            \Helper\Log\Logger::info('updateAvatar: fichier stocke', ['fichier' => $stored['fichier']]);
+
+            // Update avatar in users table
+            (new UserModel())->update($userId, [
+                'avatar' => $stored['fichier']
+            ]);
+
+            $_SESSION['success'] = 'Photo de profil mise à jour.';
+            \Helper\Log\Logger::info('updateAvatar: succes');
+        } catch (\RuntimeException $e) {
+            \Helper\Log\Logger::error('updateAvatar: erreur', ['message' => $e->getMessage()]);
+            $this->error($e->getMessage());
+        }
+
         $this->redirect(Router::route('/lawyers/profile'));
     }
 
