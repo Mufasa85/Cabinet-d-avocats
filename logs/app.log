@@ -33,3 +33,50 @@
 [2026-05-28 14:45:05] [INFO] applyInternship:Debut | Context: {"POST":{"csrf_token":"c11f2b67f289a803417bf2fc18523403db8989978275c46677e4ca022cd80693","fullName":"Paysayo","email":"16paysayocesar@gmail.com","phone":"+243895511485","university":"upc","level":"m2","consent":"on"},"FILES":["cvFile","letterFile","academicFile"]}
 [2026-05-28 15:37:37] [INFO] applyInternship:Debut | Context: {"POST":{"csrf_token":"1526c3c7005650ccf9e98510ee67f7dd149e6dbc47613e47a0548722813c7993","fullName":"Peter","email":"peter@gmail.com","phone":"+243815252159","university":"upc","level":"m2","consent":"on"},"FILES":["cvFile","letterFile","academicFile"]}
 [2026-05-28 16:00:18] [INFO] createStagiaire: User already exists | Context: {"email":"16paysayocesar@gmail.com"}
+[2026-05-28 17:32:53] [INFO] applyInternship:Debut | Context: {"POST":{"csrf_token":"c6cadcb3c06e3fc304f1f9833c2f5084ffe391cf7505219e4d6c52865c6c2c9d","fullName":"César Paysayo","email":"16paysayocesar@gmail.com","phone":"+243895511485","university":"upc congo","level":"m1","consent":"on"},"FILES":["cvFile","letterFile","academicFile"]}
+[2026-05-28 17:33:49] [INFO] createStagiaire: User already exists | Context: {"email":"16paysayocesar@gmail.com"}
+[2026-05-28 17:36:49] [INFO] applyInternship:Debut | Context: {"POST":{"csrf_token":"e7f77d9fa063b9a6951f116b91fc1259d4cd64f988fd3ecde28f70ce81afa8e0","fullName":"satan","email":"satan@gmail.com","phone":"+243878945610","university":"kin la belle","level":"m1","consent":"on"},"FILES":["cvFile","letterFile","academicFile"]}
+[2026-05-28 17:37:14] [INFO] createStagiaire: Success | Context: {"userId":8,"stagiaireId":2,"email":"satan@gmail.com"}
+[2026-05-28 17:39:21] [INFO] createStagiaire: User already exists | Context: {"email":"satan@gmail.com"}
+[2026-05-28 18:13:01] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"a58be7f85fc21aea199d3d677c353d7eb36985d8733d8e05f779f1e804ca15ed","fullname":"Bâtonnier Laurent MBAKO","email":"Laurent@gmail.com","telephone":"0811010100","titre":"Avocat","experience":"","bureau":"448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba","bio":"","password":"12345678"}}
+[2026-05-28 18:13:01] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"Laurent@gmail.com"}
+[2026-05-28 18:13:01] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Bâtonnier Laurent MBAKO","email":"Laurent@gmail.com","roles":"avocat"}
+[2026-05-28 18:13:01] [DEBUG] storeLawyer: User cree | Context: {"userId":9}
+[2026-05-28 18:13:01] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":9}
+[2026-05-28 18:13:01] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":5}
+[2026-05-28 18:13:01] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":5}
+[2026-05-28 18:14:41] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"a58be7f85fc21aea199d3d677c353d7eb36985d8733d8e05f779f1e804ca15ed","fullname":"Maître Pierre KAHADI","email":"Pierre@gmail.com","telephone":"+2430816067100","titre":"Avocat","experience":"","bureau":"448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba","bio":"","password":"12345678"}}
+[2026-05-28 18:14:41] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"Pierre@gmail.com"}
+[2026-05-28 18:14:41] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Pierre KAHADI","email":"Pierre@gmail.com","roles":"avocat"}
+[2026-05-28 18:14:41] [DEBUG] storeLawyer: User cree | Context: {"userId":10}
+[2026-05-28 18:14:41] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":10}
+[2026-05-28 18:14:41] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":6}
+[2026-05-28 18:14:41] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":6}
+[2026-05-28 18:16:18] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"a58be7f85fc21aea199d3d677c353d7eb36985d8733d8e05f779f1e804ca15ed","fullname":"Maître Olivier ABELI","email":"Olivier@gmail.com","telephone":"+243895511159","titre":"Avocat","experience":"","bureau":"448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba","bio":"","password":"12345678"}}
+[2026-05-28 18:16:18] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"Olivier@gmail.com"}
+[2026-05-28 18:16:18] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Olivier ABELI","email":"Olivier@gmail.com","roles":"avocat"}
+[2026-05-28 18:16:19] [DEBUG] storeLawyer: User cree | Context: {"userId":11}
+[2026-05-28 18:16:19] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":11}
+[2026-05-28 18:16:19] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":7}
+[2026-05-28 18:16:19] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":7}
+[2026-05-28 18:17:21] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"a58be7f85fc21aea199d3d677c353d7eb36985d8733d8e05f779f1e804ca15ed","fullname":"Maître Ghislain MUSAS","email":"Ghislain@gmail.com","telephone":"+243895511753","titre":"Avocat","experience":"","bureau":"448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba","bio":"","password":"12345678"}}
+[2026-05-28 18:17:21] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"Ghislain@gmail.com"}
+[2026-05-28 18:17:21] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Ghislain MUSAS","email":"Ghislain@gmail.com","roles":"avocat"}
+[2026-05-28 18:17:21] [DEBUG] storeLawyer: User cree | Context: {"userId":12}
+[2026-05-28 18:17:21] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":12}
+[2026-05-28 18:17:21] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":8}
+[2026-05-28 18:17:21] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":8}
+[2026-05-28 18:18:07] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"a58be7f85fc21aea199d3d677c353d7eb36985d8733d8e05f779f1e804ca15ed","fullname":"Maître Rosy MUMBA","email":"MUMBA@gmail.com","telephone":"+243895511852","titre":"Avocat","experience":"","bureau":"448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba","bio":"","password":"12345678"}}
+[2026-05-28 18:18:07] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"MUMBA@gmail.com"}
+[2026-05-28 18:18:07] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Rosy MUMBA","email":"MUMBA@gmail.com","roles":"avocat"}
+[2026-05-28 18:18:07] [DEBUG] storeLawyer: User cree | Context: {"userId":13}
+[2026-05-28 18:18:07] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":13}
+[2026-05-28 18:18:07] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":9}
+[2026-05-28 18:18:07] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":9}
+[2026-05-28 18:20:03] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"a58be7f85fc21aea199d3d677c353d7eb36985d8733d8e05f779f1e804ca15ed","fullname":"Maître Justine NSENGA","email":"NSENGA@gmail.com","telephone":"+243895511456","titre":"Avocat","experience":"","bureau":"448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba","bio":"","password":"12345678"}}
+[2026-05-28 18:20:03] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"NSENGA@gmail.com"}
+[2026-05-28 18:20:03] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Justine NSENGA","email":"NSENGA@gmail.com","roles":"avocat"}
+[2026-05-28 18:20:03] [DEBUG] storeLawyer: User cree | Context: {"userId":14}
+[2026-05-28 18:20:03] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":14}
+[2026-05-28 18:20:03] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":10}
+[2026-05-28 18:20:03] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":10}

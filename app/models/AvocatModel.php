@@ -20,7 +20,18 @@ class AvocatModel extends Model
              GROUP BY u.id
              ORDER BY u.fullname ASC'
         );
-        return $stmt->fetchAll() ?: [];
+        $avocats = $stmt->fetchAll() ?: [];
+
+        // Convertit les chemins relatifs des avatars en URLs completes
+        foreach ($avocats as &$avocat) {
+            if (!empty($avocat['avatar'])) {
+                $avocat['avatar_url'] = \Service\FileStorage::url($avocat['avatar']);
+            } else {
+                $avocat['avatar_url'] = null;
+            }
+        }
+
+        return $avocats;
     }
 
     public function findByUserId(int $userId): ?array

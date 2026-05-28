@@ -465,7 +465,7 @@ class AdminController extends Controller
         // Create notification for the new staitaire
         (new NotificationModel())->create(
             $userId,
-            'welcome_stagiaire',
+            'info',
             'Bienvenue au Cabinet',
             'Votre compte staitaire a été créé. Connectez-vous avec vos identifiants temporaires.',
             Router::route('/interns/dashboard')

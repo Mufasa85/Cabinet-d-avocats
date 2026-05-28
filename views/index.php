@@ -477,7 +477,7 @@
             <div class="team-card animate-on-scroll">
               <a href="<?= Router\Router::route('/avocat/' . ($avocat['avocat_id'] ?? $avocat['id'] ?? '')) ?>" class="team-card-link">
                 <div class="team-image">
-                  <img src="<?= $avocat['avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80' ?>" alt="<?= htmlspecialchars($avocat['fullname'] ?? 'Avocat') ?>">
+                  <img src="<?= $avatarSrc = $avocat['avatar_url'] ?? ($avocat['avatar'] ? \Service\FileStorage::url($avocat['avatar']) : $defaultAvatar); ?>" alt="<?= htmlspecialchars($avocat['fullname'] ?? 'Avocat') ?>">
                   <div class="team-overlay">
                     <div class="team-social">
                       <a href="mailto:<?= htmlspecialchars($avocat['email_professionnel'] ?? $avocat['email'] ?? '') ?>" class="social-link" aria-label="Email">
