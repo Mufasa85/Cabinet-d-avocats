@@ -52,16 +52,17 @@ require dirname(__DIR__) . '/layouts/lawyer/header.php';
 <!-- Profile Header -->
 <div class="profile-header">
     <div class="profile-avatar">
-        <img id="avatar-preview" src="<?= htmlspecialchars($lawyerAvatar) ?>" alt="<?= htmlspecialchars($lawyer['name']) ?>">
+        <img id="avatar-preview" src="<?= htmlspecialchars($lawyerAvatar) ?>" alt="<?= htmlspecialchars($avocat['fullname'] ?? '') ?>">
         <label class="profile-avatar-edit" for="avatar-upload">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                 <circle cx="12" cy="13" r="4" />
             </svg>
         </label>
+
     </div>
     <div>
-        <h1 class="profile-name"><?= htmlspecialchars($lawyer['name']) ?></h1>
+        <h1 class="profile-name"><?= htmlspecialchars($avocat['fullname'] ?? '') ?></h1>
         <p class="profile-role"><?= htmlspecialchars($lawyer['role']) ?></p>
         <div class="profile-specialties">
             <?php foreach ($lawyer['specialties'] as $specialty): ?>

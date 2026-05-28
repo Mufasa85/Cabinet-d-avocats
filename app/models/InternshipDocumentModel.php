@@ -6,6 +6,13 @@ class InternshipDocumentModel extends Model
 {
     protected string $table = 'internship_documents';
 
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db()->prepare('SELECT * FROM internship_documents WHERE id = ?');
+        $stmt->execute([$id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+    }
+
     public function byApplicationId(int $applicationId): array
     {
         $stmt = $this->db()->prepare(

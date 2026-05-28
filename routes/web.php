@@ -13,6 +13,8 @@ Router::get('/', [HomeController::class, 'index']);
 Router::get('/login', [HomeController::class, 'login']);
 Router::get('/stages', [HomeController::class, 'stages']);
 Router::post('/stages/candidature', [HomeController::class, 'applyInternship']);
+Router::get('/stages/document/[i:id]/download', [HomeController::class, 'downloadDocument']);
+Router::get('/admin/document/[i:id]/download', [AdminController::class, 'downloadDocument']);
 Router::get('/articles', [ArticleController::class, 'index']);
 Router::get('/articles/[a:slug]', [ArticleController::class, 'show']);
 Router::get('/resources/[**:file]', [ResourceController::class, 'serve']);
@@ -39,6 +41,7 @@ Router::get('/lawyers/notifications', [LawyerController::class, 'notifications']
 Router::get('/lawyers/profile', [LawyerController::class, 'profile']);
 Router::post('/lawyers/profile', [LawyerController::class, 'updateProfile']);
 Router::post('/lawyers/profile/update', [LawyerController::class, 'updateProfile']);
+Router::get('/avocat/[i:id]', [LawyerController::class, 'publicProfile']);
 Router::post('/lawyers/avatar', [LawyerController::class, 'updateAvatar']);
 Router::get('/lawyers/trainings', [LawyerController::class, 'trainings']);
 Router::post('/lawyers/trainings/inscrire', [LawyerController::class, 'enrollTraining']);

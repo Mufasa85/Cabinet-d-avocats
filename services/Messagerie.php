@@ -47,8 +47,8 @@ class Messagerie
             $name,
             'Candidature de stage reçue — Cabinet ELMD',
             '<p>Bonjour ' . htmlspecialchars($name) . ',</p>'
-            . '<p>Nous avons bien reçu votre candidature de stage. Notre équipe l\'examinera sous 15 jours ouvrés.</p>'
-            . '<p>Cordialement,<br>Cabinet ELMD</p>'
+                . '<p>Nous avons bien reçu votre candidature de stage. Notre équipe l\'examinera sous 15 jours ouvrés.</p>'
+                . '<p>Cordialement,<br>Cabinet ELMD</p>'
         );
     }
 
@@ -90,6 +90,23 @@ class Messagerie
         $this->send($email, $name, $subject, $body);
     }
 
+    public function sendStagiaireWelcome(string $email, string $name, string $tempPassword): void
+    {
+        $subject = 'Bienvenue au Cabinet ELMD - Vos identifiants';
+        $body = "
+            <h2>Bienvenue {$name},</h2>
+            <p>Votre candidature a été acceptée ! Un compte staitaire vous a été créé.</p>
+            <p><strong>Vos identifiants temporaires :</strong></p>
+            <ul>
+                <li>Email : {$email}</li>
+                <li>Mot de passe : {$tempPassword}</li>
+            </ul>
+            <p>Veuillez vous connecter et changer votre mot de passe.</p>
+            <p><a href='http://localhost/login'>Se connecter</a></p>
+        ";
+        $this->send($email, $name, $subject, $body);
+    }
+
     public function notifyInscriptionStatus(string $email, string $name, string $formationTitre, string $statut): void
     {
         $accepted = $statut === 'acceptee';
@@ -98,9 +115,9 @@ class Messagerie
             $name,
             ($accepted ? 'Inscription confirmée' : 'Inscription refusée') . ' — ' . $formationTitre,
             '<p>Bonjour ' . htmlspecialchars($name) . ',</p>'
-            . '<p>Votre inscription à la formation <strong>' . htmlspecialchars($formationTitre) . '</strong> a été '
-            . ($accepted ? '<strong>confirmée</strong>.' : '<strong>refusée</strong>.')
-            . '</p><p>Cordialement,<br>Cabinet ELMD</p>'
+                . '<p>Votre inscription à la formation <strong>' . htmlspecialchars($formationTitre) . '</strong> a été '
+                . ($accepted ? '<strong>confirmée</strong>.' : '<strong>refusée</strong>.')
+                . '</p><p>Cordialement,<br>Cabinet ELMD</p>'
         );
     }
 }

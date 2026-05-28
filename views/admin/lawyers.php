@@ -26,7 +26,7 @@ $formattedLawyers = array_map(function ($lawyer) {
     ];
 
     return [
-        'id' => (int) $lawyer['id'],
+        'id' => (int) ($lawyer['avocat_id'] ?? $lawyer['id'] ?? 0),
         'user_id' => (int) $lawyer['user_id'],
         'name' => $lawyer['fullname'] ?? '',
         'email' => $lawyer['email'] ?? '',
@@ -258,9 +258,11 @@ $specialiteOptions = array_map(function ($s) {
                 <div class="form-group">
                     <label class="form-label">Spécialités</label>
                     <select name="specialites[]" class="form-select" multiple style="height: 120px;">
-                        <?php foreach ($specialiteOptions as $spec): ?>
-                            <option value="<?= $spec['id'] ?>"><?= htmlspecialchars($spec['nom']) ?></option>
-                        <?php endforeach; ?>
+                        <option value="1">Droit des Affaires</option>
+                        <option value="2">Droit du Travail</option>
+                        <option value="3">Droit Fiscal</option>
+                        <option value="4">Droit Minier</option>
+                        <option value="5">Droit OHADA</option>
                     </select>
                     <small style="color: var(--gray-500);">Maintenez Ctrl/Cmd pour sélectionner plusieurs spécialités</small>
                 </div>
@@ -295,6 +297,7 @@ $specialiteOptions = array_map(function ($s) {
                 <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" name="user_id" :value="selectedLawyer ? selectedLawyer.user_id : ''">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Nom Complet</label>
@@ -328,9 +331,11 @@ $specialiteOptions = array_map(function ($s) {
                 <div class="form-group">
                     <label class="form-label">Spécialités</label>
                     <select name="specialites[]" class="form-select" multiple style="height: 120px;">
-                        <?php foreach ($specialiteOptions as $spec): ?>
-                            <option value="<?= $spec['id'] ?>"><?= htmlspecialchars($spec['nom']) ?></option>
-                        <?php endforeach; ?>
+                        <option value="1">Droit des Affaires</option>
+                        <option value="2">Droit du Travail</option>
+                        <option value="3">Droit Fiscal</option>
+                        <option value="4">Droit Minier</option>
+                        <option value="5">Droit OHADA</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -453,94 +458,70 @@ $specialiteOptions = array_map(function ($s) {
     </div>
 
     <style>
-        /* Action Buttons (3 icons) */
+        /* Action Buttons - Strong visibility */
         .action-buttons {
             display: flex;
-            gap: 0.5rem;
-            align-items: center;
+            gap: 8px;
         }
 
         .action-buttons .btn {
-            width: 32px;
-            height: 32px;
-            padding: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .action-buttons .btn:hover {
-            transform: translateY(-2px);
+        .action-buttons .btn i {
+            font-size: 16px;
+        }
+
+        /* View button - blue */
+        .action-buttons .btn:first-child {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .action-buttons .btn:first-child i {
+            color: #60a5fa;
         }
 
         .action-buttons .btn:first-child:hover {
-            background: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* Edit button - gold */
+        .action-buttons .btn:nth-child(2) {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .action-buttons .btn:nth-child(2) i {
+            color: #d4af37;
         }
 
         .action-buttons .btn:nth-child(2):hover {
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* Delete button - red */
+        .action-buttons .btn:last-child {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .action-buttons .btn:last-child i {
+            color: #f87171;
         }
 
         .action-buttons .btn:last-child:hover {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-
-        /* Info Card Styles */
-        .info-card {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 0.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.2s ease;
-        }
-
-        .info-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(212, 175, 55, 0.2);
-        }
-
-        .info-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 0.75rem;
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .info-content {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            min-width: 0;
-        }
-
-        .info-label {
-            color: var(--gray-500);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-value {
-            color: var(--white);
-            font-size: 0.875rem;
-            font-weight: 500;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            background: rgba(239, 68, 68, 0.25);
+            transform: scale(1.05);
         }
 
         /* Confirm Modal */
@@ -556,12 +537,6 @@ $specialiteOptions = array_map(function ($s) {
 
         .btn-danger:hover {
             background: #dc2626;
-        }
-
-        /* Avatar with gradient */
-        .avatar[style*="linear-gradient"] {
-            color: white;
-            font-weight: 600;
         }
     </style>
 

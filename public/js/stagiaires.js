@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initLoader() {
     const loader = document.getElementById('loader');
-    
+
     window.addEventListener('load', () => {
         setTimeout(() => {
             loader.classList.add('hidden');
@@ -42,28 +42,28 @@ function initLoader() {
 function initNavbar() {
     const navbar = document.getElementById('navbar');
     let lastScroll = 0;
-    
+
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-        
+
         if (currentScroll > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-        
+
         lastScroll = currentScroll;
     });
-    
+
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 const offset = 100;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -82,22 +82,22 @@ function initMobileMenu() {
     const mobileCloseBtn = document.getElementById('mobileCloseBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileLinks = mobileMenu.querySelectorAll('a');
-    
+
     function openMenu() {
         mobileMenu.classList.add('active');
         mobileMenuBtn.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-    
+
     function closeMenu() {
         mobileMenu.classList.remove('active');
         mobileMenuBtn.classList.remove('active');
         document.body.style.overflow = 'auto';
     }
-    
+
     mobileMenuBtn.addEventListener('click', openMenu);
     mobileCloseBtn.addEventListener('click', closeMenu);
-    
+
     mobileLinks.forEach(link => {
         link.addEventListener('click', closeMenu);
     });
@@ -110,9 +110,9 @@ function initMobileMenu() {
 function initHeroParticles() {
     const container = document.getElementById('heroParticles');
     if (!container) return;
-    
+
     const particleCount = 30;
-    
+
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -130,7 +130,7 @@ function initHeroParticles() {
 
 function initScrollAnimations() {
     const elements = document.querySelectorAll('.animate-on-scroll');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -144,7 +144,7 @@ function initScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
-    
+
     elements.forEach(element => observer.observe(element));
 }
 
@@ -154,7 +154,7 @@ function initScrollAnimations() {
 
 function initCounters() {
     const counters = document.querySelectorAll('[data-count]');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -163,7 +163,7 @@ function initCounters() {
             }
         });
     }, { threshold: 0.5 });
-    
+
     counters.forEach(counter => observer.observe(counter));
 }
 
@@ -172,20 +172,20 @@ function animateCounter(element) {
     const duration = 2000;
     const start = 0;
     const startTime = performance.now();
-    
+
     function update(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeProgress = 1 - Math.pow(1 - progress, 3);
         const current = Math.round(start + (target - start) * easeProgress);
-        
+
         element.textContent = current;
-        
+
         if (progress < 1) {
             requestAnimationFrame(update);
         }
     }
-    
+
     requestAnimationFrame(update);
 }
 
@@ -201,38 +201,38 @@ const uploadedFiles = {
 
 function initUploadZones() {
     const zones = document.querySelectorAll('.upload-zone');
-    
+
     zones.forEach(zone => {
         const input = zone.querySelector('input[type="file"]');
         const type = zone.dataset.type;
-        
+
         // Drag events
         zone.addEventListener('dragover', (e) => {
             e.preventDefault();
             zone.classList.add('dragover');
         });
-        
+
         zone.addEventListener('dragleave', () => {
             zone.classList.remove('dragover');
         });
-        
+
         zone.addEventListener('drop', (e) => {
             e.preventDefault();
             zone.classList.remove('dragover');
-            
+
             const files = e.dataTransfer.files;
             if (files.length > 0) {
                 handleFileUpload(zone, files[0], type);
             }
         });
-        
+
         // Click upload
         input.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 handleFileUpload(zone, e.target.files[0], type);
             }
         });
-        
+
         // Remove button
         const removeBtn = zone.querySelector('.preview-remove');
         if (removeBtn) {
@@ -252,7 +252,7 @@ function handleFileUpload(zone, file, type) {
         setTimeout(() => zone.classList.remove('error'), 3000);
         return;
     }
-    
+
     // Validate file size (5MB)
     const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
@@ -261,7 +261,7 @@ function handleFileUpload(zone, file, type) {
         setTimeout(() => zone.classList.remove('error'), 3000);
         return;
     }
-    
+
     // Simulate upload progress
     simulateUpload(zone, file, type);
 }
@@ -272,38 +272,38 @@ function simulateUpload(zone, file, type) {
     const progress = zone.querySelector('.upload-progress');
     const progressFill = progress.querySelector('.progress-fill');
     const progressText = progress.querySelector('.progress-text');
-    
+
     // Hide content, show progress
     content.style.display = 'none';
     preview.style.display = 'none';
     progress.style.display = 'flex';
-    
+
     let percent = 0;
     const interval = setInterval(() => {
         percent += Math.random() * 15;
         if (percent >= 100) {
             percent = 100;
             clearInterval(interval);
-            
+
             // Show preview
             setTimeout(() => {
                 progress.style.display = 'none';
                 preview.style.display = 'flex';
-                
+
                 const nameEl = preview.querySelector('.preview-name');
                 const sizeEl = preview.querySelector('.preview-size');
-                
+
                 nameEl.textContent = file.name;
                 sizeEl.textContent = formatFileSize(file.size);
-                
+
                 zone.classList.add('uploaded');
                 zone.classList.remove('error');
-                
+
                 // Store file reference
                 uploadedFiles[type] = file;
             }, 300);
         }
-        
+
         progressFill.style.width = `${percent}%`;
         progressText.textContent = `${Math.round(percent)}%`;
     }, 100);
@@ -314,7 +314,7 @@ function resetUploadZone(zone, type) {
     const preview = zone.querySelector('.upload-preview');
     const progress = zone.querySelector('.upload-progress');
     const input = zone.querySelector('input[type="file"]');
-    
+
     content.style.display = 'block';
     preview.style.display = 'none';
     progress.style.display = 'none';
@@ -337,10 +337,16 @@ function formatFileSize(bytes) {
 
 function initForm() {
     const form = document.getElementById('applicationForm');
+
+    if (!form) {
+        console.error('Form not found');
+        return;
+    }
+
     const submitBtn = document.getElementById('submitBtn');
     const motivationField = document.getElementById('motivation');
     const charCount = document.getElementById('charCount');
-    
+
     if (motivationField && charCount) {
         motivationField.addEventListener('input', () => {
             const count = motivationField.value.length;
@@ -348,20 +354,20 @@ function initForm() {
             charCount.style.color = count > 2000 ? 'var(--color-error)' : 'var(--color-muted)';
         });
     }
-    
+
     // Form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         // Validate form
         if (!validateForm()) {
             return;
         }
-        
+
         // Submit animation
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
-        
+
         try {
             const response = await fetch(form.action, {
                 method: 'POST',
@@ -397,11 +403,11 @@ function initForm() {
 function validateForm() {
     let isValid = true;
     const requiredFields = document.querySelectorAll('[required]');
-    
+
     requiredFields.forEach(field => {
         const formGroup = field.closest('.form-group') || field.closest('.checkbox-group');
         const errorEl = formGroup?.querySelector('.form-error');
-        
+
         if (field.type === 'checkbox') {
             if (!field.checked) {
                 isValid = false;
@@ -426,7 +432,7 @@ function validateForm() {
             }
         }
     });
-    
+
     // Validate email format
     const emailField = document.getElementById('email');
     if (emailField.value && !isValidEmail(emailField.value)) {
@@ -437,7 +443,7 @@ function validateForm() {
             errorEl.textContent = 'Email invalide';
         }
     }
-    
+
     // Validate phone format
     const phoneField = document.getElementById('phone');
     if (phoneField.value && !isValidPhone(phoneField.value)) {
@@ -448,19 +454,19 @@ function validateForm() {
             errorEl.textContent = 'Numéro invalide';
         }
     }
-    
+
     // Check motivation length
     const motivationField = document.getElementById('motivation');
-    if (motivationField.value.length > 2000) {
+    if (motivationField && motivationField.value && motivationField.value.length > 2000) {
         isValid = false;
         motivationField.classList.add('error');
         showError('La lettre de motivation ne doit pas dépasser 2000 caractères.');
     }
-    
+
     if (!isValid) {
         showError('Veuillez remplir tous les champs obligatoires.');
     }
-    
+
     return isValid;
 }
 
@@ -480,10 +486,10 @@ function initModal() {
     const modal = document.getElementById('successModal');
     const closeBtn = document.getElementById('closeModal');
     const backdrop = modal.querySelector('.modal-backdrop');
-    
+
     closeBtn.addEventListener('click', hideModal);
     backdrop.addEventListener('click', hideModal);
-    
+
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             hideModal();
@@ -510,10 +516,10 @@ function hideModal() {
 function showError(message) {
     const toast = document.getElementById('errorToast');
     const messageEl = toast.querySelector('.toast-message');
-    
+
     messageEl.textContent = message;
     toast.classList.add('active');
-    
+
     setTimeout(() => {
         toast.classList.remove('active');
     }, 4000);
@@ -539,7 +545,7 @@ function debounce(func, wait) {
 // Throttle function
 function throttle(func, limit) {
     let inThrottle;
-    return function(...args) {
+    return function (...args) {
         if (!inThrottle) {
             func.apply(this, args);
             inThrottle = true;
@@ -557,21 +563,21 @@ function initPlacesCarousel() {
     const prevBtn = document.getElementById('placesPrev');
     const nextBtn = document.getElementById('placesNext');
     const dotsContainer = document.getElementById('placesDots');
-    
+
     if (!slider || !prevBtn || !nextBtn) return;
-    
+
     const cards = slider.querySelectorAll('.place-card');
     const totalCards = cards.length;
     let currentIndex = 0;
     let cardsPerView = getCardsPerView();
     let isMobile = window.innerWidth <= 768;
-    
+
     function getCardsPerView() {
         if (window.innerWidth <= 768) return 1;
         if (window.innerWidth <= 1024) return 2;
         return 3;
     }
-    
+
     function updateSlider() {
         if (isMobile) return; // No transformation on mobile
         const cardWidth = cards[0].offsetWidth + 32; // card width + gap
@@ -579,7 +585,7 @@ function initPlacesCarousel() {
         slider.style.transform = `translateX(-${offset}px)`;
         updateDots();
     }
-    
+
     function updateDots() {
         if (!dotsContainer) return;
         const dots = dotsContainer.querySelectorAll('.dot');
@@ -591,7 +597,7 @@ function initPlacesCarousel() {
             }
         });
     }
-    
+
     function goToNext() {
         const maxIndex = totalCards - cardsPerView;
         if (currentIndex < maxIndex) {
@@ -601,7 +607,7 @@ function initPlacesCarousel() {
         }
         updateSlider();
     }
-    
+
     function goToPrev() {
         const maxIndex = totalCards - cardsPerView;
         if (currentIndex > 0) {
@@ -611,16 +617,16 @@ function initPlacesCarousel() {
         }
         updateSlider();
     }
-    
+
     function goToIndex(index) {
         currentIndex = index;
         updateSlider();
     }
-    
+
     // Event listeners
     nextBtn.addEventListener('click', goToNext);
     prevBtn.addEventListener('click', goToPrev);
-    
+
     // Dot navigation
     if (dotsContainer) {
         const dots = dotsContainer.querySelectorAll('.dot');
@@ -628,54 +634,54 @@ function initPlacesCarousel() {
             dot.addEventListener('click', () => goToIndex(index));
         });
     }
-    
+
     // Drag support
     let isDragging = false;
     let startX = 0;
     let currentTranslate = 0;
-    
+
     slider.addEventListener('mousedown', (e) => {
         isDragging = true;
         startX = e.pageX;
         slider.style.cursor = 'grabbing';
     });
-    
+
     slider.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         const diff = e.pageX - startX;
         currentTranslate = -currentIndex * (cards[0].offsetWidth + 32) + diff;
     });
-    
+
     slider.addEventListener('mouseup', () => {
         if (!isDragging) return;
         isDragging = false;
         slider.style.cursor = 'grab';
-        
+
         if (currentTranslate > 50) {
             goToPrev();
         } else if (currentTranslate < -50) {
             goToNext();
         }
     });
-    
+
     slider.addEventListener('mouseleave', () => {
         if (isDragging) {
             isDragging = false;
             slider.style.cursor = 'grab';
         }
     });
-    
+
     // Touch support for mobile
     let touchStartX = 0;
-    
+
     slider.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].pageX;
     }, { passive: true });
-    
+
     slider.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].pageX;
         const diff = touchStartX - touchEndX;
-        
+
         if (Math.abs(diff) > 50) {
             if (diff > 0) {
                 goToNext();
@@ -684,7 +690,7 @@ function initPlacesCarousel() {
             }
         }
     }, { passive: true });
-    
+
     // Resize handler
     window.addEventListener('resize', debounce(() => {
         isMobile = window.innerWidth <= 768;
@@ -699,15 +705,15 @@ function initPlacesCarousel() {
             slider.style.transform = 'none';
         }
     }, 250));
-    
+
     // Auto-play (optional)
     let autoPlayInterval = setInterval(goToNext, 5000);
-    
+
     // Pause on hover
     slider.addEventListener('mouseenter', () => {
         clearInterval(autoPlayInterval);
     });
-    
+
     slider.addEventListener('mouseleave', () => {
         autoPlayInterval = setInterval(goToNext, 5000);
     });

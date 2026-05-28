@@ -50,13 +50,11 @@ $formattedUsers = array_map(function ($user) {
         'id' => (int) $user['id'],
         'name' => $user['fullname'] ?? '',
         'email' => $user['email'] ?? '',
-        'role' => $roleLabels[$user['role']] ?? ucfirst($user['role'] ?? ''),
-        'status' => $statusMap[$user['status']] ?? 'pending',
+        'role' => $roleLabels[$user['roles']] ?? ucfirst($user['roles'] ?? ''),
+        'status' => $statusMap[$user['is_active']] ?? 'pending',
         'avatar' => $initials ?: '??',
         'telephone' => $user['telephone'] ?? '',
         'created_at' => $user['created_at'] ?? null,
-        'status' => (int) ($user['status'] ?? 1),
-        'role' => $user['role'] ?? 'stagiaire', // garder pour les formulaires
     ];
 }, $users ?? []);
 
@@ -160,47 +158,47 @@ $formattedUsers = array_map(function ($user) {
                                                         <h4><?= htmlspecialchars($user['name']) ?></h4>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td><?= htmlspecialchars($user['email']) ?></td>
-                                        <td>
-                                            <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
-                                                <?= htmlspecialchars($user['role']) ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="badge <?= $user['status'] === 1 ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
-                                                <span class="status-dot <?= $user['status'] === 1 ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
-                                                <?=  $user['status'] === 1 ? 'active': 'inative' ?>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="flex gap-sm">
-                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'view-user'; modalOpen = true" title="Voir">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
                         </div>
+                        </td>
+                        <td><?= htmlspecialchars($user['email']) ?></td>
+                        <td>
+                            <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
+                                <?= htmlspecialchars($user['role']) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge <?= $user['status'] === 'active' ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
+                                <span class="status-dot <?= $user['status'] === 'active' ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
+                                <?= htmlspecialchars($user['status']) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="flex gap-sm">
+                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'view-user'; modalOpen = true" title="Voir">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                    </table>
                     </div>
-                    <div class="card-footer">
-                        <div class="flex justify-between items-center">
-                            <span style="color: var(--gray-500); font-size: 0.875rem;">Affichage des utilisateurs</span>
-                        </div>
+                </div>
+                <div class="card-footer">
+                    <div class="flex justify-between items-center">
+                        <span style="color: var(--gray-500); font-size: 0.875rem;">Affichage des utilisateurs</span>
                     </div>
                 </div>
             </div>
-        </main>
+    </div>
+    </main>
     </div>
 
     <div class="modal-overlay" :class="{ 'active': modalOpen }" @click="modalOpen = false; activeModal = null"></div>
@@ -237,10 +235,10 @@ $formattedUsers = array_map(function ($user) {
                     </div>
                     <div class="form-group">
                         <label class="form-label">Rôle</label>
-                        <select name="role" class="form-select">
+                        <select name="roles" class="form-select">
                             <option value="">Sélectionner un rôle</option>
+                            <option value="avocat">Avocat</option>
                             <option value="admin">Administrateur</option>
-                            <option value="juriste">Juriste</option>
                             <option value="secretaire">Secrétaire</option>
                             <option value="stagiaire">Stagiaire</option>
                         </select>
@@ -304,9 +302,9 @@ $formattedUsers = array_map(function ($user) {
                     </div>
                     <div class="form-group">
                         <label class="form-label">Rôle</label>
-                        <select name="role" class="form-select" x-model="selectedUser.role">
+                        <select name="roles" class="form-select" x-model="selectedUser.role">
+                            <option value="avocat">Avocat</option>
                             <option value="admin">Administrateur</option>
-                            <option value="juriste">Juriste</option>
                             <option value="secretaire">Secrétaire</option>
                             <option value="stagiaire">Stagiaire</option>
                         </select>

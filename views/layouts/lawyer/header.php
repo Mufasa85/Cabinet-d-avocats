@@ -91,7 +91,7 @@ $lawyerAvatar = $_SESSION['lawyer_avatar'] ?? (isset($avocat['avatar']) && $avoc
               </svg>
             </span>
             <span class="nav-text">Articles</span>
-            <span class="nav-item-badge"><?= (int) $articleCount ?></span>
+
           </a>
 
           <a href="<?= Router\Router::route('/lawyers/documents') ?>" class="nav-item <?= $currentPage === 'documents' ? 'active' : '' ?>">

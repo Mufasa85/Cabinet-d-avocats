@@ -9,7 +9,7 @@ class StagiaireModel extends Model
     public function findByUserId(int $userId): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT st.*, u.name AS fullname, u.email
+            'SELECT st.*, u.fullname, u.email
              FROM stagiaires st
              JOIN users u ON u.id = st.user_id
              WHERE st.user_id = :uid LIMIT 1',
@@ -21,10 +21,10 @@ class StagiaireModel extends Model
     public function allWithUser(): array
     {
         $stmt = $this->db()->prepare(
-            'SELECT st.*, u.name AS fullname, u.email, u.telephone, u.is_active
+            'SELECT st.*, u.fullname, u.email, u.telephone, u.is_active
              FROM stagiaires st
              JOIN users u ON u.id = st.user_id
-             ORDER BY u.name ASC'
+             ORDER BY u.fullname ASC'
         );
         return $stmt->fetchAll() ?: [];
     }
@@ -32,7 +32,7 @@ class StagiaireModel extends Model
     public function findById(int $id): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT st.*, u.name AS fullname, u.email
+            'SELECT st.*, u.fullname, u.email
              FROM stagiaires st
              JOIN users u ON u.id = st.user_id
              WHERE st.id = :id LIMIT 1',
@@ -62,8 +62,26 @@ class StagiaireModel extends Model
         return (int) $this->db()->lastInsertId();
     }
 
+    public function createForUser(int $userId, array $data): int
+    {
+        return $this->create(array_merge($data, ['user_id' => $userId]));
+    }
+
     public function count(): int
     {
         return (int) ($this->db()->prepare('SELECT COUNT(*) AS c FROM stagiaires')->fetch()['c'] ?? 0);
+    }
+
+    public function recent(int $limit = 10): array
+    {
+        $stmt = $this->db()->prepare(
+            'SELECT st.*, u.fullname, u.email, u.telephone, u.is_active, u.created_at AS user_created
+             FROM stagiaires st
+             LEFT JOIN users u ON u.id = st.user_id
+             ORDER BY COALESCE(st.created_at, u.created_at) DESC
+             LIMIT ' . (int)$limit,
+            []
+        );
+        return $stmt->fetchAll() ?: [];
     }
 }

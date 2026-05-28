@@ -90,7 +90,7 @@ class AuthController extends Controller
             setcookie('remember_email', $email, time() + 86400 * 30, '/');
         }
 
-        $this->redirect(Auth::redirectUrlForDbRole($user['role']));
+        $this->redirect(Auth::redirectUrlForDbRole($user['roles'] ?? $user['role'] ?? 'admin'));
     }
 
     public function register()
@@ -116,7 +116,7 @@ class AuthController extends Controller
         $password = $_POST['password'] ?? '';
         $confirmPassword = $_POST['password_confirmation'] ?? '';
         $telephone = $this->sanitaze($_POST['telephone'] ?? '');
-        $role = $this->sanitaze($_POST['role'] ?? '');
+        $role = $this->sanitaze($_POST['roles'] ?? '');
         $is_active = isset($_POST['is_active']) ? (int) $this->sanitaze((string) ($_POST['is_active'] ?? '1')) : 1;
 
         if (Stringy::empty($fullname) || Stringy::empty($email) || Stringy::empty($password) || Stringy::empty($confirmPassword)) {
@@ -161,9 +161,9 @@ class AuthController extends Controller
                 'fullname' => $fullname,
                 'email' => $email,
                 'password' => $password,
-                'role' => $role,
+                'roles' => $role,
                 'telephone' => $telephone ?: null,
-                'status' => $is_active,
+                'is_active' => $is_active,
             ]);
         } catch (\PDOException $e) {
             $logManagement = Dic::get(LogManagement::class);

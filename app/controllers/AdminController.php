@@ -70,7 +70,7 @@ class AdminController extends Controller
         $fullname = $this->sanitaze($_POST['fullname'] ?? '');
         $email = $this->sanitaze($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
-        $role = $this->sanitaze($_POST['role'] ?? 'stagiaire');
+        $role = $this->sanitaze($_POST['roles'] ?? 'stagiaire');
         $telephone = $this->sanitaze($_POST['telephone'] ?? '');
         $is_active = isset($_POST['is_active']) ? (int) $_POST['is_active'] : 1;
 
@@ -87,7 +87,7 @@ class AdminController extends Controller
             return;
         }
 
-        $userModel->create([
+        $userId = $userModel->create([
             'fullname' => $fullname,
             'email' => $email,
             'password' => $password,
@@ -95,6 +95,14 @@ class AdminController extends Controller
             'telephone' => $telephone ?: null,
             'is_active' => $is_active,
         ]);
+
+        // Auto-create avocat profile if role is avocat
+        if ($role === 'avocat' && $userId) {
+            (new AvocatModel())->createForUser($userId, [
+                'titre' => 'Avocat',
+                'email_professionnel' => $email,
+            ]);
+        }
 
         $_SESSION['success'] = 'Utilisateur créé.';
         $this->redirect(Router::route('/admin/users'));
@@ -130,7 +138,7 @@ class AdminController extends Controller
             }
         }
 
-        $role = $this->sanitaze($_POST['role'] ?? '');
+        $role = $this->sanitaze($_POST['roles'] ?? '');
         if ($role !== '' && !in_array($role, Auth::DB_ROLES, true)) {
             $this->error('Rôle invalide.');
             $this->redirect(Router::route('/admin/users'));
@@ -140,10 +148,14 @@ class AdminController extends Controller
         $updateData = [
             'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
             'email' => $this->sanitaze($_POST['email'] ?? ''),
-            'roles' => $role,
             'telephone' => $this->sanitaze($_POST['telephone'] ?? ''),
             'is_active' => isset($_POST['is_active']) ? (int) $_POST['is_active'] : null,
         ];
+
+        // Only update role if provided
+        if ($role !== '') {
+            $updateData['roles'] = $role;
+        }
 
         // Ajouter le password seulement s'il est fourni
         if (!empty($password)) {
@@ -269,63 +281,42 @@ class AdminController extends Controller
         }
 
         $id = (int) ($params['id'] ?? 0);
-        (new AvocatModel())->update($id, [
-            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
-            'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
-            'bio' => $this->sanitaze($_POST['bio'] ?? ''),
-            'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
-            'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
-        ]);
 
-        $specIds = array_map('intval', $_POST['specialites'] ?? []);
-        (new AvocatModel())->setSpecialites($id, $specIds);
-
-        $_SESSION['success'] = 'Profil avocat mis à jour.';
-        $this->redirect(Router::route('/admin/lawyers'));
-    }
-
-    public function deleteLawyer($params)
-    {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+        // Use user_id directly from the form to find/create avocat profile
+        $userId = (int) ($_POST['user_id'] ?? 0);
+        if ($userId <= 0) {
+            $this->error('Utilisateur non trouvé.');
             $this->redirect(Router::route('/admin/lawyers'));
             return;
         }
 
-        $id = (int) ($params['id'] ?? 0);
-        if ($id > 0) {
-            $avocatModel = new AvocatModel();
-            $avocat = $avocatModel->findById($id);
-            if ($avocat) {
-                // Supprimer l'avocat puis l'utilisateur associe
-                $userId = (int) $avocat['user_id'];
-                $avocatModel->delete($id);
-                if ($userId > 0) {
-                    (new UserModel())->delete($userId);
-                }
-                $_SESSION['success'] = 'Avocat supprimé.';
-            }
-        }
-        $this->redirect(Router::route('/admin/lawyers'));
-    }
+        // Find existing avocat profile by user_id
+        $avocatModel = new AvocatModel();
+        $avocat = $avocatModel->findByUserId($userId);
 
-    public function updateLawyerForm($params)
-    {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
-            $this->redirect(Router::route('/admin/lawyers'));
-            return;
+        if ($avocat) {
+            // Update existing profile
+            $avocatModel->update((int) $avocat['id'], [
+                'titre' => $this->sanitaze($_POST['titre'] ?? ''),
+                'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
+                'bio' => $this->sanitaze($_POST['bio'] ?? ''),
+                'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
+                'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
+            ]);
+            $avocatId = (int) $avocat['id'];
+        } else {
+            // Create new profile for existing user
+            $avocatId = $avocatModel->createForUser($userId, [
+                'titre' => $this->sanitaze($_POST['titre'] ?? 'Avocat'),
+                'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
+                'bio' => $this->sanitaze($_POST['bio'] ?? ''),
+                'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
+                'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
+            ]);
         }
-
-        $id = (int) ($params['id'] ?? 0);
-        (new AvocatModel())->update($id, [
-            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
-            'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
-            'bio' => $this->sanitaze($_POST['bio'] ?? ''),
-            'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
-            'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
-        ]);
 
         $specIds = array_map('intval', $_POST['specialites'] ?? []);
-        (new AvocatModel())->setSpecialites($id, $specIds);
+        $avocatModel->setSpecialites($avocatId, $specIds);
 
         $_SESSION['success'] = 'Profil avocat mis à jour.';
         $this->redirect(Router::route('/admin/lawyers'));
@@ -355,7 +346,7 @@ class AdminController extends Controller
         $this->redirect(Router::route('/admin/lawyers'));
     }
 
-    public function candidatures()
+    public function Candidatures()
     {
         $appModel = new InternshipApplicationModel();
         $docModel = new InternshipDocumentModel();
@@ -401,8 +392,131 @@ class AdminController extends Controller
         $name = trim(($app['prenom'] ?? '') . ' ' . ($app['nom'] ?? ''));
         (new Messagerie())->notifyApplicationStatus($app['email'], $name, $statut, $motif ?: null);
 
+        // Auto-create user account if candidate is accepted
+        if ($statut === 'retenu') {
+            $this->createStagiaireFromCandidature($app);
+        }
+
         $_SESSION['success'] = 'Candidature mise à jour.';
         $this->redirect(Router::route('/admin/candidatures'));
+    }
+
+    private function createStagiaireFromCandidature(array $candidature): void
+    {
+        $userModel = new UserModel();
+
+        // Check if user already exists
+        $existingUser = $userModel->findByEmail($candidature['email'] ?? '');
+        if ($existingUser) {
+            \Helper\Log\Logger::info('createStagiaire: User already exists', ['email' => $candidature['email']]);
+            return;
+        }
+
+        // Generate temporary password
+        $tempPassword = bin2hex(random_bytes(8));
+
+        // Create user with role 'stagiaire'
+        $fullname = trim(($candidature['prenom'] ?? '') . ' ' . ($candidature['nom'] ?? ''));
+        $userId = $userModel->create([
+            'fullname' => $fullname,
+            'email' => $candidature['email'] ?? '',
+            'password' => $tempPassword,
+            'roles' => 'stagiaire',
+            'telephone' => $candidature['telephone'] ?? null,
+            'is_active' => 1,
+        ]);
+
+        if (!$userId) {
+            \Helper\Log\Logger::error('createStagiaire: Failed to create user', ['email' => $candidature['email']]);
+            return;
+        }
+
+        // Create stagiaire profile
+        $stagiaireId = (new StagiaireModel())->createForUser($userId, [
+            'nom' => $candidature['nom'] ?? '',
+            'prenom' => $candidature['prenom'] ?? '',
+            'email' => $candidature['email'] ?? '',
+            'telephone' => $candidature['telephone'] ?? '',
+            'universite' => $candidature['universite'] ?? '',
+            'filiere' => $candidature['filiere'] ?? '',
+            'niveau_etude' => $candidature['niveau_etude'] ?? '',
+        ]);
+
+        // Link internship application to the new user (optional: add user_id column if needed)
+        $appModel = new InternshipApplicationModel();
+        $appModel->update($candidature['id'], [
+            'user_id' => $userId,
+            'stagiaire_id' => $stagiaireId,
+        ]);
+
+        \Helper\Log\Logger::info('createStagiaire: Success', [
+            'userId' => $userId,
+            'stagiaireId' => $stagiaireId,
+            'email' => $candidature['email']
+        ]);
+
+        // Send welcome email with credentials
+        (new Messagerie())->sendStagiaireWelcome(
+            $candidature['email'] ?? '',
+            $fullname,
+            $tempPassword
+        );
+
+        // Create notification for the new staitaire
+        (new NotificationModel())->create(
+            $userId,
+            'welcome_stagiaire',
+            'Bienvenue au Cabinet',
+            'Votre compte staitaire a été créé. Connectez-vous avec vos identifiants temporaires.',
+            Router::route('/interns/dashboard')
+        );
+    }
+
+    public function downloadDocument($params)
+    {
+        if (!Auth::hasRole(Auth::ROLE_ADMIN)) {
+            header('HTTP/1.1 403 Forbidden');
+            exit('Accès refusé.');
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id <= 0) {
+            header('HTTP/1.1 404 Not Found');
+            exit('Document non trouvé.');
+        }
+
+        $doc = (new InternshipDocumentModel())->findById($id);
+        if (!$doc) {
+            header('HTTP/1.1 404 Not Found');
+            exit('Document non trouvé.');
+        }
+
+        $filePath = dirname(__DIR__, 2) . ltrim($doc['fichier'], '/');
+        if (!file_exists($filePath)) {
+            header('HTTP/1.1 404 Not Found');
+            exit('Fichier introuvable.');
+        }
+
+        $filename = basename($doc['fichier']);
+        $filesize = filesize($filePath);
+
+        // Check if view mode is requested (inline)
+        $view = $_GET['view'] ?? '';
+
+        if ($view === 'inline') {
+            // Display in browser
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: inline; filename="' . $filename . '"');
+        } else {
+            // Download
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+        }
+
+        header('Content-Length: ' . $filesize);
+        header('Cache-Control: private, max-age=0, must-revalidate');
+        readfile($filePath);
+        exit;
     }
 
     public function trainings()
@@ -733,8 +847,8 @@ class AdminController extends Controller
         $applications = (new InternshipApplicationModel())->all();
         $inscriptionsPending = (new InscriptionModel())->countPending();
         $documents = (new StagiaireDocumentModel())->allForAdmin();
-        $documentsValides = count(array_filter($documents, static fn (array $d): bool => ($d['statut'] ?? '') === 'valide'));
-        $documentsAttente = count(array_filter($documents, static fn (array $d): bool => ($d['statut'] ?? '') === 'en_attente'));
+        $documentsValides = count(array_filter($documents, static fn(array $d): bool => ($d['statut'] ?? '') === 'valide'));
+        $documentsAttente = count(array_filter($documents, static fn(array $d): bool => ($d['statut'] ?? '') === 'en_attente'));
 
         View::view('admin.reports', [
             'stats' => [

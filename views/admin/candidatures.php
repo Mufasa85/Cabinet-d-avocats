@@ -1,4 +1,5 @@
 <?php
+
 use Core\Auth;
 use Core\Security;
 use Service\FileStorage;
@@ -15,6 +16,7 @@ $applications = $applications ?? [];
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,9 +27,10 @@ $applications = $applications ?? [];
     <script src="../js/theme.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
+
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedApp: null }">
     <div class="admin-wrapper">
-     <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
+        <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
         <main class="main-content">
             <header class="admin-header">
                 <div class="header-left">
@@ -57,7 +60,16 @@ $applications = $applications ?? [];
                     <div class="card-body" style="padding: 0;">
                         <div class="table-container">
                             <table class="table">
-                                <thead><tr><th>Candidat</th><th>Université</th><th>Domaine</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+                                <thead>
+                                    <tr>
+                                        <th>Candidat</th>
+                                        <th>Université</th>
+                                        <th>Domaine</th>
+                                        <th>Date</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <?php foreach ($applications as $app):
                                         $name = trim(($app['prenom'] ?? '') . ' ' . ($app['nom'] ?? ''));
@@ -73,22 +85,29 @@ $applications = $applications ?? [];
                                             'documents' => $app['documents'] ?? [],
                                         ]), ENT_QUOTES, 'UTF-8');
                                     ?>
-                                    <tr>
-                                        <td><div class="user-info"><div class="avatar"><?= htmlspecialchars($initials) ?></div><div class="user-details"><h4><?= htmlspecialchars($name) ?></h4><span><?= htmlspecialchars($app['email']) ?></span></div></div></td>
-                                        <td><?= htmlspecialchars($app['universite']) ?></td>
-                                        <td><?= htmlspecialchars($app['departement_souhaite']) ?></td>
-                                        <td><?= date('d M Y', strtotime($app['created_at'])) ?></td>
-                                        <td><span class="badge <?= $st['badge'] ?>"><?= htmlspecialchars($st['label']) ?></span></td>
-                                        <td>
-                                            <div class="flex gap-sm">
-                                                <button type="button" class="btn btn-sm btn-ghost" @click="selectedApp = <?= $appJson ?>; activeModal = 'preview'; modalOpen = true"><i class="fas fa-eye"></i></button>
-                                                <?php if (in_array($app['statut'], ['en_attente', 'analyse'], true)): ?>
-                                                <form method="post" action="<?= Router\Router::route('/admin/candidatures/' . (int)$app['id'] . '/statut') ?>" style="display:inline;"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="retenu"><button type="submit" class="btn btn-sm btn-success" title="Accepter"><i class="fas fa-check"></i></button></form>
-                                                <button type="button" class="btn btn-sm btn-danger" @click="selectedApp = <?= $appJson ?>; activeModal = 'reject'; modalOpen = true"><i class="fas fa-times"></i></button>
-                                                <?php endif; ?>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="user-info">
+                                                    <div class="avatar"><?= htmlspecialchars($initials) ?></div>
+                                                    <div class="user-details">
+                                                        <h4><?= htmlspecialchars($name) ?></h4><span><?= htmlspecialchars($app['email']) ?></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><?= htmlspecialchars($app['universite']) ?></td>
+                                            <td><?= htmlspecialchars($app['departement_souhaite']) ?></td>
+                                            <td><?= date('d M Y', strtotime($app['created_at'])) ?></td>
+                                            <td><span class="badge <?= $st['badge'] ?>"><?= htmlspecialchars($st['label']) ?></span></td>
+                                            <td>
+                                                <div class="flex gap-sm">
+                                                    <button type="button" class="btn btn-sm btn-ghost" @click="selectedApp = <?= $appJson ?>; activeModal = 'preview'; modalOpen = true"><i class="fas fa-eye"></i></button>
+                                                    <?php if (in_array($app['statut'], ['en_attente', 'analyse'], true)): ?>
+                                                        <form method="post" action="<?= Router\Router::route('/admin/candidatures/' . (int)$app['id'] . '/statut') ?>" style="display:inline;"><?= Security::csrf_tokken() ?><input type="hidden" name="statut" value="retenu"><button type="submit" class="btn btn-sm btn-success" title="Accepter"><i class="fas fa-check"></i></button></form>
+                                                        <button type="button" class="btn btn-sm btn-danger" @click="selectedApp = <?= $appJson ?>; activeModal = 'reject'; modalOpen = true"><i class="fas fa-times"></i></button>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -105,7 +124,10 @@ $applications = $applications ?? [];
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-user-graduate"></i></div>
-                <div><h3 class="modal-title">Candidature</h3><p class="modal-subtitle" x-text="selectedApp ? selectedApp.name : ''"></p></div>
+                <div>
+                    <h3 class="modal-title">Candidature</h3>
+                    <p class="modal-subtitle" x-text="selectedApp ? selectedApp.name : ''"></p>
+                </div>
             </div>
             <button class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
         </div>
@@ -118,12 +140,18 @@ $applications = $applications ?? [];
                         <p style="color: var(--gray-500); font-size: 0.875rem;" x-text="selectedApp ? selectedApp.university : ''"></p>
                     </div>
                     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                        <div><p style="color: var(--gray-500); font-size: 0.75rem;">Domaine</p><p style="color: var(--white);" x-text="selectedApp ? selectedApp.field : ''"></p></div>
-                        <div><p style="color: var(--gray-500); font-size: 0.75rem;">Date</p><p style="color: var(--white);" x-text="selectedApp ? selectedApp.date : ''"></p></div>
+                        <div>
+                            <p style="color: var(--gray-500); font-size: 0.75rem;">Domaine</p>
+                            <p style="color: var(--white);" x-text="selectedApp ? selectedApp.field : ''"></p>
+                        </div>
+                        <div>
+                            <p style="color: var(--gray-500); font-size: 0.75rem;">Date</p>
+                            <p style="color: var(--white);" x-text="selectedApp ? selectedApp.date : ''"></p>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <h4 style="color: var(--white); margin-bottom: 0.5rem;">Lettre de Motivation</h4>
+                    <h4 style="color: var(--white); margin-bottom: 0.5rem;">Lettre de Candidature</h4>
                     <p style="color: var(--gray-400); line-height: 1.7; margin-bottom: 1.5rem;" x-text="selectedApp ? selectedApp.motivation : ''"></p>
                     <h4 style="color: var(--white); margin-bottom: 0.5rem;">Documents</h4>
                     <template x-if="selectedApp && selectedApp.documents">
@@ -155,7 +183,10 @@ $applications = $applications ?? [];
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-times-circle"></i></div>
-                <div><h3 class="modal-title">Refuser la Candidature</h3><p class="modal-subtitle">Motif du refus</p></div>
+                <div>
+                    <h3 class="modal-title">Refuser la Candidature</h3>
+                    <p class="modal-subtitle">Motif du refus</p>
+                </div>
             </div>
             <button class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
         </div>
@@ -178,4 +209,5 @@ $applications = $applications ?? [];
         </div>
     </div>
 </body>
+
 </html>

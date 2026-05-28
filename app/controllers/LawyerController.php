@@ -24,6 +24,12 @@ class LawyerController extends Controller
 
     public function __construct()
     {
+        // Allow public profile without authentication
+        $currentMethod = $_SERVER['REQUEST_URI'] ?? '';
+        if (strpos($currentMethod, '/avocat/') === 0) {
+            return;
+        }
+
         if (!Auth::hasRole(Auth::ROLE_LAWYER)) {
             $this->redirect(Router::route('/login'));
             exit;
@@ -286,7 +292,7 @@ class LawyerController extends Controller
         $inscriptions = (new InscriptionModel())->byUserId((int) Auth::id());
         $inscriptionsEnCours = array_values(array_filter(
             $inscriptions,
-            static fn (array $inscription): bool => in_array($inscription['statut'], ['en_attente', 'acceptee'], true)
+            static fn(array $inscription): bool => in_array($inscription['statut'], ['en_attente', 'acceptee'], true)
         ));
 
         $inscriptionsFormationIds = [];
@@ -451,6 +457,26 @@ class LawyerController extends Controller
         View::view('lawyers.notifications', [
             'notifications' => $notifModel->byUserId((int) Auth::id()),
             'unread' => $notifModel->unreadCount((int) Auth::id()),
+        ]);
+    }
+
+    public function publicProfile($params)
+    {
+        $id = (int) ($params['id'] ?? 0);
+        if ($id <= 0) {
+            $this->redirect(Router::route('/'));
+            return;
+        }
+
+        $avocat = (new AvocatModel())->findById($id);
+        if (!$avocat) {
+            $this->redirect(Router::route('/'));
+            return;
+        }
+
+        View::view('lawyers.public-profile', [
+            'title' => htmlspecialchars($avocat['fullname'] ?? 'Avocat') . ' | ELMD',
+            'avocat' => $avocat,
         ]);
     }
 }

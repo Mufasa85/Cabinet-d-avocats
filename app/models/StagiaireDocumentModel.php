@@ -9,7 +9,7 @@ class StagiaireDocumentModel extends Model
     public function byStagiaireId(int $stagiaireId): array
     {
         $stmt = $this->db()->prepare(
-            'SELECT sd.*, u.name AS validateur_nom
+            'SELECT sd.*, u.fullname AS validateur_nom
              FROM stagiaire_documents sd
              LEFT JOIN users u ON u.id = sd.valide_par
              WHERE sd.stagiaire_id = :sid
@@ -21,7 +21,7 @@ class StagiaireDocumentModel extends Model
 
     public function allForAdmin(?string $statut = null): array
     {
-        $sql = 'SELECT sd.*, st.user_id, u.name AS stagiaire_nom, u.email AS stagiaire_email
+        $sql = 'SELECT sd.*, st.user_id, u.fullname AS stagiaire_nom, u.email AS stagiaire_email
                 FROM stagiaire_documents sd
                 JOIN stagiaires st ON st.id = sd.stagiaire_id
                 JOIN users u ON u.id = st.user_id';
@@ -37,7 +37,7 @@ class StagiaireDocumentModel extends Model
     public function findById(int $id): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT sd.*, st.user_id, u.name AS fullname, u.email
+            'SELECT sd.*, st.user_id, u.fullname, u.email
              FROM stagiaire_documents sd
              JOIN stagiaires st ON st.id = sd.stagiaire_id
              JOIN users u ON u.id = st.user_id

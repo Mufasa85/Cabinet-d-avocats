@@ -9,7 +9,7 @@ class Auth
     public const ROLE_INTERN = 'intern';
 
     /** Rôles stockés en base (colonne users.roles) */
-    public const DB_ROLES = ['admin', 'avocat', 'secretaire', 'stagiaire'];
+    public const DB_ROLES = ['admin', 'avocat', 'juriste', 'secretaire', 'stagiaire'];
 
     public static function check(): bool
     {
@@ -33,8 +33,11 @@ class Auth
     }
 
     /** Convertit le rôle BDD vers le rôle de session */
-    public static function sessionRoleFromDb(string $role): string
+    public static function sessionRoleFromDb(?string $role): string
     {
+        if ($role === null) {
+            return self::ROLE_ADMIN;
+        }
         return match ($role) {
             'avocat' => self::ROLE_LAWYER,
             'stagiaire' => self::ROLE_INTERN,
@@ -68,10 +71,10 @@ class Auth
     public static function login(array $user): void
     {
         $_SESSION['user_id'] = (int) $user['id'];
-        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_name'] = $user['fullname'] ?? $user['name'] ?? 'User';
         $_SESSION['user_email'] = $user['email'];
-        $_SESSION['user_role'] = self::sessionRoleFromDb($user['role']);
-        $_SESSION['user_db_role'] = $user['role'];
+        $_SESSION['user_role'] = self::sessionRoleFromDb($user['roles'] ?? $user['role'] ?? null);
+        $_SESSION['user_db_role'] = $user['roles'] ?? $user['role'] ?? null;
 
         if (!empty($user['avatar'])) {
             $_SESSION['user_avatar'] = $user['avatar'];
@@ -94,7 +97,7 @@ class Auth
                 session_name(),
                 '',
                 time() - 42000,
-                $params['path'] ?? '/', 
+                $params['path'] ?? '/',
                 $params['domain'] ?? '',
                 $params['secure'] ?? false,
                 $params['httponly'] ?? true

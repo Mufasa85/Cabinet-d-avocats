@@ -9,14 +9,16 @@ class AvocatModel extends Model
     public function allWithUser(): array
     {
         $stmt = $this->db()->prepare(
-            'SELECT a.*, u.name, u.email, u.phone, u.avatar, u.status,
+            'SELECT u.id AS user_id, u.fullname, u.email, u.telephone, u.avatar, u.is_active,
+                    a.id AS avocat_id, a.titre, a.email_professionnel, a.bio, a.experience, a.bureau,
                     GROUP_CONCAT(DISTINCT s.nom ORDER BY s.nom SEPARATOR ", ") AS specialites
-             FROM avocats a
-             JOIN users u ON u.id = a.user_id
+             FROM users u
+             LEFT JOIN avocats a ON a.user_id = u.id
              LEFT JOIN avocat_specialites asp ON asp.avocat_id = a.id
              LEFT JOIN specialites s ON s.id = asp.specialite_id
-             GROUP BY a.id
-             ORDER BY u.name ASC'
+             WHERE u.roles = "avocat"
+             GROUP BY u.id
+             ORDER BY u.fullname ASC'
         );
         return $stmt->fetchAll() ?: [];
     }
@@ -24,7 +26,7 @@ class AvocatModel extends Model
     public function findByUserId(int $userId): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT a.*, u.name, u.email, u.phone, u.avatar
+            'SELECT a.*, u.fullname, u.email, u.telephone, u.avatar
              FROM avocats a
              JOIN users u ON u.id = a.user_id
              WHERE a.user_id = :uid LIMIT 1',
@@ -37,7 +39,7 @@ class AvocatModel extends Model
     public function findById(int $id): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT a.*, u.name, u.email, u.phone
+            'SELECT a.*, u.fullname, u.email, u.telephone
              FROM avocats a
              JOIN users u ON u.id = a.user_id
              WHERE a.id = :id LIMIT 1',
@@ -100,7 +102,7 @@ class AvocatModel extends Model
             [':id' => $avocatId]
         );
         $rows = $stmt->fetchAll() ?: [];
-        return array_map(static fn (array $row): int => (int) ($row['specialite_id'] ?? 0), $rows);
+        return array_map(static fn(array $row): int => (int) ($row['specialite_id'] ?? 0), $rows);
     }
 
     public function count(): int

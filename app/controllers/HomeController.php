@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\models\InternshipApplicationModel;
 use App\models\InternshipDocumentModel;
+use App\models\StagiaireModel;
 use App\View;
 use Core\Auth;
 use Core\Security;
@@ -15,7 +16,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        View::view('index');
+        // Get all lawyers for the team section
+        $avocats = (new \App\models\AvocatModel())->allWithUser();
+
+        View::view('index', [
+            'avocats' => $avocats,
+        ]);
     }
 
     public function login()
@@ -37,9 +43,13 @@ class HomeController extends Controller
 
     public function stages()
     {
+        // Get 10 most recent trainees
+        $stagiaires = (new StagiaireModel())->recent(10);
+
         View::view('stages', [
             'csrf' => Security::csrf_tokken(),
             'applyUrl' => Router::route('/stages/candidature'),
+            'stagiaires' => $stagiaires,
         ]);
     }
 
@@ -82,6 +92,8 @@ class HomeController extends Controller
         ];
         $fieldKey = $_POST['field'] ?? 'autre';
 
+        \Helper\Log\Logger::info('applyInternship:Debut', ['POST' => $_POST, 'FILES' => array_keys($_FILES)]);
+
         try {
             $appId = (new InternshipApplicationModel())->create([
                 'nom' => $nom,
@@ -119,6 +131,33 @@ class HomeController extends Controller
             http_response_code(400);
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+    public function downloadDocument($params)
+    {
+        $id = (int) ($params['id'] ?? 0);
+        if ($id <= 0) {
+            header('HTTP/1.1 404 Not Found');
+            exit('Document non trouvé.');
+        }
+
+        $doc = (new InternshipDocumentModel())->findById($id);
+        if (!$doc) {
+            header('HTTP/1.1 404 Not Found');
+            exit('Document non trouvé.');
+        }
+
+        $filePath = dirname(__DIR__, 2) . ltrim($doc['fichier'], '/');
+        if (!file_exists($filePath)) {
+            header('HTTP/1.1 404 Not Found');
+            exit('Fichier introuvable.');
+        }
+
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="' . basename($doc['fichier']) . '"');
+        header('Content-Length: ' . filesize($filePath));
+        readfile($filePath);
+        exit;
     }
 
     public function domaines()

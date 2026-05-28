@@ -47,6 +47,32 @@ class InternshipApplicationModel extends Model
         return (int) $this->db()->lastInsertId();
     }
 
+    public function update(int $id, array $data): void
+    {
+        $fields = [];
+        $params = [':id' => $id];
+
+        if (isset($data['user_id'])) {
+            $fields[] = 'user_id = :user_id';
+            $params[':user_id'] = $data['user_id'];
+        }
+        if (isset($data['stagiaire_id'])) {
+            $fields[] = 'stagiaire_id = :stagiaire_id';
+            $params[':stagiaire_id'] = $data['stagiaire_id'];
+        }
+        if (isset($data['statut'])) {
+            $fields[] = 'statut = :statut';
+            $params[':statut'] = $data['statut'];
+        }
+
+        if (!empty($fields)) {
+            $this->db()->prepare(
+                'UPDATE internship_applications SET ' . implode(', ', $fields) . ' WHERE id = :id',
+                $params
+            );
+        }
+    }
+
     public function updateStatus(int $id, string $statut, ?string $motif = null): void
     {
         $this->db()->prepare(

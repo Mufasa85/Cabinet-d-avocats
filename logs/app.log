@@ -30,3 +30,6 @@
 [2026-05-28 01:13:10] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
 [2026-05-28 01:13:10] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_c14301644ed8d73b.png"}
 [2026-05-28 01:13:10] [INFO] updateAvatar: succes
+[2026-05-28 14:45:05] [INFO] applyInternship:Debut | Context: {"POST":{"csrf_token":"c11f2b67f289a803417bf2fc18523403db8989978275c46677e4ca022cd80693","fullName":"Paysayo","email":"16paysayocesar@gmail.com","phone":"+243895511485","university":"upc","level":"m2","consent":"on"},"FILES":["cvFile","letterFile","academicFile"]}
+[2026-05-28 15:37:37] [INFO] applyInternship:Debut | Context: {"POST":{"csrf_token":"1526c3c7005650ccf9e98510ee67f7dd149e6dbc47613e47a0548722813c7993","fullName":"Peter","email":"peter@gmail.com","phone":"+243815252159","university":"upc","level":"m2","consent":"on"},"FILES":["cvFile","letterFile","academicFile"]}
+[2026-05-28 16:00:18] [INFO] createStagiaire: User already exists | Context: {"email":"16paysayocesar@gmail.com"}

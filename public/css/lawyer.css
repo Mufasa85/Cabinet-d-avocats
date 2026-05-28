@@ -2212,3 +2212,12 @@ img {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--gold-light);
 }
+
+/* Profile Avatar Name */
+.profile-avatar-name {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gold-primary);
+    text-align: center;
+}
