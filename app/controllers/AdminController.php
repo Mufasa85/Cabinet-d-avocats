@@ -184,54 +184,131 @@ class AdminController extends Controller
 
     public function storeLawyer()
     {
+        \Helper\Log\Logger::info('storeLawyer: Debut de la creation avocat', [
+            'POST' => $_POST
+        ]);
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            \Helper\Log\Logger::warning('storeLawyer: Method non POST ou CSRF invalide');
             $this->redirect(Router::route('/admin/lawyers'));
             return;
         }
 
         $userModel = new UserModel();
         $email = $this->sanitaze($_POST['email'] ?? '');
+        \Helper\log\Logger::debug('storeLawyer: Email sanitize', ['email' => $email]);
+
         if ($userModel->findByEmail($email)) {
+            \Helper\log\Logger::warning('storeLawyer: Email deja utilise', ['email' => $email]);
             $this->error('Email déjà utilisé.');
             $this->redirect(Router::route('/admin/lawyers'));
             return;
         }
 
-        $userModel->create([
-            'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
-            'email' => $email,
-            'password' => $_POST['password'] ?? 'avocat123',
-            'roles' => 'avocat',
-            'telephone' => $this->sanitaze($_POST['telephone'] ?? ''),
-            'is_active' => 1,
-        ]);
+        try {
+            \Helper\log\Logger::debug('storeLawyer: Creation user', [
+                'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
+                'email' => $email,
+                'roles' => 'avocat'
+            ]);
 
-        $user = $userModel->findByEmail($email);
-        $userId = (int) ($user['id'] ?? 0);
-        if (!$userId) {
-            $this->error('Erreur création utilisateur.');
+            $userId = $userModel->create([
+                'fullname' => $this->sanitaze($_POST['fullname'] ?? ''),
+                'email' => $email,
+                'password' => $_POST['password'] ?? 'avocat123',
+                'roles' => 'avocat',
+                'telephone' => $this->sanitaze($_POST['telephone'] ?? ''),
+                'is_active' => 1,
+            ]);
+
+            \Helper\log\Logger::debug('storeLawyer: User cree', ['userId' => $userId]);
+
+            if (!$userId) {
+                \Helper\log\Logger::error('storeLawyer: userId non trouve apres creation');
+                $this->error('Erreur création utilisateur.');
+                $this->redirect(Router::route('/admin/lawyers'));
+                return;
+            }
+
+            \Helper\log\Logger::info('storeLawyer: Creation profil avocat', ['userId' => $userId]);
+
+            $avocatId = (new AvocatModel())->createForUser($userId, [
+                'titre' => $this->sanitaze($_POST['titre'] ?? 'Avocat'),
+                'email_professionnel' => $email,
+                'bio' => $this->sanitaze($_POST['bio'] ?? ''),
+                'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
+                'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
+            ]);
+
+            \Helper\log\Logger::debug('storeLawyer: Avocat cree', ['avocatId' => $avocatId]);
+
+            $specIds = array_map('intval', $_POST['specialites'] ?? []);
+            if ($specIds) {
+                \Helper\log\Logger::info('storeLawyer: Attribution specialites', ['specIds' => $specIds]);
+                (new AvocatModel())->setSpecialites($avocatId, $specIds);
+            }
+
+            \Helper\log\Logger::info('storeLawyer: Succes - Avocat ajoute', ['avocatId' => $avocatId]);
+            $_SESSION['success'] = 'Avocat ajouté.';
+            $this->redirect(Router::route('/admin/lawyers'));
+        } catch (\Exception $e) {
+            \Helper\log\Logger::error('storeLawyer: Exception', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            $this->error('Erreur: ' . $e->getMessage());
+            $this->redirect(Router::route('/admin/lawyers'));
+        }
+    }
+
+    public function updateLawyer($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
             $this->redirect(Router::route('/admin/lawyers'));
             return;
         }
 
-        $avocatId = (new AvocatModel())->createForUser($userId, [
-            'titre' => $this->sanitaze($_POST['titre'] ?? 'Avocat'),
-            'email_professionnel' => $email,
+        $id = (int) ($params['id'] ?? 0);
+        (new AvocatModel())->update($id, [
+            'titre' => $this->sanitaze($_POST['titre'] ?? ''),
+            'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
             'bio' => $this->sanitaze($_POST['bio'] ?? ''),
             'experience' => (int) ($_POST['experience'] ?? 0) ?: null,
             'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
         ]);
 
         $specIds = array_map('intval', $_POST['specialites'] ?? []);
-        if ($specIds) {
-            (new AvocatModel())->setSpecialites($avocatId, $specIds);
-        }
+        (new AvocatModel())->setSpecialites($id, $specIds);
 
-        $_SESSION['success'] = 'Avocat ajouté.';
+        $_SESSION['success'] = 'Profil avocat mis à jour.';
         $this->redirect(Router::route('/admin/lawyers'));
     }
 
-    public function updateLawyer($params)
+    public function deleteLawyer($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/lawyers'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id > 0) {
+            $avocatModel = new AvocatModel();
+            $avocat = $avocatModel->findById($id);
+            if ($avocat) {
+                // Supprimer l'avocat puis l'utilisateur associe
+                $userId = (int) $avocat['user_id'];
+                $avocatModel->delete($id);
+                if ($userId > 0) {
+                    (new UserModel())->delete($userId);
+                }
+                $_SESSION['success'] = 'Avocat supprimé.';
+            }
+        }
+        $this->redirect(Router::route('/admin/lawyers'));
+    }
+
+    public function updateLawyerForm($params)
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
             $this->redirect(Router::route('/admin/lawyers'));
