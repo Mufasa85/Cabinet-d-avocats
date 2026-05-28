@@ -8,6 +8,19 @@
  */
 
 $pageTitle = 'Gestion des Utilisateurs';
+// <<<<<<< HEAD
+// =======
+// $users = [
+//     ['id' => 1, 'fullname' => 'Maître Jean Kabongo', 'email' => 'jean.kabongo@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'JK'],
+//     ['id' => 2, 'name' => 'Marie Lukoji', 'email' => 'marie.lukoj@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'ML'],
+//     ['id' => 3, 'name' => 'Pierre Diallo', 'email' => 'pierre.diallo@cabinet.cd', 'role' => 'Admin', 'status' => 'active', 'avatar' => 'PD'],
+//     ['id' => 4, 'name' => 'Aminata Mwamba', 'email' => 'aminata.mwamba@cabinet.cd', 'role' => 'Secrétaire', 'status' => 'active', 'avatar' => 'AM'],
+//     ['id' => 5, 'name' => 'Jean Mukamba', 'email' => 'jean.mukamba@gmail.com', 'role' => 'Stagiaire', 'status' => 'pending', 'avatar' => 'JM'],
+//     ['id' => 6, 'name' => 'Sophie Kasaï', 'email' => 'sophie.kasai@cabinet.cd', 'role' => 'Juriste', 'status' => 'active', 'avatar' => 'SK'],
+//     ['id' => 7, 'name' => 'Robert Ngalulu', 'email' => 'robert.ngalulu@cabinet.cd', 'role' => 'Avocat', 'status' => 'inactive', 'avatar' => 'RN'],
+//     ['id' => 8, 'name' => 'Claire Bemba', 'email' => 'claire.bemba@cabinet.cd', 'role' => 'Comptable', 'status' => 'active', 'avatar' => 'CB'],
+// ];
+// >>>>>>> 56ac707 (fix(auth,users): Resolve error)
 
 // Formater les utilisateurs pour la vue (adapter les champs DB)
 $formattedUsers = array_map(function ($user) {
@@ -37,13 +50,13 @@ $formattedUsers = array_map(function ($user) {
         'id' => (int) $user['id'],
         'name' => $user['fullname'] ?? '',
         'email' => $user['email'] ?? '',
-        'role' => $roleLabels[$user['roles']] ?? ucfirst($user['roles'] ?? ''),
-        'status' => $statusMap[$user['is_active']] ?? 'pending',
+        'role' => $roleLabels[$user['role']] ?? ucfirst($user['role'] ?? ''),
+        'status' => $statusMap[$user['status']] ?? 'pending',
         'avatar' => $initials ?: '??',
         'telephone' => $user['telephone'] ?? '',
         'created_at' => $user['created_at'] ?? null,
-        'is_active' => (int) ($user['is_active'] ?? 1),
-        'roles' => $user['roles'] ?? 'stagiaire', // garder pour les formulaires
+        'status' => (int) ($user['status'] ?? 1),
+        'role' => $user['role'] ?? 'stagiaire', // garder pour les formulaires
     ];
 }, $users ?? []);
 
@@ -63,7 +76,13 @@ $formattedUsers = array_map(function ($user) {
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedUser: null }">
+<body x-data="{
+    sidebarOpen: false,
+    modalOpen: false,
+    activeModal: null,
+    selectedUser: { id: null, name: '', email: '', telephone: '', role: 'stagiaire', status: 1, avatar: '' },
+    usersBaseUrl: '<?= Router\Router::route('/admin/users') ?>'
+}">
 
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
@@ -106,7 +125,6 @@ $formattedUsers = array_map(function ($user) {
                     <select class="filter-select">
                         <option value="">Tous les rôles</option>
                         <option value="admin">Administrateur</option>
-                        <option value="avocat">Avocat</option>
                         <option value="juriste">Juriste</option>
                         <option value="secretaire">Secrétaire</option>
                         <option value="stagiaire">Stagiaire</option>
@@ -142,33 +160,34 @@ $formattedUsers = array_map(function ($user) {
                                                         <h4><?= htmlspecialchars($user['name']) ?></h4>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            <td><?= htmlspecialchars($user['email']) ?></td>
-                                            <td>
-                                                <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
-                                                    <?= htmlspecialchars($user['role']) ?>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="badge <?= $user['status'] === 'active' ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
-                                                    <span class="status-dot <?= $user['status'] === 'active' ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
-                                                    <?= ucfirst($user['status']) ?>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div class="flex gap-sm">
-                                                    <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'view-user'; modalOpen = true" title="Voir">
-                                                        <i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-ghost" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                        <td><?= htmlspecialchars($user['email']) ?></td>
+                                        <td>
+                                            <span class="badge <?= $user['role'] === 'Admin' ? 'badge-gold' : 'badge-info' ?>">
+                                                <?= htmlspecialchars($user['role']) ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge <?= $user['status'] === 1 ? 'badge-success' : ($user['status'] === 'pending' ? 'badge-warning' : 'badge-danger') ?>">
+                                                <span class="status-dot <?= $user['status'] === 1 ? 'success' : ($user['status'] === 'pending' ? 'warning' : 'danger') ?>"></span>
+                                                <?=  $user['status'] === 1 ? 'active': 'inative' ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="flex gap-sm">
+                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'view-user'; modalOpen = true" title="Voir">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -221,7 +240,6 @@ $formattedUsers = array_map(function ($user) {
                         <select name="role" class="form-select">
                             <option value="">Sélectionner un rôle</option>
                             <option value="admin">Administrateur</option>
-                            <option value="avocat">Avocat</option>
                             <option value="juriste">Juriste</option>
                             <option value="secretaire">Secrétaire</option>
                             <option value="stagiaire">Stagiaire</option>
@@ -256,7 +274,7 @@ $formattedUsers = array_map(function ($user) {
 
     <!-- EDIT USER MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'edit-user' && modalOpen }">
-        <form method="POST" :action="'/admin/users/' + selectedUser?.id + '/update'">
+        <form method="POST" :action="usersBaseUrl + '/' + selectedUser.id + '/update'">
             <?= \Core\Security::csrf_tokken() ?>
             <div class="modal-header">
                 <div class="modal-header-content">
@@ -286,9 +304,8 @@ $formattedUsers = array_map(function ($user) {
                     </div>
                     <div class="form-group">
                         <label class="form-label">Rôle</label>
-                        <select name="role" class="form-select" x-model="selectedUser.roles">
+                        <select name="role" class="form-select" x-model="selectedUser.role">
                             <option value="admin">Administrateur</option>
-                            <option value="avocat">Avocat</option>
                             <option value="juriste">Juriste</option>
                             <option value="secretaire">Secrétaire</option>
                             <option value="stagiaire">Stagiaire</option>
@@ -297,7 +314,7 @@ $formattedUsers = array_map(function ($user) {
                 </div>
                 <div class="form-group">
                     <label class="form-label">Statut</label>
-                    <select name="is_active" class="form-select" x-model="selectedUser.is_active">
+                    <select name="is_active" class="form-select" x-model="selectedUser.status">
                         <option value="1">Actif</option>
                         <option value="0">Inactif</option>
                     </select>
@@ -371,7 +388,7 @@ $formattedUsers = array_map(function ($user) {
 
     <!-- DELETE USER MODAL -->
     <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete-user' && modalOpen }">
-        <form method="POST" :action="'/admin/users/' + selectedUser?.id + '/delete'">
+        <form method="POST" :action="usersBaseUrl + '/' + selectedUser.id + '/delete'">
             <?= \Core\Security::csrf_tokken() ?>
             <div class="modal-header">
                 <div class="modal-header-content">

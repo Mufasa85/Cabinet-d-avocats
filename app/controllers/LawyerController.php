@@ -8,7 +8,9 @@ use App\models\CategoryModel;
 use App\models\UserModel;
 use App\models\FormationModel;
 use App\models\InscriptionModel;
+use App\models\MediaModel;
 use App\models\NotificationModel;
+use App\models\SpecialiteModel;
 use App\View;
 use Core\Auth;
 use Core\Security;
@@ -18,6 +20,7 @@ use Service\FileStorage;
 class LawyerController extends Controller
 {
     private ?array $avocat = null;
+    private const ARTICLE_STATUTS = ['brouillon', 'publie', 'archive'];
 
     public function __construct()
     {
@@ -62,14 +65,25 @@ class LawyerController extends Controller
             return;
         }
 
+        $statut = $this->sanitaze($_POST['statut'] ?? 'brouillon');
+        if (!in_array($statut, self::ARTICLE_STATUTS, true)) {
+            $statut = 'brouillon';
+        }
+
         $data = [
             'avocat_id' => (int) $this->avocat['id'],
             'category_id' => (int) ($_POST['category_id'] ?? 0) ?: null,
             'titre' => $this->sanitaze($_POST['titre'] ?? ''),
             'extrait' => $this->sanitaze($_POST['extrait'] ?? ''),
-            'contenu' => $_POST['contenu'] ?? '',
-            'statut' => $this->sanitaze($_POST['statut'] ?? 'brouillon'),
+            'contenu' => $this->sanitaze($_POST['contenu'] ?? ''),
+            'statut' => $statut,
         ];
+
+        if (trim($data['titre']) === '' || trim($data['contenu']) === '') {
+            $this->error('Le titre et le contenu sont obligatoires.');
+            $this->redirect(Router::route('/lawyers/articles'));
+            return;
+        }
 
         try {
             if (!empty($_FILES['image']['name'])) {
@@ -82,8 +96,12 @@ class LawyerController extends Controller
             return;
         }
 
-        (new ArticleModel())->create($data);
-        $_SESSION['success'] = 'Article enregistré.';
+        try {
+            (new ArticleModel())->create($data);
+            $_SESSION['success'] = 'Article enregistré.';
+        } catch (\Throwable $e) {
+            $this->error('Impossible d\'enregistrer l\'article. Vérifiez les champs puis réessayez.');
+        }
         $this->redirect(Router::route('/lawyers/articles'));
     }
 
@@ -101,13 +119,24 @@ class LawyerController extends Controller
             return;
         }
 
+        $statut = $this->sanitaze($_POST['statut'] ?? 'brouillon');
+        if (!in_array($statut, self::ARTICLE_STATUTS, true)) {
+            $statut = 'brouillon';
+        }
+
         $data = [
             'category_id' => (int) ($_POST['category_id'] ?? 0) ?: null,
             'titre' => $this->sanitaze($_POST['titre'] ?? ''),
             'extrait' => $this->sanitaze($_POST['extrait'] ?? ''),
-            'contenu' => $_POST['contenu'] ?? '',
-            'statut' => $this->sanitaze($_POST['statut'] ?? 'brouillon'),
+            'contenu' => $this->sanitaze($_POST['contenu'] ?? ''),
+            'statut' => $statut,
         ];
+
+        if (trim($data['titre']) === '' || trim($data['contenu']) === '') {
+            $this->error('Le titre et le contenu sont obligatoires.');
+            $this->redirect(Router::route('/lawyers/articles'));
+            return;
+        }
 
         if (!empty($_FILES['image']['name'])) {
             try {
@@ -120,16 +149,52 @@ class LawyerController extends Controller
             }
         }
 
-        (new ArticleModel())->update($id, $data);
-        $_SESSION['success'] = 'Article mis à jour.';
+        try {
+            (new ArticleModel())->update($id, $data);
+            $_SESSION['success'] = 'Article mis à jour.';
+        } catch (\Throwable $e) {
+            $this->error('Impossible de mettre à jour l\'article.');
+        }
+        $this->redirect(Router::route('/lawyers/articles'));
+    }
+
+    public function deleteArticle($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/lawyers/articles'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        $article = (new ArticleModel())->findById($id);
+        if (!$article || (int) $article['avocat_id'] !== (int) $this->avocat['id']) {
+            $this->error('Article introuvable.');
+            $this->redirect(Router::route('/lawyers/articles'));
+            return;
+        }
+
+        if (!empty($article['image_couverture'])) {
+            FileStorage::delete((string) $article['image_couverture']);
+        }
+
+        (new ArticleModel())->delete($id);
+        $_SESSION['success'] = 'Article supprimé.';
         $this->redirect(Router::route('/lawyers/articles'));
     }
 
     public function profile()
     {
+        $articleModel = new ArticleModel();
         View::view('lawyers.profile', [
             'avocat' => $this->avocat,
-            'specialites' => (new \App\models\SpecialiteModel())->all(),
+            'specialites' => (new SpecialiteModel())->all(),
+            'selectedSpecialites' => (new AvocatModel())->specialiteIds((int) $this->avocat['id']),
+            'stats' => [
+                'articles' => count($articleModel->byAvocatId((int) $this->avocat['id'])),
+                'published' => $articleModel->countByStatut('publie', (int) $this->avocat['id']),
+                'draft' => $articleModel->countByStatut('brouillon', (int) $this->avocat['id']),
+                'documents' => count((new MediaModel())->byUserId((int) Auth::id(), 'document')),
+            ],
             'csrf' => Security::csrf_tokken(),
         ]);
     }
@@ -218,10 +283,28 @@ class LawyerController extends Controller
 
     public function trainings()
     {
-        $formationModel = new FormationModel();
+        $inscriptions = (new InscriptionModel())->byUserId((int) Auth::id());
+        $inscriptionsEnCours = array_values(array_filter(
+            $inscriptions,
+            static fn (array $inscription): bool => in_array($inscription['statut'], ['en_attente', 'acceptee'], true)
+        ));
+
+        $inscriptionsFormationIds = [];
+        foreach ($inscriptionsEnCours as $inscription) {
+            $inscriptionsFormationIds[] = (int) ($inscription['formation_id'] ?? 0);
+        }
+
+        $formationsDisponibles = [];
+        foreach ((new FormationModel())->availableForPublic('avocat') as $formation) {
+            if (!in_array((int) ($formation['id'] ?? 0), $inscriptionsFormationIds, true)) {
+                $formationsDisponibles[] = $formation;
+            }
+        }
+
         View::view('lawyers.trainings', [
-            'formations' => $formationModel->all('avocat'),
-            'inscriptions' => (new InscriptionModel())->byUserId((int) Auth::id()),
+            'formationsDisponibles' => $formationsDisponibles,
+            'inscriptionsEnCours' => $inscriptionsEnCours,
+            'inscriptions' => $inscriptions,
             'csrf' => Security::csrf_tokken(),
         ]);
     }
@@ -242,20 +325,119 @@ class LawyerController extends Controller
             return;
         }
 
-        if (!(new FormationModel())->hasPlaces($formationId)) {
+        $formationModel = new FormationModel();
+        if (!$formationModel->findAvailableForPublic($formationId, 'avocat')) {
             $this->error('Plus de places disponibles.');
             $this->redirect(Router::route('/lawyers/trainings'));
             return;
         }
 
-        $inscriptionModel->create($formationId, (int) Auth::id(), $this->sanitaze($_POST['message'] ?? ''));
-        $_SESSION['success'] = 'Demande d\'inscription envoyée.';
+        if (!$formationModel->reservePlace($formationId)) {
+            $this->error('Plus de places disponibles.');
+            $this->redirect(Router::route('/lawyers/trainings'));
+            return;
+        }
+
+        try {
+            $inscriptionModel->create(
+                $formationId,
+                (int) Auth::id(),
+                $this->sanitaze($_POST['message'] ?? ''),
+                'acceptee'
+            );
+            $_SESSION['success'] = 'Inscription validée. Formation ajoutée dans "En cours".';
+        } catch (\Throwable $e) {
+            $formationModel->releasePlace($formationId);
+            $this->error('Inscription impossible pour le moment. Veuillez réessayer.');
+        }
+
         $this->redirect(Router::route('/lawyers/trainings'));
     }
 
     public function documents()
     {
-        View::view('lawyers.documents');
+        View::view('lawyers.documents', [
+            'documents' => (new MediaModel())->byUserId((int) Auth::id(), 'document'),
+            'csrf' => Security::csrf_tokken(),
+        ]);
+    }
+
+    public function storeDocument()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/lawyers/documents'));
+            return;
+        }
+
+        try {
+            if (empty($_FILES['fichier']['name'])) {
+                throw new \RuntimeException('Veuillez choisir un fichier PDF.');
+            }
+
+            $stored = FileStorage::storeUpload($_FILES['fichier'], 'documents/avocats', 'av_' . Auth::id());
+            (new MediaModel())->create([
+                'nom' => $this->sanitaze($_POST['nom'] ?? $_FILES['fichier']['name']),
+                'fichier' => $stored['fichier'],
+                'mime' => $stored['mime'],
+                'taille' => $stored['taille'],
+                'type' => 'document',
+                'user_id' => (int) Auth::id(),
+                'est_public' => isset($_POST['est_public']) ? 1 : 0,
+            ]);
+            $_SESSION['success'] = 'Document ajouté.';
+        } catch (\Throwable $e) {
+            $this->error($e->getMessage());
+        }
+
+        $this->redirect(Router::route('/lawyers/documents'));
+    }
+
+    public function updateDocument($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/lawyers/documents'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        $doc = (new MediaModel())->findById($id);
+        if (!$doc || (int) ($doc['user_id'] ?? 0) !== (int) Auth::id() || ($doc['type'] ?? '') !== 'document') {
+            $this->error('Document introuvable.');
+            $this->redirect(Router::route('/lawyers/documents'));
+            return;
+        }
+
+        $update = [
+            'nom' => $this->sanitaze($_POST['nom'] ?? ''),
+            'est_public' => isset($_POST['est_public']) ? 1 : 0,
+        ];
+
+        (new MediaModel())->update($id, $update);
+        $_SESSION['success'] = 'Document mis à jour.';
+        $this->redirect(Router::route('/lawyers/documents'));
+    }
+
+    public function deleteDocument($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/lawyers/documents'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        $doc = (new MediaModel())->findById($id);
+        if (!$doc || (int) ($doc['user_id'] ?? 0) !== (int) Auth::id() || ($doc['type'] ?? '') !== 'document') {
+            $this->error('Document introuvable.');
+            $this->redirect(Router::route('/lawyers/documents'));
+            return;
+        }
+
+        if (!empty($doc['fichier'])) {
+            FileStorage::delete((string) $doc['fichier']);
+        }
+        (new MediaModel())->delete($id);
+        $_SESSION['success'] = 'Document supprimé.';
+        $this->redirect(Router::route('/lawyers/documents'));
     }
 
     public function settings()

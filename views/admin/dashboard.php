@@ -1,10 +1,5 @@
 <?php
-/**
- * ==============================================
- * ADMIN DASHBOARD - MAIN PAGE
- * Cabinet d'Avocats
- * ==============================================
- */
+
 
 $stats = $stats ?? ['users' => 0, 'lawyers' => 0, 'pending' => 0, 'documents' => 0];
 $recentApplications = $recentApplications ?? [];
@@ -351,25 +346,25 @@ $statutCandidature = [
                             </div>
                             <div class="card-body">
                                 <div class="quick-actions">
-                                    <a href="users.php" class="quick-action">
+                                    <a href="<?= Router\Router::route('/admin/users') ?>" class="quick-action">
                                         <div class="quick-action-icon">
                                             <i class="fas fa-user-plus"></i>
                                         </div>
                                         <span>Ajouter Utilisateur</span>
                                     </a>
-                                    <a href="lawyers.php" class="quick-action">
+                                    <a href="<?= Router\Router::route('/admin/lawyers') ?>" class="quick-action">
                                         <div class="quick-action-icon">
                                             <i class="fas fa-user-tie"></i>
                                         </div>
                                         <span>Nouvel Avocat</span>
                                     </a>
-                                    <a href="publications.php" class="quick-action">
+                                    <a href="<?= Router\Router::route('/admin/publications') ?>" class="quick-action">
                                         <div class="quick-action-icon">
                                             <i class="fas fa-newspaper"></i>
                                         </div>
                                         <span>Publication</span>
                                     </a>
-                                    <a href="documents.php" class="quick-action">
+                                    <a href="<?= Router\Router::route('/admin/documents') ?>" class="quick-action">
                                         <div class="quick-action-icon">
                                             <i class="fas fa-upload"></i>
                                         </div>

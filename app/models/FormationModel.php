@@ -89,4 +89,53 @@ class FormationModel extends Model
         }
         return (int) $f['places_reservees'] < (int) $f['places_max'];
     }
+
+    public function availableForPublic(string $public): array
+    {
+        $stmt = $this->db()->prepare(
+            "SELECT * FROM formations
+             WHERE statut = 'ouverte'
+               AND (public_cible = :public OR public_cible = 'tous')
+               AND places_reservees < places_max
+             ORDER BY date_debut ASC, titre ASC",
+            [':public' => $public]
+        );
+        return $stmt->fetchAll() ?: [];
+    }
+
+    public function findAvailableForPublic(int $id, string $public): ?array
+    {
+        $stmt = $this->db()->prepare(
+            "SELECT * FROM formations
+             WHERE id = :id
+               AND statut = 'ouverte'
+               AND (public_cible = :public OR public_cible = 'tous')
+               AND places_reservees < places_max
+             LIMIT 1",
+            [':id' => $id, ':public' => $public]
+        );
+        return $stmt->fetch() ?: null;
+    }
+
+    public function reservePlace(int $id): bool
+    {
+        $stmt = $this->db()->prepare(
+            "UPDATE formations
+             SET places_reservees = places_reservees + 1
+             WHERE id = :id
+               AND statut = 'ouverte'
+               AND places_reservees < places_max",
+            [':id' => $id]
+        );
+
+        return $stmt->rowCount() > 0;
+    }
+
+    public function releasePlace(int $id): void
+    {
+        $this->db()->prepare(
+            'UPDATE formations SET places_reservees = GREATEST(places_reservees - 1, 0) WHERE id = :id',
+            [':id' => $id]
+        );
+    }
 }

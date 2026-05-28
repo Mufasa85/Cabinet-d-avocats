@@ -34,6 +34,7 @@ $statutLabels = ['en_attente' => 'En attente', 'valide' => 'Validé', 'rejete' =
             </header>
             <div class="page-content">
                 <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
+                <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
                 <div class="card">
                     <div class="card-body" style="padding: 0;">
                         <div class="table-container">
@@ -72,22 +73,44 @@ $statutLabels = ['en_attente' => 'En attente', 'valide' => 'Validé', 'rejete' =
     <div class="modal-overlay" :class="{ 'active': modalOpen }" @click="modalOpen = false"></div>
 
     <div class="modal" :class="{ 'active': activeModal === 'upload' && modalOpen }">
-        <div class="modal-header">
-            <div class="modal-header-content"><div class="modal-icon"><i class="fas fa-cloud-upload-alt"></i></div><div><h3 class="modal-title">Upload Document</h3><p class="modal-subtitle">Télécharger un nouveau fichier</p></div></div>
-            <button class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="file-upload">
-                <div class="file-upload-icon"><i class="fas fa-file-pdf"></i></div>
-                <h4>Glissez-déposez ou cliquez pour uploader</h4>
-                <p>PDF, DOC, DOCX jusqu'à 10MB</p>
+        <form method="post" action="<?= Router\Router::route('/admin/documents/upload') ?>" enctype="multipart/form-data">
+            <?= $csrf ?? '' ?>
+            <div class="modal-header">
+                <div class="modal-header-content"><div class="modal-icon"><i class="fas fa-cloud-upload-alt"></i></div><div><h3 class="modal-title">Upload Document</h3><p class="modal-subtitle">Télécharger un document stagiaire</p></div></div>
+                <button type="button" class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
             </div>
-            <div class="form-group" style="margin-top: 1.5rem;"><label class="form-label">Catégorie</label><select class="form-select"><option>Contrats</option><option>Notes</option><option>Plaidoiries</option></select></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
-            <button class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
-        </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Stagiaire</label>
+                    <select class="form-select" name="stagiaire_id" required>
+                        <option value="">Sélectionner...</option>
+                        <?php foreach (($stagiaires ?? []) as $s): ?>
+                            <option value="<?= (int) ($s['id'] ?? 0) ?>"><?= htmlspecialchars($s['fullname'] ?? '') ?> (<?= htmlspecialchars($s['email'] ?? '') ?>)</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Titre</label>
+                    <input type="text" class="form-input" name="titre" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-select" name="type">
+                        <option value="convention">Convention</option>
+                        <option value="rapport">Rapport</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Fichier PDF</label>
+                    <input type="file" class="form-input" name="fichier" accept="application/pdf" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="modalOpen = false">Annuler</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Upload</button>
+            </div>
+        </form>
     </div>
 
     <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete' && modalOpen }">

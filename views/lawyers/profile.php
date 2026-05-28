@@ -32,9 +32,9 @@ $lawyerName = $avocat['fullname'] ?? 'Me. Laurent Mbako';
 var_dump($lawyerAvatar);
 // Données avocat
 $lawyer = [
-    'name' => $avocat['fullname'] ?? 'Me. Laurent Mbako',
+    'name' => $avocat['name'] ?? 'Me. Laurent Mbako',
     'email' => $avocat['email_professionnel'] ?? 'laurent.mbako@elmd-law.com',
-    'phone' => $avocat['telephone'] ?? '+243 81 234 5678',
+    'phone' => $avocat['phone'] ?? '+243 81 234 5678',
     'role' => $avocat['titre'] ?? 'Avocat Principal',
     'specialties' => $avocat['specialties'] ?? ['Droit OHADA', 'Droit Fiscal', 'Droit Minier', 'Droit du Travail'],
     'bio' => $avocat['biographie'] ?? 'Avocat avec plus de 15 ans d\'expérience dans les domaines du droit des affaires, droit fiscal et droit minier en République Démocratique du Congo.',

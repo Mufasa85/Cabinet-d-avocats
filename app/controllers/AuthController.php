@@ -77,7 +77,8 @@ class AuthController extends Controller
             return;
         }
 
-        if (isset($user['is_active']) && !$user['is_active']) {
+        $isActive = isset($user['status']) ? (int) $user['status'] : (isset($user['is_active']) ? (int) $user['is_active'] : 1);
+        if (!$isActive) {
             $this->error('Votre compte est désactivé.');
             $this->redirect(Router::route('/login'));
             return;
@@ -89,7 +90,7 @@ class AuthController extends Controller
             setcookie('remember_email', $email, time() + 86400 * 30, '/');
         }
 
-        $this->redirect(Auth::redirectUrlForDbRole($user['roles']));
+        $this->redirect(Auth::redirectUrlForDbRole($user['role']));
     }
 
     public function register()
@@ -160,9 +161,9 @@ class AuthController extends Controller
                 'fullname' => $fullname,
                 'email' => $email,
                 'password' => $password,
-                'roles' => $role,
+                'role' => $role,
                 'telephone' => $telephone ?: null,
-                'is_active' => $is_active,
+                'status' => $is_active,
             ]);
         } catch (\PDOException $e) {
             $logManagement = Dic::get(LogManagement::class);

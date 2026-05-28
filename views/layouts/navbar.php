@@ -34,9 +34,9 @@ $currentPage = $currentPage ?? basename($_SERVER['PHP_SELF'], '.php');
         <a href="/stages.php" class="nav-link">Stages</a>
         
         <?php if (isset($_SESSION['user_id'])): ?>
-          <a href="/dashboard.php" class="nav-link nav-link-highlight">Tableau de bord</a>
+          <a href="#" class="nav-link nav-link-highlight">Tableau de bord</a>
         <?php else: ?>
-          <a href="/connexion.php" class="nav-link nav-link-highlight">Connexion</a>
+          <a href="<?= Router\Router::route('/login') ?>" class="nav-link nav-link-highlight">Connexion</a>
         <?php endif; ?>
       </div>
       
@@ -81,11 +81,11 @@ $currentPage = $currentPage ?? basename($_SERVER['PHP_SELF'], '.php');
           <span>Le Cabinet</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="/index.php#expertises" class="mobile-link">
+        <a href="<?= Router\Router::route('/#expertises') ?> " class="mobile-link">
           <span>Expertises</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="/index.php#equipe" class="mobile-link">
+        <a href="<?= Router\Router::route('/#equipe') ?>" class="mobile-link">
           <span>Équipe</span>
           <span class="mobile-link-arrow">→</span>
         </a>

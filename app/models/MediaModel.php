@@ -24,4 +24,42 @@ class MediaModel extends Model
         );
         return (int) $this->db()->lastInsertId();
     }
+
+    public function byUserId(int $userId, string $type = 'document'): array
+    {
+        $stmt = $this->db()->prepare(
+            'SELECT * FROM media WHERE user_id = :uid AND type = :type ORDER BY created_at DESC',
+            [':uid' => $userId, ':type' => $type]
+        );
+        return $stmt->fetchAll() ?: [];
+    }
+
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db()->prepare('SELECT * FROM media WHERE id = :id LIMIT 1', [':id' => $id]);
+        return $stmt->fetch() ?: null;
+    }
+
+    public function update(int $id, array $data): void
+    {
+        $fields = [];
+        $params = [':id' => $id];
+        foreach (['nom', 'est_public'] as $col) {
+            if (array_key_exists($col, $data)) {
+                $fields[] = "{$col} = :{$col}";
+                $params[":{$col}"] = $data[$col];
+            }
+        }
+
+        if (empty($fields)) {
+            return;
+        }
+
+        $this->db()->prepare('UPDATE media SET ' . implode(', ', $fields) . ' WHERE id = :id', $params);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->db()->prepare('DELETE FROM media WHERE id = :id', [':id' => $id]);
+    }
 }
