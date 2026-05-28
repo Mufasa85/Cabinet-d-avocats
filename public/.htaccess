@@ -1,8 +1,8 @@
 RewriteEngine On
 
-# Allow direct access to resources folder
+# Block direct access to resources folder (use ResourceController instead)
 
-RewriteRule ^resources/ - [L]
+# RewriteRule ^resources/ - [L]
 
 # Allow direct access to assets folder
 

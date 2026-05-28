@@ -4,20 +4,20 @@ namespace Service;
 
 class FileStorage
 {
-    private const MAX_BYTES = 5 * 1024 * 1024;
+    private const MAX_BYTES = 10 * 1024 * 1024;
     private const ALLOWED_PDF = ['application/pdf'];
     private const ALLOWED_IMAGES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
     public static function root(): string
     {
-        // Store in public/resources for direct web access
-        return dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'resources';
+        // Store in resources (not publicly accessible)
+        return dirname(__DIR__, 1)  . DIRECTORY_SEPARATOR . 'resources';
     }
 
     public static function url(string $relativePath): string
     {
         $relativePath = ltrim(str_replace('\\', '/', $relativePath), '/');
-        return \Router\Router::route('/resources/' . $relativePath);
+        return '/resources/' . $relativePath;
     }
 
     /**
@@ -25,7 +25,16 @@ class FileStorage
      */
     public static function storeUpload(array $file, string $subdir, ?string $prefix = null): array
     {
+        \Helper\Log\Logger::debug('FileStorage::storeUpload: debut', [
+            'file_name' => $file['name'] ?? 'no name',
+            'file_size' => $file['size'] ?? 0,
+            'file_tmp' => $file['tmp_name'] ?? 'no tmp',
+            'subdir' => $subdir,
+            'prefix' => $prefix,
+        ]);
+
         if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+            \Helper\Log\Logger::warning('FileStorage: erreur upload', ['error' => $file['error'] ?? 'unknown']);
             throw new \RuntimeException('Échec du téléversement du fichier.');
         }
 
@@ -48,7 +57,14 @@ class FileStorage
         }
 
         $targetDir = self::root() . DIRECTORY_SEPARATOR . trim($subdir, '/\\');
+        \Helper\Log\Logger::debug('FileStorage: targetDir check', [
+            'targetDir' => $targetDir,
+            'is_dir' => is_dir($targetDir),
+            'root' => self::root(),
+        ]);
+
         if (!is_dir($targetDir) && !mkdir($targetDir, 0755, true)) {
+            \Helper\Log\Logger::error('FileStorage: mkdir a echoue', ['targetDir' => $targetDir]);
             throw new \RuntimeException('Impossible de créer le dossier de stockage.');
         }
 
@@ -56,9 +72,21 @@ class FileStorage
             . bin2hex(random_bytes(8)) . '.' . $ext;
 
         $absolute = $targetDir . DIRECTORY_SEPARATOR . $safeName;
+        \Helper\Log\Logger::debug('FileStorage: tentative move', [
+            'tmp' => $file['tmp_name'],
+            'target' => $absolute,
+            'exists_tmp' => file_exists($file['tmp_name']),
+            'is_writable_target' => is_writable($targetDir),
+        ]);
+
         if (!move_uploaded_file($file['tmp_name'], $absolute)) {
+            \Helper\Log\Logger::error('FileStorage: move_uploaded_file a echoue', [
+                'error' => error_get_last()['message'] ?? 'unknown',
+            ]);
             throw new \RuntimeException('Impossible d\'enregistrer le fichier.');
         }
+
+        \Helper\Log\Logger::info('FileStorage: fichier deplace', ['absolute' => $absolute]);
 
         $relative = trim($subdir, '/\\') . '/' . $safeName;
 

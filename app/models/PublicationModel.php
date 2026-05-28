@@ -8,7 +8,7 @@ class PublicationModel extends Model
 
     public function all(?string $statut = null): array
     {
-        $sql = 'SELECT p.*, u.name AS auteur_nom FROM publications p LEFT JOIN users u ON u.id = p.cree_par';
+        $sql = 'SELECT p.*, u.fullname AS auteur_nom FROM publications p LEFT JOIN users u ON u.id = p.cree_par';
         $params = [];
         if ($statut) {
             $sql .= ' WHERE p.statut = :statut';

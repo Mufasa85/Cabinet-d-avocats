@@ -44,19 +44,26 @@ class AvocatModel extends Model
             [':uid' => $userId]
         );
         $row = $stmt->fetch();
+        if ($row && !empty($row['avatar'])) {
+            $row['avatar_url'] = \Service\FileStorage::url($row['avatar']);
+        }
         return $row ?: null;
     }
 
     public function findById(int $id): ?array
     {
         $stmt = $this->db()->prepare(
-            'SELECT a.*, u.fullname, u.email, u.telephone
+            'SELECT a.*, u.fullname, u.email, u.telephone, u.avatar
              FROM avocats a
              JOIN users u ON u.id = a.user_id
              WHERE a.id = :id LIMIT 1',
             [':id' => $id]
         );
-        return $stmt->fetch() ?: null;
+        $row = $stmt->fetch();
+        if ($row && !empty($row['avatar'])) {
+            $row['avatar_url'] = \Service\FileStorage::url($row['avatar']);
+        }
+        return $row ?: null;
     }
 
     public function createForUser(int $userId, array $data): int

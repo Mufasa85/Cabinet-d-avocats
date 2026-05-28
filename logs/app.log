@@ -80,3 +80,216 @@
 [2026-05-28 18:20:03] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":14}
 [2026-05-28 18:20:03] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":10}
 [2026-05-28 18:20:03] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":10}
+[2026-05-28 18:45:35] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:45:35] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:45:35] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_226aac2b46204fc0.jpg"}
+[2026-05-28 18:45:35] [INFO] updateAvatar: succes
+[2026-05-28 18:45:52] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:45:52] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:45:52] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_fad33b81eb39386e.jpg"}
+[2026-05-28 18:45:52] [INFO] updateAvatar: succes
+[2026-05-28 18:47:42] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:47:42] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:47:42] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_eb78565c9f691e51.jpg"}
+[2026-05-28 18:47:42] [INFO] updateAvatar: succes
+[2026-05-28 18:50:08] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:50:08] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:50:08] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_eaa2b56eba02693a.jpg"}
+[2026-05-28 18:50:08] [INFO] updateAvatar: succes
+[2026-05-28 18:50:44] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:50:44] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:50:44] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_c454ab8ae79aeb28.jpg"}
+[2026-05-28 18:50:44] [INFO] updateAvatar: succes
+[2026-05-28 18:50:53] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:50:53] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:50:53] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_439904020f339a1a.jpg"}
+[2026-05-28 18:50:53] [INFO] updateAvatar: succes
+[2026-05-28 18:51:20] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:51:20] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:51:20] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_a0a7121e9b2b7d3d.jpg"}
+[2026-05-28 18:51:20] [INFO] updateAvatar: succes
+[2026-05-28 18:53:38] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 18:53:38] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 18:53:38] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_2dec52d3aafacfc4.jpg"}
+[2026-05-28 18:53:38] [INFO] updateAvatar: succes
+[2026-05-28 19:06:35] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:06:35] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:06:35] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\xampp\\tmp\\php679E.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:06:35] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php679E.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_0ae1193bd86d0112.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:06:35] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_0ae1193bd86d0112.jpg"}
+[2026-05-28 19:06:35] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_0ae1193bd86d0112.jpg"}
+[2026-05-28 19:06:35] [INFO] updateAvatar: succes
+[2026-05-28 19:10:17] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:10:17] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:10:17] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"annie-spratt-QckxruozjRg-unsplash.jpg","file_size":10621724,"file_tmp":"C:\\xampp\\tmp\\phpCD4A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:10:17] [ERROR] updateAvatar: erreur | Context: {"message":"Le fichier dépasse la taille maximale de 5 Mo."}
+[2026-05-28 19:10:31] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:10:31] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:10:31] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"files-1777932947682-576657299.png","file_size":6915,"file_tmp":"C:\\xampp\\tmp\\php44A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:10:31] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php44A.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_0e3ad9b087467472.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:10:31] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_0e3ad9b087467472.png"}
+[2026-05-28 19:10:31] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_0e3ad9b087467472.png"}
+[2026-05-28 19:10:32] [INFO] updateAvatar: succes
+[2026-05-28 19:12:41] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:12:41] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:12:41] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\phpFDD8.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:12:41] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpFDD8.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_14cfa196a98920e8.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:12:41] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_14cfa196a98920e8.jpg"}
+[2026-05-28 19:12:41] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_14cfa196a98920e8.jpg"}
+[2026-05-28 19:12:41] [INFO] updateAvatar: succes
+[2026-05-28 19:15:30] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:15:30] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:15:30] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"files-1777932947682-576657299.png","file_size":6915,"file_tmp":"C:\\xampp\\tmp\\php909A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:15:30] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 19:15:30] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php909A.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_5da07f6761b8ae60.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:15:30] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_5da07f6761b8ae60.png"}
+[2026-05-28 19:15:30] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_5da07f6761b8ae60.png"}
+[2026-05-28 19:15:30] [INFO] updateAvatar: succes
+[2026-05-28 19:18:49] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:18:49] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:18:49] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"files-1777932947682-576657299.png","file_size":6915,"file_tmp":"C:\\xampp\\tmp\\php9BD7.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:18:49] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars","is_dir":false,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources"}
+[2026-05-28 19:18:49] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php9BD7.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_bf971397c3e33b5e.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:18:49] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_bf971397c3e33b5e.png"}
+[2026-05-28 19:18:49] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_bf971397c3e33b5e.png"}
+[2026-05-28 19:18:49] [INFO] updateAvatar: succes
+[2026-05-28 19:19:06] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:19:06] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:19:06] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"files-1777932947682-576657299.png","file_size":6915,"file_tmp":"C:\\xampp\\tmp\\phpDFB2.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:19:06] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources"}
+[2026-05-28 19:19:06] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpDFB2.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_cf819d528087c594.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:19:06] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_cf819d528087c594.png"}
+[2026-05-28 19:19:06] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_cf819d528087c594.png"}
+[2026-05-28 19:19:06] [INFO] updateAvatar: succes
+[2026-05-28 19:19:17] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:19:17] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:19:17] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"justine.jpeg","file_size":114161,"file_tmp":"C:\\xampp\\tmp\\php760.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:19:17] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources"}
+[2026-05-28 19:19:17] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php760.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_0648f18a478b1cb2.jpeg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:19:17] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_0648f18a478b1cb2.jpeg"}
+[2026-05-28 19:19:17] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_0648f18a478b1cb2.jpeg"}
+[2026-05-28 19:19:17] [INFO] updateAvatar: succes
+[2026-05-28 19:20:23] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:20:23] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:20:23] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"files-1777932947682-576657299.png","file_size":6915,"file_tmp":"C:\\xampp\\tmp\\phpA4A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:20:23] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources"}
+[2026-05-28 19:20:23] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpA4A.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_9d415134c4ca9a6f.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:20:23] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_9d415134c4ca9a6f.png"}
+[2026-05-28 19:20:23] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_9d415134c4ca9a6f.png"}
+[2026-05-28 19:20:23] [INFO] updateAvatar: succes
+[2026-05-28 19:29:31] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:29:31] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:29:31] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php9FEA.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:29:31] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources"}
+[2026-05-28 19:29:31] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php9FEA.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_6a758cb9a6071dbc.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:29:31] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_6a758cb9a6071dbc.jpg"}
+[2026-05-28 19:29:31] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_6a758cb9a6071dbc.jpg"}
+[2026-05-28 19:29:31] [INFO] updateAvatar: succes
+[2026-05-28 19:34:24] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:34:24] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:34:24] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php176A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:34:24] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources"}
+[2026-05-28 19:34:24] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php176A.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_88a41ec712c7a3d6.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:34:24] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\resources\\images\/avatars\\avatar_9_88a41ec712c7a3d6.jpg"}
+[2026-05-28 19:34:24] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_88a41ec712c7a3d6.jpg"}
+[2026-05-28 19:34:24] [INFO] updateAvatar: succes
+[2026-05-28 19:37:00] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:37:00] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:37:00] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php79E4.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:37:00] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 19:37:00] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php79E4.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_b8edf534540d7bb1.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:37:00] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_b8edf534540d7bb1.jpg"}
+[2026-05-28 19:37:00] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_b8edf534540d7bb1.jpg"}
+[2026-05-28 19:37:00] [INFO] updateAvatar: succes
+[2026-05-28 19:37:35] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:37:35] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:37:35] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php26E.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:37:35] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 19:37:35] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php26E.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_7db562c6fe26ad00.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:37:35] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_7db562c6fe26ad00.jpg"}
+[2026-05-28 19:37:35] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_7db562c6fe26ad00.jpg"}
+[2026-05-28 19:37:35] [INFO] updateAvatar: succes
+[2026-05-28 19:39:58] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:39:58] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 19:39:58] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php330B.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-28 19:39:58] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 19:39:58] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php330B.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_3_4f668aa49da62607.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:39:58] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_3_4f668aa49da62607.jpg"}
+[2026-05-28 19:39:58] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_4f668aa49da62607.jpg"}
+[2026-05-28 19:39:58] [INFO] updateAvatar: succes
+[2026-05-28 19:41:29] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:41:29] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:41:30] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_fd5e23ecbbcee2be.jpg"}
+[2026-05-28 19:41:30] [INFO] updateAvatar: succes
+[2026-05-28 19:43:44] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:43:44] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:43:44] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_ee7cbf1d07c2663d.jpg"}
+[2026-05-28 19:43:44] [INFO] updateAvatar: succes
+[2026-05-28 19:45:17] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:45:17] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:45:17] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\phpF80.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:45:17] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 19:45:17] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpF80.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_bd6ac2f231cbda8b.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:45:17] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_bd6ac2f231cbda8b.jpg"}
+[2026-05-28 19:45:17] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_bd6ac2f231cbda8b.jpg"}
+[2026-05-28 19:45:17] [INFO] updateAvatar: succes
+[2026-05-28 19:47:28] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 19:47:28] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-05-28 19:47:28] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php115C.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-05-28 19:47:28] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 19:47:28] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php115C.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_9a0ab21c5b7c7595.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 19:47:28] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/avatars\\avatar_9_9a0ab21c5b7c7595.jpg"}
+[2026-05-28 19:47:28] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_9a0ab21c5b7c7595.jpg"}
+[2026-05-28 19:47:28] [INFO] updateAvatar: succes
+[2026-05-28 21:57:59] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php8D70.tmp","subdir":"images\/articles","prefix":"article"}
+[2026-05-28 21:57:59] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles","is_dir":false,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 21:57:59] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php8D70.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles\\article_7ebe544ce80b73b0.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 21:57:59] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles\\article_7ebe544ce80b73b0.jpg"}
+[2026-05-28 21:59:07] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"M69dd5dd02e375d1b25abd24e59742b071724331109935.png","file_size":173907,"file_tmp":"C:\\xampp\\tmp\\php94FD.tmp","subdir":"images\/articles","prefix":"article"}
+[2026-05-28 21:59:07] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 21:59:07] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php94FD.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles\\article_dcae943db67ecec6.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 21:59:07] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles\\article_dcae943db67ecec6.png"}
+[2026-05-28 22:12:01] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Excercice31.png","file_size":324606,"file_tmp":"C:\\xampp\\tmp\\php6667.tmp","subdir":"images\/articles","prefix":"article"}
+[2026-05-28 22:12:01] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources"}
+[2026-05-28 22:12:01] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php6667.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles\\article_27cabfe3e6031902.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 22:12:01] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\public\\resources\\images\/articles\\article_27cabfe3e6031902.png"}
+[2026-05-28 22:36:35] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 22:36:35] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 22:36:35] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\phpE571.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-28 22:36:35] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\public\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\public\\resources"}
+[2026-05-28 22:36:35] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpE571.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\public\\resources\\images\/avatars\\avatar_3_5102a7a1bd6ad263.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 22:36:35] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\public\\resources\\images\/avatars\\avatar_3_5102a7a1bd6ad263.jpg"}
+[2026-05-28 22:36:35] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_5102a7a1bd6ad263.jpg"}
+[2026-05-28 22:36:35] [INFO] updateAvatar: succes
+[2026-05-28 22:38:20] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 22:38:20] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 22:38:20] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"M69dd5dd02e375d1b25abd24e59742b071724331109935.png","file_size":173907,"file_tmp":"C:\\xampp\\tmp\\php7F7A.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-28 22:38:20] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\\\resources"}
+[2026-05-28 22:38:20] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php7F7A.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\\\resources\\images\/avatars\\avatar_3_e3edcf3ba805744c.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 22:38:20] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\\\resources\\images\/avatars\\avatar_3_e3edcf3ba805744c.png"}
+[2026-05-28 22:38:20] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_e3edcf3ba805744c.png"}
+[2026-05-28 22:38:20] [INFO] updateAvatar: succes
+[2026-05-28 22:39:10] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 22:39:10] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 22:39:10] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"M69dd5dd02e375d1b25abd24e59742b071724331109935.png","file_size":173907,"file_tmp":"C:\\xampp\\tmp\\php40E7.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-28 22:39:10] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-05-28 22:39:10] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php40E7.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_44501fc7e8c51459.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 22:39:10] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_44501fc7e8c51459.png"}
+[2026-05-28 22:39:10] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_44501fc7e8c51459.png"}
+[2026-05-28 22:39:10] [INFO] updateAvatar: succes
+[2026-05-28 22:55:03] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 22:55:03] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 22:55:03] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"1.png","file_size":111581,"file_tmp":"C:\\xampp\\tmp\\phpCBEE.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-28 22:55:03] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-05-28 22:55:03] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpCBEE.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_cc4978e17fe303bf.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 22:55:03] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_cc4978e17fe303bf.png"}
+[2026-05-28 22:55:03] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_cc4978e17fe303bf.png"}
+[2026-05-28 22:55:03] [INFO] updateAvatar: succes
+[2026-05-28 23:32:44] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-28 23:32:44] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-28 23:32:44] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php4DFA.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-28 23:32:44] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-05-28 23:32:44] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php4DFA.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_65d04f4ac473e7cc.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-05-28 23:32:44] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_65d04f4ac473e7cc.jpg"}
+[2026-05-28 23:32:44] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_65d04f4ac473e7cc.jpg"}
+[2026-05-28 23:32:44] [INFO] updateAvatar: succes

@@ -1,6 +1,7 @@
 <?php
-$avatar = $avocat['avatar'] ?? null;
 $defaultAvatar = 'https://minimax-algeng-chat-tts-us.oss-us-east-1.aliyuncs.com/ccv2%2F2026-05-28%2FMiniMax-M2.7%2F2046526872820392610%2F44708c25db26409a60992da9859d025f1c713788a154a1195834e12d9105fbb8..png';
+// Utilise avatar_url (URL complete) si disponible, sinon avatar (chemin relatif), sinon default
+$avatar = $avocat['avatar_url'] ?? (!empty($avocat['avatar']) ? \Service\FileStorage::url($avocat['avatar']) : $defaultAvatar);
 ?>
 <!DOCTYPE html>
 <html lang="fr">

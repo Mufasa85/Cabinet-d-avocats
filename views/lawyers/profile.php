@@ -19,17 +19,11 @@ $pageTitle = 'Mon Profil';
 $currentPage = 'profile';
 
 // Build avatar URL from database or use default
-$uploadedAvatar = $avocat['avatar'] ?? null;
 $defaultAvatar = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80';
-if (!empty($uploadedAvatar)) {
-    // Use FileStorage::url() which now correctly points to public/resources
-    $lawyerAvatar = \Service\FileStorage::url($uploadedAvatar);
-} else {
-    $lawyerAvatar = $defaultAvatar;
-}
+// Utilise avatar_url (URL complete) si disponible, sinon avatar (chemin relatif), sinon default
+$lawyerAvatar = $avocat['avatar_url'] ?? (!empty($avocat['avatar']) ? \Service\FileStorage::url($avocat['avatar']) : $defaultAvatar);
 $lawyerName = $avocat['fullname'] ?? 'Me. Laurent Mbako';
 
-var_dump($lawyerAvatar);
 // Données avocat
 $lawyer = [
     'name' => $avocat['name'] ?? 'Me. Laurent Mbako',
@@ -77,12 +71,6 @@ require dirname(__DIR__) . '/layouts/lawyer/header.php';
     <?= \Core\Security::csrf_tokken() ?>
     <input type="file" name="avatar" id="avatar-upload" accept="image/*" onchange="submitAvatarForm()">
 </form>
-
-<!-- Debug info -->
-<div style="background: #333; color: #0f0; padding: 1rem; margin: 1rem; border-radius: 8px; font-family: monospace;">
-    <p>Avatar DB: <strong><?= htmlspecialchars($debugAvatar ?? 'NULL') ?></strong></p>
-    <p>Avatar URL: <strong><?= htmlspecialchars($lawyerAvatar) ?></strong></p>
-</div>
 
 <!-- Profile Content -->
 <div class="content-grid grid-2">

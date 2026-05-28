@@ -2,7 +2,8 @@
 $currentPage = $_SERVER['REQUEST_URI']   ?? '';
 $pageTitle = $pageTitle ?? 'Espace Avocat - ELMD';
 $lawyerName = $_SESSION['lawyer_name'] ?? $_SESSION['user_name'] ?? 'Avocat';
-$lawyerAvatar = $_SESSION['lawyer_avatar'] ?? 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
+$defaultAvatar = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=100&q=80';
+$lawyerAvatar = $avocat['avatar_url'] ?? (!empty($avocat['avatar']) ? \Service\FileStorage::url($avocat['avatar']) : $defaultAvatar);
 ?>
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">

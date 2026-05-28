@@ -1,144 +1,133 @@
 <?php
- namespace Router;
 
- use App\App;
- use App\controllers\Controller;
+namespace Router;
 
-   class Router
-   {
+use App\App;
+use App\controllers\Controller;
 
-      private static string $route_name = "";
-      private static string $uri = '';
-      private static $instance ;
+class Router
+{
 
-      public function __construct()
-      {
-         self::$uri = $_ENV['APP_URL'] ?? '';
-      }
+    private static string $route_name = "";
+    private static string $uri = '';
+    private static $instance;
 
-      public static function Instance():self
-      {
-         if(self::$instance == null)
-         {
+    public function __construct()
+    {
+        self::$uri = $_ENV['APP_URL'] ?? '';
+    }
+
+    public static function Instance(): self
+    {
+        if (self::$instance == null) {
             self::$instance = new Router();
-         }
-         return self::$instance;
-        
-      }
+        }
+        return self::$instance;
+    }
 
-      public static function name(string $name)
-      {
+    public static function name(string $name)
+    {
         self::$route_name = $name;
-      }
+    }
 
-      public static function route(string $route):string
-      {
-          return self::$uri . $route ;
-      }
-       public static function get(string $route,mixed $target)
-       {
-          App::getInstanceRouter()->map('GET',$route,$target,self::$route_name);
-       }
+    public static function route(string $route): string
+    {
+        return self::$uri . $route;
+    }
+    public static function get(string $route, mixed $target)
+    {
+        App::getInstanceRouter()->map('GET', $route, $target, self::$route_name);
+    }
 
-       public static function post(string $route, mixed $target)
-       {
-        App::getInstanceRouter()->map('POST',$route,$target,self::$route_name);
-       }
+    public static function post(string $route, mixed $target)
+    {
+        App::getInstanceRouter()->map('POST', $route, $target, self::$route_name);
+    }
 
-       public static function delete(string $route, mixed $target, string $name = '')
-       {
-        App::getInstanceRouter()->map('DELETE',$route,$target,self::$route_name);
-       }
+    public static function delete(string $route, mixed $target, string $name = '')
+    {
+        App::getInstanceRouter()->map('DELETE', $route, $target, self::$route_name);
+    }
 
-       public static function put(string $route,mixed $target)
-       {
-        App::getInstanceRouter()->map('PUT',$route,$target,self::$route_name);
-       }
-       
-       public static function origin($path)
-       {
+    public static function put(string $route, mixed $target)
+    {
+        App::getInstanceRouter()->map('PUT', $route, $target, self::$route_name);
+    }
+
+    public static function origin($path)
+    {
         App::getInstanceRouter()->setBasePath($path);
-       }
+    }
 
-       public static function matcher()
-       {
-          $match =App::getInstanceRouter()->match();
-   
-          if($match && is_callable($match['target']))
-            {
-            call_user_func($match['target'],$match['params']);
-          }
+    public static function matcher()
+    {
+        $match = App::getInstanceRouter()->match();
 
-          elseif(is_array($match) && is_array($match['target']))
-          {
+        if ($match && is_callable($match['target'])) {
+            call_user_func($match['target'], $match['params']);
+        } elseif (is_array($match) && is_array($match['target'])) {
             $controller = $match['target'][0];
             $method = $match['target'][1];
             $controller = new $controller();
             $controller->$method($match['params']);
-          }
+        } else {
+            self::respondNotFound();
+        }
+    }
 
-          else
-          {
-             self::respondNotFound();
-          }
-       }
+    private static function respondNotFound()
+    {
+        if (self::isApiRequest()) {
+            Controller::status(404)->json([
+                'error' => 'Not Found'
+            ]);
+            return;
+        }
 
-       private static function respondNotFound()
-       {
-           if (self::isApiRequest()) {
-               Controller::status(404)->json([
-                   'error' => 'Not Found'
-               ]);
-               return;
-           }
+        self::respondWithError(404, 'La page que vous recherchez est introuvable.');
+    }
 
-           self::respondWithError(404, 'La page que vous recherchez est introuvable.');
-       }
+    public static function respondWithError(int $statusCode, string $message = '')
+    {
+        Controller::status($statusCode);
+        $statusText = $message ?: self::getStatusText($statusCode);
+        $viewPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'error.php';
+        if (file_exists($viewPath)) {
+            $errorCode = $statusCode;
+            $errorMessage = $statusText;
+            require $viewPath;
+            return;
+        }
 
-       public static function respondWithError(int $statusCode, string $message = '')
-       {
-           Controller::status($statusCode);
-           $statusText = $message ?: self::getStatusText($statusCode);
-           $viewPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'error.php';
-           if (file_exists($viewPath))
-          {
-               $errorCode = $statusCode;
-               $errorMessage = $statusText;
-               require $viewPath;
-               return;
-           }
+        header('Content-Type: text/html; charset=utf-8');
+        echo "<h1>$statusCode</h1><p>$statusText</p>";
+    }
 
-           header('Content-Type: text/html; charset=utf-8');
-           echo "<h1>$statusCode</h1><p>$statusText</p>";
-       }
+    private static function isApiRequest(): bool
+    {
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
+        $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+        return str_starts_with($uri, '/api') || str_contains($accept, 'application/json');
+    }
 
-       private static function isApiRequest(): bool
-       {
-           $uri = $_SERVER['REQUEST_URI'] ?? '';
-           $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
-           return str_starts_with($uri, '/api') || str_contains($accept, 'application/json');
-       }
-
-       private static function getStatusText(int $statusCode): string
-       {
-           return match ($statusCode) {
-               400 => 'Requête incorrecte.',
-               401 => 'Accès non autorisé.',
-               403 => 'Accès refusé.',
-               404 => 'Page introuvable.',
-               405 => 'Méthode non autorisée.',
-               409 => 'Conflit de ressources.',
-               410 => 'Ressource supprimée.',
-               415 => 'Type de média non supporté.',
-               419 => 'Token CSRF expiré.',
-               422 => 'Entité non traitable.',
-               500 => 'Erreur interne du serveur.',
-               502 => 'Mauvaise passerelle.',
-               503 => 'Service indisponible.',
-               504 => 'Délai d’attente dépassé.',
-               default => 'Une erreur est survenue.'
-           };
-       }
-
-   }
-?>
+    private static function getStatusText(int $statusCode): string
+    {
+        return match ($statusCode) {
+            400 => 'Requête incorrecte.',
+            401 => 'Accès non autorisé.',
+            403 => 'Accès refusé.',
+            404 => 'Page introuvable.',
+            405 => 'Méthode non autorisée.',
+            409 => 'Conflit de ressources.',
+            410 => 'Ressource supprimée.',
+            415 => 'Type de média non supporté.',
+            419 => 'Token CSRF expiré.',
+            422 => 'Entité non traitable.',
+            500 => 'Erreur interne du serveur.',
+            502 => 'Mauvaise passerelle.',
+            503 => 'Service indisponible.',
+            504 => 'Délai d’attente dépassé.',
+            default => 'Une erreur est survenue.'
+        };
+    }
+}

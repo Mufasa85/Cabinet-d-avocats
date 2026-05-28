@@ -4,9 +4,9 @@ use App\controllers\AdminController;
 use App\controllers\ArticleController;
 use App\controllers\HomeController;
 use App\controllers\LawyerController;
+use App\controllers\ResourceController;
 use App\controllers\InternController;
 use App\controllers\AuthController;
-use App\controllers\ResourceController;
 use Router\Router;
 
 Router::get('/', [HomeController::class, 'index']);
