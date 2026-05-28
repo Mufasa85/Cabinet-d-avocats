@@ -10,7 +10,8 @@ class FileStorage
 
     public static function root(): string
     {
-        return dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources';
+        // Store in public/resources for direct web access
+        return dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'resources';
     }
 
     public static function url(string $relativePath): string
