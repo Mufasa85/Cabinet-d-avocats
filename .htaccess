@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Allow access to resources folder
+
+RewriteRule ^resources/ - [L]
+
+# Redirect all other requests to public/index.php
+
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule ^(.\*)$ public/$1 [L]
