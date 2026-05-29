@@ -35,9 +35,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 #3 Alors on applique la règle
 
-# RewriteRule ^(.\*)$ index.php?\_url=/$1 [QSA,L]
-
-RewriteRule . index.php [L]
+RewriteRule ^(.\*)$ index.php?\_url=/$1 [QSA,L]
 
 #4 Sinon on continue en affichant la page demandée
 

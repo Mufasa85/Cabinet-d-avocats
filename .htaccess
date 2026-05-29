@@ -4,7 +4,7 @@ RewriteEngine On
 
 RewriteRule ^resources/(.\*)$ public/index.php?\_url=/resources/$1 [QSA,L]
 
-# Redirect all other requests to public/index.php
+# Redirect all other requests to public/index.php (preserve query string)
 
 RewriteCond %{REQUEST_URI} !public/
-RewriteRule ^(.\*)$ public/$1 [L]
+RewriteRule ^(.\*)$ public/$1 [L,QSA]
