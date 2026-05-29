@@ -611,12 +611,16 @@ class AdminController extends Controller
             return;
         }
 
+        // Gérer l'action (brouillon ou publier) depuis les boutons submit
+        $action = $_POST['action'] ?? $_POST['statut'] ?? 'publie';
+        $statut = ($action === 'brouillon') ? 'brouillon' : 'publie';
+
         $data = [
             'titre' => $this->sanitaze($_POST['titre'] ?? ''),
             'description' => $this->sanitaze($_POST['description'] ?? ''),
             'contenu' => $_POST['contenu'] ?? '',
             'type' => $this->sanitaze($_POST['type'] ?? 'autre'),
-            'statut' => $this->sanitaze($_POST['statut'] ?? 'publie'),
+            'statut' => $statut,
             'cree_par' => Auth::id(),
         ];
 
@@ -840,6 +844,53 @@ class AdminController extends Controller
         $userModel->update((int) Auth::id(), ['password' => $newPassword]);
         $_SESSION['success'] = 'Mot de passe modifié avec succès.';
         $this->redirect(Router::route('/admin/settings'));
+    }
+
+    public function markNotificationRead($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/notifications'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id > 0) {
+            (new NotificationModel())->markRead($id, (int) Auth::id());
+        }
+
+        $this->redirect(Router::route('/admin/notifications'));
+    }
+
+    public function markAllNotificationsRead()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/notifications'));
+            return;
+        }
+
+        (new NotificationModel())->markAllRead((int) Auth::id());
+        $_SESSION['success'] = 'Toutes les notifications ont été marquées comme lues.';
+        $this->redirect(Router::route('/admin/notifications'));
+    }
+
+    public function deleteNotification($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/notifications'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id > 0) {
+            $notifModel = new NotificationModel();
+            $notif = $notifModel->findById($id);
+            if ($notif && (int) $notif['user_id'] === (int) Auth::id()) {
+                $notifModel->delete($id);
+                $_SESSION['success'] = 'Notification supprimée.';
+            }
+        }
+
+        $this->redirect(Router::route('/admin/notifications'));
     }
 
     public function reports()

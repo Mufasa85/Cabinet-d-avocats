@@ -8,19 +8,6 @@
  */
 
 $pageTitle = 'Gestion des Utilisateurs';
-// <<<<<<< HEAD
-// =======
-// $users = [
-//     ['id' => 1, 'fullname' => 'Maître Jean Kabongo', 'email' => 'jean.kabongo@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'JK'],
-//     ['id' => 2, 'name' => 'Marie Lukoji', 'email' => 'marie.lukoj@cabinet.cd', 'role' => 'Avocat', 'status' => 'active', 'avatar' => 'ML'],
-//     ['id' => 3, 'name' => 'Pierre Diallo', 'email' => 'pierre.diallo@cabinet.cd', 'role' => 'Admin', 'status' => 'active', 'avatar' => 'PD'],
-//     ['id' => 4, 'name' => 'Aminata Mwamba', 'email' => 'aminata.mwamba@cabinet.cd', 'role' => 'Secrétaire', 'status' => 'active', 'avatar' => 'AM'],
-//     ['id' => 5, 'name' => 'Jean Mukamba', 'email' => 'jean.mukamba@gmail.com', 'role' => 'Stagiaire', 'status' => 'pending', 'avatar' => 'JM'],
-//     ['id' => 6, 'name' => 'Sophie Kasaï', 'email' => 'sophie.kasai@cabinet.cd', 'role' => 'Juriste', 'status' => 'active', 'avatar' => 'SK'],
-//     ['id' => 7, 'name' => 'Robert Ngalulu', 'email' => 'robert.ngalulu@cabinet.cd', 'role' => 'Avocat', 'status' => 'inactive', 'avatar' => 'RN'],
-//     ['id' => 8, 'name' => 'Claire Bemba', 'email' => 'claire.bemba@cabinet.cd', 'role' => 'Comptable', 'status' => 'active', 'avatar' => 'CB'],
-// ];
-// >>>>>>> 56ac707 (fix(auth,users): Resolve error)
 
 // Formater les utilisateurs pour la vue (adapter les champs DB)
 $formattedUsers = array_map(function ($user) {
@@ -35,8 +22,6 @@ $formattedUsers = array_map(function ($user) {
     $roleLabels = [
         'admin' => 'Admin',
         'avocat' => 'Avocat',
-        'juriste' => 'Juriste',
-        'secretaire' => 'Secrétaire',
         'stagiaire' => 'Stagiaire',
     ];
 
@@ -79,8 +64,62 @@ $formattedUsers = array_map(function ($user) {
     modalOpen: false,
     activeModal: null,
     selectedUser: { id: null, name: '', email: '', telephone: '', role: 'stagiaire', status: 1, avatar: '' },
-    usersBaseUrl: '<?= Router\Router::route('/admin/users') ?>'
+    usersBaseUrl: '<?= Router\Router::route('/admin/users') ?>',
+    searchQuery: '',
+    filterRole: '',
+    filterStatus: '',
+    allUsers: <?= json_encode($formattedUsers) ?>,
+    
+    openUserModal(type, user) {
+        this.selectedUser = user;
+        this.modalOpen = true;
+        this.activeModal = type + '-user';
+    }
 }">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input input');
+            const roleSelect = document.querySelectorAll('.filter-select')[0];
+            const statusSelect = document.querySelectorAll('.filter-select')[1];
+
+            function filterUsers() {
+                const search = searchInput?.value?.toLowerCase() || '';
+                const roleFilter = roleSelect?.value?.toLowerCase() || '';
+                const statusFilter = statusSelect?.value?.toLowerCase() || '';
+
+                const rows = document.querySelectorAll('table tbody tr');
+                let count = 0;
+
+                rows.forEach(row => {
+                    const name = row.querySelector('h4')?.textContent?.toLowerCase() || '';
+                    const email = row.querySelector('td:nth-child(2)')?.textContent?.toLowerCase() || '';
+                    const badges = row.querySelectorAll('.badge');
+                    const role = badges.length > 0 ? badges[0].textContent?.trim()?.toLowerCase() || '' : '';
+                    const status = badges.length > 1 ? badges[1].textContent?.trim()?.toLowerCase() || '' : '';
+
+                    const matchSearch = !search || name.includes(search) || email.includes(search);
+                    const matchRole = !roleFilter || role.includes(roleFilter);
+                    const matchStatus = !statusFilter || status.includes(statusFilter);
+
+                    if (matchSearch && matchRole && matchStatus) {
+                        row.style.display = '';
+                        count++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                const counter = document.getElementById('userCount');
+                if (counter) counter.textContent = count + ' utilisateur(s)';
+            }
+
+            searchInput?.addEventListener('input', filterUsers);
+            roleSelect?.addEventListener('change', filterUsers);
+            statusSelect?.addEventListener('change', filterUsers);
+            filterUsers();
+        });
+    </script>
 
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
@@ -103,7 +142,7 @@ $formattedUsers = array_map(function ($user) {
 
                 <div class="header-search">
                     <i class="fas fa-search header-search-icon"></i>
-                    <input type="text" class="header-search-input" placeholder="Rechercher un utilisateur...">
+                    <input type="text" class="header-search-input" placeholder="Rechercher un utilisateur..." x-model="searchQuery">
                 </div>
 
                 <div class="header-actions">
@@ -118,16 +157,15 @@ $formattedUsers = array_map(function ($user) {
                 <div class="filter-bar">
                     <div class="search-input">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Rechercher par nom, email...">
+                        <input type="text" placeholder="Rechercher par nom, email..." x-model="searchQuery">
                     </div>
-                    <select class="filter-select">
+                    <select class="filter-select" x-model="filterRole">
                         <option value="">Tous les rôles</option>
                         <option value="admin">Administrateur</option>
-                        <option value="juriste">Juriste</option>
-                        <option value="secretaire">Secrétaire</option>
+                        <option value="avocat">Avocat</option>
                         <option value="stagiaire">Stagiaire</option>
                     </select>
-                    <select class="filter-select">
+                    <select class="filter-select" x-model="filterStatus">
                         <option value="">Tous les statuts</option>
                         <option value="active">Actif</option>
                         <option value="pending">En attente</option>
@@ -174,13 +212,13 @@ $formattedUsers = array_map(function ($user) {
                         </td>
                         <td>
                             <div class="flex gap-sm">
-                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'view-user'; modalOpen = true" title="Voir">
+                                <button class="btn btn-sm btn-ghost" title="Voir" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'view-user'; modalOpen = true">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'edit-user'; modalOpen = true" title="Modifier">
+                                <button class="btn btn-sm btn-ghost" title="Modifier" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'edit-user'; modalOpen = true">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="btn btn-sm btn-ghost" @click="selectedUser = { ...selectedUser, ...<?= htmlspecialchars(json_encode($user)) ?> }; activeModal = 'delete-user'; modalOpen = true" title="Supprimer">
+                                <button class="btn btn-sm btn-ghost" title="Supprimer" @click="selectedUser = <?= htmlspecialchars(json_encode($user)) ?>; activeModal = 'delete-user'; modalOpen = true">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -239,7 +277,6 @@ $formattedUsers = array_map(function ($user) {
                             <option value="">Sélectionner un rôle</option>
                             <option value="avocat">Avocat</option>
                             <option value="admin">Administrateur</option>
-                            <option value="secretaire">Secrétaire</option>
                             <option value="stagiaire">Stagiaire</option>
                         </select>
                     </div>
@@ -305,7 +342,6 @@ $formattedUsers = array_map(function ($user) {
                         <select name="roles" class="form-select" x-model="selectedUser.role">
                             <option value="avocat">Avocat</option>
                             <option value="admin">Administrateur</option>
-                            <option value="secretaire">Secrétaire</option>
                             <option value="stagiaire">Stagiaire</option>
                         </select>
                     </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\controllers;
 
 use App\models\FormationModel;
@@ -77,7 +78,7 @@ class InternController extends Controller
         $inscriptions = (new InscriptionModel())->byUserId((int) Auth::id());
         $inscriptionsEnCours = array_values(array_filter(
             $inscriptions,
-            static fn (array $inscription): bool => in_array($inscription['statut'], ['en_attente', 'acceptee'], true)
+            static fn(array $inscription): bool => in_array($inscription['statut'], ['en_attente', 'acceptee'], true)
         ));
 
         $inscriptionsFormationIds = [];
@@ -152,5 +153,91 @@ class InternController extends Controller
             'notifications' => $notifModel->byUserId((int) Auth::id()),
             'unread' => $notifModel->unreadCount((int) Auth::id()),
         ]);
+    }
+
+    public function settings()
+    {
+        View::view('interns.settings', [
+            'csrf' => Security::csrf_tokken(),
+        ]);
+    }
+
+    public function updatePassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/interns/settings'));
+            return;
+        }
+
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+
+        if ($currentPassword === '' || $newPassword === '' || $confirmPassword === '') {
+            $this->error('Tous les champs mot de passe sont obligatoires.');
+            $this->redirect(Router::route('/interns/settings'));
+            return;
+        }
+
+        if ($newPassword !== $confirmPassword) {
+            $this->error('Le nouveau mot de passe et sa confirmation ne correspondent pas.');
+            $this->redirect(Router::route('/interns/settings'));
+            return;
+        }
+
+        if (!\Helper\String\Stringy::lengthError($newPassword, 8, 64)) {
+            $this->error('Le mot de passe doit contenir entre 8 et 64 caractères.');
+            $this->redirect(Router::route('/interns/settings'));
+            return;
+        }
+
+        $userModel = new \App\models\UserModel();
+        $user = $userModel->findAuthById((int) Auth::id());
+        if (!$user || !password_verify($currentPassword, $user['passwords'] ?? '')) {
+            $this->error('Mot de passe actuel incorrect.');
+            $this->redirect(Router::route('/interns/settings'));
+            return;
+        }
+
+        try {
+            $userModel->update((int) Auth::id(), ['password' => $newPassword]);
+            $_SESSION['success'] = 'Mot de passe modifié avec succès.';
+        } catch (\Throwable $e) {
+            $this->error('Erreur lors du changement de mot de passe.');
+        }
+
+        $this->redirect(Router::route('/interns/settings'));
+    }
+
+    public function saveTheme()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            exit;
+        }
+
+        $theme = $_POST['theme'] ?? 'default';
+        $validThemes = ['default', 'light', 'royal'];
+
+        if (!in_array($theme, $validThemes)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Theme invalide']);
+            exit;
+        }
+
+        $userId = Auth::id();
+        if (!$userId) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            exit;
+        }
+
+        $userModel = new \App\models\UserModel();
+        $userModel->updateTheme((int) $userId, $theme);
+
+        // Update session
+        $_SESSION['theme'] = $theme;
+
+        echo json_encode(['success' => true, 'theme' => $theme]);
     }
 }

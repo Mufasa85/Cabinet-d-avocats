@@ -134,4 +134,18 @@ class ArticleModel extends Model
         $row = $this->db()->prepare($sql, $params)->fetch();
         return (int) ($row['c'] ?? 0);
     }
+
+    public function recentByAvocatId(int $avocatId, int $limit = 3): array
+    {
+        $stmt = $this->db()->prepare(
+            "SELECT ar.*, c.nom AS category_nom
+             FROM articles ar
+             LEFT JOIN categories c ON c.id = ar.category_id
+             WHERE ar.avocat_id = :aid
+             ORDER BY ar.updated_at DESC
+             LIMIT {$limit}",
+            [':aid' => $avocatId]
+        );
+        return $stmt->fetchAll() ?: [];
+    }
 }

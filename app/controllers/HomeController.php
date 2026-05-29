@@ -19,8 +19,12 @@ class HomeController extends Controller
         // Get all lawyers for the team section
         $avocats = (new \App\models\AvocatModel())->allWithUser();
 
+        // Get published articles for the news section (only "publie" status)
+        $publications = (new \App\models\PublicationModel())->published();
+
         View::view('index', [
             'avocats' => $avocats,
+            'publications' => $publications,
         ]);
     }
 

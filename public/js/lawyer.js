@@ -66,14 +66,15 @@ const initUserMenu = () => {
 // Theme Switcher
 // ==========================================
 const initThemeSwitcher = () => {
-    const themeBtns = document.querySelectorAll('.theme-btn');
+    // Selecteurs pour header (theme-btn) et settings (theme-option)
+    const themeSelectors = document.querySelectorAll('.theme-btn, .theme-option');
     const html = document.documentElement;
 
     // Load saved theme
     const savedTheme = localStorage.getItem('elmd-lawyer-theme') || 'dark';
     applyTheme(savedTheme);
 
-    themeBtns.forEach(btn => {
+    themeSelectors.forEach(btn => {
         btn.addEventListener('click', () => {
             const theme = btn.dataset.theme;
             applyTheme(theme);
@@ -82,29 +83,45 @@ const initThemeSwitcher = () => {
     });
 
     function applyTheme(theme) {
-        themeBtns.forEach(b => b.classList.remove('active'));
-        document.querySelector(`[data-theme="${theme}"]`)?.classList.add('active');
-        
+        // Retirer active de tous les boutons (header et settings)
+        document.querySelectorAll('.theme-btn, .theme-option').forEach(b => b.classList.remove('active'));
+
+        // Activer le bouton correspondant dans le header
+        document.querySelectorAll(`.theme-btn[data-theme="${theme}"]`).forEach(b => b.classList.add('active'));
+        // Activer le bouton correspondant dans settings
+        document.querySelectorAll(`.theme-option[data-theme="${theme}"]`).forEach(b => b.classList.add('active'));
+
         html.setAttribute('data-theme', theme);
-        
+
         // Apply theme-specific colors
         if (theme === 'light') {
             html.style.setProperty('--primary-black', '#FFFFFF');
             html.style.setProperty('--secondary-black', '#F8F8F8');
             html.style.setProperty('--white', '#171717');
+            html.style.setProperty('--text-primary', '#171717');
+            html.style.setProperty('--text-secondary', '#525252');
+            html.style.setProperty('--text-muted', '#737373');
             html.style.setProperty('--modal-bg', 'rgba(250, 250, 250, 0.98)');
             html.style.setProperty('--modal-overlay', 'rgba(0, 0, 0, 0.5)');
+            html.style.setProperty('--card-bg', '#FFFFFF');
+            html.style.setProperty('--border-color', '#E5E5E5');
         } else if (theme === 'royal') {
             html.style.setProperty('--primary-black', '#0F172A');
             html.style.setProperty('--secondary-black', '#1E293B');
             html.style.setProperty('--modal-bg', 'rgba(30, 41, 59, 0.98)');
             html.style.setProperty('--modal-overlay', 'rgba(15, 23, 42, 0.7)');
         } else {
+            // Dark theme (default)
             html.style.setProperty('--primary-black', '#0A0A0A');
             html.style.setProperty('--secondary-black', '#141414');
             html.style.setProperty('--white', '#FFFFFF');
+            html.style.setProperty('--text-primary', '#FFFFFF');
+            html.style.setProperty('--text-secondary', '#A0A0A0');
+            html.style.setProperty('--text-muted', '#737373');
             html.style.setProperty('--modal-bg', 'rgba(20, 20, 20, 0.98)');
             html.style.setProperty('--modal-overlay', 'rgba(0, 0, 0, 0.7)');
+            html.style.setProperty('--card-bg', '#1A1A1A');
+            html.style.setProperty('--border-color', '#2A2A2A');
         }
     }
 };
@@ -114,7 +131,7 @@ const initThemeSwitcher = () => {
 // ==========================================
 const initModals = () => {
     const modalTriggers = document.querySelectorAll('[data-modal]');
-    
+
     modalTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
             const modalId = trigger.dataset.modal;
@@ -172,7 +189,7 @@ function closeModal(modalId) {
 // ==========================================
 const initForms = () => {
     const forms = document.querySelectorAll('form[data-validate]');
-    
+
     forms.forEach(form => {
         form.addEventListener('submit', (e) => {
             if (!validateForm(form)) {
@@ -184,12 +201,12 @@ const initForms = () => {
     function validateForm(form) {
         let isValid = true;
         const requiredFields = form.querySelectorAll('[required]');
-        
+
         requiredFields.forEach(field => {
             if (!field.value.trim()) {
                 isValid = false;
                 field.classList.add('error');
-                
+
                 // Add error message
                 let errorMsg = field.parentElement.querySelector('.form-error');
                 if (!errorMsg) {
@@ -214,7 +231,7 @@ const initForms = () => {
 // ==========================================
 const initFileUpload = () => {
     const fileInputs = document.querySelectorAll('.file-upload input[type="file"]');
-    
+
     fileInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -255,7 +272,7 @@ const initSmoothScroll = () => {
 // ==========================================
 const initCounters = () => {
     const counters = document.querySelectorAll('[data-counter]');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -292,7 +309,7 @@ const initCounters = () => {
 // ==========================================
 const initNotifications = () => {
     const notificationsBtn = document.getElementById('notifications-btn');
-    
+
     notificationsBtn?.addEventListener('click', () => {
         window.location.href = 'notifications.php';
     });
@@ -303,7 +320,7 @@ const initNotifications = () => {
 // ==========================================
 const initTables = () => {
     const tables = document.querySelectorAll('.table');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -329,21 +346,21 @@ const initTables = () => {
     function convertTableToCards(table) {
         const container = table.closest('.table-container');
         const rows = table.querySelectorAll('tbody tr');
-        
+
         const cardsContainer = document.createElement('div');
         cardsContainer.className = 'table-mobile-cards';
-        
+
         rows.forEach(row => {
             const cells = row.querySelectorAll('td');
             const headers = table.querySelectorAll('th');
-            
+
             const card = document.createElement('div');
             card.className = 'mobile-table-card';
-            
+
             headers.forEach((header, index) => {
                 const label = header.textContent;
                 const value = cells[index]?.textContent || '';
-                
+
                 const item = document.createElement('div');
                 item.className = 'mobile-table-card-item';
                 item.innerHTML = `
@@ -352,10 +369,10 @@ const initTables = () => {
                 `;
                 card.appendChild(item);
             });
-            
+
             cardsContainer.appendChild(card);
         });
-        
+
         container.appendChild(cardsContainer);
     }
 
@@ -382,9 +399,9 @@ const showToast = (message, type = 'info') => {
             </svg>
         </button>
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     // Add styles
     toast.style.cssText = `
         position: fixed;
@@ -401,13 +418,13 @@ const showToast = (message, type = 'info') => {
         animation: slideInRight 0.3s ease;
         box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     `;
-    
+
     const closeBtn = toast.querySelector('.toast-close');
     closeBtn?.addEventListener('click', () => {
         toast.style.animation = 'fadeOut 0.3s ease';
         setTimeout(() => toast.remove(), 300);
     });
-    
+
     setTimeout(() => {
         if (toast.parentElement) {
             toast.style.animation = 'fadeOut 0.3s ease';

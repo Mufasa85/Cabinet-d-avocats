@@ -54,4 +54,28 @@ class NotificationModel extends Model
             [':uid' => $userId]
         );
     }
+
+    public function recentByUserId(int $userId, int $days = 7, int $limit = 5): array
+    {
+        $stmt = $this->db()->prepare(
+            "SELECT * FROM notifications 
+             WHERE user_id = :uid 
+               AND created_at >= DATE_SUB(NOW(), INTERVAL {$days} DAY)
+             ORDER BY created_at DESC 
+             LIMIT {$limit}",
+            [':uid' => $userId]
+        );
+        return $stmt->fetchAll() ?: [];
+    }
+
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db()->prepare('SELECT * FROM notifications WHERE id = :id', [':id' => $id]);
+        return $stmt->fetch() ?: null;
+    }
+
+    public function delete(int $id): void
+    {
+        $this->db()->prepare('DELETE FROM notifications WHERE id = :id', [':id' => $id]);
+    }
 }

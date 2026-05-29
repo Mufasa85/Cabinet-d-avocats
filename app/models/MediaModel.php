@@ -62,4 +62,16 @@ class MediaModel extends Model
     {
         $this->db()->prepare('DELETE FROM media WHERE id = :id', [':id' => $id]);
     }
+
+    public function recentByUserId(int $userId, string $type = 'document', int $limit = 3): array
+    {
+        $stmt = $this->db()->prepare(
+            "SELECT * FROM media 
+             WHERE user_id = :uid AND type = :type 
+             ORDER BY created_at DESC 
+             LIMIT {$limit}",
+            [':uid' => $userId, ':type' => $type]
+        );
+        return $stmt->fetchAll() ?: [];
+    }
 }

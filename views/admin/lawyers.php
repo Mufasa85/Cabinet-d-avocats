@@ -68,7 +68,39 @@ $specialiteOptions = array_map(function ($s) {
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedLawyer: null, lawyerSpecialites: [] }">
+<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedLawyer: null, lawyerSpecialites: [], searchQuery: '', filterStatus: '' }">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function filterLawyers() {
+                const searchInput = document.querySelector('.search-input input');
+                const statusSelect = document.querySelector('.filter-select');
+
+                const query = searchInput?.value?.toLowerCase() || '';
+                const statusFilter = statusSelect?.value?.toLowerCase() || '';
+
+                const rows = document.querySelectorAll('#lawyers-table-body tr');
+
+                rows.forEach(row => {
+                    const name = row.querySelector('h4')?.textContent?.toLowerCase() || '';
+                    const specialite = row.querySelector('td:nth-child(3)')?.textContent?.toLowerCase() || '';
+                    const status = row.dataset.status || '';
+
+                    const matchSearch = !query || name.includes(query) || specialite.includes(query);
+                    const matchStatus = !statusFilter || status.includes(statusFilter);
+
+                    row.style.display = (matchSearch && matchStatus) ? '' : 'none';
+                });
+            }
+
+            document.querySelectorAll('.search-input input, .filter-select').forEach(el => {
+                el.addEventListener('input', filterLawyers);
+                el.addEventListener('change', filterLawyers);
+            });
+
+            filterLawyers();
+        });
+    </script>
 
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>

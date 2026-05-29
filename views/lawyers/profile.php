@@ -35,9 +35,9 @@ $lawyer = [
     'location' => 'Kinshasa, RDC',
     'bar' => 'Barreau de Kinshasa',
     'joined' => '2018',
-    'cases' => 127,
-    'clients' => 85,
-    'publications' => 24
+    'cases' => $profileStats['cases'] ?? 0,
+    'clients' => $profileStats['clients'] ?? 0,
+    'publications' => $profileStats['publications'] ?? 0
 ];
 
 require dirname(__DIR__) . '/layouts/lawyer/header.php';
@@ -132,36 +132,39 @@ require dirname(__DIR__) . '/layouts/lawyer/header.php';
                     <div class="stat-card">
                         <div class="stat-card-icon icon-gold">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-                            </svg>
-                        </div>
-                        <div class="stat-card-content">
-                            <h3><?= $lawyer['cases'] ?></h3>
-                            <p>Dossiers</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon icon-info">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                <circle cx="9" cy="7" r="4" />
-                            </svg>
-                        </div>
-                        <div class="stat-card-content">
-                            <h3><?= $lawyer['clients'] ?></h3>
-                            <p>Clients</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon icon-success">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                                 <polyline points="14 2 14 8 20 8" />
                             </svg>
                         </div>
                         <div class="stat-card-content">
-                            <h3><?= $lawyer['publications'] ?></h3>
-                            <p>Publications</p>
+                            <h3><?= $profileStats['articles'] ?? 0 ?></h3>
+                            <p>Articles</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon icon-success">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                                <line x1="9" y1="14" x2="15" y2="14" />
+                            </svg>
+                        </div>
+                        <div class="stat-card-content">
+                            <h3><?= $profileStats['publications'] ?? 0 ?></h3>
+                            <p>Publiés</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon icon-info">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                            </svg>
+                        </div>
+                        <div class="stat-card-content">
+                            <h3><?= $profileStats['documents'] ?? 0 ?></h3>
+                            <p>Documents</p>
                         </div>
                     </div>
                 </div>
@@ -178,18 +181,23 @@ require dirname(__DIR__) . '/layouts/lawyer/header.php';
                 </h2>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label class="form-label">Barreau</label>
-                    <input type="text" class="form-input" value="<?= htmlspecialchars($lawyer['bar']) ?>">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Années d'expérience</label>
-                    <input type="text" class="form-input" value="15 ans">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Membre depuis</label>
-                    <input type="text" class="form-input" value="<?= htmlspecialchars($lawyer['joined']) ?>">
-                </div>
+                <form method="POST" action="<?= \Router\Router::route('/lawyers/profile/update') ?>">
+                    <?= \Core\Security::csrf_tokken() ?>
+                    <div class="form-group">
+                        <label class="form-label">Titre / Fonction</label>
+                        <input type="text" class="form-input" name="titre" value="<?= htmlspecialchars($avocat['titre'] ?? '') ?>">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Années d'expérience</label>
+                        <input type="number" class="form-input" name="experience" value="<?= htmlspecialchars($avocat['experience'] ?? '') ?>" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Membre depuis</label>
+                        <input type="text" class="form-input" value="<?= date('Y', strtotime($avocat['created_at'] ?? date('Y-m-d'))) ?>" disabled>
+                        <small class="text-muted">Date d'adhésion au cabinet</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </form>
             </div>
         </div>
     </div>

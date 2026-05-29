@@ -4,6 +4,7 @@ $pageTitle = 'Paramètres';
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@ $pageTitle = 'Paramètres';
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="../js/theme.js"></script>
 </head>
+
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null }">
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
@@ -21,7 +23,9 @@ $pageTitle = 'Paramètres';
             <header class="admin-header">
                 <div class="header-left">
                     <button class="header-toggle" @click="document.dispatchEvent(new CustomEvent('sidebar:toggle'))"><i class="fas fa-bars"></i></button>
-                    <div><h1 class="header-title"><?= $pageTitle ?></h1></div>
+                    <div>
+                        <h1 class="header-title"><?= $pageTitle ?></h1>
+                    </div>
                 </div>
             </header>
 
@@ -31,7 +35,9 @@ $pageTitle = 'Paramètres';
 
                 <div class="grid-2">
                     <div class="card">
-                        <div class="card-header"><h2 class="card-title"><i class="fas fa-user"></i> Profil</h2></div>
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fas fa-user"></i> Profil</h2>
+                        </div>
                         <div class="card-body">
                             <form method="post" action="<?= Router\Router::route('/admin/settings/profile') ?>">
                                 <?= $csrf ?? '' ?>
@@ -49,11 +55,90 @@ $pageTitle = 'Paramètres';
                     </div>
 
                     <div class="card">
-                        <div class="card-header"><h2 class="card-title"><i class="fas fa-key"></i> Sécurité</h2></div>
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fas fa-key"></i> Sécurité</h2>
+                        </div>
                         <div class="card-body">
                             <button class="settings-btn hover-lift" @click="activeModal = 'password'; modalOpen = true">
-                                <i class="fas fa-lock"></i><div><h3>Changer Mot de Passe</h3><p>Modifier votre mot de passe</p></div>
+                                <i class="fas fa-lock"></i>
+                                <div>
+                                    <h3>Changer Mot de Passe</h3>
+                                    <p>Modifier votre mot de passe</p>
+                                </div>
                             </button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="grid-column: span 2;">
+                        <div class="card-header">
+                            <h2 class="card-title"><i class="fas fa-palette"></i> Apparence</h2>
+                        </div>
+                        <div class="card-body">
+                            <p style="color: var(--gray-400); margin-bottom: 1.5rem;">Choisissez le thème qui vous convient le mieux pour l'interface.</p>
+
+                            <div class="theme-selector" x-data="{ activeTheme: localStorage.getItem('themis-theme') || 'dark' }">
+                                <div class="theme-options">
+                                    <!-- Dark Theme -->
+                                    <button class="theme-option"
+                                        data-theme-btn="dark"
+                                        :class="{ 'active': activeTheme === 'dark' }"
+                                        @click="activeTheme = 'dark'; window.themeManager?.setTheme('dark')"
+                                        style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-color: var(--gray-700);">
+                                        <div class="theme-preview" style="background: #0f0f1a;">
+                                            <div style="background: #eaeaea; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
+                                            <div style="background: #d4af37; width: 40%; height: 4px; border-radius: 2px;"></div>
+                                        </div>
+                                        <div class="theme-info">
+                                            <i class="fas fa-moon" style="color: #d4af37;"></i>
+                                            <span>Dark Luxury</span>
+                                            <small style="color: var(--gray-500);">Mode sombre élégant</small>
+                                        </div>
+                                        <div class="theme-check" x-show="activeTheme === 'dark'">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </button>
+
+                                    <!-- Light Theme -->
+                                    <button class="theme-option"
+                                        data-theme-btn="light"
+                                        :class="{ 'active': activeTheme === 'light' }"
+                                        @click="activeTheme = 'light'; window.themeManager?.setTheme('light')"
+                                        style="background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); border-color: var(--gray-300);">
+                                        <div class="theme-preview" style="background: #f8f9fa;">
+                                            <div style="background: #333; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
+                                            <div style="background: #2563eb; width: 40%; height: 4px; border-radius: 2px;"></div>
+                                        </div>
+                                        <div class="theme-info">
+                                            <i class="fas fa-sun" style="color: #2563eb;"></i>
+                                            <span style="color: #333;">Light Professional</span>
+                                            <small style="color: #666;">Mode clair professionnel</small>
+                                        </div>
+                                        <div class="theme-check" x-show="activeTheme === 'light'">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </button>
+
+                                    <!-- Royal Theme -->
+                                    <button class="theme-option"
+                                        data-theme-btn="royal"
+                                        :class="{ 'active': activeTheme === 'royal' }"
+                                        @click="activeTheme = 'royal'; window.themeManager?.setTheme('royal')"
+                                        style="background: linear-gradient(135deg, #1e3a5f 0%, #0c1929 100%); border-color: #1e3a5f;">
+                                        <div class="theme-preview" style="background: #0f1929;">
+                                            <div style="background: #f8f9fa; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
+                                            <div style="background: #6366f1; width: 40%; height: 4px; border-radius: 2px;"></div>
+                                        </div>
+                                        <div class="theme-info">
+                                            <i class="fas fa-crown" style="color: #6366f1;"></i>
+                                            <span>Royal Blue</span>
+                                            <small style="color: var(--gray-400);">Thème royal bleu</small>
+                                        </div>
+                                        <div class="theme-check" x-show="activeTheme === 'royal'">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,7 +154,10 @@ $pageTitle = 'Paramètres';
             <div class="modal-header">
                 <div class="modal-header-content">
                     <div class="modal-icon"><i class="fas fa-lock"></i></div>
-                    <div><h3 class="modal-title">Changer Mot de Passe</h3><p class="modal-subtitle">Sécurité du compte</p></div>
+                    <div>
+                        <h3 class="modal-title">Changer Mot de Passe</h3>
+                        <p class="modal-subtitle">Sécurité du compte</p>
+                    </div>
                 </div>
                 <button type="button" class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
             </div>
@@ -85,4 +173,5 @@ $pageTitle = 'Paramètres';
         </form>
     </div>
 </body>
+
 </html>

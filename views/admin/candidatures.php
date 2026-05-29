@@ -28,7 +28,7 @@ $applications = $applications ?? [];
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedApp: null }">
+<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedApp: null, searchQuery: '', filterStatus: '' }">
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
         <main class="main-content">
@@ -48,12 +48,13 @@ $applications = $applications ?? [];
                 <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
                 <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
                 <div class="filter-bar">
-                    <div class="search-input"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher une candidature..."></div>
-                    <select class="filter-select">
+                    <div class="search-input"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher une candidature..." x-model="searchQuery" @input="filterCandidatures()"></div>
+                    <select class="filter-select" x-model="filterStatus" @change="filterCandidatures()">
                         <option value="">Tous les statuts</option>
-                        <option value="pending">En attente</option>
-                        <option value="accepted">Acceptée</option>
-                        <option value="rejected">Refusée</option>
+                        <option value="en_attente">En attente</option>
+                        <option value="analyse">En analyse</option>
+                        <option value="retenu">Retenu</option>
+                        <option value="refuse">Refusé</option>
                     </select>
                 </div>
                 <div class="card">
@@ -85,7 +86,7 @@ $applications = $applications ?? [];
                                             'documents' => $app['documents'] ?? [],
                                         ]), ENT_QUOTES, 'UTF-8');
                                     ?>
-                                        <tr>
+                                        <tr data-status="<?= $app['statut'] ?>">
                                             <td>
                                                 <div class="user-info">
                                                     <div class="avatar"><?= htmlspecialchars($initials) ?></div>
@@ -208,6 +209,33 @@ $applications = $applications ?? [];
             </form>
         </div>
     </div>
+
+    <script>
+        function filterCandidatures() {
+            const query = document.querySelector('[x-model="searchQuery"]')?.value?.toLowerCase() || '';
+            const status = document.querySelector('[x-model="filterStatus"]')?.value || '';
+            const rows = document.querySelectorAll('tbody tr[data-status]');
+
+            rows.forEach(row => {
+                const name = row.querySelector('h4')?.textContent?.toLowerCase() || '';
+                const email = row.querySelector('.user-details span')?.textContent?.toLowerCase() || '';
+                const rowStatus = row.dataset.status || '';
+
+                const matchesSearch = !query || name.includes(query) || email.includes(query);
+                const matchesStatus = !status || rowStatus === status;
+
+                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.search-input input, .filter-select').forEach(el => {
+                el.addEventListener('input', filterCandidatures);
+                el.addEventListener('change', filterCandidatures);
+            });
+            filterCandidatures();
+        });
+    </script>
 </body>
 
 </html>

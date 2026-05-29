@@ -44,14 +44,42 @@ class LawyerController extends Controller
 
     public function index()
     {
+        $userId = (int) Auth::id();
+        $avocatId = (int) $this->avocat['id'];
+
         $articleModel = new ArticleModel();
+        $mediaModel = new MediaModel();
+        $inscriptionModel = new InscriptionModel();
+        $notificationModel = new NotificationModel();
+
+        // Statistiques dynamiques
+        $stats = [
+            'publications' => $articleModel->countByStatut('publie', $avocatId),
+            'documents' => count($mediaModel->byUserId($userId, 'document')),
+            'trainings' => count($inscriptionModel->byUserId($userId)),
+            'activities' => $notificationModel->unreadCount($userId),
+        ];
+
+        // Activités récentes (notifications des 7 derniers jours)
+        $recentActivities = $notificationModel->recentByUserId($userId, 7, 5);
+
+        // Publications récentes (3 derniers articles)
+        $recentArticles = $articleModel->recentByAvocatId($avocatId, 3);
+
+        // Documents récents (3 derniers documents)
+        $recentDocuments = $mediaModel->recentByUserId($userId, 'document', 3);
+
+        // Formations disponibles
+        $formations = (new FormationModel())->availableForPublic('avocat');
+
         View::view('lawyers.dashboard', [
             'avocat' => $this->avocat,
-            'stats' => [
-                'published' => $articleModel->countByStatut('publie', (int) $this->avocat['id']),
-                'draft' => $articleModel->countByStatut('brouillon', (int) $this->avocat['id']),
-            ],
-            'notifications' => (new NotificationModel())->unreadCount((int) Auth::id()),
+            'stats' => $stats,
+            'recentActivities' => $recentActivities,
+            'recentArticles' => $recentArticles,
+            'recentDocuments' => $recentDocuments,
+            'availableTrainings' => $formations,
+            'notifications' => $notificationModel->unreadCount($userId),
         ]);
     }
 
@@ -190,17 +218,28 @@ class LawyerController extends Controller
 
     public function profile()
     {
+        $userId = (int) Auth::id();
+        $avocatId = (int) $this->avocat['id'];
+
         $articleModel = new ArticleModel();
+        $mediaModel = new MediaModel();
+        $avocatModel = new AvocatModel();
+
+        // Statistiques dynamiques pour le profil
+        $profileStats = [
+            'cases' => 0, // Pas de table dossiers dans le schema
+            'clients' => 0, // Pas de table clients dans le schema  
+            'publications' => $articleModel->countByStatut('publie', $avocatId),
+            'articles' => count($articleModel->byAvocatId($avocatId)),
+            'draft' => $articleModel->countByStatut('brouillon', $avocatId),
+            'documents' => count($mediaModel->byUserId($userId, 'document')),
+        ];
+
         View::view('lawyers.profile', [
             'avocat' => $this->avocat,
             'specialites' => (new SpecialiteModel())->all(),
-            'selectedSpecialites' => (new AvocatModel())->specialiteIds((int) $this->avocat['id']),
-            'stats' => [
-                'articles' => count($articleModel->byAvocatId((int) $this->avocat['id'])),
-                'published' => $articleModel->countByStatut('publie', (int) $this->avocat['id']),
-                'draft' => $articleModel->countByStatut('brouillon', (int) $this->avocat['id']),
-                'documents' => count((new MediaModel())->byUserId((int) Auth::id(), 'document')),
-            ],
+            'selectedSpecialites' => $avocatModel->specialiteIds($avocatId),
+            'profileStats' => $profileStats,
             'csrf' => Security::csrf_tokken(),
         ]);
     }
@@ -224,12 +263,22 @@ class LawyerController extends Controller
             (new UserModel())->update((int) Auth::id(), $userData);
         }
 
-        // Update avocats table (email_professionnel, bio, bureau)
-        (new AvocatModel())->update((int) $this->avocat['id'], [
+        // Update avocats table (email_professionnel, bio, bureau, titre, experience)
+        $avocatData = [
             'email_professionnel' => $this->sanitaze($_POST['email_professionnel'] ?? ''),
             'bio' => $this->sanitaze($_POST['bio'] ?? ''),
             'bureau' => $this->sanitaze($_POST['bureau'] ?? ''),
-        ]);
+        ];
+
+        // Ajouter titre et experience si présents
+        if (isset($_POST['titre'])) {
+            $avocatData['titre'] = $this->sanitaze($_POST['titre']);
+        }
+        if (isset($_POST['experience'])) {
+            $avocatData['experience'] = (int) $_POST['experience'];
+        }
+
+        (new AvocatModel())->update((int) $this->avocat['id'], $avocatData);
 
         $_SESSION['success'] = 'Profil mis à jour.';
         $this->redirect(Router::route('/lawyers/profile'));
@@ -458,6 +507,32 @@ class LawyerController extends Controller
             'notifications' => $notifModel->byUserId((int) Auth::id()),
             'unread' => $notifModel->unreadCount((int) Auth::id()),
         ]);
+    }
+
+    public function markNotificationRead($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/lawyers/notifications'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id > 0) {
+            (new NotificationModel())->markRead($id, (int) Auth::id());
+        }
+
+        $this->redirect(Router::route('/lawyers/notifications'));
+    }
+
+    public function markAllNotificationsRead()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/lawyers/notifications'));
+            return;
+        }
+
+        (new NotificationModel())->markAllRead((int) Auth::id());
+        $this->redirect(Router::route('/lawyers/notifications'));
     }
 
     public function publicProfile($params)

@@ -121,4 +121,21 @@ class UserModel extends Model
     {
         return (int) (Dic::get(Database::class)->prepare('SELECT COUNT(*) AS c FROM users')->fetch()['c'] ?? 0);
     }
+
+    public function updateTheme(int $userId, string $theme): void
+    {
+        Dic::get(Database::class)->prepare(
+            'UPDATE users SET theme = :theme WHERE id = :id',
+            [':theme' => $theme, ':id' => $userId]
+        );
+    }
+
+    public function getTheme(int $userId): string
+    {
+        $stmt = Dic::get(Database::class)->prepare(
+            'SELECT theme FROM users WHERE id = :id LIMIT 1',
+            [':id' => $userId]
+        );
+        return $stmt->fetch()['theme'] ?? 'default';
+    }
 }

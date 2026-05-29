@@ -51,7 +51,33 @@
       <a href="#contact" class="navbar-cta">Consultation</a>
 
       <!-- Theme Switcher -->
-      <div id="theme-switcher-container" class="theme-switcher-wrapper"></div>
+      <div class="theme-switcher-wrapper">
+        <button type="button" class="theme-btn" data-theme="default" title="Sombre">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+        <button type="button" class="theme-btn" data-theme="light" title="Clair">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </button>
+        <button type="button" class="theme-btn" data-theme="royal" title="Royal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7z" />
+            <path d="M5 16v4h14v-4" />
+            <path d="M12 4v2" />
+          </svg>
+        </button>
+      </div>
 
       <!-- Mobile Menu Button -->
       <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Menu">
@@ -219,16 +245,13 @@
         <div class="about-image animate-on-scroll">
           <div class="themes-showcase">
             <div class="theme-item" data-theme-default>
-              <img src="/assets/images/sombre.png" alt="Theme Sombre">
-              <span class="theme-label">Theme Sombre</span>
+              <img src="/assets/images/sombre.png" alt="Thème Sombre">
             </div>
             <div class="theme-item" data-theme-light>
-              <img src="/assets/images/claire.png" alt="Theme Clair">
-              <span class="theme-label">Theme Clair</span>
+              <img src="/assets/images/claire.png" alt="Thème Clair">
             </div>
             <div class="theme-item" data-theme-royal>
-              <img src="/assets/images/royal.png" alt="Theme Royal">
-              <span class="theme-label">Theme Royal</span>
+              <img src="/assets/images/royal.png" alt="Thème Royal">
             </div>
           </div>
           <div class="about-image-overlay"></div>
@@ -486,13 +509,6 @@
                           <polyline points="22,6 12,13 2,6" />
                         </svg>
                       </a>
-                      <span class="social-link view-profile" aria-label="Voir plus">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <circle cx="12" cy="12" r="10" />
-                          <line x1="12" y1="16" x2="12" y2="12" />
-                          <line x1="12" y1="8" x2="12.01" y2="8" />
-                        </svg>
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -502,6 +518,13 @@
                   <?php if (!empty($avocat['specialites'])): ?>
                     <p class="team-specialty"><?= htmlspecialchars($avocat['specialites']) ?></p>
                   <?php endif; ?>
+                  <a href="<?= Router\Router::route('/avocat/' . ($avocat['avocat_id'] ?? $avocat['id'] ?? '')) ?>" class="team-profile-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    Voir le profil
+                  </a>
                 </div>
               </a>
             </div>
@@ -611,44 +634,62 @@
       </div>
 
       <div class="news-slider" id="news-slider">
-        <article class="news-card animate-on-scroll">
-          <div class="news-image">
-            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80" alt="Réforme fiscale 2024">
-            <span class="news-category">Publication</span>
-          </div>
-          <div class="news-content">
-            <time class="news-date">15 Janvier 2024</time>
-            <h3 class="news-title">Réforme Fiscale 2024 : Analyse et Implications</h3>
-            <p class="news-excerpt">Notre analyse approfondie des nouvelles dispositions fiscales et leurs impacts sur les entreprises.</p>
-            <a href="#" class="news-link">Lire l'article</a>
-          </div>
-        </article>
+        <?php if (!empty($publications)): ?>
+          <?php foreach ($publications as $pub): ?>
+            <?php
+            // Déterminer la catégorie selon le type
+            $typeLabels = [
+              'brochure' => 'Publication',
+              'etude_cas' => 'Étude de cas',
+              'distinction' => 'Distinction',
+              'autre' => 'Article',
+            ];
+            $category = $typeLabels[$pub['type']] ?? 'Article';
 
-        <article class="news-card animate-on-scroll">
-          <div class="news-image">
-            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80" alt="Conférence droit international">
-            <span class="news-category">Événement</span>
-          </div>
-          <div class="news-content">
-            <time class="news-date">28 Février 2024</time>
-            <h3 class="news-title">Conférence sur le Droit International des Affaires</h3>
-            <p class="news-excerpt">Rejoignez-nous pour une journée de réflexion sur les enjeux juridiques de la mondialisation.</p>
-            <a href="#" class="news-link">En savoir plus</a>
-          </div>
-        </article>
+            // Image de couverture ou image par défaut selon le type
+            $defaultImages = [
+              'brochure' => 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80',
+              'etude_cas' => 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80',
+              'distinction' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
+              'autre' => 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80',
+            ];
+            $imageUrl = !empty($pub['image_couverture'])
+              ? \Service\FileStorage::url($pub['image_couverture'])
+              : ($defaultImages[$pub['type']] ?? $defaultImages['autre']);
 
-        <article class="news-card animate-on-scroll">
-          <div class="news-image">
-            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80" alt="Distinction juridique">
-            <span class="news-category">Distinction</span>
-          </div>
-          <div class="news-content">
-            <time class="news-date">10 Mars 2024</time>
-            <h3 class="news-title">ELMD Distingué par Legal 500</h3>
-            <p class="news-excerpt">Notre cabinet reconnu parmi les meilleurs en droit des affaires pour la 5ème année consécutive.</p>
-            <a href="#" class="news-link">Découvrir</a>
-          </div>
-        </article>
+            // Date formatée
+            $pubDate = !empty($pub['publie_le'])
+              ? date('d F Y', strtotime($pub['publie_le']))
+              : date('d F Y', strtotime($pub['created_at'] ?? 'now'));
+            ?>
+            <article class="news-card animate-on-scroll">
+              <div class="news-image">
+                <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($pub['titre'] ?? 'Publication') ?>">
+                <span class="news-category"><?= htmlspecialchars($category) ?></span>
+              </div>
+              <div class="news-content">
+                <time class="news-date"><?= htmlspecialchars($pubDate) ?></time>
+                <h3 class="news-title"><?= htmlspecialchars($pub['titre'] ?? 'Sans titre') ?></h3>
+                <p class="news-excerpt"><?= htmlspecialchars($pub['description'] ?? '') ?></p>
+                <a href="<?= Router\Router::route('/articles/' . ($pub['id'] ?? '#')) ?>" class="news-link">Lire l'article</a>
+              </div>
+            </article>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <!-- Fallback si aucune publication -->
+          <article class="news-card animate-on-scroll">
+            <div class="news-image">
+              <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80" alt="Actualités ELMD">
+              <span class="news-category">Publication</span>
+            </div>
+            <div class="news-content">
+              <time class="news-date"><?= date('d F Y') ?></time>
+              <h3 class="news-title">Bienvenue chez ELMD</h3>
+              <p class="news-excerpt">Découvrez nos publications et événements juridiques.</p>
+              <a href="<?= Router\Router::route('/articles') ?>" class="news-link">Voir les articles</a>
+            </div>
+          </article>
+        <?php endif; ?>
       </div>
 
       <!-- Slider Navigation -->
