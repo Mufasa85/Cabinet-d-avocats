@@ -29,6 +29,18 @@ class PublicationModel extends Model
         return $stmt->fetch() ?: null;
     }
 
+    public function findBySlug(string $slug): ?array
+    {
+        $stmt = $this->db()->prepare(
+            'SELECT p.*, u.fullname AS auteur_nom 
+             FROM publications p 
+             LEFT JOIN users u ON u.id = p.cree_par 
+             WHERE p.slug = :slug LIMIT 1',
+            [':slug' => $slug]
+        );
+        return $stmt->fetch() ?: null;
+    }
+
     public function create(array $data): int
     {
         $slug = $this->uniqueSlug($data['titre'] ?? 'publication');

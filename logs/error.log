@@ -13,3 +13,5 @@
 [2026-05-27 | 23:16:57] SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
 
 
+[2026-06-01 | 22:07:49] DEBUG LOGIN: email=admin@gmail.com, password_reçu=12345678, user_trouvé=non, hash_en_db=n/a
+[2026-06-02 | 11:58:19] SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it

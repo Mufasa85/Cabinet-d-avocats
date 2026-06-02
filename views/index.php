@@ -686,7 +686,7 @@
               <time class="news-date"><?= date('d F Y') ?></time>
               <h3 class="news-title">Bienvenue chez ELMD</h3>
               <p class="news-excerpt">Découvrez nos publications et événements juridiques.</p>
-              <a href="<?= Router\Router::route('/articles') ?>" class="news-link">Voir les articles</a>
+              <a href="<?= Router\Router::route('/publications') ?>" class="news-link">Voir les articles</a>
             </div>
           </article>
         <?php endif; ?>

@@ -305,3 +305,83 @@
 [2026-05-29 16:17:29] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/publications","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
 [2026-05-29 16:17:29] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php28D1.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/publications\\cover_3229c7123859ec15.jpg","exists_tmp":true,"is_writable_target":true}
 [2026-05-29 16:17:29] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/publications\\cover_3229c7123859ec15.jpg"}
+[2026-05-30 14:21:24] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-30 14:21:24] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-30 14:21:24] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Exercice12.png","file_size":328573,"file_tmp":"C:\\xampp\\tmp\\phpF8A3.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-30 14:21:24] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-05-30 14:21:24] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpF8A3.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_2cb62eac0e321694.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-30 14:21:24] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_2cb62eac0e321694.png"}
+[2026-05-30 14:21:24] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_2cb62eac0e321694.png"}
+[2026-05-30 14:21:24] [INFO] updateAvatar: succes
+[2026-05-30 16:11:20] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-05-30 16:11:20] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-05-30 16:11:20] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Screenshot 2024-01-30 192540.png","file_size":730713,"file_tmp":"C:\\xampp\\tmp\\phpDF6F.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-05-30 16:11:20] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-05-30 16:11:20] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpDF6F.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_6334a8f61f2652a4.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-30 16:11:20] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_6334a8f61f2652a4.png"}
+[2026-05-30 16:11:20] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_6334a8f61f2652a4.png"}
+[2026-05-30 16:11:20] [INFO] updateAvatar: succes
+[2026-05-30 16:14:19] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Screenshot 2024-07-05 143645 (2).png","file_size":204741,"file_tmp":"C:\\xampp\\tmp\\php9B35.tmp","subdir":"images\/articles","prefix":"article"}
+[2026-05-30 16:14:19] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-05-30 16:14:19] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php9B35.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles\\article_479767e5ce1afe93.png","exists_tmp":true,"is_writable_target":true}
+[2026-05-30 16:14:19] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles\\article_479767e5ce1afe93.png"}
+[2026-06-01 22:13:10] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-01 22:13:10] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-01 22:13:10] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\xampp\\tmp\\phpEE21.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-01 22:13:10] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-01 22:13:10] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpEE21.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_c49586af663a7fa5.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-01 22:13:10] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_c49586af663a7fa5.jpg"}
+[2026-06-01 22:13:10] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_c49586af663a7fa5.jpg"}
+[2026-06-01 22:13:10] [INFO] updateAvatar: succes
+[2026-06-01 22:13:59] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-01 22:13:59] [DEBUG] updateAvatar: upload pour user | Context: {"userId":12}
+[2026-06-01 22:13:59] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"ghyslain.jpg","file_size":32507,"file_tmp":"C:\\xampp\\tmp\\phpACED.tmp","subdir":"images\/avatars","prefix":"avatar_12"}
+[2026-06-01 22:13:59] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-01 22:13:59] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpACED.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_12_0b72c0deead835c2.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-01 22:13:59] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_12_0b72c0deead835c2.jpg"}
+[2026-06-01 22:13:59] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_12_0b72c0deead835c2.jpg"}
+[2026-06-01 22:13:59] [INFO] updateAvatar: succes
+[2026-06-01 22:14:34] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-01 22:14:34] [DEBUG] updateAvatar: upload pour user | Context: {"userId":14}
+[2026-06-01 22:14:34] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"justine.jpeg","file_size":114161,"file_tmp":"C:\\xampp\\tmp\\php34EB.tmp","subdir":"images\/avatars","prefix":"avatar_14"}
+[2026-06-01 22:14:34] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-01 22:14:34] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php34EB.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_14_83f521c7a8b405de.jpeg","exists_tmp":true,"is_writable_target":true}
+[2026-06-01 22:14:34] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_14_83f521c7a8b405de.jpeg"}
+[2026-06-01 22:14:34] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_14_83f521c7a8b405de.jpeg"}
+[2026-06-01 22:14:34] [INFO] updateAvatar: succes
+[2026-06-01 22:15:12] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-01 22:15:12] [DEBUG] updateAvatar: upload pour user | Context: {"userId":11}
+[2026-06-01 22:15:12] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"olivier.jpg","file_size":54381,"file_tmp":"C:\\xampp\\tmp\\phpCAD3.tmp","subdir":"images\/avatars","prefix":"avatar_11"}
+[2026-06-01 22:15:12] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-01 22:15:12] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpCAD3.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_11_d1b1c3a9fbbfe10f.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-01 22:15:12] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_11_d1b1c3a9fbbfe10f.jpg"}
+[2026-06-01 22:15:12] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_11_d1b1c3a9fbbfe10f.jpg"}
+[2026-06-01 22:15:12] [INFO] updateAvatar: succes
+[2026-06-01 22:15:49] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-01 22:15:49] [DEBUG] updateAvatar: upload pour user | Context: {"userId":10}
+[2026-06-01 22:15:49] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"pierre.jpg","file_size":66250,"file_tmp":"C:\\xampp\\tmp\\php5B6C.tmp","subdir":"images\/avatars","prefix":"avatar_10"}
+[2026-06-01 22:15:49] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-01 22:15:49] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php5B6C.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_10_c768f02085b27094.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-01 22:15:49] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_10_c768f02085b27094.jpg"}
+[2026-06-01 22:15:49] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_10_c768f02085b27094.jpg"}
+[2026-06-01 22:15:49] [INFO] updateAvatar: succes
+[2026-06-01 22:16:15] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-01 22:16:15] [DEBUG] updateAvatar: upload pour user | Context: {"userId":13}
+[2026-06-01 22:16:15] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"rosy.jpg","file_size":35093,"file_tmp":"C:\\xampp\\tmp\\phpC0DD.tmp","subdir":"images\/avatars","prefix":"avatar_13"}
+[2026-06-01 22:16:15] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-01 22:16:15] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpC0DD.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_13_648a60d67207ea5e.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-01 22:16:15] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_13_648a60d67207ea5e.jpg"}
+[2026-06-01 22:16:15] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_13_648a60d67207ea5e.jpg"}
+[2026-06-01 22:16:15] [INFO] updateAvatar: succes
+[2026-06-02 12:10:16] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-02 12:10:16] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":false,"article_keys":[]}
+[2026-06-02 12:10:16] [WARNING] ArticleController:show - Article non trouve | Context: {"slug":"1"}
+[2026-06-02 12:11:07] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-02 12:11:07] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":false,"article_keys":[]}
+[2026-06-02 12:11:07] [WARNING] ArticleController:show - Article non trouve | Context: {"slug":"1"}
+[2026-06-02 12:12:55] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-02 12:12:55] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":false,"article_keys":[]}
+[2026-06-02 12:12:55] [WARNING] ArticleController:show - Article non trouve | Context: {"slug":"1"}
+[2026-06-02 12:18:02] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-02 12:18:02] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","category_nom","category_slug","avocat_nom"]}
+[2026-06-02 12:18:02] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}

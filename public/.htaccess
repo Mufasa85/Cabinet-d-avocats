@@ -1,8 +1,10 @@
 RewriteEngine On
 
-# Block direct access to resources folder (use ResourceController instead)
+# Redirect /resources/\* to index.php router (for PHP built-in server compatibility)
 
-# RewriteRule ^resources/ - [L]
+# This allows images from /resources/ to be accessed via <img src="/resources/...">
+
+RewriteRule ^resources/(.\*)$ index.php?\_url=/resources/$1 [QSA,L]
 
 # Allow direct access to assets folder
 
