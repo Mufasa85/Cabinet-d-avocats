@@ -130,6 +130,18 @@ class LawyerController extends Controller
             return;
         }
 
+        // Upload PDF
+        try {
+            if (!empty($_FILES['pdf_file']['name'])) {
+                $pdf = FileStorage::storeUpload($_FILES['pdf_file'], 'documents/articles', 'article');
+                $data['pdf_file'] = $pdf['fichier'];
+            }
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
+            $this->redirect(Router::route('/lawyers/articles'));
+            return;
+        }
+
         try {
             (new ArticleModel())->create($data);
             $_SESSION['success'] = 'Article enregistré.';
@@ -176,6 +188,18 @@ class LawyerController extends Controller
             try {
                 $img = FileStorage::storeUpload($_FILES['image'], 'images/articles', 'article');
                 $data['image_couverture'] = $img['fichier'];
+            } catch (\RuntimeException $e) {
+                $this->error($e->getMessage());
+                $this->redirect(Router::route('/lawyers/articles'));
+                return;
+            }
+        }
+
+        // Upload PDF
+        if (!empty($_FILES['pdf_file']['name'])) {
+            try {
+                $pdf = FileStorage::storeUpload($_FILES['pdf_file'], 'documents/articles', 'article');
+                $data['pdf_file'] = $pdf['fichier'];
             } catch (\RuntimeException $e) {
                 $this->error($e->getMessage());
                 $this->redirect(Router::route('/lawyers/articles'));
