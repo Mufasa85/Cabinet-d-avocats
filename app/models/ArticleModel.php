@@ -45,7 +45,7 @@ class ArticleModel extends Model
              JOIN avocats av ON av.id = ar.avocat_id
              JOIN users u ON u.id = av.user_id
              LEFT JOIN categories c ON c.id = ar.category_id
-             WHERE ar.id = :slug LIMIT 1',
+             WHERE ar.slug = :slug LIMIT 1',
             [':slug' => $slug]
         );
         return $stmt->fetch() ?: null;
@@ -62,8 +62,8 @@ class ArticleModel extends Model
         $slug = $this->uniqueSlug($data['titre'] ?? 'article');
         $statut = $data['statut'] ?? 'brouillon';
         $this->db()->prepare(
-            'INSERT INTO articles (avocat_id, category_id, titre, slug, extrait, contenu, image_couverture, statut, publie_le)
-             VALUES (:avocat_id, :category_id, :titre, :slug, :extrait, :contenu, :image, :statut, :publie_le)',
+            'INSERT INTO articles (avocat_id, category_id, titre, slug, extrait, contenu, image_couverture, pdf_file, statut, publie_le)
+             VALUES (:avocat_id, :category_id, :titre, :slug, :extrait, :contenu, :image, :pdf_file, :statut, :publie_le)',
             [
                 ':avocat_id' => $data['avocat_id'],
                 ':category_id' => $data['category_id'] ?? null,
@@ -72,6 +72,7 @@ class ArticleModel extends Model
                 ':extrait' => $data['extrait'] ?? null,
                 ':contenu' => $data['contenu'],
                 ':image' => $data['image_couverture'] ?? null,
+                ':pdf_file' => $data['pdf_file'] ?? null,
                 ':statut' => $statut,
                 ':publie_le' => $statut === 'publie' ? date('Y-m-d H:i:s') : null,
             ]
@@ -89,7 +90,7 @@ class ArticleModel extends Model
         $fields = [];
         $params = [':id' => $id];
 
-        foreach (['titre', 'extrait', 'contenu', 'image_couverture', 'statut', 'category_id'] as $col) {
+        foreach (['titre', 'extrait', 'contenu', 'image_couverture', 'pdf_file', 'statut', 'category_id'] as $col) {
             if (array_key_exists($col, $data)) {
                 $fields[] = "{$col} = :{$col}";
                 $params[":{$col}"] = $data[$col];
