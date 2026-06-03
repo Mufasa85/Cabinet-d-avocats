@@ -15,10 +15,10 @@ Router::get('/stages', [HomeController::class, 'stages']);
 Router::post('/stages/candidature', [HomeController::class, 'applyInternship']);
 Router::get('/stages/document/[i:id]/download', [HomeController::class, 'downloadDocument']);
 Router::get('/admin/document/[i:id]/download', [AdminController::class, 'downloadDocument']);
-Router::get('/articles', [ArticleController::class, 'index']);
-Router::get('/articles/[a:slug]', [ArticleController::class, 'show']);
 Router::get('/publications', [ArticleController::class, 'publications']);
 Router::get('/publications/[a:slug]', [ArticleController::class, 'showPublication']);
+Router::get('/articles', [ArticleController::class, 'index']);
+Router::get('/articles/[a:slug]', [ArticleController::class, 'show']);
 Router::get('/resources/[**:file]', [ResourceController::class, 'serve']);
 
 Router::get('/domaines', [HomeController::class, 'domaines']);
