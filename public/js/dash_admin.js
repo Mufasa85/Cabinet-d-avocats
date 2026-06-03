@@ -6,43 +6,45 @@
  * ==============================================
  */
 
-(function() {
+(function () {
     'use strict';
 
     // ==========================================
     // SIDEBAR TOGGLE - RESPONSIVE
     // ==========================================
-    const initSidebar = function() {
+    const initSidebar = function () {
         const sidebar = document.querySelector('.sidebar');
         const overlay = document.querySelector('.sidebar-overlay');
-        const toggleBtn = document.querySelector('.header-toggle');
+        const toggleBtn = document.getElementById('sidebarToggle') || document.querySelector('.header-toggle');
+        const closeBtn = document.getElementById('sidebarClose');
 
         if (!sidebar) return;
+
+        function updateToggleIcon() {
+            if (toggleBtn) {
+                const icon = toggleBtn.querySelector('i');
+                if (icon) {
+                    if (sidebar.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                }
+            }
+        }
 
         function openSidebar() {
             sidebar.classList.add('active');
             if (overlay) overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Update Alpine if present
-            if (window.Alpine) {
-                const header = document.querySelector('[x-data]');
-                if (header && header.__x) {
-                    header.__x.$data.sidebarOpen = true;
-                }
-            }
+            updateToggleIcon();
         }
 
         function closeSidebar() {
             sidebar.classList.remove('active');
             if (overlay) overlay.classList.remove('active');
             document.body.style.overflow = '';
-            // Update Alpine if present
-            if (window.Alpine) {
-                const header = document.querySelector('[x-data]');
-                if (header && header.__x) {
-                    header.__x.$data.sidebarOpen = false;
-                }
-            }
+            updateToggleIcon();
         }
 
         function toggleSidebar() {
@@ -58,20 +60,25 @@
             toggleBtn.addEventListener('click', toggleSidebar);
         }
 
+        // Close button click (inside sidebar)
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeSidebar);
+        }
+
         // Overlay click to close
         if (overlay) {
             overlay.addEventListener('click', closeSidebar);
         }
 
         // Escape key to close sidebar
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && sidebar.classList.contains('active')) {
                 closeSidebar();
             }
         });
 
         // Close sidebar on window resize to desktop
-        window.addEventListener('resize', debounce(function() {
+        window.addEventListener('resize', debounce(function () {
             if (window.innerWidth >= 1024) {
                 closeSidebar();
             }
@@ -81,24 +88,27 @@
         document.addEventListener('sidebar:open', openSidebar);
         document.addEventListener('sidebar:close', closeSidebar);
         document.addEventListener('sidebar:toggle', toggleSidebar);
+
+        // Initial icon state
+        updateToggleIcon();
     };
 
     // ==========================================
     // USER DROPDOWN
     // ==========================================
-    const initUserDropdown = function() {
+    const initUserDropdown = function () {
         const userBtn = document.querySelector('.header-user-btn');
         const userDropdown = document.querySelector('.header-user-dropdown');
 
         if (!userBtn || !userDropdown) return;
 
-        userBtn.addEventListener('click', function(e) {
+        userBtn.addEventListener('click', function (e) {
             e.stopPropagation();
             const headerUser = document.querySelector('.header-user');
             headerUser.classList.toggle('active');
         });
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!e.target.closest('.header-user')) {
                 document.querySelector('.header-user')?.classList.remove('active');
             }
@@ -108,10 +118,10 @@
     // ==========================================
     // MODAL SYSTEM
     // ==========================================
-    const initModals = function() {
+    const initModals = function () {
         // Open modal buttons
-        document.querySelectorAll('[data-modal-open]').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
+        document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const modalId = this.getAttribute('data-modal-open');
                 openModal(modalId);
@@ -119,8 +129,8 @@
         });
 
         // Close modal buttons
-        document.querySelectorAll('[data-modal-close]').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
+        document.querySelectorAll('[data-modal-close]').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const modalId = this.getAttribute('data-modal-close');
                 closeModal(modalId);
@@ -128,8 +138,8 @@
         });
 
         // Close on overlay click
-        document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
-            overlay.addEventListener('click', function(e) {
+        document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+            overlay.addEventListener('click', function (e) {
                 if (e.target === this) {
                     closeModal(this.id.replace('-overlay', ''));
                 }
@@ -137,7 +147,7 @@
         });
 
         // Close on escape key
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 const activeModal = document.querySelector('.modal.active');
                 if (activeModal) {
@@ -147,7 +157,7 @@
         });
     };
 
-    window.openModal = function(modalId) {
+    window.openModal = function (modalId) {
         const modal = document.getElementById(modalId);
         const overlay = document.getElementById(modalId + '-overlay');
 
@@ -164,7 +174,7 @@
         modal?.dispatchEvent(new CustomEvent('modal:open', { detail: { id: modalId } }));
     };
 
-    window.closeModal = function(modalId) {
+    window.closeModal = function (modalId) {
         const modal = document.getElementById(modalId);
         const overlay = document.getElementById(modalId + '-overlay');
 
@@ -189,8 +199,8 @@
     // ==========================================
     // TABS
     // ==========================================
-    const initTabs = function() {
-        document.querySelectorAll('.tabs').forEach(function(tabsContainer) {
+    const initTabs = function () {
+        document.querySelectorAll('.tabs').forEach(function (tabsContainer) {
             const tabs = tabsContainer.querySelectorAll('.tab');
             const targetId = tabsContainer.getAttribute('data-tabs-target');
 
@@ -198,10 +208,10 @@
 
             const panels = document.querySelectorAll(targetId);
 
-            tabs.forEach(function(tab, index) {
-                tab.addEventListener('click', function() {
+            tabs.forEach(function (tab, index) {
+                tab.addEventListener('click', function () {
                     // Remove active class from all tabs
-                    tabs.forEach(function(t) {
+                    tabs.forEach(function (t) {
                         t.classList.remove('active');
                     });
 
@@ -209,7 +219,7 @@
                     tab.classList.add('active');
 
                     // Hide all panels
-                    panels.forEach(function(panel) {
+                    panels.forEach(function (panel) {
                         panel.classList.add('hidden');
                     });
 
@@ -226,8 +236,8 @@
     // ==========================================
     // TOAST NOTIFICATIONS
     // ==========================================
-    const initToasts = function() {
-        window.showToast = function(message, type = 'success', duration = 3000) {
+    const initToasts = function () {
+        window.showToast = function (message, type = 'success', duration = 3000) {
             const container = document.querySelector('.toast-container');
             if (!container) return;
 
@@ -235,10 +245,10 @@
             toast.className = 'toast ' + type;
             toast.innerHTML = `
                 <div class="toast-icon">
-                    ${type === 'success' ? 
-                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' :
-                        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
-                    }
+                    ${type === 'success' ?
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' :
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+                }
                 </div>
                 <div class="toast-content">
                     <p>${message}</p>
@@ -248,17 +258,17 @@
             container.appendChild(toast);
 
             // Auto remove
-            setTimeout(function() {
+            setTimeout(function () {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateY(20px)';
-                setTimeout(function() {
+                setTimeout(function () {
                     toast.remove();
                 }, 300);
             }, duration);
         };
 
         // Listen for toast events
-        document.addEventListener('toast:show', function(e) {
+        document.addEventListener('toast:show', function (e) {
             showToast(e.detail.message, e.detail.type, e.detail.duration);
         });
     };
@@ -266,7 +276,7 @@
     // ==========================================
     // ANIMATED COUNTERS
     // ==========================================
-    const initCounters = function() {
+    const initCounters = function () {
         const counters = document.querySelectorAll('.stat-card-value[data-count]');
 
         const observerOptions = {
@@ -274,8 +284,8 @@
             rootMargin: '0px'
         };
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const target = parseInt(el.getAttribute('data-count'), 10);
@@ -288,7 +298,7 @@
             });
         }, observerOptions);
 
-        counters.forEach(function(counter) {
+        counters.forEach(function (counter) {
             observer.observe(counter);
         });
     };
@@ -320,12 +330,12 @@
     // ==========================================
     // FORM VALIDATION
     // ==========================================
-    const initFormValidation = function() {
-        document.querySelectorAll('form[data-validate]').forEach(function(form) {
-            form.addEventListener('submit', function(e) {
+    const initFormValidation = function () {
+        document.querySelectorAll('form[data-validate]').forEach(function (form) {
+            form.addEventListener('submit', function (e) {
                 let isValid = true;
 
-                form.querySelectorAll('[required]').forEach(function(field) {
+                form.querySelectorAll('[required]').forEach(function (field) {
                     if (!field.value.trim()) {
                         isValid = false;
                         field.classList.add('error');
@@ -342,8 +352,8 @@
             });
 
             // Real-time validation
-            form.querySelectorAll('input, select, textarea').forEach(function(field) {
-                field.addEventListener('blur', function() {
+            form.querySelectorAll('input, select, textarea').forEach(function (field) {
+                field.addEventListener('blur', function () {
                     if (field.hasAttribute('required') && !field.value.trim()) {
                         field.classList.add('error');
                         showFieldError(field, 'Ce champ est requis');
@@ -374,9 +384,9 @@
     // ==========================================
     // FILE UPLOAD PREVIEW
     // ==========================================
-    const initFileUpload = function() {
-        document.querySelectorAll('.file-upload input[type="file"]').forEach(function(input) {
-            input.addEventListener('change', function(e) {
+    const initFileUpload = function () {
+        document.querySelectorAll('.file-upload input[type="file"]').forEach(function (input) {
+            input.addEventListener('change', function (e) {
                 const file = e.target.files[0];
                 if (file) {
                     const preview = this.closest('.file-upload').querySelector('.file-preview');
@@ -404,18 +414,18 @@
     // ==========================================
     // SEARCH FUNCTIONALITY
     // ==========================================
-    const initSearch = function() {
+    const initSearch = function () {
         const searchInputs = document.querySelectorAll('.search-input input, .header-search input');
 
-        searchInputs.forEach(function(input) {
-            input.addEventListener('input', debounce(function() {
+        searchInputs.forEach(function (input) {
+            input.addEventListener('input', debounce(function () {
                 const query = this.value.toLowerCase().trim();
-                const targetSelector = this.closest('.search-input')?.getAttribute('data-search-target') || 
-                                      this.getAttribute('data-search-target');
+                const targetSelector = this.closest('.search-input')?.getAttribute('data-search-target') ||
+                    this.getAttribute('data-search-target');
 
                 if (targetSelector) {
                     const items = document.querySelectorAll(targetSelector);
-                    items.forEach(function(item) {
+                    items.forEach(function (item) {
                         const text = item.textContent.toLowerCase();
                         if (query === '' || text.includes(query)) {
                             item.style.display = '';
@@ -431,7 +441,7 @@
     // ==========================================
     // CONFIRM DIALOG
     // ==========================================
-    window.confirmAction = function(message, onConfirm, onCancel) {
+    window.confirmAction = function (message, onConfirm, onCancel) {
         const overlay = document.createElement('div');
         overlay.className = 'modal-overlay active';
         overlay.innerHTML = `
@@ -469,27 +479,27 @@
         document.body.appendChild(overlay);
         document.body.style.overflow = 'hidden';
 
-        const closeDialog = function() {
+        const closeDialog = function () {
             overlay.remove();
             document.body.style.overflow = '';
         };
 
-        overlay.querySelector('[data-action="cancel"]').addEventListener('click', function() {
+        overlay.querySelector('[data-action="cancel"]').addEventListener('click', function () {
             closeDialog();
             if (onCancel) onCancel();
         });
 
-        overlay.querySelector('[data-action="confirm"]').addEventListener('click', function() {
+        overlay.querySelector('[data-action="confirm"]').addEventListener('click', function () {
             closeDialog();
             if (onConfirm) onConfirm();
         });
 
-        overlay.querySelector('.modal-close').addEventListener('click', function() {
+        overlay.querySelector('.modal-close').addEventListener('click', function () {
             closeDialog();
             if (onCancel) onCancel();
         });
 
-        overlay.addEventListener('click', function(e) {
+        overlay.addEventListener('click', function (e) {
             if (e.target === overlay) {
                 closeDialog();
                 if (onCancel) onCancel();
@@ -500,7 +510,7 @@
     // ==========================================
     // SCROLL ANIMATIONS
     // ==========================================
-    const initScrollAnimations = function() {
+    const initScrollAnimations = function () {
         const animatedElements = document.querySelectorAll('.animate-on-scroll');
 
         if (animatedElements.length === 0) return;
@@ -510,8 +520,8 @@
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animated');
                     observer.unobserve(entry.target);
@@ -519,7 +529,7 @@
             });
         }, observerOptions);
 
-        animatedElements.forEach(function(el) {
+        animatedElements.forEach(function (el) {
             observer.observe(el);
         });
     };
@@ -527,11 +537,11 @@
     // ==========================================
     // TABLE ROW ACTIONS
     // ==========================================
-    const initTableActions = function() {
-        document.querySelectorAll('.table tbody tr').forEach(function(row) {
-            row.addEventListener('click', function(e) {
+    const initTableActions = function () {
+        document.querySelectorAll('.table tbody tr').forEach(function (row) {
+            row.addEventListener('click', function (e) {
                 if (e.target.closest('a, button, .btn')) return;
-                
+
                 const actionUrl = this.getAttribute('data-action-url');
                 if (actionUrl) {
                     window.location.href = actionUrl;
@@ -543,12 +553,12 @@
     // ==========================================
     // SWITCH TOGGLE
     // ==========================================
-    const initSwitches = function() {
-        document.querySelectorAll('.switch input').forEach(function(input) {
-            input.addEventListener('change', function() {
+    const initSwitches = function () {
+        document.querySelectorAll('.switch input').forEach(function (input) {
+            input.addEventListener('change', function () {
                 const isChecked = this.checked;
                 const value = isChecked ? '1' : '0';
-                
+
                 // Dispatch custom event
                 this.dispatchEvent(new CustomEvent('switch:change', {
                     detail: { value: value, checked: isChecked }
@@ -560,9 +570,9 @@
     // ==========================================
     // PAGINATION
     // ==========================================
-    const initPagination = function() {
-        document.querySelectorAll('.pagination-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
+    const initPagination = function () {
+        document.querySelectorAll('.pagination-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
                 const page = this.getAttribute('data-page');
                 if (page) {
                     const form = document.querySelector('[data-pagination-form]');
@@ -578,18 +588,18 @@
     // ==========================================
     // NOTIFICATIONS DRAWER (Mobile)
     // ==========================================
-    const initNotificationsDrawer = function() {
+    const initNotificationsDrawer = function () {
         const notificationBtn = document.querySelector('.header-action[data-notifications]');
         const drawer = document.querySelector('.notifications-drawer');
 
         if (!notificationBtn || !drawer) return;
 
-        notificationBtn.addEventListener('click', function() {
+        notificationBtn.addEventListener('click', function () {
             drawer.classList.toggle('active');
         });
 
         // Close on outside click
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (!e.target.closest('.notifications-drawer') && !e.target.closest('.header-action[data-notifications]')) {
                 drawer.classList.remove('active');
             }
@@ -602,7 +612,7 @@
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
-            const later = function() {
+            const later = function () {
                 clearTimeout(timeout);
                 func.apply(this, args);
             };
@@ -613,11 +623,11 @@
 
     function throttle(func, limit) {
         let inThrottle;
-        return function(...args) {
+        return function (...args) {
             if (!inThrottle) {
                 func.apply(this, args);
                 inThrottle = true;
-                setTimeout(function() { inThrottle = false; }, limit);
+                setTimeout(function () { inThrottle = false; }, limit);
             }
         };
     }
