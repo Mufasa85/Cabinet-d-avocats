@@ -159,7 +159,7 @@
           <article class="article-card <?= $isFeatured ? 'featured-article' : '' ?>" data-category="<?= htmlspecialchars($article['category_slug'] ?? '') ?>">
             <div class="article-image">
               <?php if (!empty($article['image_couverture'])): ?>
-                <img src="<?= htmlspecialchars($article['image_couverture']) ?>" alt="<?= htmlspecialchars($article['titre']) ?>" loading="lazy">
+                <img src="<?= 'resources/' . htmlspecialchars($article['image_couverture']) ?>" alt="<?= htmlspecialchars($article['titre']) ?>" loading="lazy">
               <?php else: ?>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <path d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -183,7 +183,7 @@
                 </span>
               <?php endif; ?>
               <h2 class="article-title">
-                <a href="articles/<?= htmlspecialchars($article['slug']) ?>">
+                <a href="articles/<?= htmlspecialchars($article['id']) ?>">
                   <?= htmlspecialchars($article['titre']) ?>
                 </a>
               </h2>
@@ -214,7 +214,7 @@
                   </svg>
                   <?= isset($article['contenu']) ? max(5, min(15, strlen(strip_tags($article['contenu'])) / 500)) . ' min de lecture' : '5 min de lecture' ?>
                 </span>
-                <a href="articles/<?= htmlspecialchars($article['slug']) ?>" class="article-link">
+                <a href="articles/<?= htmlspecialchars($article['id']) ?>" class="article-link">
                   Lire l'article
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="5" y1="12" x2="19" y2="12" />

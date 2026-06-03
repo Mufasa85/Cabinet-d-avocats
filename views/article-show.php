@@ -102,6 +102,14 @@
         </div>
     </div>
 
+    <!-- Article Hero -->
+    <?php if (!empty($article['image_couverture'])): ?>
+        <div class="article-hero" style="background-image: url('<?= \Service\FileStorage::url($article['image_couverture']) ?>')">
+            <div class="article-hero-overlay"></div>
+            <div class="article-hero-blur"></div>
+        </div>
+    <?php endif; ?>
+
     <!-- Article Content -->
     <article class="article-detail">
         <div class="container">
