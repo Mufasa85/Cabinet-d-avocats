@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * ==============================================
  * ADMIN LAWYERS MANAGEMENT
@@ -10,16 +9,13 @@
 
 $pageTitle = 'Gestion des Avocats';
 
-// Formater les avocats pour la vue
 $formattedLawyers = array_map(function ($lawyer) {
-    // Générer les initiales pour l'avatar
     $names = explode(' ', $lawyer['fullname'] ?? '');
     $initials = '';
     foreach (array_slice($names, 0, 2) as $n) {
         $initials .= mb_strtoupper(mb_substr($n, 0, 1));
     }
 
-    // Mapper le statut DB au format de la vue
     $statusMap = [
         1 => 'active',
         0 => 'inactive',
@@ -44,14 +40,6 @@ $formattedLawyers = array_map(function ($lawyer) {
     ];
 }, $lawyers ?? []);
 
-// Préparer les options pour les spécialitiés
-$specialiteOptions = array_map(function ($s) {
-    return [
-        'id' => (int) $s['id'],
-        'nom' => $s['nom'] ?? '',
-    ];
-}, $specialites ?? []);
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -65,42 +53,14 @@ $specialiteOptions = array_map(function ($s) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
     <script src="../js/theme.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedLawyer: null, lawyerSpecialites: [], searchQuery: '', filterStatus: '' }">
+<body>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function filterLawyers() {
-                const searchInput = document.querySelector('.search-input input');
-                const statusSelect = document.querySelector('.filter-select');
-
-                const query = searchInput?.value?.toLowerCase() || '';
-                const statusFilter = statusSelect?.value?.toLowerCase() || '';
-
-                const rows = document.querySelectorAll('#lawyers-table-body tr');
-
-                rows.forEach(row => {
-                    const name = row.querySelector('h4')?.textContent?.toLowerCase() || '';
-                    const specialite = row.querySelector('td:nth-child(3)')?.textContent?.toLowerCase() || '';
-                    const status = row.dataset.status || '';
-
-                    const matchSearch = !query || name.includes(query) || specialite.includes(query);
-                    const matchStatus = !statusFilter || status.includes(statusFilter);
-
-                    row.style.display = (matchSearch && matchStatus) ? '' : 'none';
-                });
-            }
-
-            document.querySelectorAll('.search-input input, .filter-select').forEach(el => {
-                el.addEventListener('input', filterLawyers);
-                el.addEventListener('change', filterLawyers);
-            });
-
-            filterLawyers();
-        });
-    </script>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay"></div>
 
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
@@ -108,13 +68,13 @@ $specialiteOptions = array_map(function ($s) {
         <main class="main-content">
             <header class="admin-header">
                 <div class="header-left">
-                    <button class="header-toggle" @click="document.dispatchEvent(new CustomEvent('sidebar:toggle'))">
+                    <button class="header-toggle" id="sidebarToggle">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div>
                         <h1 class="header-title"><?= $pageTitle ?></h1>
                         <nav class="header-breadcrumb">
-                            <a href="dashboard.php">Accueil</a>
+                            <a href="<?= Router\Router::route('/admin/dashboard') ?>">Accueil</a>
                             <span>/</span>
                             <span><?= $pageTitle ?></span>
                         </nav>
@@ -123,11 +83,11 @@ $specialiteOptions = array_map(function ($s) {
 
                 <div class="header-search">
                     <i class="fas fa-search header-search-icon"></i>
-                    <input type="text" class="header-search-input" placeholder="Rechercher un avocat..." x-model="searchQuery" @input="filterLawyers()">
+                    <input type="text" class="header-search-input" id="headerSearchInput" placeholder="Rechercher un avocat...">
                 </div>
 
                 <div class="header-actions">
-                    <button class="btn btn-primary" @click="activeModal = 'add-lawyer'; modalOpen = true">
+                    <button class="btn btn-primary" id="addLawyerBtn">
                         <i class="fas fa-plus"></i>
                         Nouvel Avocat
                     </button>
@@ -150,9 +110,9 @@ $specialiteOptions = array_map(function ($s) {
                 <div class="filter-bar">
                     <div class="search-input">
                         <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Rechercher par nom, spécialité..." x-model="searchQuery" @input="filterLawyers()">
+                        <input type="text" id="filterSearch" placeholder="Rechercher par nom, spécialité...">
                     </div>
-                    <select class="filter-select" x-model="filterStatus" @change="filterLawyers()">
+                    <select class="filter-select" id="filterStatus">
                         <option value="">Tous les statuts</option>
                         <option value="active">Actif</option>
                         <option value="inactive">Inactif</option>
@@ -204,13 +164,13 @@ $specialiteOptions = array_map(function ($s) {
                                             </td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <button class="btn btn-sm btn-ghost" title="Voir" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'view-lawyer'; modalOpen = true">
+                                                    <button class="btn btn-sm btn-ghost view-lawyer-btn" data-lawyer='<?= json_encode($lawyer) ?>' title="Voir">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
-                                                    <button class="btn btn-sm btn-ghost" title="Modifier" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'edit-lawyer'; modalOpen = true">
+                                                    <button class="btn btn-sm btn-ghost edit-lawyer-btn" data-lawyer='<?= json_encode($lawyer) ?>' title="Modifier">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <button class="btn btn-sm btn-ghost" title="Supprimer" @click="selectedLawyer = <?= htmlspecialchars(json_encode($lawyer)) ?>; activeModal = 'delete-lawyer'; modalOpen = true">
+                                                    <button class="btn btn-sm btn-ghost delete-lawyer-btn" data-lawyer='<?= json_encode($lawyer) ?>' title="Supprimer">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </div>
@@ -241,10 +201,8 @@ $specialiteOptions = array_map(function ($s) {
         </main>
     </div>
 
-    <div class="modal-overlay" :class="{ 'active': modalOpen }" @click="modalOpen = false; activeModal = null"></div>
-
     <!-- ADD LAWYER MODAL -->
-    <div class="modal modal-lg" :class="{ 'active': activeModal === 'add-lawyer' && modalOpen }">
+    <div class="modal modal-lg" id="add-lawyer">
         <form method="POST" action="<?= Router\Router::route('/admin/lawyers') ?>">
             <?= \Core\Security::csrf_tokken() ?>
             <div class="modal-header">
@@ -255,7 +213,7 @@ $specialiteOptions = array_map(function ($s) {
                         <p class="modal-subtitle">Créer un profil avocat</p>
                     </div>
                 </div>
-                <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+                <button type="button" class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
                 <div class="form-row">
@@ -309,61 +267,61 @@ $specialiteOptions = array_map(function ($s) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Annuler</button>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Créer l'Avocat</button>
             </div>
         </form>
     </div>
 
     <!-- EDIT LAWYER MODAL -->
-    <div class="modal modal-lg" :class="{ 'active': activeModal === 'edit-lawyer' && modalOpen }">
-        <form method="POST" :action="'/admin/lawyers/' + selectedLawyer?.id + '/update'">
+    <div class="modal modal-lg" id="edit-lawyer">
+        <form method="POST" id="editLawyerForm">
             <?= \Core\Security::csrf_tokken() ?>
             <div class="modal-header">
                 <div class="modal-header-content">
                     <div class="modal-icon"><i class="fas fa-user-edit"></i></div>
                     <div>
                         <h3 class="modal-title">Modifier l'Avocat</h3>
-                        <p class="modal-subtitle" x-text="selectedLawyer ? selectedLawyer.name : ''"></p>
+                        <p class="modal-subtitle" id="editLawyerName"></p>
                     </div>
                 </div>
-                <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+                <button type="button" class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="user_id" :value="selectedLawyer ? selectedLawyer.user_id : ''">
+                <input type="hidden" name="user_id" id="editUserId">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Nom Complet</label>
-                        <input type="text" name="fullname" class="form-input" x-model="selectedLawyer.name" required>
+                        <input type="text" name="fullname" id="editFullname" class="form-input" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Titre / Fonction</label>
-                        <input type="text" name="titre" class="form-input" x-model="selectedLawyer.titre">
+                        <input type="text" name="titre" id="editTitre" class="form-input">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Email Professionnel</label>
-                        <input type="email" name="email_professionnel" class="form-input" x-model="selectedLawyer.email_pro">
+                        <input type="email" name="email_professionnel" id="editEmailPro" class="form-input">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Téléphone</label>
-                        <input type="tel" name="telephone" class="form-input" x-model="selectedLawyer.telephone">
+                        <input type="tel" name="telephone" id="editTelephone" class="form-input">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Années d'expérience</label>
-                        <input type="number" name="experience" class="form-input" x-model="selectedLawyer.experience" min="0">
+                        <input type="number" name="experience" id="editExperience" class="form-input" min="0">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Bureau</label>
-                        <input type="text" name="bureau" class="form-input" x-model="selectedLawyer.bureau">
+                        <input type="text" name="bureau" id="editBureau" class="form-input">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Spécialités</label>
-                    <select name="specialites[]" class="form-select" multiple style="height: 120px;">
+                    <select name="specialites[]" id="editSpecialites" class="form-select" multiple style="height: 120px;">
                         <option value="1">Droit des Affaires</option>
                         <option value="2">Droit du Travail</option>
                         <option value="3">Droit Fiscal</option>
@@ -373,37 +331,37 @@ $specialiteOptions = array_map(function ($s) {
                 </div>
                 <div class="form-group">
                     <label class="form-label">Biographie</label>
-                    <textarea name="bio" class="form-input" rows="4" x-model="selectedLawyer.bio"></textarea>
+                    <textarea name="bio" id="editBio" class="form-input" rows="4"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Annuler</button>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
             </div>
         </form>
     </div>
 
-    <!-- VIEW LAWYER MODAL (OVERVIEW) -->
-    <div class="modal" :class="{ 'active': activeModal === 'view-lawyer' && modalOpen }">
+    <!-- VIEW LAWYER MODAL -->
+    <div class="modal" id="view-lawyer">
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon"><i class="fas fa-user-tie"></i></div>
                 <div>
                     <h3 class="modal-title">Overview - Avocat</h3>
-                    <p class="modal-subtitle" x-text="selectedLawyer ? selectedLawyer.name : ''"></p>
+                    <p class="modal-subtitle" id="viewLawyerName"></p>
                 </div>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+            <button type="button" class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
             <div style="text-align: center; margin-bottom: 1.5rem;">
-                <div class="avatar avatar-xl" style="margin: 0 auto 1rem; width: 100px; height: 100px; font-size: 2rem; background: linear-gradient(135deg, #d4af37, #b8860b); display: flex; align-items: center; justify-content: center;" x-text="selectedLawyer ? selectedLawyer.avatar : ''"></div>
-                <h3 style="color: var(--white); font-size: 1.5rem;" x-text="selectedLawyer ? selectedLawyer.name : ''"></h3>
-                <p style="color: var(--gold-primary); font-size: 1.1rem; font-weight: 600;" x-text="selectedLawyer ? selectedLawyer.titre : ''"></p>
+                <div class="avatar avatar-xl" id="viewAvatar" style="margin: 0 auto 1rem; width: 100px; height: 100px; font-size: 2rem; background: linear-gradient(135deg, #d4af37, #b8860b); display: flex; align-items: center; justify-content: center;"></div>
+                <h3 style="color: var(--white); font-size: 1.5rem;" id="viewName"></h3>
+                <p style="color: var(--gold-primary); font-size: 1.1rem; font-weight: 600;" id="viewTitre"></p>
                 <div style="margin-top: 0.5rem;">
-                    <span class="badge" :class="selectedLawyer?.status === 'active' ? 'badge-success' : 'badge-danger'" style="font-size: 0.875rem;">
-                        <span class="status-dot" :class="selectedLawyer?.status === 'active' ? 'success' : 'danger'"></span>
-                        <span x-text="selectedLawyer ? (selectedLawyer.status === 'active' ? 'Actif' : 'Inactif') : ''"></span>
+                    <span class="badge badge-success" id="viewStatusBadge" style="font-size: 0.875rem;">
+                        <span class="status-dot success"></span>
+                        <span id="viewStatusText">Actif</span>
                     </span>
                 </div>
             </div>
@@ -413,28 +371,28 @@ $specialiteOptions = array_map(function ($s) {
                     <div class="info-icon"><i class="fas fa-envelope"></i></div>
                     <div class="info-content">
                         <span class="info-label">Email</span>
-                        <span class="info-value" x-text="selectedLawyer ? selectedLawyer.email : '-'"></span>
+                        <span class="info-value" id="viewEmail">-</span>
                     </div>
                 </div>
                 <div class="info-card">
                     <div class="info-icon"><i class="fas fa-phone"></i></div>
                     <div class="info-content">
                         <span class="info-label">Téléphone</span>
-                        <span class="info-value" x-text="selectedLawyer ? (selectedLawyer.telephone || '-') : '-'"></span>
+                        <span class="info-value" id="viewTelephone">-</span>
                     </div>
                 </div>
                 <div class="info-card">
                     <div class="info-icon"><i class="fas fa-briefcase"></i></div>
                     <div class="info-content">
                         <span class="info-label">Expérience</span>
-                        <span class="info-value" x-text="selectedLawyer ? (selectedLawyer.experience ? selectedLawyer.experience + ' ans' : 'Non renseignée') : '-'"></span>
+                        <span class="info-value" id="viewExperience">-</span>
                     </div>
                 </div>
                 <div class="info-card">
                     <div class="info-icon"><i class="fas fa-building"></i></div>
                     <div class="info-content">
                         <span class="info-label">Bureau</span>
-                        <span class="info-value" x-text="selectedLawyer ? (selectedLawyer.bureau || '-') : '-'"></span>
+                        <span class="info-value" id="viewBureau">-</span>
                     </div>
                 </div>
             </div>
@@ -444,7 +402,7 @@ $specialiteOptions = array_map(function ($s) {
                     <i class="fas fa-tags"></i> Spécialités
                 </h4>
                 <div style="padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 0.5rem;">
-                    <span style="color: var(--gray-300);" x-text="selectedLawyer ? (selectedLawyer.specialites || 'Aucune spécialité définie') : '-'"></span>
+                    <span style="color: var(--gray-300);" id="viewSpecialites">Aucune spécialité définie</span>
                 </div>
             </div>
 
@@ -453,21 +411,19 @@ $specialiteOptions = array_map(function ($s) {
                     <i class="fas fa-file-alt"></i> Biographie
                 </h4>
                 <div style="padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 0.5rem; min-height: 80px;">
-                    <p style="color: var(--gray-300); line-height: 1.6;" x-text="selectedLawyer ? (selectedLawyer.bio || 'Aucune biographie disponible') : '-'"></p>
+                    <p style="color: var(--gray-300); line-height: 1.6;" id="viewBio">Aucune biographie disponible</p>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Fermer</button>
-            <button class="btn btn-primary" @click="activeModal = 'edit-lawyer'">
-                <i class="fas fa-edit"></i> Modifier
-            </button>
+            <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Fermer</button>
+            <button type="button" class="btn btn-primary" id="viewEditBtn"><i class="fas fa-edit"></i> Modifier</button>
         </div>
     </div>
 
     <!-- DELETE LAWYER MODAL -->
-    <div class="modal confirm-modal" :class="{ 'active': activeModal === 'delete-lawyer' && modalOpen }">
-        <form method="POST" :action="'/admin/lawyers/' + selectedLawyer?.id + '/delete'">
+    <div class="modal confirm-modal" id="delete-lawyer">
+        <form method="POST" id="deleteLawyerForm">
             <?= \Core\Security::csrf_tokken() ?>
             <div class="modal-header">
                 <div class="modal-header-content">
@@ -477,21 +433,20 @@ $specialiteOptions = array_map(function ($s) {
                         <p class="modal-subtitle">Cette action est irréversible</p>
                     </div>
                 </div>
-                <button type="button" class="modal-close" @click="modalOpen = false; activeModal = null"><i class="fas fa-times"></i></button>
+                <button type="button" class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <p style="color: var(--gray-300);">Êtes-vous sûr de vouloir supprimer l'avocat <strong style="color: var(--white);" x-text="selectedLawyer ? selectedLawyer.name : ''"></strong> ?</p>
+                <p style="color: var(--gray-300);">Êtes-vous sûr de vouloir supprimer l'avocat <strong style="color: var(--white);" id="deleteLawyerName"></strong> ?</p>
                 <p style="color: var(--gray-500); margin-top: 0.75rem; font-size: 0.875rem;">Cette action supprimera définitivement le compte utilisateur et toutes les données associées.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="modalOpen = false; activeModal = null">Annuler</button>
+                <button type="button" class="btn btn-secondary" onclick="closeAllModals()">Annuler</button>
                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
             </div>
         </form>
     </div>
 
     <style>
-        /* Action Buttons - Strong visibility */
         .action-buttons {
             display: flex;
             gap: 8px;
@@ -512,7 +467,6 @@ $specialiteOptions = array_map(function ($s) {
             font-size: 16px;
         }
 
-        /* View button - blue */
         .action-buttons .btn:first-child {
             background: rgba(59, 130, 246, 0.1);
             border-color: rgba(59, 130, 246, 0.3);
@@ -527,7 +481,6 @@ $specialiteOptions = array_map(function ($s) {
             transform: scale(1.05);
         }
 
-        /* Edit button - gold */
         .action-buttons .btn:nth-child(2) {
             background: rgba(212, 175, 55, 0.1);
             border-color: rgba(212, 175, 55, 0.3);
@@ -542,7 +495,6 @@ $specialiteOptions = array_map(function ($s) {
             transform: scale(1.05);
         }
 
-        /* Delete button - red */
         .action-buttons .btn:last-child {
             background: rgba(239, 68, 68, 0.1);
             border-color: rgba(239, 68, 68, 0.3);
@@ -557,7 +509,6 @@ $specialiteOptions = array_map(function ($s) {
             transform: scale(1.05);
         }
 
-        /* Confirm Modal */
         .confirm-modal {
             max-width: 450px;
         }
@@ -573,80 +524,146 @@ $specialiteOptions = array_map(function ($s) {
         }
     </style>
 
+    <script src="../js/dash_admin.js"></script>
     <script>
-        // Track active menu
-        let activeMenu = null;
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentLawyer = null;
 
-        // Toggle action menu
-        function toggleActionMenu(button) {
-            const dropdown = button.parentElement;
-            const menu = dropdown.querySelector('.action-menu');
+            // Modal functions
+            window.openModal = function(modalId) {
+                const modal = document.getElementById(modalId);
+                const overlay = document.getElementById('modalOverlay');
+                if (modal && overlay) {
+                    modal.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
 
-            // Close any open menu first
-            closeAllMenus();
+            window.closeAllModals = function() {
+                document.querySelectorAll('.modal.active').forEach(function(modal) {
+                    modal.classList.remove('active');
+                });
+                document.getElementById('modalOverlay').classList.remove('active');
+                document.body.style.overflow = '';
+            };
 
-            // Position and show menu
-            const rect = button.getBoundingClientRect();
-            menu.style.cssText = 'position:fixed;top:' + (rect.bottom + 10) + 'px;left:' + rect.left + 'px;z-index:99999;display:block;';
-            activeMenu = menu;
-
-            // Add click away listener
-            setTimeout(() => {
-                document.addEventListener('click', closeMenuOnClickOutside);
-            }, 10);
-        }
-
-        function closeAllMenus() {
-            document.querySelectorAll('.action-menu').forEach(m => {
-                m.style.display = 'none';
+            // Add lawyer button
+            document.getElementById('addLawyerBtn').addEventListener('click', function() {
+                openModal('add-lawyer');
             });
-            activeMenu = null;
-            document.removeEventListener('click', closeMenuOnClickOutside);
-        }
 
-        function closeMenuOnClickOutside(e) {
-            if (activeMenu && !activeMenu.contains(e.target) && !e.target.closest('.action-toggle')) {
-                activeMenu.style.display = 'none';
-                activeMenu = null;
-                document.removeEventListener('click', closeMenuOnClickOutside);
-            }
-        }
+            // View lawyer
+            document.querySelectorAll('.view-lawyer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentLawyer = JSON.parse(this.dataset.lawyer);
+                    document.getElementById('viewAvatar').textContent = currentLawyer.avatar;
+                    document.getElementById('viewName').textContent = currentLawyer.name;
+                    document.getElementById('viewLawyerName').textContent = currentLawyer.name;
+                    document.getElementById('viewTitre').textContent = currentLawyer.titre;
+                    document.getElementById('viewEmail').textContent = currentLawyer.email || '-';
+                    document.getElementById('viewTelephone').textContent = currentLawyer.telephone || '-';
+                    document.getElementById('viewExperience').textContent = currentLawyer.experience ? currentLawyer.experience + ' ans' : 'Non renseignée';
+                    document.getElementById('viewBureau').textContent = currentLawyer.bureau || '-';
+                    document.getElementById('viewSpecialites').textContent = currentLawyer.specialites || 'Aucune spécialité définie';
+                    document.getElementById('viewBio').textContent = currentLawyer.bio || 'Aucune biographie disponible';
 
-        // Open lawyer modal
-        function openLawyerModal(type, lawyer) {
-            closeAllMenus();
+                    const statusBadge = document.getElementById('viewStatusBadge');
+                    const statusText = document.getElementById('viewStatusText');
+                    if (currentLawyer.status === 'active') {
+                        statusBadge.className = 'badge badge-success';
+                        statusText.textContent = 'Actif';
+                    } else {
+                        statusBadge.className = 'badge badge-danger';
+                        statusText.textContent = 'Inactif';
+                    }
 
-            // Get Alpine data
-            const alpine = document.querySelector('body').__x.$data;
-            alpine.selectedLawyer = lawyer;
-            alpine.modalOpen = true;
-
-            if (type === 'view') {
-                alpine.activeModal = 'view-lawyer';
-            } else if (type === 'edit') {
-                alpine.activeModal = 'edit-lawyer';
-            } else if (type === 'delete') {
-                alpine.activeModal = 'delete-lawyer';
-            }
-        }
-
-        // Filter functionality
-        function filterLawyers() {
-            const query = document.querySelector('[x-model="searchQuery"]')?.value?.toLowerCase() || '';
-            const status = document.querySelector('[x-model="filterStatus"]')?.value || '';
-            const rows = document.querySelectorAll('#lawyers-table-body tr[data-status]');
-
-            rows.forEach(row => {
-                const name = row.querySelector('h4')?.textContent?.toLowerCase() || '';
-                const specialties = row.querySelector('.specialty-badge')?.textContent?.toLowerCase() || '';
-                const rowStatus = row.dataset.status || '';
-
-                const matchesSearch = !query || name.includes(query) || specialties.includes(query);
-                const matchesStatus = !status || rowStatus === status;
-
-                row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+                    document.getElementById('viewEditBtn').dataset.lawyer = this.dataset.lawyer;
+                    openModal('view-lawyer');
+                });
             });
-        }
+
+            // Edit lawyer
+            document.querySelectorAll('.edit-lawyer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentLawyer = JSON.parse(this.dataset.lawyer);
+                    document.getElementById('editUserId').value = currentLawyer.user_id;
+                    document.getElementById('editLawyerName').textContent = currentLawyer.name;
+                    document.getElementById('editFullname').value = currentLawyer.name;
+                    document.getElementById('editTitre').value = currentLawyer.titre;
+                    document.getElementById('editEmailPro').value = currentLawyer.email_pro || '';
+                    document.getElementById('editTelephone').value = currentLawyer.telephone || '';
+                    document.getElementById('editExperience').value = currentLawyer.experience || '';
+                    document.getElementById('editBureau').value = currentLawyer.bureau || '';
+                    document.getElementById('editBio').value = currentLawyer.bio || '';
+                    document.getElementById('editLawyerForm').action = '<?= Router\Router::route('/admin/lawyers') ?>/' + currentLawyer.id + '/update';
+                    openModal('edit-lawyer');
+                });
+            });
+
+            // Delete lawyer
+            document.querySelectorAll('.delete-lawyer-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentLawyer = JSON.parse(this.dataset.lawyer);
+                    document.getElementById('deleteLawyerName').textContent = currentLawyer.name;
+                    document.getElementById('deleteLawyerForm').action = '<?= Router\Router::route('/admin/lawyers') ?>/' + currentLawyer.id + '/delete';
+                    openModal('delete-lawyer');
+                });
+            });
+
+            // View edit button
+            document.getElementById('viewEditBtn').addEventListener('click', function() {
+                if (currentLawyer) {
+                    closeAllModals();
+                    setTimeout(function() {
+                        document.getElementById('editUserId').value = currentLawyer.user_id;
+                        document.getElementById('editLawyerName').textContent = currentLawyer.name;
+                        document.getElementById('editFullname').value = currentLawyer.name;
+                        document.getElementById('editTitre').value = currentLawyer.titre;
+                        document.getElementById('editEmailPro').value = currentLawyer.email_pro || '';
+                        document.getElementById('editTelephone').value = currentLawyer.telephone || '';
+                        document.getElementById('editExperience').value = currentLawyer.experience || '';
+                        document.getElementById('editBureau').value = currentLawyer.bureau || '';
+                        document.getElementById('editBio').value = currentLawyer.bio || '';
+                        document.getElementById('editLawyerForm').action = '<?= Router\Router::route('/admin/lawyers') ?>/' + currentLawyer.id + '/update';
+                        openModal('edit-lawyer');
+                    }, 100);
+                }
+            });
+
+            // Filter functions
+            function filterLawyers() {
+                const query = document.getElementById('filterSearch')?.value?.toLowerCase() || '';
+                const status = document.getElementById('filterStatus')?.value || '';
+                const rows = document.querySelectorAll('#lawyers-table-body tr[data-status]');
+
+                rows.forEach(function(row) {
+                    const name = row.querySelector('h4')?.textContent?.toLowerCase() || '';
+                    const specialties = row.querySelector('.specialty-badge')?.textContent?.toLowerCase() || '';
+                    const rowStatus = row.dataset.status || '';
+
+                    const matchesSearch = !query || name.includes(query) || specialties.includes(query);
+                    const matchesStatus = !status || rowStatus === status;
+
+                    row.style.display = (matchesSearch && matchesStatus) ? '' : 'none';
+                });
+            }
+
+            document.getElementById('filterSearch')?.addEventListener('input', filterLawyers);
+            document.getElementById('filterStatus')?.addEventListener('change', filterLawyers);
+            document.getElementById('headerSearchInput')?.addEventListener('input', function() {
+                document.getElementById('filterSearch').value = this.value;
+                filterLawyers();
+            });
+
+            // Close on escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeAllModals();
+            });
+
+            // Overlay click to close
+            document.getElementById('modalOverlay')?.addEventListener('click', closeAllModals);
+        });
     </script>
 
 </body>

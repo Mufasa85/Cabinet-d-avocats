@@ -14,6 +14,7 @@ $statutCandidature = [
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,22 +24,22 @@ $statutCandidature = [
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
     <script src="../js/theme.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null }">
-    
+
+<body>
+
     <!-- Sidebar Overlay for Mobile -->
-    <div class="sidebar-overlay" :class="{ 'active': sidebarOpen }" @click="sidebarOpen = false"></div>
-    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="admin-wrapper">
         <!-- SIDEBAR -->
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <!-- HEADER -->
-            <header class="admin-header" x-data="{ mobileMenuOpen: false }">
+            <header class="admin-header">
                 <div class="header-left">
-                    <button class="header-toggle" @click="mobileMenuOpen = !mobileMenuOpen">
+                    <button class="header-toggle" id="sidebarToggle" title="Menu">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div>
@@ -50,72 +51,14 @@ $statutCandidature = [
                         </nav>
                     </div>
                 </div>
-                
-                <!-- Mobile Menu Dropdown -->
-                <div class="mobile-dropdown" :class="{ 'active': mobileMenuOpen }" @click.away="mobileMenuOpen = false" x-show="mobileMenuOpen" x-transition>
-                    <div class="mobile-dropdown-header">
-                        <span class="mobile-dropdown-title">Menu Navigation</span>
-                        <button @click="mobileMenuOpen = false" class="mobile-dropdown-close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <nav class="mobile-nav">
-                        <a href="<?= Router\Router::route('/admin/dashboard') ?>" class="mobile-nav-item">
-                            <i class="fas fa-chart-pie"></i>
-                            <span>Tableau de Bord</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/users') ?>" class="mobile-nav-item">
-                            <i class="fas fa-users"></i>
-                            <span>Utilisateurs</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/lawyers') ?>" class="mobile-nav-item">
-                            <i class="fas fa-user-tie"></i>
-                            <span>Avocats</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="mobile-nav-item">
-                            <i class="fas fa-file-alt"></i>
-                            <span>Candidatures</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/trainings') ?>" class="mobile-nav-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Formations</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/publications') ?>" class="mobile-nav-item">
-                            <i class="fas fa-newspaper"></i>
-                            <span>Publications</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/documents') ?>" class="mobile-nav-item">
-                            <i class="fas fa-folder-open"></i>
-                            <span>Documents</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/reports') ?>" class="mobile-nav-item">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>Rapports</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/notifications') ?>" class="mobile-nav-item">
-                            <i class="fas fa-bell"></i>
-                            <span>Notifications</span>
-                        </a>
-                        <a href="<?= Router\Router::route('/admin/settings') ?>" class="mobile-nav-item">
-                            <i class="fas fa-cog"></i>
-                            <span>Paramètres</span>
-                        </a>
-                    </nav>
-                    <div class="mobile-dropdown-footer">
-                        <a href="<?= Router\Router::route('/logout') ?>" class="mobile-nav-item logout">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Déconnexion</span>
-                        </a>
-                    </div>
-                </div>
-                
+
                 <div class="header-search">
                     <i class="fas fa-search header-search-icon"></i>
                     <input type="text" class="header-search-input" placeholder="Rechercher...">
                 </div>
-                
+
                 <div class="header-actions">
-                    <button class="header-action" @click="activeModal = 'notifications'; modalOpen = true">
+                    <button class="header-action" id="notificationsBtn">
                         <i class="fas fa-bell"></i>
                         <span class="header-action-badge">5</span>
                     </button>
@@ -128,7 +71,7 @@ $statutCandidature = [
                     </button>
                 </div>
             </header>
-            
+
             <!-- PAGE CONTENT -->
             <div class="page-content">
                 <!-- STATS CARDS -->
@@ -149,7 +92,7 @@ $statutCandidature = [
                             <i class="fas fa-users fa-3x"></i>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-card-icon icon-success">
                             <i class="fas fa-gavel"></i>
@@ -166,7 +109,7 @@ $statutCandidature = [
                             <i class="fas fa-gavel fa-3x"></i>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-card-icon icon-info">
                             <i class="fas fa-file-alt"></i>
@@ -183,7 +126,7 @@ $statutCandidature = [
                             <i class="fas fa-file-alt fa-3x"></i>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-card-icon icon-warning">
                             <i class="fas fa-clock"></i>
@@ -201,7 +144,7 @@ $statutCandidature = [
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- CONTENT GRID -->
                 <div class="content-grid">
                     <!-- MAIN COLUMN -->
@@ -220,18 +163,18 @@ $statutCandidature = [
                             <div class="card-body" style="padding: 0;">
                                 <div class="activity-list">
                                     <?php foreach ($recentActivity as $activity): ?>
-                                    <div class="activity-item">
-                                        <div class="activity-icon <?= $activity['icon_class'] ?? 'icon-gold' ?>">
-                                            <i class="<?= $activity['icon'] ?? 'fas fa-circle' ?>"></i>
+                                        <div class="activity-item">
+                                            <div class="activity-icon <?= $activity['icon_class'] ?? 'icon-gold' ?>">
+                                                <i class="<?= $activity['icon'] ?? 'fas fa-circle' ?>"></i>
+                                            </div>
+                                            <div class="activity-content">
+                                                <h4><?= htmlspecialchars($activity['title']) ?></h4>
+                                                <p><?= htmlspecialchars($activity['description']) ?></p>
+                                            </div>
+                                            <span class="activity-time"><?= htmlspecialchars($activity['time']) ?></span>
                                         </div>
-                                        <div class="activity-content">
-                                            <h4><?= htmlspecialchars($activity['title']) ?></h4>
-                                            <p><?= htmlspecialchars($activity['description']) ?></p>
-                                        </div>
-                                        <span class="activity-time"><?= htmlspecialchars($activity['time']) ?></span>
-                                    </div>
                                     <?php endforeach; ?>
-                                    
+
                                     <!-- Sample Data -->
                                     <div class="activity-item">
                                         <div class="activity-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
@@ -243,7 +186,7 @@ $statutCandidature = [
                                         </div>
                                         <span class="activity-time">Il y a 5 min</span>
                                     </div>
-                                    
+
                                     <div class="activity-item">
                                         <div class="activity-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
                                             <i class="fas fa-file-upload"></i>
@@ -254,7 +197,7 @@ $statutCandidature = [
                                         </div>
                                         <span class="activity-time">Il y a 23 min</span>
                                     </div>
-                                    
+
                                     <div class="activity-item">
                                         <div class="activity-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
                                             <i class="fas fa-calendar-check"></i>
@@ -265,7 +208,7 @@ $statutCandidature = [
                                         </div>
                                         <span class="activity-time">Il y a 1h</span>
                                     </div>
-                                    
+
                                     <div class="activity-item">
                                         <div class="activity-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
                                             <i class="fas fa-exclamation-circle"></i>
@@ -279,7 +222,7 @@ $statutCandidature = [
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- PENDING APPLICATIONS -->
                         <div class="card">
                             <div class="card-header">
@@ -309,33 +252,35 @@ $statutCandidature = [
                                                 $initials = \Core\Auth::initials($name);
                                                 $st = $statutCandidature[$app['statut']] ?? ['label' => $app['statut'], 'class' => 'badge-warning'];
                                             ?>
-                                            <tr>
-                                                <td>
-                                                    <div class="user-info">
-                                                        <div class="avatar"><?= htmlspecialchars($initials) ?></div>
-                                                        <div class="user-details">
-                                                            <h4><?= htmlspecialchars($name) ?></h4>
-                                                            <span><?= htmlspecialchars($app['universite']) ?></span>
+                                                <tr>
+                                                    <td>
+                                                        <div class="user-info">
+                                                            <div class="avatar"><?= htmlspecialchars($initials) ?></div>
+                                                            <div class="user-details">
+                                                                <h4><?= htmlspecialchars($name) ?></h4>
+                                                                <span><?= htmlspecialchars($app['universite']) ?></span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td><?= htmlspecialchars($app['universite']) ?></td>
-                                                <td><?= date('d M Y', strtotime($app['created_at'])) ?></td>
-                                                <td><span class="badge <?= $st['class'] ?>"><?= htmlspecialchars($st['label']) ?></span></td>
-                                                <td>
-                                                    <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="btn btn-sm btn-ghost" title="Voir"><i class="fas fa-eye"></i></a>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td><?= htmlspecialchars($app['universite']) ?></td>
+                                                    <td><?= date('d M Y', strtotime($app['created_at'])) ?></td>
+                                                    <td><span class="badge <?= $st['class'] ?>"><?= htmlspecialchars($st['label']) ?></span></td>
+                                                    <td>
+                                                        <a href="<?= Router\Router::route('/admin/candidatures') ?>" class="btn btn-sm btn-ghost" title="Voir"><i class="fas fa-eye"></i></a>
+                                                    </td>
+                                                </tr>
                                             <?php endforeach; ?>
                                             <?php if (empty($recentApplications)): ?>
-                                            <tr><td colspan="5" style="text-align:center;color:var(--gray-500);">Aucune candidature récente</td></tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align:center;color:var(--gray-500);">Aucune candidature récente</td>
+                                                </tr>
                                             <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                   
+
                         <!-- QUICK ACTIONS -->
                         <div class="card">
                             <div class="card-header">
@@ -373,7 +318,7 @@ $statutCandidature = [
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- QUICK NOTIFICATIONS -->
                         <div class="card">
                             <div class="card-header">
@@ -430,18 +375,18 @@ $statutCandidature = [
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    
+
     <!-- MODAL OVERLAY -->
-    <div class="modal-overlay" :class="{ 'active': modalOpen }" @click="modalOpen = false"></div>
-    
+    <div class="modal-overlay" id="modalOverlay"></div>
+
     <!-- NOTIFICATIONS MODAL -->
-    <div class="modal modal-lg" :class="{ 'active': activeModal === 'notifications' && modalOpen }">
+    <div class="modal modal-lg" id="notificationsModal">
         <div class="modal-header">
             <div class="modal-header-content">
                 <div class="modal-icon">
@@ -452,7 +397,7 @@ $statutCandidature = [
                     <p class="modal-subtitle">Vous avez 5 notifications non lues</p>
                 </div>
             </div>
-            <button class="modal-close" @click="modalOpen = false; activeModal = null">
+            <button class="modal-close" onclick="closeAllModals()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -515,7 +460,7 @@ $statutCandidature = [
             <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
         </div>
     </div>
-    
+
     <!-- ACTIVITY MODAL -->
     <div class="modal modal-lg" :class="{ 'active': activeModal === 'activity' && modalOpen }">
         <div class="modal-header">
@@ -591,7 +536,7 @@ $statutCandidature = [
             <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
         </div>
     </div>
-    
+
     <!-- STATS DETAILS MODAL -->
     <div class="modal" :class="{ 'active': activeModal === 'stats-details' && modalOpen }">
         <div class="modal-header">
@@ -627,7 +572,7 @@ $statutCandidature = [
                     <p style="color: var(--gray-400); font-size: 0.875rem;">En Attente</p>
                 </div>
             </div>
-            
+
             <div style="margin-top: 1.5rem;">
                 <h4 style="color: var(--white); margin-bottom: 1rem;">Répartition par Domaine</h4>
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -686,7 +631,7 @@ $statutCandidature = [
             <button class="btn btn-primary" @click="modalOpen = false; activeModal = null">Fermer</button>
         </div>
     </div>
-    
+
     <!-- PREVIEW APPLICATION MODAL -->
     <div class="modal modal-lg" :class="{ 'active': activeModal === 'preview-application' && modalOpen }">
         <div class="modal-header">
@@ -711,7 +656,7 @@ $statutCandidature = [
                         <h4 style="color: var(--white); font-size: 1.125rem;">Jean Mukamba</h4>
                         <p style="color: var(--gray-500); font-size: 0.875rem;">Candidat Stagiaire</p>
                     </div>
-                    
+
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
                         <div>
                             <p style="color: var(--gray-500); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Email</p>
@@ -727,20 +672,20 @@ $statutCandidature = [
                         </div>
                     </div>
                 </div>
-                
+
                 <div>
                     <div style="margin-bottom: 1.5rem;">
                         <h4 style="color: var(--white); margin-bottom: 0.5rem;">Lettre de Motivation</h4>
                         <p style="color: var(--gray-400); font-size: 0.875rem; line-height: 1.7;">
                             Madame, Monsieur,<br><br>
-                            Ayant terminé ma formation en Master II en Droit des Affaires à l'Université de Kinshasa, 
+                            Ayant terminé ma formation en Master II en Droit des Affaires à l'Université de Kinshasa,
                             je suis vivement intéressé par une opportunité de stage au sein de votre cabinet reconnu pour son excellence en conseil juridique.<br><br>
-                            Mon mémoire de fin d'études portait sur les aspects juridiques des fusions-acquisitions en République Démocratique du Congo, 
+                            Mon mémoire de fin d'études portait sur les aspects juridiques des fusions-acquisitions en République Démocratique du Congo,
                             ce qui m'a permis de développer une solide compréhension des défis réglementaires auxquels font face les entreprises locales.<br><br>
                             Je suis convaincu que mon profil correspond aux attentes de votre cabinet et serais honoré de contribuer à vos activités.
                         </p>
                     </div>
-                    
+
                     <div>
                         <h4 style="color: var(--white); margin-bottom: 0.5rem;">Documents Attachés</h4>
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
@@ -773,44 +718,70 @@ $statutCandidature = [
             </button>
         </div>
     </div>
-    
+
+    <!-- Admin Dashboard JavaScript -->
+    <script src="../js/dash_admin.js"></script>
     <script>
-        // Animated counters
+        // Modal functionality (vanilla JS - no Alpine)
         document.addEventListener('DOMContentLoaded', function() {
-            const counters = document.querySelectorAll('.stat-card-value[data-count]');
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-count'));
-                const duration = 2000;
-                const step = target / (duration / 16);
-                let current = 0;
-                
-                const updateCounter = () => {
-                    current += step;
-                    if (current < target) {
-                        counter.textContent = Math.floor(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                
-                updateCounter();
+            // Toggle modal function
+            window.toggleModal = function(modalId) {
+                const modal = document.getElementById(modalId);
+                const overlay = document.getElementById('modalOverlay');
+                if (modal && overlay) {
+                    modal.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : '';
+                }
+            };
+
+            window.closeAllModals = function() {
+                document.querySelectorAll('.modal.active').forEach(function(modal) {
+                    modal.classList.remove('active');
+                });
+                document.getElementById('modalOverlay').classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            // Open notification modal
+            document.getElementById('notificationsBtn').addEventListener('click', function() {
+                toggleModal('notificationsModal');
             });
-        });
-        
-        // Sidebar toggle for mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-            
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 992) {
-                    sidebar.classList.remove('active');
+
+            // Activity modal button
+            document.querySelectorAll('[data-open-activity]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    toggleModal('activityModal');
+                });
+            });
+
+            // Notifications card button
+            document.querySelectorAll('[data-open-notifications]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    toggleModal('notificationsModal');
+                });
+            });
+
+            // Close buttons
+            document.querySelectorAll('.modal-close').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    closeAllModals();
+                });
+            });
+
+            // Overlay click to close
+            document.getElementById('modalOverlay').addEventListener('click', function() {
+                closeAllModals();
+            });
+
+            // Escape key to close modals
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllModals();
                 }
             });
         });
     </script>
-    
-    <!-- Admin Dashboard JavaScript -->
-    <script src="../js/dash_admin.js"></script>
 </body>
+
 </html>
