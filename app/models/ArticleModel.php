@@ -45,7 +45,7 @@ class ArticleModel extends Model
              JOIN avocats av ON av.id = ar.avocat_id
              JOIN users u ON u.id = av.user_id
              LEFT JOIN categories c ON c.id = ar.category_id
-             WHERE ar.slug = :slug LIMIT 1',
+             WHERE ar.id = :slug LIMIT 1',
             [':slug' => $slug]
         );
         return $stmt->fetch() ?: null;
