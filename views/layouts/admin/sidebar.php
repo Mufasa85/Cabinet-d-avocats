@@ -3,10 +3,15 @@ $currentPage = $_SERVER['REQUEST_URI'] ?? '';
 ?>
 
 <!-- Sidebar Admin Premium -->
-<aside class="sidebar" :class="{ 'collapsed': sidebarOpen }">
+<aside class="sidebar" id="adminSidebar">
     <div class="sidebar-header">
-        <a href="<?= Router\Router::route('/dashboard') ?>" style="display: flex; align-items: center; gap: 10px;">
-        </a>
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+            <a href="<?= Router\Router::route('/dashboard') ?>" style="display: flex; align-items: center; gap: 10px;">
+            </a>
+            <button id="sidebarClose" class="sidebar-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     </div>
 
     <nav class="sidebar-nav">
