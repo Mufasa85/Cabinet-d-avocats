@@ -158,11 +158,15 @@
         ?>
           <article class="article-card <?= $isFeatured ? 'featured-article' : '' ?>" data-category="<?= htmlspecialchars($article['category_slug'] ?? '') ?>">
             <div class="article-image">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                <path d="M12 14v7" />
-              </svg>
+              <?php if (!empty($article['image_couverture'])): ?>
+                <img src="<?= htmlspecialchars($article['image_couverture']) ?>" alt="<?= htmlspecialchars($article['titre']) ?>" loading="lazy">
+              <?php else: ?>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  <path d="M12 14v7" />
+                </svg>
+              <?php endif; ?>
               <?php if ($isFeatured): ?>
                 <span class="article-category">À la une</span>
               <?php else: ?>
