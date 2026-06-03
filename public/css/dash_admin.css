@@ -316,6 +316,28 @@ img {
     letter-spacing: 2px;
 }
 
+/* Sidebar Close Button */
+.sidebar-close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    color: var(--gray-400);
+    transition: var(--transition-base);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-close-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+}
+
+.sidebar-close-btn i {
+    font-size: 1rem;
+}
+
 /* Navigation */
 .sidebar-nav {
     flex: 1;
