@@ -527,9 +527,11 @@ class LawyerController extends Controller
     public function notifications()
     {
         $notifModel = new NotificationModel();
+        $unreadCount = $notifModel->unreadCount((int) Auth::id());
         View::view('lawyers.notifications', [
             'notifications' => $notifModel->byUserId((int) Auth::id()),
-            'unread' => $notifModel->unreadCount((int) Auth::id()),
+            'unread' => $unreadCount,
+            'unreadCount' => $unreadCount,
         ]);
     }
 

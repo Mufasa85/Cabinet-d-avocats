@@ -744,9 +744,11 @@ class AdminController extends Controller
     public function notifications()
     {
         $notifModel = new NotificationModel();
+        $unreadCount = $notifModel->unreadCount((int) Auth::id());
         View::view('admin.notifications', [
             'notifications' => $notifModel->byUserId((int) Auth::id()),
-            'unread' => $notifModel->unreadCount((int) Auth::id()),
+            'unread' => $unreadCount,
+            'unreadCount' => $unreadCount,
         ]);
     }
 
