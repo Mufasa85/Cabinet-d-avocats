@@ -4,3 +4,4 @@ composite
 composite.exe
 .php-cs-fixer.cache
 .env
+app.log

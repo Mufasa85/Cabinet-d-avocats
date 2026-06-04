@@ -60,7 +60,9 @@ $statutCandidature = [
                 <div class="header-actions">
                     <button class="header-action" id="notificationsBtn">
                         <i class="fas fa-bell"></i>
-                        <span class="header-action-badge">5</span>
+                        <?php if (isset($unreadNotificationsCount) && $unreadNotificationsCount > 0): ?>
+                            <span class="header-action-badge"><?= (int) $unreadNotificationsCount ?></span>
+                        <?php endif; ?>
                     </button>
                     <button class="header-action">
                         <i class="fas fa-envelope"></i>
@@ -162,7 +164,7 @@ $statutCandidature = [
                             </div>
                             <div class="card-body" style="padding: 0;">
                                 <div class="activity-list">
-                                    <?php foreach ($recentActivity as $activity): ?>
+                                    <?php foreach (array_slice($recentActivity, 0, 10) as $activity): ?>
                                         <div class="activity-item">
                                             <div class="activity-icon <?= $activity['icon_class'] ?? 'icon-gold' ?>">
                                                 <i class="<?= $activity['icon'] ?? 'fas fa-circle' ?>"></i>
@@ -320,58 +322,85 @@ $statutCandidature = [
                         </div>
 
                         <!-- QUICK NOTIFICATIONS -->
+                        <?php $recentNotifications = $recentNotifications ?? []; ?>
                         <div class="card">
                             <div class="card-header">
                                 <h2 class="card-title">
                                     <i class="fas fa-bell"></i>
                                     Notifications
                                 </h2>
-                                <button class="btn btn-sm btn-ghost" @click="activeModal = 'notifications'; modalOpen = true">
+                                <a href="<?= Router\Router::route('/admin/notifications') ?>" class="btn btn-sm btn-ghost">
                                     Tout Voir
-                                </button>
+                                </a>
                             </div>
                             <div class="card-body" style="padding: 0;">
                                 <div class="notification-list">
-                                    <div class="notification-item unread">
-                                        <div class="notification-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
-                                            <i class="fas fa-exclamation-triangle"></i>
+                                    <?php if (!empty($recentNotifications)): ?>
+                                        <?php foreach (array_slice($recentNotifications, 0, 5) as $notif): ?>
+                                            <?php
+                                            $isUnread = empty($notif['est_lu']);
+                                            $iconStyle = '';
+                                            $iconClass = 'fas fa-bell';
+
+                                            // Déterminer l'icône selon le type
+                                            switch ($notif['type'] ?? '') {
+                                                case 'validation_document':
+                                                    $iconClass = 'fas fa-check-circle';
+                                                    $iconStyle = 'background: rgba(34, 197, 94, 0.1); color: var(--success);';
+                                                    break;
+                                                case 'rejet_document':
+                                                    $iconClass = 'fas fa-times-circle';
+                                                    $iconStyle = 'background: rgba(239, 68, 68, 0.1); color: var(--danger);';
+                                                    break;
+                                                case 'inscription_formation':
+                                                    $iconClass = 'fas fa-graduation-cap';
+                                                    $iconStyle = 'background: rgba(59, 130, 246, 0.1); color: var(--info);';
+                                                    break;
+                                                default:
+                                                    $iconStyle = 'background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);';
+                                            }
+
+                                            // Temps relatif
+                                            $timeAgo = '';
+                                            if (!empty($notif['created_at'])) {
+                                                $timestamp = strtotime($notif['created_at']);
+                                                $diff = time() - $timestamp;
+                                                if ($diff < 60) {
+                                                    $timeAgo = 'Il y a ' . $diff . ' sec';
+                                                } elseif ($diff < 3600) {
+                                                    $timeAgo = 'Il y a ' . floor($diff / 60) . ' min';
+                                                } elseif ($diff < 86400) {
+                                                    $timeAgo = 'Il y a ' . floor($diff / 3600) . ' h';
+                                                } else {
+                                                    $timeAgo = 'Il y a ' . floor($diff / 86400) . ' j';
+                                                }
+                                            }
+                                            ?>
+                                            <div class="notification-item <?= $isUnread ? 'unread' : '' ?>">
+                                                <div class="notification-icon" style="<?= $iconStyle ?>">
+                                                    <i class="<?= $iconClass ?>"></i>
+                                                </div>
+                                                <div class="notification-content">
+                                                    <h4><?= htmlspecialchars($notif['titre'] ?? 'Notification') ?></h4>
+                                                    <p><?= htmlspecialchars($notif['message'] ?? '') ?></p>
+                                                    <?php if ($timeAgo): ?>
+                                                        <span class="notification-time"><?= $timeAgo ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <!-- Fallback: aucune notification -->
+                                        <div class="notification-item">
+                                            <div class="notification-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
+                                                <i class="fas fa-bell-slash"></i>
+                                            </div>
+                                            <div class="notification-content">
+                                                <h4>Aucune notification</h4>
+                                                <p>Vous n'avez pas de notifications pour le moment.</p>
+                                            </div>
                                         </div>
-                                        <div class="notification-content">
-                                            <h4>Dossier urgent</h4>
-                                            <p>Le dossier #1457 nécessite votre attention immédiate</p>
-                                            <span class="notification-time">Il y a 10 min</span>
-                                        </div>
-                                    </div>
-                                    <div class="notification-item unread">
-                                        <div class="notification-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
-                                            <i class="fas fa-calendar"></i>
-                                        </div>
-                                        <div class="notification-content">
-                                            <h4>Nouveau rendez-vous</h4>
-                                            <p>Rendez-vous prévu demain à 10h avec Maître Kabongo</p>
-                                            <span class="notification-time">Il y a 1h</span>
-                                        </div>
-                                    </div>
-                                    <div class="notification-item">
-                                        <div class="notification-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
-                                            <i class="fas fa-check-circle"></i>
-                                        </div>
-                                        <div class="notification-content">
-                                            <h4>Candidature acceptée</h4>
-                                            <p>La candidature de Jean Mukamba a été traitée</p>
-                                            <span class="notification-time">Il y a 3h</span>
-                                        </div>
-                                    </div>
-                                    <div class="notification-item">
-                                        <div class="notification-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
-                                            <i class="fas fa-file-signature"></i>
-                                        </div>
-                                        <div class="notification-content">
-                                            <h4>Document signé</h4>
-                                            <p>Le contrat avec Solar Corp a été signé numériquement</p>
-                                            <span class="notification-time">Il y a 5h</span>
-                                        </div>
-                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

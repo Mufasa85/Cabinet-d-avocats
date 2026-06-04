@@ -19,6 +19,5 @@
 [2026-06-02 | 17:36:52] DEBUG PASSWORD: verify_result=, hash_db=$2y$10$PwupqSrj4wZiCQl.IiC/yuFRP.R3Pl6CzEsSVTdlgmydUfby9nPIO
 [2026-06-04 | 09:10:09] DEBUG LOGIN: email=Laurent@gmail.com, password_reçu=123456789, user_trouvé=oui, hash_en_db=$2y$10$RT75sORqh8V60VWjFjLaIusddgQ9EjlfhFUkv/GSkDoDJV5tGPjKe
 [2026-06-04 | 09:10:09] DEBUG PASSWORD: verify_result=, hash_db=$2y$10$RT75sORqh8V60VWjFjLaIusddgQ9EjlfhFUkv/GSkDoDJV5tGPjKe
-[2026-06-04 | 11:39:49] DEBUG LOGIN: email=admin@gmail.com, password_reçu=12345678, user_trouvé=non, hash_en_db=n/a
-[2026-06-04 | 15:48:45] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
-[2026-06-04 | 15:56:56] SQLSTATE[HY000] [2002] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-06-04 | 14:52:23] DEBUG LOGIN: email=chistiansapu@gmail.com, password_reçu=123456789, user_trouvé=oui, hash_en_db=$2y$10$fSxkQ7nADbqgQREQRyzWsek6V.TgO/GHhzlX3CahOaZMCU9UTSNDO
+[2026-06-04 | 14:52:23] DEBUG PASSWORD: verify_result=, hash_db=$2y$10$fSxkQ7nADbqgQREQRyzWsek6V.TgO/GHhzlX3CahOaZMCU9UTSNDO

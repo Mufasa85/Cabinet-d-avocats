@@ -141,19 +141,15 @@
           <span class="mobile-link-arrow">→</span>
         </a>
 
-        <!-- Mobile Actualités Dropdown -->
-        <div class="mobile-dropdown">
-          <button type="button" class="mobile-dropdown-toggle">
-            <span>Actualités</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="mobile-dropdown-content">
-            <a href="<?= Router\Router::route('/articles') ?>" class="mobile-dropdown-item">Articles</a>
-            <a href="<?= Router\Router::route('/publications') ?>" class="mobile-dropdown-item">Publications</a>
-          </div>
-        </div>
+        <!-- Mobile liens Actualités -->
+        <a href="<?= Router\Router::route('/articles') ?>" class="mobile-link">
+          <span>Articles</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
+        <a href="<?= Router\Router::route('/publications') ?>" class="mobile-link">
+          <span>Publications</span>
+          <span class="mobile-link-arrow">→</span>
+        </a>
 
         <a href="#contact" class="mobile-link">
           <span>Contact</span>
@@ -361,7 +357,7 @@
     <div class="stats-overlay"></div>
     <div class="container stats-container">
       <div class="stat-item animate-on-scroll">
-<span class="stat-number" data-target="<?= $cabinetAge ?>"><?= $cabinetAge ?></span>
+        <span class="stat-number" data-target="<?= $cabinetAge ?>"><?= $cabinetAge ?></span>
         <span class="stat-suffix">+</span>
         <span class="stat-label">Années d'Excellence</span>
       </div>
@@ -703,7 +699,7 @@
                 <time class="news-date"><?= htmlspecialchars($pubDate) ?></time>
                 <h3 class="news-title"><?= htmlspecialchars($pub['titre'] ?? 'Sans titre') ?></h3>
                 <p class="news-excerpt"><?= htmlspecialchars($pub['description'] ?? '') ?></p>
-                <a href="<?= Router\Router::route('/articles/' . ($pub['id'] ?? '#')) ?>" class="news-link">Lire l'article</a>
+                <a href="<?= Router\Router::route('/publications/' . ($pub['slug'] ?? '#')) ?>" class="news-link">Lire l'article</a>
               </div>
             </article>
           <?php endforeach; ?>
