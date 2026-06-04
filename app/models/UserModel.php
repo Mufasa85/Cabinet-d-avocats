@@ -138,4 +138,13 @@ class UserModel extends Model
         );
         return $stmt->fetch()['theme'] ?? 'default';
     }
+
+    public function findByRole(string $role): array
+    {
+        $stmt = Dic::get(Database::class)->prepare(
+            'SELECT id, fullname, email, roles, telephone, avatar, is_active, created_at FROM users WHERE roles = :role ORDER BY fullname ASC',
+            [':role' => $role]
+        );
+        return $stmt->fetchAll() ?: [];
+    }
 }

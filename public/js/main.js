@@ -431,21 +431,80 @@ const initContactForm = () => {
 
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  // Créer un conteneur pour les messages
+  let messageContainer = form.querySelector('.form-message');
+  if (!messageContainer) {
+    messageContainer = document.createElement('div');
+    messageContainer.className = 'form-message';
+    messageContainer.style.cssText = 'margin-top: 1rem; padding: 1rem; border-radius: 8px; display: none;';
+    form.appendChild(messageContainer);
+  }
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Get form data
+    // Récupérer les données
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
+    
+    // Désactiver le bouton
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
 
-    // Here you would typically send the data to a server
-    console.log('Form submitted:', data);
+    try {
+      // Envoyer en AJAX
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
 
-    // Show success message
-    alert('Merci pour votre message. Nous vous contacterons dans les plus brefs délais.');
+      const result = await response.json();
 
-    // Reset form
-    form.reset();
+      // Afficher le résultat
+      messageContainer.style.display = 'block';
+      
+      if (result.success) {
+        messageContainer.style.backgroundColor = '#d4edda';
+        messageContainer.style.color = '#155724';
+        messageContainer.style.border = '1px solid #c3e6cb';
+        messageContainer.innerHTML = `<strong>✓ ${result.message}</strong>`;
+        form.reset();
+      } else {
+        messageContainer.style.backgroundColor = '#f8d7da';
+        messageContainer.style.color = '#721c24';
+        messageContainer.style.border = '1px solid #f5c6cb';
+        
+        let errorMsg = result.message || 'Une erreur est survenue.';
+        if (result.errors) {
+          errorMsg += '<br>' + Object.values(result.errors).join('<br>');
+        }
+        messageContainer.innerHTML = `<strong>✗ ${errorMsg}</strong>`;
+      }
+
+      // Scroll vers le message
+      messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    } catch (error) {
+      // Erreur réseau
+      messageContainer.style.display = 'block';
+      messageContainer.style.backgroundColor = '#f8d7da';
+      messageContainer.style.color = '#721c24';
+      messageContainer.style.border = '1px solid #f5c6cb';
+      messageContainer.innerHTML = '<strong>✗ Erreur de connexion. Veuillez réessayer.</strong>';
+    } finally {
+      // Réactiver le bouton
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+
+      // Masquer le message après 10 secondes
+      setTimeout(() => {
+        messageContainer.style.display = 'none';
+      }, 10000);
+    }
   });
 };
 

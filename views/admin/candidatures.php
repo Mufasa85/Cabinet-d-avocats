@@ -44,7 +44,7 @@ $applications = $applications ?? [];
                         <h1 class="header-title"><?= $pageTitle ?></h1>
                         <nav class="header-breadcrumb"><a href="<?= Router\Router::route('/admin/dashboard') ?>">Accueil</a><span>/</span><span><?= $pageTitle ?></span></nav>
                     </div>
-                </div>
+                </div>n
                 <div class="header-actions">
                     <button class="btn btn-primary" id="exportPdfBtn"><i class="fas fa-download"></i> Exporter PDF</button>
                 </div>
