@@ -85,7 +85,7 @@ $applications = $applications ?? [];
                                 <tbody id="candidatures-table-body">
                                     <?php foreach ($applications as $app): ?>
                                         <?php
-                                        $names = explode(' ', $app['fullname'] ?? '');
+                                        $names = explode(' ', $app['nom'] ?? '');
                                         $initials = '';
                                         foreach (array_slice($names, 0, 2) as $n) {
                                             $initials .= mb_strtoupper(mb_substr($n, 0, 1));
@@ -97,7 +97,8 @@ $applications = $applications ?? [];
                                                 <div class="user-info">
                                                     <div class="avatar"><?= $initials ?: '??' ?></div>
                                                     <div class="user-details">
-                                                        <h4><?= htmlspecialchars($app['fullname']) ?></h4>
+                                                        <h4><?= htmlspecialchars($app['nom']) . " " . htmlspecialchars($app['prenom'])
+                                                            ?></h4>
                                                         <span style="color: var(--gray-500); font-size: 0.75rem;"><?= htmlspecialchars($app['email']) ?></span>
                                                     </div>
                                                 </div>

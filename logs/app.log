@@ -480,3 +480,116 @@
 [2026-06-04 11:34:18] [INFO] ArticleController:showPublication - Debut | Context: {"slug":"beach","params":{"slug":"beach"}}
 [2026-06-04 11:34:18] [INFO] ArticleController:showPublication - Apres findBySlug | Context: {"slug":"beach","publication_found":true,"publication_keys":["id","titre","slug","description","contenu","fichier","type","image_couverture","statut","publie_le","cree_par","created_at","updated_at","auteur_nom"]}
 [2026-06-04 11:34:18] [INFO] ArticleController:showPublication - Succes | Context: {"slug":"beach","publication_id":1,"publication_titre":"beach"}
+[2026-06-04 14:32:52] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"61a69a688ec41b63d70ce435abbb592acd21e59a9dd805c1e2fe5cca02b168d7","fullname":"Maitre Cécile MANDE","email":"cecilemande@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 14:32:52] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"cecilemande@gmail.com"}
+[2026-06-04 14:32:52] [WARNING] storeLawyer: Email deja utilise | Context: {"email":"cecilemande@gmail.com"}
+[2026-06-04 14:38:06] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 14:38:06] [DEBUG] updateAvatar: upload pour user | Context: {"userId":15}
+[2026-06-04 14:38:06] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"cecile.jpg","file_size":30795,"file_tmp":"C:\\xampp\\tmp\\php7483.tmp","subdir":"images\/avatars","prefix":"avatar_15"}
+[2026-06-04 14:38:06] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 14:38:06] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php7483.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_15_014cdbe0d902fcd8.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 14:38:06] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_15_014cdbe0d902fcd8.jpg"}
+[2026-06-04 14:38:06] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_15_014cdbe0d902fcd8.jpg"}
+[2026-06-04 14:38:06] [INFO] updateAvatar: succes
+[2026-06-04 14:41:29] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"f94251024af33642e803e13ae9ae50366557687af1eb06c959489eae1513edc5","fullname":"Maître Joseph KAHASHA","email":"josephkahasha@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 14:41:29] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"josephkahasha@gmail.com"}
+[2026-06-04 14:41:29] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Joseph KAHASHA","email":"josephkahasha@gmail.com","roles":"avocat"}
+[2026-06-04 14:41:29] [DEBUG] storeLawyer: User cree | Context: {"userId":16}
+[2026-06-04 14:41:29] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":16}
+[2026-06-04 14:41:29] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":12}
+[2026-06-04 14:41:29] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":12}
+[2026-06-04 14:42:19] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 14:42:19] [DEBUG] updateAvatar: upload pour user | Context: {"userId":16}
+[2026-06-04 14:42:19] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"joseph.jpg","file_size":91047,"file_tmp":"C:\\xampp\\tmp\\php4F65.tmp","subdir":"images\/avatars","prefix":"avatar_16"}
+[2026-06-04 14:42:19] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 14:42:19] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php4F65.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_16_dbd13c2b1c9ba6ab.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 14:42:19] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_16_dbd13c2b1c9ba6ab.jpg"}
+[2026-06-04 14:42:19] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_16_dbd13c2b1c9ba6ab.jpg"}
+[2026-06-04 14:42:19] [INFO] updateAvatar: succes
+[2026-06-04 14:48:13] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"9d06503be763e83aeda083781ec9fd5b5b1be0f93fb01c9a5b2f39462a31847a","fullname":"Maitre Grâce KAFUMBU","email":"gracekafumu@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 14:48:13] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"gracekafumu@gmail.com"}
+[2026-06-04 14:48:13] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maitre Grâce KAFUMBU","email":"gracekafumu@gmail.com","roles":"avocat"}
+[2026-06-04 14:48:13] [DEBUG] storeLawyer: User cree | Context: {"userId":17}
+[2026-06-04 14:48:13] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":17}
+[2026-06-04 14:48:13] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":13}
+[2026-06-04 14:48:13] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":13}
+[2026-06-04 14:50:59] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"8f475e879e3b45318d21e982c065ef1dd9ae9fcb590e8d2ba350a05ae1852ff9","fullname":"Maitre Christian SAPU","email":"chistiansapu@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 14:50:59] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"chistiansapu@gmail.com"}
+[2026-06-04 14:50:59] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maitre Christian SAPU","email":"chistiansapu@gmail.com","roles":"avocat"}
+[2026-06-04 14:50:59] [DEBUG] storeLawyer: User cree | Context: {"userId":18}
+[2026-06-04 14:50:59] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":18}
+[2026-06-04 14:50:59] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":14}
+[2026-06-04 14:50:59] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":14}
+[2026-06-04 14:52:59] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 14:52:59] [DEBUG] updateAvatar: upload pour user | Context: {"userId":18}
+[2026-06-04 14:52:59] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"christian.jpg","file_size":32025,"file_tmp":"C:\\xampp\\tmp\\php11CF.tmp","subdir":"images\/avatars","prefix":"avatar_18"}
+[2026-06-04 14:52:59] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 14:52:59] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php11CF.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_18_8bef188c51c8b808.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 14:52:59] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_18_8bef188c51c8b808.jpg"}
+[2026-06-04 14:52:59] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_18_8bef188c51c8b808.jpg"}
+[2026-06-04 14:52:59] [INFO] updateAvatar: succes
+[2026-06-04 14:54:57] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"8f475e879e3b45318d21e982c065ef1dd9ae9fcb590e8d2ba350a05ae1852ff9","fullname":"Maître Bijou MUKESI","email":"bijoumukesi@mail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 14:54:57] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"bijoumukesi@mail.com"}
+[2026-06-04 14:54:57] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maître Bijou MUKESI","email":"bijoumukesi@mail.com","roles":"avocat"}
+[2026-06-04 14:54:57] [DEBUG] storeLawyer: User cree | Context: {"userId":19}
+[2026-06-04 14:54:57] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":19}
+[2026-06-04 14:54:57] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":15}
+[2026-06-04 14:54:57] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":15}
+[2026-06-04 14:55:36] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 14:55:36] [DEBUG] updateAvatar: upload pour user | Context: {"userId":19}
+[2026-06-04 14:55:36] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"bijou.jpg","file_size":39612,"file_tmp":"C:\\xampp\\tmp\\php7860.tmp","subdir":"images\/avatars","prefix":"avatar_19"}
+[2026-06-04 14:55:36] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 14:55:36] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php7860.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_19_c9c048aad55fec5b.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 14:55:36] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_19_c9c048aad55fec5b.jpg"}
+[2026-06-04 14:55:36] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_19_c9c048aad55fec5b.jpg"}
+[2026-06-04 14:55:36] [INFO] updateAvatar: succes
+[2026-06-04 15:01:42] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"8f475e879e3b45318d21e982c065ef1dd9ae9fcb590e8d2ba350a05ae1852ff9","fullname":"Maitre Dominic CASSINI","email":"dominiccassini@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 15:01:42] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"dominiccassini@gmail.com"}
+[2026-06-04 15:01:42] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maitre Dominic CASSINI","email":"dominiccassini@gmail.com","roles":"avocat"}
+[2026-06-04 15:01:42] [DEBUG] storeLawyer: User cree | Context: {"userId":20}
+[2026-06-04 15:01:42] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":20}
+[2026-06-04 15:01:42] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":16}
+[2026-06-04 15:01:42] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":16}
+[2026-06-04 15:02:27] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 15:02:27] [DEBUG] updateAvatar: upload pour user | Context: {"userId":20}
+[2026-06-04 15:02:27] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"dominic.jpg","file_size":135425,"file_tmp":"C:\\xampp\\tmp\\phpBD9B.tmp","subdir":"images\/avatars","prefix":"avatar_20"}
+[2026-06-04 15:02:27] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 15:02:27] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpBD9B.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_20_bea5057b24c98daf.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 15:02:27] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_20_bea5057b24c98daf.jpg"}
+[2026-06-04 15:02:27] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_20_bea5057b24c98daf.jpg"}
+[2026-06-04 15:02:27] [INFO] updateAvatar: succes
+[2026-06-04 15:04:41] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"8f475e879e3b45318d21e982c065ef1dd9ae9fcb590e8d2ba350a05ae1852ff9","fullname":"Maitre Eliatha KALUNGA","email":"eliathakalunga@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 15:04:41] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"eliathakalunga@gmail.com"}
+[2026-06-04 15:04:41] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maitre Eliatha KALUNGA","email":"eliathakalunga@gmail.com","roles":"avocat"}
+[2026-06-04 15:04:41] [DEBUG] storeLawyer: User cree | Context: {"userId":21}
+[2026-06-04 15:04:41] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":21}
+[2026-06-04 15:04:41] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":17}
+[2026-06-04 15:04:41] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":17}
+[2026-06-04 15:05:27] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 15:05:27] [DEBUG] updateAvatar: upload pour user | Context: {"userId":21}
+[2026-06-04 15:05:27] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"eliatha.jpg","file_size":49272,"file_tmp":"C:\\xampp\\tmp\\php7FBA.tmp","subdir":"images\/avatars","prefix":"avatar_21"}
+[2026-06-04 15:05:27] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 15:05:27] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php7FBA.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_21_6a818203cf0d5350.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 15:05:27] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_21_6a818203cf0d5350.jpg"}
+[2026-06-04 15:05:27] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_21_6a818203cf0d5350.jpg"}
+[2026-06-04 15:05:27] [INFO] updateAvatar: succes
+[2026-06-04 15:07:44] [INFO] storeLawyer: Debut de la creation avocat | Context: {"POST":{"csrf_token":"8f475e879e3b45318d21e982c065ef1dd9ae9fcb590e8d2ba350a05ae1852ff9","fullname":"Maitre Victor KAZAD","email":"victorkazad@gmail.com","telephone":"","titre":"Avocat","experience":"","bureau":"Kinshasa Gombe","bio":"","password":"12345678"}}
+[2026-06-04 15:07:44] [DEBUG] storeLawyer: Email sanitize | Context: {"email":"victorkazad@gmail.com"}
+[2026-06-04 15:07:44] [DEBUG] storeLawyer: Creation user | Context: {"fullname":"Maitre Victor KAZAD","email":"victorkazad@gmail.com","roles":"avocat"}
+[2026-06-04 15:07:44] [DEBUG] storeLawyer: User cree | Context: {"userId":22}
+[2026-06-04 15:07:44] [INFO] storeLawyer: Creation profil avocat | Context: {"userId":22}
+[2026-06-04 15:07:44] [DEBUG] storeLawyer: Avocat cree | Context: {"avocatId":18}
+[2026-06-04 15:07:44] [INFO] storeLawyer: Succes - Avocat ajoute | Context: {"avocatId":18}
+[2026-06-04 15:09:04] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 15:09:04] [DEBUG] updateAvatar: upload pour user | Context: {"userId":22}
+[2026-06-04 15:09:04] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"victor.jpeg","file_size":34627,"file_tmp":"C:\\xampp\\tmp\\phpCCB3.tmp","subdir":"images\/avatars","prefix":"avatar_22"}
+[2026-06-04 15:09:04] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-04 15:09:04] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpCCB3.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_22_208dce30904f192d.jpeg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 15:09:04] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_22_208dce30904f192d.jpeg"}
+[2026-06-04 15:09:04] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_22_208dce30904f192d.jpeg"}
+[2026-06-04 15:09:04] [INFO] updateAvatar: succes
+[2026-06-04 15:14:59] [INFO] ArticleController:showPublication - Debut | Context: {"slug":"beach","params":{"slug":"beach"}}
+[2026-06-04 15:14:59] [INFO] ArticleController:showPublication - Apres findBySlug | Context: {"slug":"beach","publication_found":true,"publication_keys":["id","titre","slug","description","contenu","fichier","type","image_couverture","statut","publie_le","cree_par","created_at","updated_at","auteur_nom"]}
+[2026-06-04 15:14:59] [INFO] ArticleController:showPublication - Succes | Context: {"slug":"beach","publication_id":1,"publication_titre":"beach"}
+[2026-06-04 15:22:32] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 15:22:49] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}

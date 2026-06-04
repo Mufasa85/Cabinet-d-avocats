@@ -37,6 +37,16 @@ class AdminController extends Controller
         $avocatModel = new AvocatModel();
         $appModel = new InternshipApplicationModel();
         $inscriptionModel = new InscriptionModel();
+        $notifModel = new NotificationModel();
+
+        // Lire les activités récentes depuis le fichier log
+        $recentActivity = $this->getRecentActivityFromLog();
+
+        // Récupérer les notifications de l'admin depuis la base de données
+        $recentNotifications = $notifModel->byUserId((int) Auth::id(), 10);
+
+        // Compter les notifications non lues
+        $unreadNotifications = $notifModel->unreadCount((int) Auth::id());
 
         View::view('admin.dashboard', [
             'stats' => [
@@ -46,7 +56,126 @@ class AdminController extends Controller
                 'documents' => count((new StagiaireDocumentModel())->allForAdmin('en_attente')),
             ],
             'recentApplications' => $appModel->recent(5),
+            'recentActivity' => $recentActivity,
+            'recentNotifications' => $recentNotifications,
+            'unreadNotificationsCount' => $unreadNotifications,
         ]);
+    }
+
+    /**
+     * Lit et analyse le fichier log pour récupérer les activités récentes
+     */
+    private function getRecentActivityFromLog(int $limit = 10): array
+    {
+        $logFile = dirname(__DIR__, 2) . '/logs/app.log';
+        $activities = [];
+
+        if (!file_exists($logFile)) {
+            return $activities;
+        }
+
+        // Lire les dernières lignes du fichier log
+        $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if (!$lines) {
+            return $activities;
+        }
+
+        // Prendre les dernières lignes (les plus récentes)
+        $lines = array_slice($lines, -$limit);
+
+        foreach ($lines as $line) {
+            // Parser la ligne de log: [TIMESTAMP] [LEVEL] message
+            if (preg_match('/\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\] \[(\w+)\] (.+)/', $line, $matches)) {
+                $timestamp = $matches[1];
+                $level = $matches[2];
+                $message = $matches[3];
+
+                // Déterminer l'icône et la classe selon le niveau
+                $iconClass = 'icon-gold';
+                $icon = 'fas fa-circle';
+
+                switch ($level) {
+                    case 'INFO':
+                        $icon = 'fas fa-info-circle';
+                        $iconClass = 'icon-info';
+                        break;
+                    case 'WARNING':
+                        $icon = 'fas fa-exclamation-triangle';
+                        $iconClass = 'icon-warning';
+                        break;
+                    case 'ERROR':
+                        $icon = 'fas fa-times-circle';
+                        $iconClass = 'icon-danger';
+                        break;
+                    case 'DEBUG':
+                        $icon = 'fas fa-cog';
+                        $iconClass = 'icon-gold';
+                        break;
+                }
+
+                // Extraire le nom de la fonction/méthode du message
+                $title = 'Activité système';
+                if (preg_match('/^([a-zA-Z0-9_]+):/', $message, $funcMatch)) {
+                    $title = ucfirst(str_replace('_', ' ', $funcMatch[1]));
+                }
+
+                // Parser le contexte JSON s'il existe
+                $description = 'Opération système';
+                if (preg_match('/Context: (.+)$/', $message, $contextMatch)) {
+                    $context = json_decode($contextMatch[1], true);
+                    if ($context) {
+                        // Extraire des informations pertinentes du contexte
+                        if (isset($context['email'])) {
+                            $description = 'Email: ' . $context['email'];
+                        } elseif (isset($context['userId'])) {
+                            $description = 'User ID: ' . $context['userId'];
+                        } elseif (isset($context['message'])) {
+                            $description = $context['message'];
+                        } else {
+                            $description = substr($contextMatch[1], 0, 100) . '...';
+                        }
+                    }
+                }
+
+                // Calculer le temps relatif
+                $timeAgo = $this->formatTimeAgo($timestamp);
+
+                $activities[] = [
+                    'icon' => $icon,
+                    'icon_class' => $iconClass,
+                    'title' => $title,
+                    'description' => $description,
+                    'time' => $timeAgo,
+                    'timestamp' => $timestamp,
+                    'level' => $level,
+                ];
+            }
+        }
+
+        // Inverser pour avoir les plus récents en premier
+        return array_reverse($activities);
+    }
+
+    /**
+     * Calcule le temps relatif depuis une date
+     */
+    private function formatTimeAgo(string $datetime): string
+    {
+        $timestamp = strtotime($datetime);
+        $now = time();
+        $diff = $now - $timestamp;
+
+        if ($diff < 60) {
+            return 'Il y a ' . $diff . ' sec';
+        } elseif ($diff < 3600) {
+            return 'Il y a ' . floor($diff / 60) . ' min';
+        } elseif ($diff < 86400) {
+            return 'Il y a ' . floor($diff / 3600) . ' h';
+        } elseif ($diff < 604800) {
+            return 'Il y a ' . floor($diff / 86400) . ' j';
+        } else {
+            return date('d/m H:i', $timestamp);
+        }
     }
 
     public function users()
