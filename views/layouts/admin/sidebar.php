@@ -69,6 +69,9 @@ $currentPage = $_SERVER['REQUEST_URI'] ?? '';
             <a href="<?= Router\Router::route('/admin/notifications') ?>" class="nav-item <?= $currentPage === 'notifications' ? 'active' : '' ?>">
                 <span class="nav-item-icon"><i class="fas fa-bell"></i></span>
                 <span class="nav-item-text">Notifications</span>
+                <?php if (!empty($unreadCount) && $unreadCount > 0): ?>
+                    <span class="nav-badge"><?= $unreadCount > 99 ? '99+' : $unreadCount ?></span>
+                <?php endif; ?>
             </a>
         </div>
 

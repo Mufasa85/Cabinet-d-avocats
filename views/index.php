@@ -38,7 +38,22 @@
         <a href="#cabinet" class="nav-link">Cabinet</a>
         <a href="#expertises" class="nav-link">Expertises</a>
         <a href="#equipe" class="nav-link">Équipe</a>
-        <a href="#actualites" class="nav-link">Actualités</a>
+
+        <!-- Actualités Dropdown -->
+        <div class="nav-item-dropdown">
+          <a href="#" class="nav-link nav-dropdown-toggle">
+            Actualités
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </a>
+          <div class="nav-dropdown-menu">
+            <a href="<?= Router\Router::route('/articles') ?>" class="nav-dropdown-item">Articles</a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="<?= Router\Router::route('/publications') ?>" class="nav-dropdown-item">Publications</a>
+          </div>
+        </div>
+
         <a href="#contact" class="nav-link">Contact</a>
         <a href="<?= Router\Router::route('/stages') ?>" class="nav-link">Stages</a>
         <?php if (isset($_SESSION['user_id'])): ?>
@@ -125,10 +140,21 @@
           <span>Équipe</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="#actualites" class="mobile-link">
-          <span>Actualités</span>
-          <span class="mobile-link-arrow">→</span>
-        </a>
+
+        <!-- Mobile Actualités Dropdown -->
+        <div class="mobile-dropdown">
+          <button type="button" class="mobile-dropdown-toggle">
+            <span>Actualités</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="mobile-dropdown-content">
+            <a href="<?= Router\Router::route('/articles') ?>" class="mobile-dropdown-item">Articles</a>
+            <a href="<?= Router\Router::route('/publications') ?>" class="mobile-dropdown-item">Publications</a>
+          </div>
+        </div>
+
         <a href="#contact" class="mobile-link">
           <span>Contact</span>
           <span class="mobile-link-arrow">→</span>

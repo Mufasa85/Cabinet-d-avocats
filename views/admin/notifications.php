@@ -80,7 +80,9 @@ function timeAgo(string $datetime): string
                         <div class="notification-list" x-show="notifications.length > 0">
                             <template x-for="notif in notifications" :key="notif.id">
                                 <div class="notification-item" :class="{ 'unread': !notif.read }">
-                                    <div class="notification-icon" :class="'notification-' + notif.color"><i class="fas fa-" x-text="notif.icon"></i></div>
+                                    <div class="notification-icon" :class="'notification-' + notif.color">
+                                        <i :class="'fas fa-' + notif.icon"></i>
+                                    </div>
                                     <div class="notification-content">
                                         <h4 x-text="notif.title"></h4>
                                         <p x-text="notif.message"></p>
