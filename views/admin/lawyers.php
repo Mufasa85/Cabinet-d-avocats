@@ -215,7 +215,7 @@ $formattedLawyers = array_map(function ($lawyer) {
                 </div>
                 <button type="button" class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Nom Complet <span class="required">*</span></label>
@@ -287,7 +287,7 @@ $formattedLawyers = array_map(function ($lawyer) {
                 </div>
                 <button type="button" class="modal-close" onclick="closeAllModals()"><i class="fas fa-times"></i></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
                 <input type="hidden" name="user_id" id="editUserId">
                 <div class="form-row">
                     <div class="form-group">

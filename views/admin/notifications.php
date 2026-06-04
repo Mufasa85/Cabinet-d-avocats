@@ -49,12 +49,16 @@ function timeAgo(string $datetime): string
                                                                                                                         'lien' => $n['lien'] ?? null,
                                                                                                                     ];
                                                                                                                 }, $notifications))) ?>, unreadCount: <?= (int)$unread ?> }">
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="admin-wrapper">
         <?php require dirname(__DIR__) . '/layouts/admin/sidebar.php'; ?>
         <main class="main-content">
             <header class="admin-header">
                 <div class="header-left">
-                    <button class="header-toggle" @click="document.dispatchEvent(new CustomEvent('sidebar:toggle'))"><i class="fas fa-bars"></i></button>
+                    <button class="header-toggle" id="sidebarToggle" title="Menu"><i class="fas fa-bars"></i></button>
                     <div>
                         <h1 class="header-title"><?= $pageTitle ?></h1>
                         <nav class="header-breadcrumb"><a href="dashboard.php">Accueil</a><span>/</span><span><?= $pageTitle ?></span></nav>
@@ -138,6 +142,9 @@ function timeAgo(string $datetime): string
             <button class="btn btn-secondary" @click="modalOpen = false">Fermer</button>
         </div>
     </div>
+
+    <!-- Admin Dashboard JavaScript -->
+    <script src="../js/dash_admin.js"></script>
 </body>
 
 </html>

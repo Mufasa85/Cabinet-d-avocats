@@ -10,6 +10,7 @@ $pageTitle = 'Paramètres'; ?>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/dash_admin.css">
+    <link rel="stylesheet" href="../css/settings.css">
     <script src="../js/theme.js"></script>
 </head>
 
@@ -30,7 +31,9 @@ $pageTitle = 'Paramètres'; ?>
             <div class="page-content">
                 <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
                 <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
-                <div class="grid-2">
+
+                <!-- Stack Profil et Sécurité pour mobile, côte à côte pour desktop -->
+                <div class="settings-grid">
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title"><i class="fas fa-user"></i> Profil</h2>
@@ -58,39 +61,39 @@ $pageTitle = 'Paramètres'; ?>
                             </button>
                         </div>
                     </div>
-                    <div class="card" style="grid-column: span 2;">
-                        <div class="card-header">
-                            <h2 class="card-title"><i class="fas fa-palette"></i> Apparence</h2>
-                        </div>
-                        <div class="card-body">
-                            <p style="color: var(--gray-400); margin-bottom: 1.5rem;">Choisissez le thème pour l'interface.</p>
-                            <div class="theme-selector" id="themeSelector">
-                                <div class="theme-options">
-                                    <button class="theme-option active" id="themeDark" data-theme="dark" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-color: var(--gray-700);">
-                                        <div class="theme-preview" style="background: #0f0f1a;">
-                                            <div style="background: #eaeaea; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
-                                            <div style="background: #d4af37; width: 40%; height: 4px; border-radius: 2px;"></div>
-                                        </div>
-                                        <div class="theme-info"><i class="fas fa-moon" style="color: #d4af37;"></i><span>Dark Luxury</span><small style="color: var(--gray-500);">Mode sombre élégant</small></div>
-                                        <div class="theme-check" id="themeCheckDark"><i class="fas fa-check"></i></div>
-                                    </button>
-                                    <button class="theme-option" id="themeLight" data-theme="light" style="background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); border-color: var(--gray-300);">
-                                        <div class="theme-preview" style="background: #f8f9fa;">
-                                            <div style="background: #333; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
-                                            <div style="background: #2563eb; width: 40%; height: 4px; border-radius: 2px;"></div>
-                                        </div>
-                                        <div class="theme-info"><i class="fas fa-sun" style="color: #2563eb;"></i><span style="color: #333;">Light Professional</span><small style="color: #666;">Mode clair professionnel</small></div>
-                                        <div class="theme-check" id="themeCheckLight" style="display: none;"><i class="fas fa-check"></i></div>
-                                    </button>
-                                    <button class="theme-option" id="themeRoyal" data-theme="royal" style="background: linear-gradient(135deg, #1e3a5f 0%, #0c1929 100%); border-color: #1e3a5f;">
-                                        <div class="theme-preview" style="background: #0f1929;">
-                                            <div style="background: #f8f9fa; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
-                                            <div style="background: #6366f1; width: 40%; height: 4px; border-radius: 2px;"></div>
-                                        </div>
-                                        <div class="theme-info"><i class="fas fa-crown" style="color: #6366f1;"></i><span>Royal Blue</span><small style="color: var(--gray-400);">Thème royal bleu</small></div>
-                                        <div class="theme-check" id="themeCheckRoyal" style="display: none;"><i class="fas fa-check"></i></div>
-                                    </button>
-                                </div>
+                </div>
+                <div class="card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-palette"></i> Apparence</h2>
+                    </div>
+                    <div class="card-body">
+                        <p style="color: var(--gray-400); margin-bottom: 1.5rem;">Choisissez le thème pour l'interface.</p>
+                        <div class="theme-selector" id="themeSelector">
+                            <div class="theme-options">
+                                <button class="theme-option active" id="themeDark" data-theme="dark" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-color: var(--gray-700);">
+                                    <div class="theme-preview" style="background: #0f0f1a;">
+                                        <div style="background: #eaeaea; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
+                                        <div style="background: #d4af37; width: 40%; height: 4px; border-radius: 2px;"></div>
+                                    </div>
+                                    <div class="theme-info"><i class="fas fa-moon" style="color: #d4af37;"></i><span>Dark Luxury</span><small style="color: var(--gray-500);">Mode sombre élégant</small></div>
+                                    <div class="theme-check" id="themeCheckDark"><i class="fas fa-check"></i></div>
+                                </button>
+                                <button class="theme-option" id="themeLight" data-theme="light" style="background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); border-color: var(--gray-300);">
+                                    <div class="theme-preview" style="background: #f8f9fa;">
+                                        <div style="background: #333; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
+                                        <div style="background: #2563eb; width: 40%; height: 4px; border-radius: 2px;"></div>
+                                    </div>
+                                    <div class="theme-info"><i class="fas fa-sun" style="color: #2563eb;"></i><span style="color: #333;">Light Professional</span><small style="color: #666;">Mode clair professionnel</small></div>
+                                    <div class="theme-check" id="themeCheckLight" style="display: none;"><i class="fas fa-check"></i></div>
+                                </button>
+                                <button class="theme-option" id="themeRoyal" data-theme="royal" style="background: linear-gradient(135deg, #1e3a5f 0%, #0c1929 100%); border-color: #1e3a5f;">
+                                    <div class="theme-preview" style="background: #0f1929;">
+                                        <div style="background: #f8f9fa; width: 60%; height: 4px; border-radius: 2px; margin-bottom: 4px;"></div>
+                                        <div style="background: #6366f1; width: 40%; height: 4px; border-radius: 2px;"></div>
+                                    </div>
+                                    <div class="theme-info"><i class="fas fa-crown" style="color: #6366f1;"></i><span>Royal Blue</span><small style="color: var(--gray-400);">Thème royal bleu</small></div>
+                                    <div class="theme-check" id="themeCheckRoyal" style="display: none;"><i class="fas fa-check"></i></div>
+                                </button>
                             </div>
                         </div>
                     </div>
