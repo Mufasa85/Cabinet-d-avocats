@@ -470,3 +470,118 @@
 [2026-06-03 20:07:25] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
 [2026-06-03 20:07:25] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
 [2026-06-03 20:07:46] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 09:12:12] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:12:12] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:12:12] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php6C7.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:12:12] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:12:12] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php6C7.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_0a19f5d29805adb7.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:12:12] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_0a19f5d29805adb7.jpg"}
+[2026-06-04 09:12:12] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_0a19f5d29805adb7.jpg"}
+[2026-06-04 09:12:12] [INFO] updateAvatar: succes
+[2026-06-04 09:12:29] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:12:29] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:12:29] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php4A2A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:12:29] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:12:29] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php4A2A.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_70c5bab0002a4cc9.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:12:29] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_70c5bab0002a4cc9.jpg"}
+[2026-06-04 09:12:29] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_70c5bab0002a4cc9.jpg"}
+[2026-06-04 09:12:29] [INFO] updateAvatar: succes
+[2026-06-04 09:13:10] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:13:10] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:13:10] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\phpEC47.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:13:10] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:13:10] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\phpEC47.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_4a97d115b124d428.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:13:10] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_4a97d115b124d428.jpg"}
+[2026-06-04 09:13:10] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_4a97d115b124d428.jpg"}
+[2026-06-04 09:13:10] [INFO] updateAvatar: succes
+[2026-06-04 09:14:43] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:14:43] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:14:43] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php56C5.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:14:43] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:14:43] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php56C5.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_be502184936878be.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:14:43] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_be502184936878be.jpg"}
+[2026-06-04 09:14:43] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_be502184936878be.jpg"}
+[2026-06-04 09:14:43] [INFO] updateAvatar: succes
+[2026-06-04 09:15:59] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:15:59] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:15:59] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php7EDB.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:15:59] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:15:59] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php7EDB.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_b151325fb1103d29.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:15:59] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_b151325fb1103d29.jpg"}
+[2026-06-04 09:15:59] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_b151325fb1103d29.jpg"}
+[2026-06-04 09:15:59] [INFO] updateAvatar: succes
+[2026-06-04 09:16:20] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:16:20] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:16:20] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\phpD29A.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:16:20] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:16:20] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\phpD29A.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_0f147a7ad4d59ec5.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:16:20] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_0f147a7ad4d59ec5.jpg"}
+[2026-06-04 09:16:20] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_0f147a7ad4d59ec5.jpg"}
+[2026-06-04 09:16:20] [INFO] updateAvatar: succes
+[2026-06-04 09:20:02] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-04 09:20:02] [DEBUG] updateAvatar: upload pour user | Context: {"userId":9}
+[2026-06-04 09:20:02] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"laurent.jpg","file_size":68297,"file_tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php35AB.tmp","subdir":"images\/avatars","prefix":"avatar_9"}
+[2026-06-04 09:20:02] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources"}
+[2026-06-04 09:20:02] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\Users\\THE KING MUFASA\\AppData\\Local\\Temp\\php35AB.tmp","target":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_1943b6622ff76ae6.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-04 09:20:02] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\laragon\\www\\Php_Poo\\ArcaqneCore\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_9_1943b6622ff76ae6.jpg"}
+[2026-06-04 09:20:02] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_9_1943b6622ff76ae6.jpg"}
+[2026-06-04 09:20:02] [INFO] updateAvatar: succes
+[2026-06-04 09:21:37] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 09:21:37] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 09:21:37] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 09:21:54] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 09:22:16] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 09:22:16] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 09:22:16] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 09:22:26] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 09:22:35] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 09:22:35] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 09:22:35] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:02:02] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 10:02:02] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:02:02] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 10:02:08] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 10:02:15] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:02:15] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:02:15] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:03:47] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:03:47] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:03:47] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:37:44] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 10:37:44] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:37:44] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 10:37:50] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 10:37:54] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:37:54] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:37:54] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:38:26] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 10:39:32] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 10:39:32] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:39:32] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 10:39:37] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 10:39:41] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:39:41] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:39:41] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:42:52] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:42:52] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:42:52] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:45:58] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:45:58] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:45:58] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:48:02] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:48:02] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:48:02] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:49:27] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:49:27] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:49:27] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:49:33] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 10:51:34] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 10:51:34] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:51:34] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 10:51:39] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 10:51:44] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:51:44] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:51:44] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 10:53:17] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 10:53:17] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 10:53:17] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}

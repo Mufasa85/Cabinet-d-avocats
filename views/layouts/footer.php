@@ -8,6 +8,24 @@ if (!defined('ELMD_ROOT')) {
     define('ELMD_ROOT', dirname(__DIR__, 2));
 }
 
+// Get contact info from database
+$contactAddress = '448, Avenue Maduda, Quartier Biashara, Dilala, Kolwezi, Lualaba';
+$contactPhone = '+243 811 403 315';
+$contactEmail = 'laurentmbako@etudelmbako.com';
+$siteTagline = 'L\'excellence juridique au service de votre réussite';
+
+// Try to load from KeyValue model if available
+try {
+    if (class_exists('App\Models\KeyValue')) {
+        $contactAddress = \App\Models\KeyValue::get('contact_address', $contactAddress);
+        $contactPhone = \App\Models\KeyValue::get('contact_phone', $contactPhone);
+        $contactEmail = \App\Models\KeyValue::get('contact_email', $contactEmail);
+        $siteTagline = \App\Models\KeyValue::get('site_tagline', $siteTagline);
+    }
+} catch (\Throwable $e) {
+    // Fallback to default values
+}
+
 $currentYear = date('Y');
 ?>
   <!-- Footer -->
@@ -23,7 +41,7 @@ $currentYear = date('Y');
             </svg>
             <span class="logo-text">ELMD</span>
           </a>
-          <p class="footer-tagline">L'excellence juridique au service de votre réussite depuis 1985.</p>
+          <p class="footer-tagline"><?= htmlspecialchars($siteTagline) ?></p>
           <div class="footer-social">
             <a href="#" class="social-link" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -63,10 +81,9 @@ $currentYear = date('Y');
         <div class="footer-links">
           <h4>Contact</h4>
           <ul>
-            <li>448, Avenue Maduda</li>
-            <li>Quartier Biashara, Dilala, Kolwezi, Lualaba</li>
-            <li>+243 811 403 315</li>
-            <li>laurentmbako@etudelmbako.com</li>
+            <li><?= htmlspecialchars($contactAddress) ?></li>
+            <li><a href="tel:<?= htmlspecialchars(str_replace(' ', '', $contactPhone)) ?>"><?= htmlspecialchars($contactPhone) ?></a></li>
+            <li><a href="mailto:<?= htmlspecialchars($contactEmail) ?>"><?= htmlspecialchars($contactEmail) ?></a></li>
           </ul>
         </div>
       </div>

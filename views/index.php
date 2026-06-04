@@ -195,7 +195,14 @@
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Tradition & Innovation</span>
-          <h1 class="hero-title">40 Ans<br>d'Excellence<br>Juridique</h1>
+            <?php
+            // Calculer dynamiquement l'âge du cabinet
+            $cabinetAge = (int)date('Y') - 2007; // Fallback par défaut
+            if (isset($settings['cabinet_founding_year'])) {
+                $cabinetAge = (int)date('Y') - (int)$settings['cabinet_founding_year'];
+            }
+            ?>
+<h1 class="hero-title"><?= $cabinetAge ?> Ans<br>d'Excellence<br>Juridique</h1>
           <p class="hero-description">Un cabinet fondé sur des valeurs d'intégrité, de rigueur et d'engagement envers nos clients.</p>
           <div class="hero-buttons">
             <a href="#cabinet" class="btn-premium">Notre Histoire</a>
@@ -355,7 +362,7 @@
     <div class="stats-overlay"></div>
     <div class="container stats-container">
       <div class="stat-item animate-on-scroll">
-        <span class="stat-number" data-target="40">0</span>
+<span class="stat-number" data-target="<?= $cabinetAge ?>"><?= $cabinetAge ?></span>
         <span class="stat-suffix">+</span>
         <span class="stat-label">Années d'Excellence</span>
       </div>
