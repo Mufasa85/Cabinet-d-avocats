@@ -164,7 +164,7 @@ $statutCandidature = [
                             </div>
                             <div class="card-body" style="padding: 0;">
                                 <div class="activity-list">
-                                    <?php foreach ($recentActivity as $activity): ?>
+                                    <?php foreach (array_slice($recentActivity, 0, 10) as $activity): ?>
                                         <div class="activity-item">
                                             <div class="activity-icon <?= $activity['icon_class'] ?? 'icon-gold' ?>">
                                                 <i class="<?= $activity['icon'] ?? 'fas fa-circle' ?>"></i>

@@ -1,281 +1,131 @@
-# Cabinet d'Avocats - Plateforme de Gestion
+- Droit Ohada
+Expertise en Droit Ohada & Droit des affaires en RDC
+
+Le Cabinet d'Avocats Etude Laurent MBAKO accompagne les entreprises, investisseurs et entrepreneurs dans l’ensemble des problématiques liées au droit OHADA, applicable en République Démocratique du Congo.
+
+Les domaines d'intervention sont :
+
+    Droit des sociétés OHADA
+        Création et structuration des sociétés (SARL, SA, SAS, ...)
+        Gouvernance, restructuration et dissolution
+        Secrétariat juridique et conformité OHADA
+    Droit commercial général
+        Actes de commerce et statut du commerçant
+        Fond de commerce et baux commerciaux
+        Immatriculation au RCCM
+    Contrat et sécurisation juridique
+        Rédaction et audit de contrats commerciaux
+        Garanties et sûretés OHADA
+        Prévention des risques juridiques
+    Procédures collectives
+        Règlement préventif
+        Redressement judiciaire
+        Liquidation des biens
+    Contentieux et règlement des litiges
+        Contentieux commercial OHADA
+        Arbitrage et médiation (CCJA et juridictions nationales)
+        Exécution des décisions et sentences arbitrales
+    Conseil aux investisseurs
+        Accompagnement des investissements en RDC
+        Sécurisation juridique des projets
+        Due diligence juridique
+
+- Droit Minier
+Droit minier.
+
+Le cabinet ELMD assiste les entreprises et les investisseurs dans le traitement des problématiques juridiques relatives au secteur des mines et des ressources naturelles en Afrique (forêts, agro-foncier, eau, environnement…). Il traite également différentes problématiques juridiques liées au secteur de l’énergie en Afrique.
+Le cabinet ELMD intervient dans la gestion des droits et titres miniers ainsi que dans l’analyse et l’élaboration des contrats miniers. Il accompagne aussi bien les Etats africains dans l’élaboration des législations et des réglementations minières, que les entreprises et les investisseurs dans la réalisation de leurs projets miniers en R.D. Congo et en Afrique. Les prestations du cabinet incluent les opérations de due diligence juridique et fiscale et les grandes phases des opérations minières ;
+
+- Droit du Travail
+Droit du travail.
+
+Le droit du travail est une matière très vivante qui est, à tort ou à raison, victime d’une forte inflation législative. D’un côté, tous les dirigeants d’entreprises doivent maîtriser l’entretien d’embauche, la rédaction des contrats de travail, les domaines et limites de leurs pouvoirs et autorités hiérarchique et disciplinaire. Ainsi, les relations sociales influent fortement sur le quotidien des entreprises et peuvent constituer tant un moteur qu’un frein à l’activité.
+
+D’un autre côté, tous les salariés doivent franchir les étapes professionnelles du recrutement, de la négociation du contrat de travail dans ses clauses les plus spécifiques, patrimoniales et extra-patrimoniales, jusqu’à la rupture de leur relation conventionnelle par exemple par démission ou licenciement. En définitive, pour les dirigeants de petites ou de moyennes entreprises, comme pour les salariés, la connaissance ou l’application de l’ensemble des dispositions du Code du travail relève de l’illusion tant le législateur a complexifié et multiplié les textes. Faire le choix d'un Avocat vous permettra de cerner les risques qui peuvent vous menacer ou encore de faire face à un contentieux imminent. 
+
+- Administration des Affaires
+Droit administratif et des affaires.
+
+Notre cabinet conseille au niveau national et international tant des sociétés multinationales que des PME et appréhende l’ensemble des problématiques juridiques relatives à l’activité quotidienne des entreprises (p.ex. suivi du juridique courant, conventions d’actionnaires, différends entre actionnaires/partenaires…) ainsi que dans le cadre des opérations de fusion, d’acquisition, de cession et plus généralement de toute restructuration et/ou réorganisation des pouvoirs.
+Notre cabinet conseille et assiste une clientèle d’entreprises également dans le cadre de leur création, développement, ainsi que pour leurs rapports contractuels avec leurs différents partenaires, clients, prestataires, et/ou fournisseurs.
+Notre expérience dans le domaine de droit des sociétés nous permet d’assister et défendre les groupes d’entreprises, les entreprises, les dirigeants d’entreprises, les associés lors des contentieux mettant en œuvre le droit des sociétés tant en matière de conseil que de contentieux. 
+
+
+
+
+- Autres Domaines de Droits
+Droit pénal et civil.
+Droit civil.
+
+Le cabinet assure conseil, assistance et représentation dans l’ensemble des litiges et procédures relevant du droit civil congolais, tant en phase précontentieuse que contentieuse.
+
+Les domaines d'intervention sont :
+
+    Droit des obligations
+        Responsabilité civile (contractuelle et délictuelle)
+        Réparation des préjudices matériels et moraux
+        Exécution et inexécution des obligations
+    Droit des contrats civils
+        Rédaction et analyse des contrats civils
+        Résiliation, résolution et nullité des contrats
+        Contentieux contractuel
+    Droit de la famille
+        Mariage, divorce et séparation
+        Filiation et autorité parentale
+        Pension alimentaire et garde des enfants
+        Successions et régimes matrimoniaux
+    Droit des biens
+        Propriété et possession
+        Litiges fonciers et immobiliers
+        Bornage, servitude et expropriation
+    Procédure civile
+        Assignations et requêtes
+        Mesures conservatoires et d'exécution
+        Représentation devant les juridictions civiles
+
+Droit pénal.
+
+Le cabinet intervient à tous les stades de la procédure pénale, pour la défense des intérêts des prévenus, victimes et parties civiles, conformément au Code pénal et au Code de procédure pénale congolais.
+
+Les domaines d'intervention sont :
+
+    Défense pénale
+        Assistance en garde à vue et instruction
+        Défense devant les juridictions répressives
+        Plaidoiries et recours
+    Infractions pénales courantes
+        Infractions contre les personnes (coups et blessures, homicide)
+        Infractions contre les biens (vol, abus de confiance, escroquerie)
+        Infractions économiques et financières
+        Infractions liées aux documents et faux
+    Constitution de la partie civile
+        réparation du préjudice
+        Indemnisation des victimes
+        Suivi de l'exécution des décisions
+    Procédure pénale
+        Plaintes et dénonciations
+        Instructions préparatoires
+        Appels et pourvois
 
-## 📋 Description du Projet
+Droit foncier et immobilier.
 
-Plateforme web complète pour la gestion des cabinets d'avocats, permettant l'administration centralisée des avocats, stagières, formations et publications du cabinet.
+Le droit immobilier est complexe, bailleurs, constructeurs, vendeurs sont soumis à des législations de plus en plus contraignantes et multiples. Le cabinet est habitué à défendre autant des professionnels que des particuliers (bailleurs, acheteurs, riverains…) qu’il s’agisse de prévenir les risques ou de vous défendre nous saurons défendre vos droits et vous éviter les pièges. En pratique, il peut par exemple s’agir de défendre un bailleur ou un locataire, de rédiger des clauses, rédiger un cahier des charges ou encore un règlement de copropriété, organiser une expulsion…etc.
+Droit de la famille.
 
----
+Le Droit de la famille est une matière profondément humaine. Elle nécessite non seulement une solide connaissance des règles techniques applicables mais également une vision globale de la situation, afin de s'attacher aux répercutions indirectes, notamment à l'égard des proches. Cette matière implique une attention particulière sur les conséquences fiscales et patrimoniales de la prise de décision plus particulièrement lors d’une séparation.
 
-## 🎯 Fonctionnalités Principales
+Notre équipe d’avocats et juristes bénéficie d’une sérieuse expérience dans les domaines du droit de l’aménagement et du droit de l’environnement. Le Cabinet, accompagne ainsi de nombreux acteurs publics et aménageurs dans leurs projets, tant en région parisienne que sur l’ensemble du territoire national. Il intervient ainsi à toutes les étapes des procédures environnementales imposées par le code de l’environnement et le code de l’urbanisme :
 
-### 1. 🔐 Système d'Authentification et Gestion des Rôles
+    Élaboration de calendriers procéduraux
+    Suivi des procédures de concertation au titre du code de l’urbanisme et de concertation environnementale
+    Accompagnement dans la mise en œuvre du processus d’évaluation environnementale (demande d’examen au cas par cas, rencontre avec l’Autorité environnementale, audit des études d’impact et rapports environnementaux, réponse à l’avis de l’Autorité environnementale)
+    Sécurisation juridique des enquêtes publiques environnementales (audit de l’ensemble des pièces des dossiers d’enquête, rédaction/validation des délibérations, suivi de la phase d’enquête, réponse au procès-verbal de synthèse du commissaire enquêteur, déclaration de projet) et des procédures de participation du public
+    Suivi des procédures d’autorisation environnementale (certificat de projet, audit des dossiers de demande)
 
-- **Administrateur** : Contrôle total sur la plateforme
-  - Création et gestion des comptes utilisateurs
-  - Gestion des profils d'avocats
-  - Validation des inscriptions aux formations
-  - Modération des publications
-  - Gestion des documents des stagières
+L’expertise du cabinet en environnement s’étend également au droit des pollutions et des nuisances ainsi qu’au droit de l’eau et de l’assainissement.
 
-- **Avocats** : Accès aux fonctionnalités du cabinet
-  - Publication d'articles/blog
-  - Gestion de leur profil professionnel
-  - Participation aux formations
+Dans ce cadre, il peut intervenir pour le compte d’établissements publics et de collectivités territoriales et, mais aussi de particuliers et associations, tant au travers de représentation en justice en matière de contentieux que de missions d’accompagnement et de conseil.
+Droit fiscal.
 
-- **Stagiaires** : Accès limité aux fonctionnalités dédiées
-  - Envoi de documents administratifs
-  - Consultation des formations disponibles
-
-### 2. 📝 Blog du Cabinet
-
-- Publication d'articles juridiques par les avocats
-- Catégories par domaine de droit (civil, pénal, commercial, etc.)
-- Recherche et filtrage des articles
-- Responsive design pour mobile et desktop
-
-### 3. 📁 Zone Stagiaires - Gestion des Documents
-
-- **Téléchargement sécurisé** de documents :
-- Notifications de validation par email/rejet
-
-### 3.1 📬 Système de Notifications des Stages
-
-Le système de notifications assure une communication fluide entre le cabinet et les stagières.
-
-| Type de Notification | Description | Destinataires |
-|----------------------|-------------|---------------|
-| Validation document | Confirmation de l'approbation d'un document soumis | Stagiaire |
-| Rejet document | Notification de refus avec motif | Stagiaire |
-| Rappel stage | Alerte avant la fin de période de stage | Stagiaire, Admin |
-| Nouveau message | Communication du cabinet | Stagiaire |
-| Changement affectation | Modification d'affectation/collaborateur | Stagiaire |
-| Évaluation stage | Résultats d'évaluation de performance | Stagiaire, Admin |
-
-### 3.2 📄 Export PDF des Documents
-
-- **Génération automatique** de documents PDF :
-  - Certificats de stage
-
-- **Fonctionnalités** :
-  - Téléchargement en un clic
-  - Format standardisé professionnellement
-  - Archivage automatique
-  - Signature numérique intégrée
-
-### 3.3 📧 Rapports Automatisés par Email
-
-Le système de rapports automatisés permet une communication régulière et efficace.
-
-| Type de Rapport | Fréquence | Destinataires | Contenu |
-|-----------------|-----------|---------------|---------|
-| Rapport activité mensuel | Mensuel | Admin, Avocats | Statistiques mensuelles, performances |
-| Alerte documents expiration | Hebdomadaire | Admin, Stagiaires | Documents à renouveler |
-| Synthèse formations | Mensuel | Admin | Formations completées, inscriptions en attente |
-| Rapport financier | Mensuel | Admin | Honoraires, factures émises |
-| Bilan stagières | Trimestriel | Admin | Évaluations, recommandations |
-
-- **Configuration** :
-  - Planification flexible des rapports
-  - Personnalisation des destinataires
-  - Modèles de rapports personnalisables
-  - Historique des envois
-
----
-
-### 4. 🏛️ Administration du Cabinet
-
-- **Gestion des avocats** :
-  - Création de profils professionnels
-  - Attribution des spécialisations
-  - Historique des activités
-  - Gestion des disponibilités
-
-- **Gestion des stagières** :
-  - Inscription et suivi des stages
-
-- **Tableau de bord administrateur** :
-  - Statistiques du cabinet
-  - Gestion des utilisateurs
-  - Rapports et analytics
-
-### 5. 📚 Zone de Formation
-
-- **Catalogue des formations** :
-  - Formations continues pour avocats
-  - Programmes de perfectionnement
-  - Ateliers pratiques
-
-- **Inscription aux formations** :
-  - Formulaire de candidature
-  - Sélection des stagières pour formations spécialisées
-  - Gestion des places disponibles
-  - Notifications de confirmation email /refus
-
-### 6. 🎨 Zone Publications du Cabinet
-
-- Publication des réalisations du cabinet
-- Brochures et plaquettes de présentation
-- Études de cas et jurisprudence
-- Partage des succès et distinctions
-
----
-
-## 🛠️ Technologies Utilisées
-
-### Frontend
-- HTML5 / CSS3 / JavaScript
-- Framework CSS (Bootstrap/Tailwind)
-- Templates Thémis / Juridique
-
-### Backend
-- PHP 8.0+ / Laravel
-- Base de données MySQL
-
-### Sécurité
-- Authentification JWT
-- Chiffrement des données sensibles
-- Protection CSRF/XSS
-- Gestion des rôles et permissions
-
----
-
-## 📂 Structure du Projet
-
-```
-Avocats/
-├── admin/                 # Interface administrateur
-│   ├── dashboard.php
-│   ├── gestion_avocats.php
-│   ├── gestion_stagiaires.php
-│   ├── gestion_formations.php
-│   └── gestion_publications.php
-├── attorneys/            # Interface avocats
-│   ├── blog/
-│   ├── profil/
-│   └── publications/
-├── interns/             # Interface stagières
-│   ├── documents/
-│   ├── formations/
-│   └── suivi/
-├── includes/            # Fichiers réutilisables
-│   ├── header.php
-│   ├── footer.php
-│   ├── sidebar.php
-│   └── functions.php
-├── assets/              # Ressources statiques
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   └── fonts/
-├── config/              # Configuration
-│   └── database.php
-├── README.md
-└── index.php            # Page d'accueil
-```
-
----
-
-## 👥 Rôles et Permissions
-
-| Fonctionnalité | Admin | Avocat | Stagiaire |
-|----------------|-------|--------|-----------|
-| Créer compte utilisateur | ✅ | ❌ | ❌ |
-| Gérer profil avocat | ✅ | ✅ (propre) | ❌ |
-| Publier articles blog | ✅ | ✅ | ❌ |
-| Envoyer documents | ✅ | ❌ | ✅ |
-| Gérer formations | ✅ | Consultation | Consultation |
-| Valider inscriptions | ✅ | ❌ | ❌ |
-| Publier œuvres cabinet | ✅ | ❌ | ❌ |
-
----
-
-## 📊 Base de Données - Tables Principales
-
-- `users` - Utilisateurs et authentification
-- `avocats` - Profils des avocats
-- `stagiaires` - Informations des stagières
-- `documents` - Documents uploadés
-- `articles` - Articles du blog
-- `formations` - Catalogue des formations
-- `inscriptions` - Inscriptions aux formations
-- `publications` - Publications du cabinet
-- `categories` - Catégories d'articles
-
----
-
-## 🚀 Installation
-
-1. **Cloner le projet**
-   ```bash
-   git clone [repository]
-   cd Avocats
-   ```
-
-2. **Configuration de la base de données**
-   ```bash
-   # Importer le fichier SQL
-   mysql -u root -p < database/schema.sql
-   ```
-
-3. **Configuration**
-   - Modifier `config/database.php` avec vos identifiants
-   - Configurer les variables d'environnement
-
-4. **Lancer le serveur**
-   ```bash
-   php -S localhost:8000
-   ```
-
-5. **Accéder à l'application**
-   - Frontend : `http://localhost:8000`
-   - Admin : `http://localhost:8000/admin`
-
----
-
-## 🔐 Comptes par Défaut
-
-| Rôle | Email | Mot de passe |
-|------|-------|--------------|
-| Administrateur | admin@cabinet.avocat | admin123 |
-| Avocat | avocat@cabinet.avocat | avocat123 |
-| Stagiaire | stagiaire@cabinet.avocat | stagiaire123 |
-
----
-
-## ✨ Fonctionnalités à Venir
-
-- [ ] Application mobile
-- [ ] Visioconférence pour consultations
-- [ ] Paiement en ligne des honoraires
-- [ ] Système de rendez-vous en ligne
-- [ ] Newsletter automatique
-- [ ] Chat en direct
-- [ ] Intégration calendrier (Google Calendar)
-- [ ] Système de notifications push
-
----
-
-## 📞 Support
-
-Pour toute question ou assistance, contactez :
-- **Email** : contact@cabinet-avocat.com
-- **Téléphone** : +XXX XXX XXX XXX
-
----
-
-## 📜 Licence
-
-Ce projet est la propriété du Cabinet d'Avocats.
-Tous droits réservés © 2026
-
----
-
-## 👨‍💻 Équipe de Développement
-
-- **Développeur Principal** : [Nom]
-- **Designer UI/UX** : [Nom]
-- **Testeur QA** : [Nom]
-
----
-
-*Document créé le 14/05/2026*
+Notre cabinet aide nos clients à optimiser et maîtriser le poids de la fiscalité dans le cadre de leur activité ou de leurs investissements. Il assure également leur défense face à l’administration fiscale ou douanière, tant au stade des opérations de contrôle que devant les instances ou juridictions nationales et/ou européennes.
+Notre cabinet accompagne également de nombreuses entreprises et investisseurs étrangers pour leurs investissements en République Démocratique du Congo ainsi que des opérateurs Congolais pour leurs investissements à l’étranger.
