@@ -36,13 +36,13 @@ function timeAgo(string $datetime): string
 </head>
 
 <body x-data="{ sidebarOpen: false, modalOpen: false, activeModal: null, selectedNotif: null, notifications: <?= htmlspecialchars(json_encode(array_map(function ($n) {
-                                                                                                                    $typeIcons = ['info' => 'info-circle', 'candidature' => 'user-plus', 'document' => 'file-alt', 'formation' => 'graduation-cap', 'message' => 'envelope', 'alert' => 'exclamation-triangle'];
-                                                                                                                    $typeColors = ['info' => 'gold', 'candidature' => 'success', 'document' => 'info', 'formation' => 'warning', 'message' => 'info', 'alert' => 'danger'];
-                                                                                                                    return [
-                                                                                                                        'id' => $n['id'],
-                                                                                                                        'title' => $n['titre'],
-                                                                                                                        'message' => $n['message'],
-                                                                                                                        'time' => timeAgo($n['created_at'] ?? date('Y-m-d H:i:s')),
+                                                                                                                     $typeIcons = ['info' => 'info-circle', 'candidature' => 'user-plus', 'document' => 'file-alt', 'formation' => 'graduation-cap', 'message' => 'envelope', 'alert' => 'exclamation-triangle', 'autre' => 'envelope'];
+                                                                                                                     $typeColors = ['info' => 'gold', 'candidature' => 'success', 'document' => 'info', 'formation' => 'warning', 'message' => 'info', 'alert' => 'danger', 'autre' => 'info'];
+                                                                                                                     return [
+                                                                                                                         'id' => $n['id'],
+                                                                                                                         'title' => $n['titre'],
+                                                                                                                         'message' => html_entity_decode($n['message'] ?? ''),
+                                                                                                                         'time' => timeAgo($n['created_at'] ?? date('Y-m-d H:i:s')),
                                                                                                                         'read' => (bool)($n['est_lu'] ?? false),
                                                                                                                         'icon' => $typeIcons[$n['type']] ?? 'bell',
                                                                                                                         'color' => $typeColors[$n['type']] ?? 'gold',
@@ -85,7 +85,7 @@ function timeAgo(string $datetime): string
                                     </div>
                                     <div class="notification-content">
                                         <h4 x-text="notif.title"></h4>
-                                        <p x-text="notif.message"></p>
+                                        <p x-html="notif.message"></p>
                                         <span class="notification-time" x-text="notif.time"></span>
                                     </div>
                                     <div class="notification-actions">
@@ -128,7 +128,7 @@ function timeAgo(string $datetime): string
             <button class="modal-close" @click="modalOpen = false"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body">
-            <p style="color: var(--gray-300);" x-text="selectedNotif ? selectedNotif.message : ''"></p>
+            <div style="color: var(--gray-300);" x-html="selectedNotif ? selectedNotif.message : ''"></div>
             <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 1rem;" x-text="selectedNotif ? selectedNotif.time : ''"></p>
         </div>
         <div class="modal-footer">

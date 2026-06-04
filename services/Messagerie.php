@@ -120,4 +120,46 @@ class Messagerie
                 . '</p><p>Cordialement,<br>Cabinet ELMD</p>'
         );
     }
+
+    /**
+     * Envoie une notification de demande de contact/rendez-vous
+     */
+    public function notifyContactRequest(array $data): bool
+    {
+        $toEmail = 'rmusafiri30@gmail.com';
+        $toName = 'Cabinet ELMD';
+        
+        $subject = 'Nouvelle demande de contact - ' . htmlspecialchars($data['subject'] ?? 'Sans sujet');
+        
+        $body = "
+            <h2>Nouvelle demande de contact</h2>
+            <p><strong>Nom:</strong> " . htmlspecialchars($data['name'] ?? 'Non renseigné') . "</p>
+            <p><strong>Email:</strong> " . htmlspecialchars($data['email'] ?? 'Non renseigné') . "</p>
+            <p><strong>Téléphone:</strong> " . htmlspecialchars($data['phone'] ?? 'Non renseigné') . "</p>
+            <p><strong>Sujet:</strong> " . htmlspecialchars($data['subject'] ?? 'Non renseigné') . "</p>
+            <hr>
+            <p><strong>Message:</strong></p>
+            <p>" . nl2br(htmlspecialchars($data['message'] ?? '')) . "</p>
+            <hr>
+            <p><em>Ce message a été envoyé depuis le formulaire de contact du site ELMD.</em></p>
+        ";
+        
+        $sent = $this->send($toEmail, $toName, $subject, $body);
+        
+        // Envoyer aussi un email de confirmation au client
+        if ($sent && !empty($data['email'])) {
+            $this->send(
+                $data['email'],
+                $data['name'] ?? 'Client',
+                'Confirmation de réception - Cabinet ELMD',
+                '<p>Bonjour ' . htmlspecialchars($data['name'] ?? '') . ',</p>'
+                    . '<p>Nous avons bien reçu votre demande de contact. Notre équipe vous répondra dans les plus brefs délais.</p>'
+                    . '<p><strong>Récapitulatif de votre demande:</strong></p>'
+                    . '<p><em>' . nl2br(htmlspecialchars($data['message'] ?? '')) . '</em></p>'
+                    . '<p>Cordialement,<br>Cabinet ELMD<br>Bâtonnier Laurent Mbako Ditend</p>'
+            );
+        }
+        
+        return $sent;
+    }
 }

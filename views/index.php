@@ -196,13 +196,12 @@
         <div class="hero-slide-content">
           <span class="hero-subtitle">Tradition & Innovation</span>
             <?php
-            // Calculer dynamiquement l'âge du cabinet
-            $cabinetAge = (int)date('Y') - 2007; // Fallback par défaut
+            $cabinetAge = (int)date('Y') - 2007; 
             if (isset($settings['cabinet_founding_year'])) {
                 $cabinetAge = (int)date('Y') - (int)$settings['cabinet_founding_year'];
             }
             ?>
-<h1 class="hero-title"><?= $cabinetAge ?> Ans<br>d'Excellence<br>Juridique</h1>
+          <h1 class="hero-title"><?= $cabinetAge ?> Ans<br>d'Excellence<br>Juridique</h1>
           <p class="hero-description">Un cabinet fondé sur des valeurs d'intégrité, de rigueur et d'engagement envers nos clients.</p>
           <div class="hero-buttons">
             <a href="#cabinet" class="btn-premium">Notre Histoire</a>

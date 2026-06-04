@@ -382,6 +382,10 @@ $formattedUsers = array_map(function ($user) {
                 const modal = document.getElementById(modalId);
                 const overlay = document.getElementById('modalOverlay');
                 if (modal && overlay) {
+                    // On small screens, open certain modals in full mode for better usability
+                    if (window.innerWidth <= 640 && (modalId === 'add-user' || modalId === 'edit-user')) {
+                        modal.classList.add('modal-full');
+                    }
                     modal.classList.add('active');
                     overlay.classList.add('active');
                     document.body.style.overflow = 'hidden';
@@ -389,7 +393,10 @@ $formattedUsers = array_map(function ($user) {
             };
 
             window.closeAllModals = function() {
-                document.querySelectorAll('.modal.active').forEach(modal => modal.classList.remove('active'));
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                    modal.classList.remove('modal-full');
+                });
                 document.getElementById('modalOverlay').classList.remove('active');
                 document.body.style.overflow = '';
             };

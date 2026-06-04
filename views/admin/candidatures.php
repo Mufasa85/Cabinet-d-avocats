@@ -44,7 +44,7 @@ $applications = $applications ?? [];
                         <h1 class="header-title"><?= $pageTitle ?></h1>
                         <nav class="header-breadcrumb"><a href="<?= Router\Router::route('/admin/dashboard') ?>">Accueil</a><span>/</span><span><?= $pageTitle ?></span></nav>
                     </div>
-                </div>
+                </div>n
                 <div class="header-actions">
                     <button class="btn btn-primary" id="exportPdfBtn"><i class="fas fa-download"></i> Exporter PDF</button>
                 </div>
@@ -97,8 +97,8 @@ $applications = $applications ?? [];
                                                 <div class="user-info">
                                                     <div class="avatar"><?= $initials ?: '??' ?></div>
                                                     <div class="user-details">
-                                                        <h4><?= htmlspecialchars($app['fullname']) ?></h4>
-                                                        <span style="color: var(--gray-500); font-size: 0.75rem;"><?= htmlspecialchars($app['email']) ?></span>
+                                                        <h4><?= htmlspecialchars($app['fullname'] ?? 'Candidat') ?></h4>
+                                                        <span style="color: var(--gray-500); font-size: 0.75rem;"><?= htmlspecialchars($app['email'] ?? '-') ?></span>
                                                     </div>
                                                 </div>
                                             </td>

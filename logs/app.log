@@ -585,3 +585,24 @@
 [2026-06-04 10:53:17] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
 [2026-06-04 10:53:17] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
 [2026-06-04 10:53:17] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 12:47:11] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 12:47:11] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 12:47:11] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 12:47:17] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 12:47:27] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 12:47:27] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 12:47:27] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 12:53:05] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-04 12:53:05] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 12:53:05] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-04 12:53:09] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 12:53:14] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-04 12:53:14] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-04 12:53:14] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-04 14:08:47] [INFO] ArticleController:publications - Debut
+[2026-06-04 14:08:47] [INFO] ArticleController:publications - Succes | Context: {"count":1}
+[2026-06-04 14:08:55] [INFO] ArticleController:showPublication - Debut | Context: {"slug":"beach","params":{"slug":"beach"}}
+[2026-06-04 14:08:55] [INFO] ArticleController:showPublication - Apres findBySlug | Context: {"slug":"beach","publication_found":true,"publication_keys":["id","titre","slug","description","contenu","fichier","type","image_couverture","statut","publie_le","cree_par","created_at","updated_at","auteur_nom"]}
+[2026-06-04 14:08:55] [INFO] ArticleController:showPublication - Succes | Context: {"slug":"beach","publication_id":1,"publication_titre":"beach"}
+[2026-06-04 14:09:10] [INFO] ArticleController:publications - Debut
+[2026-06-04 14:09:10] [INFO] ArticleController:publications - Succes | Context: {"count":1}
