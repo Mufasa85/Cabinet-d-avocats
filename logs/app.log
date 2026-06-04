@@ -593,3 +593,5 @@
 [2026-06-04 15:14:59] [INFO] ArticleController:showPublication - Succes | Context: {"slug":"beach","publication_id":1,"publication_titre":"beach"}
 [2026-06-04 15:22:32] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
 [2026-06-04 15:22:49] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-04 17:55:27] [INFO] ArticleController:publications - Debut
+[2026-06-04 17:55:27] [INFO] ArticleController:publications - Succes | Context: {"count":1}
