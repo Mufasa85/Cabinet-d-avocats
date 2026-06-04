@@ -679,12 +679,17 @@
     /* Article Body */
     .article-body {
       font-size: 1.0625rem;
-      line-height: 1.85;
+      line-height: 1.8;
       color: var(--color-muted-foreground);
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
     }
     
     .article-body p {
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
     
     .article-body h2, .article-body h3, .article-body h4 {
