@@ -71,6 +71,17 @@ const initNavbar = () => {
   mobileLinks.forEach(link => {
     link.addEventListener('click', closeMobileMenu);
   });
+
+  // Mobile dropdown toggle
+  const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+  const mobileDropdown = document.querySelector('.mobile-dropdown');
+
+  if (mobileDropdownToggle && mobileDropdown) {
+    mobileDropdownToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobileDropdown.classList.toggle('active');
+    });
+  }
 };
 
 const initHeroSlider = () => {

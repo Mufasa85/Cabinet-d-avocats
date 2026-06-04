@@ -15,3 +15,5 @@
 
 [2026-06-01 | 22:07:49] DEBUG LOGIN: email=admin@gmail.com, password_reçu=12345678, user_trouvé=non, hash_en_db=n/a
 [2026-06-02 | 11:58:19] SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-06-02 | 17:36:52] DEBUG LOGIN: email=cesar@gmail.com, password_reçu=123456798, user_trouvé=oui, hash_en_db=$2y$10$PwupqSrj4wZiCQl.IiC/yuFRP.R3Pl6CzEsSVTdlgmydUfby9nPIO
+[2026-06-02 | 17:36:52] DEBUG PASSWORD: verify_result=, hash_db=$2y$10$PwupqSrj4wZiCQl.IiC/yuFRP.R3Pl6CzEsSVTdlgmydUfby9nPIO

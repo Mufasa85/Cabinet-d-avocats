@@ -385,3 +385,88 @@
 [2026-06-02 12:18:02] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
 [2026-06-02 12:18:02] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","category_nom","category_slug","avocat_nom"]}
 [2026-06-02 12:18:02] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-02 12:34:19] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Screenshot 2024-07-05 143645 (2).png","file_size":204741,"file_tmp":"C:\\xampp\\tmp\\php6E36.tmp","subdir":"images\/articles","prefix":"article"}
+[2026-06-02 12:34:19] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-02 12:34:19] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php6E36.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles\\article_92a20063fd4fdca4.png","exists_tmp":true,"is_writable_target":true}
+[2026-06-02 12:34:19] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles\\article_92a20063fd4fdca4.png"}
+[2026-06-02 12:34:19] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"littlebit.pdf","file_size":1215552,"file_tmp":"C:\\xampp\\tmp\\php6E37.tmp","subdir":"documents\/articles","prefix":"article"}
+[2026-06-02 12:34:19] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/articles","is_dir":false,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-02 12:34:19] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php6E37.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/articles\\article_9c84a88057bb8924.pdf","exists_tmp":true,"is_writable_target":true}
+[2026-06-02 12:34:19] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/articles\\article_9c84a88057bb8924.pdf"}
+[2026-06-02 12:40:42] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-02 12:40:42] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":false,"article_keys":[]}
+[2026-06-02 12:40:42] [WARNING] ArticleController:show - Article non trouve | Context: {"slug":"1"}
+[2026-06-02 17:32:45] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-02 17:33:05] [INFO] ArticleController:show - Debut | Context: {"slug":"test","params":{"slug":"test"}}
+[2026-06-02 17:33:05] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"test","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-02 17:33:05] [INFO] ArticleController:show - Succes | Context: {"slug":"test","article_id":2,"article_titre":"test"}
+[2026-06-02 17:37:29] [INFO] updateAvatar: debut | Context: {"method":"POST","files":["avatar"],"post":"has post data"}
+[2026-06-02 17:37:29] [DEBUG] updateAvatar: upload pour user | Context: {"userId":3}
+[2026-06-02 17:37:29] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\phpFAE5.tmp","subdir":"images\/avatars","prefix":"avatar_3"}
+[2026-06-02 17:37:29] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-02 17:37:29] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\phpFAE5.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_8f815d66cb029056.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-02 17:37:29] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/avatars\\avatar_3_8f815d66cb029056.jpg"}
+[2026-06-02 17:37:29] [INFO] updateAvatar: fichier stocke | Context: {"fichier":"images\/avatars\/avatar_3_8f815d66cb029056.jpg"}
+[2026-06-02 17:37:29] [INFO] updateAvatar: succes
+[2026-06-02 22:08:59] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-02 22:08:59] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":false,"article_keys":[]}
+[2026-06-02 22:08:59] [WARNING] ArticleController:show - Article non trouve | Context: {"slug":"1"}
+[2026-06-02 22:23:09] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-02 22:23:56] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-02 22:33:52] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-02 22:34:21] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-02 22:34:46] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 18:42:36] [INFO] ArticleController:show - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-03 18:42:36] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"1","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 18:42:36] [INFO] ArticleController:show - Succes | Context: {"slug":"1","article_id":1,"article_titre":"Avocat"}
+[2026-06-03 18:45:25] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"IS-BH-1024x576-1.jpg","file_size":49017,"file_tmp":"C:\\xampp\\tmp\\php85A9.tmp","subdir":"images\/articles","prefix":"article"}
+[2026-06-03 18:45:25] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-03 18:45:25] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php85A9.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles\\article_ce4f7bd9f1674400.jpg","exists_tmp":true,"is_writable_target":true}
+[2026-06-03 18:45:25] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\images\/articles\\article_ce4f7bd9f1674400.jpg"}
+[2026-06-03 18:45:25] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Code arduino afficheurs 7 segments.pdf","file_size":1108964,"file_tmp":"C:\\xampp\\tmp\\php85AA.tmp","subdir":"documents\/articles","prefix":"article"}
+[2026-06-03 18:45:25] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/articles","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-03 18:45:25] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php85AA.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/articles\\article_9069eb77f8604d54.pdf","exists_tmp":true,"is_writable_target":true}
+[2026-06-03 18:45:25] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/articles\\article_9069eb77f8604d54.pdf"}
+[2026-06-03 18:46:30] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 18:46:39] [INFO] ArticleController:show - Debut | Context: {"slug":"lorem","params":{"slug":"lorem"}}
+[2026-06-03 18:46:39] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"lorem","article_found":false,"article_keys":[]}
+[2026-06-03 18:46:39] [WARNING] ArticleController:show - Article non trouve | Context: {"slug":"lorem"}
+[2026-06-03 18:52:24] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 18:55:20] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 18:55:31] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-03 18:55:31] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 18:55:31] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-03 18:59:01] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-03 18:59:01] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 18:59:01] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-03 18:59:24] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 18:59:28] [INFO] ArticleController:show - Debut | Context: {"slug":"4","params":{"slug":"4"}}
+[2026-06-03 18:59:28] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"4","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 18:59:28] [INFO] ArticleController:show - Succes | Context: {"slug":"4","article_id":4,"article_titre":"test 3"}
+[2026-06-03 19:01:23] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-03 19:01:23] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 19:01:23] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-03 19:04:14] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-03 19:04:14] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 19:04:14] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-03 19:04:28] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 19:04:36] [INFO] ArticleController:show - Debut | Context: {"slug":"4","params":{"slug":"4"}}
+[2026-06-03 19:04:36] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"4","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 19:04:36] [INFO] ArticleController:show - Succes | Context: {"slug":"4","article_id":4,"article_titre":"test 3"}
+[2026-06-03 19:05:29] [INFO] ArticleController:showPublication - Debut | Context: {"slug":"1","params":{"slug":"1"}}
+[2026-06-03 19:05:29] [INFO] ArticleController:showPublication - Apres findBySlug | Context: {"slug":"1","publication_found":false,"publication_keys":[]}
+[2026-06-03 19:05:29] [WARNING] ArticleController:showPublication - Publication non trouvee | Context: {"slug":"1"}
+[2026-06-03 19:10:05] [DEBUG] FileStorage::storeUpload: debut | Context: {"file_name":"Code arduino afficheurs 7 segments.pdf","file_size":1108964,"file_tmp":"C:\\xampp\\tmp\\php1ACC.tmp","subdir":"documents\/stagiaires","prefix":"stg_3"}
+[2026-06-03 19:10:05] [DEBUG] FileStorage: targetDir check | Context: {"targetDir":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/stagiaires","is_dir":true,"root":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources"}
+[2026-06-03 19:10:05] [DEBUG] FileStorage: tentative move | Context: {"tmp":"C:\\xampp\\tmp\\php1ACC.tmp","target":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/stagiaires\\stg_3_af8c3ab6695d1fb2.pdf","exists_tmp":true,"is_writable_target":true}
+[2026-06-03 19:10:05] [INFO] FileStorage: fichier deplace | Context: {"absolute":"C:\\Users\\CESAR PAYSAYO\\Documents\\ArcaneCore\\Projet\\Maquette\\law\\Cabinet-d-avocats\\resources\\documents\/stagiaires\\stg_3_af8c3ab6695d1fb2.pdf"}
+[2026-06-03 20:01:44] [INFO] ArticleController:publications - Debut
+[2026-06-03 20:01:44] [INFO] ArticleController:publications - Succes | Context: {"count":1}
+[2026-06-03 20:02:11] [INFO] ArticleController:showPublication - Debut | Context: {"slug":"beach","params":{"slug":"beach"}}
+[2026-06-03 20:02:11] [INFO] ArticleController:showPublication - Apres findBySlug | Context: {"slug":"beach","publication_found":true,"publication_keys":["id","titre","slug","description","contenu","fichier","type","image_couverture","statut","publie_le","cree_par","created_at","updated_at","auteur_nom"]}
+[2026-06-03 20:02:11] [INFO] ArticleController:showPublication - Succes | Context: {"slug":"beach","publication_id":1,"publication_titre":"beach"}
+[2026-06-03 20:07:14] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}
+[2026-06-03 20:07:25] [INFO] ArticleController:show - Debut | Context: {"slug":"5","params":{"slug":"5"}}
+[2026-06-03 20:07:25] [INFO] ArticleController:show - Apres findBySlug | Context: {"slug":"5","article_found":true,"article_keys":["id","avocat_id","category_id","titre","slug","extrait","contenu","image_couverture","statut","publie_le","created_at","updated_at","pdf_file","category_nom","category_slug","avocat_nom"]}
+[2026-06-03 20:07:25] [INFO] ArticleController:show - Succes | Context: {"slug":"5","article_id":5,"article_titre":"lorem"}
+[2026-06-03 20:07:46] [INFO] ArticleController:index | Context: {"category":null,"categories_count":5}

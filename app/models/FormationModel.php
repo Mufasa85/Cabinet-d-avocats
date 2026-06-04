@@ -8,13 +8,18 @@ class FormationModel extends Model
 
     public function all(?string $public = null): array
     {
-        $sql = 'SELECT * FROM formations WHERE statut = :archive';
+        $sql = 'SELECT f.*, 
+                COUNT(i.id) AS participants_count,
+                f.places_max AS capacite
+                FROM formations f
+                LEFT JOIN inscriptions i ON i.formation_id = f.id AND i.statut = \'acceptee\'
+                WHERE f.statut = :archive';
         $params = [':archive' => 'ouverte'];
         if ($public) {
-            $sql .= " AND (public_cible = :pub OR public_cible = 'tous')";
+            $sql .= " AND (f.public_cible = :pub OR f.public_cible = 'tous')";
             $params[':pub'] = $public;
         }
-        $sql .= ' ORDER BY date_debut ASC, titre ASC';
+        $sql .= ' GROUP BY f.id ORDER BY f.date_debut ASC, f.titre ASC';
         return $this->db()->prepare($sql, $params)->fetchAll() ?: [];
     }
 
