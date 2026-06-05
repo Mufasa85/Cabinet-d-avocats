@@ -64,13 +64,6 @@ $statutCandidature = [
                             <span class="header-action-badge"><?= (int) $unreadNotificationsCount ?></span>
                         <?php endif; ?>
                     </button>
-                    <button class="header-action">
-                        <i class="fas fa-envelope"></i>
-                        <span class="header-action-badge">3</span>
-                    </button>
-                    <button class="header-action">
-                        <i class="fas fa-cog"></i>
-                    </button>
                 </div>
             </header>
 
@@ -162,67 +155,7 @@ $statutCandidature = [
                                     Voir Tout
                                 </button>
                             </div>
-                            <div class="card-body" style="padding: 0;">
-                                <div class="activity-list">
-                                    <?php foreach (array_slice($recentActivity, 0, 10) as $activity): ?>
-                                        <div class="activity-item">
-                                            <div class="activity-icon <?= $activity['icon_class'] ?? 'icon-gold' ?>">
-                                                <i class="<?= $activity['icon'] ?? 'fas fa-circle' ?>"></i>
-                                            </div>
-                                            <div class="activity-content">
-                                                <h4><?= htmlspecialchars($activity['title']) ?></h4>
-                                                <p><?= htmlspecialchars($activity['description']) ?></p>
-                                            </div>
-                                            <span class="activity-time"><?= htmlspecialchars($activity['time']) ?></span>
-                                        </div>
-                                    <?php endforeach; ?>
 
-                                    <!-- Sample Data -->
-                                    <div class="activity-item">
-                                        <div class="activity-icon" style="background: rgba(34, 197, 94, 0.1); color: var(--success);">
-                                            <i class="fas fa-user-plus"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <h4>Nouveau client enregistré</h4>
-                                            <p>Maître Diallo a ajouté un nouveau client pour le dossier #1245</p>
-                                        </div>
-                                        <span class="activity-time">Il y a 5 min</span>
-                                    </div>
-
-                                    <div class="activity-item">
-                                        <div class="activity-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);">
-                                            <i class="fas fa-file-upload"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <h4>Document téléchargé</h4>
-                                            <p>Un nouveau contrat a été uploadé dans le dossier fiscal</p>
-                                        </div>
-                                        <span class="activity-time">Il y a 23 min</span>
-                                    </div>
-
-                                    <div class="activity-item">
-                                        <div class="activity-icon" style="background: rgba(212, 175, 55, 0.1); color: var(--gold-primary);">
-                                            <i class="fas fa-calendar-check"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <h4>Rendez-vous confirmé</h4>
-                                            <p>Consultation prévue avec le client Mwamba pour le 20 Mai</p>
-                                        </div>
-                                        <span class="activity-time">Il y a 1h</span>
-                                    </div>
-
-                                    <div class="activity-item">
-                                        <div class="activity-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
-                                            <i class="fas fa-exclamation-circle"></i>
-                                        </div>
-                                        <div class="activity-content">
-                                            <h4>Délai approaching</h4>
-                                            <p>Échéance proche pour le dossier #892 - Droit des sociétés</p>
-                                        </div>
-                                        <span class="activity-time">Il y a 2h</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- PENDING APPLICATIONS -->

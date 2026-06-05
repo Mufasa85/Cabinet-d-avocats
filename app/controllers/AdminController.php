@@ -1044,4 +1044,44 @@ class AdminController extends Controller
             ],
         ]);
     }
+
+    public function saveTheme()
+    {
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['error' => 'Method not allowed']);
+            exit;
+        }
+
+        $theme = $_POST['theme'] ?? 'dark';
+        $validThemes = ['dark', 'light', 'royal'];
+
+        if (!in_array($theme, $validThemes)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Theme invalide', 'received' => $theme]);
+            exit;
+        }
+
+        $userId = Auth::id();
+        if (!$userId) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            exit;
+        }
+
+        try {
+            $userModel = new UserModel();
+            $userModel->updateTheme((int) $userId, $theme);
+
+            // Update session
+            $_SESSION['theme'] = $theme;
+
+            echo json_encode(['success' => true, 'theme' => $theme]);
+        } catch (\Throwable $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Erreur serveur', 'message' => $e->getMessage()]);
+        }
+    }
 }

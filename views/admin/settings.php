@@ -161,6 +161,24 @@ $pageTitle = 'Paramètres'; ?>
             var check = document.getElementById('themeCheck' + theme.charAt(0).toUpperCase() + theme.slice(1));
             if (check) check.style.display = 'flex';
             if (window.themeManager) window.themeManager.setTheme(theme);
+            
+            // Sauvegarder le thème en base de données via AJAX
+            fetch('<?= Router\Router::route('/admin/settings/theme') ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'theme=' + encodeURIComponent(theme)
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    console.log('Theme saved to database:', theme);
+                }
+            })
+            .catch(function(error) {
+                console.error('Error saving theme:', error);
+            });
         }
         document.addEventListener('DOMContentLoaded', function() {
             var savedTheme = localStorage.getItem('themis-theme') || 'dark';

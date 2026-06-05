@@ -128,7 +128,7 @@ $formattedLawyers = array_map(function ($lawyer) {
                                         <th>Avocat</th>
                                         <th>Titre</th>
                                         <th>Spécialités</th>
-                                        <th>Expérience</th>
+
                                         <th>Bureau</th>
                                         <th>Statut</th>
                                         <th>Actions</th>
@@ -152,9 +152,7 @@ $formattedLawyers = array_map(function ($lawyer) {
                                                     <?= htmlspecialchars($lawyer['specialites'] ?: 'Non défini') ?>
                                                 </span>
                                             </td>
-                                            <td>
-                                                <?= $lawyer['experience'] ? $lawyer['experience'] . ' ans' : '-' ?>
-                                            </td>
+                                            
                                             <td><?= htmlspecialchars($lawyer['bureau']) ?: '-' ?></td>
                                             <td>
                                                 <span class="badge <?= $lawyer['status'] === 'active' ? 'badge-success' : 'badge-danger' ?>">

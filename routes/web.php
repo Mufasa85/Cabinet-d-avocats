@@ -77,6 +77,7 @@ Router::post('/admin/users/[i:id]/delete', [AdminController::class, 'deleteUser'
 Router::get('/admin/settings', [AdminController::class, 'settings']);
 Router::post('/admin/settings/profile', [AdminController::class, 'updateSettingsProfile']);
 Router::post('/admin/settings/password', [AdminController::class, 'updateSettingsPassword']);
+Router::post('/admin/settings/theme', [AdminController::class, 'saveTheme']);
 Router::get('/admin/reports', [AdminController::class, 'reports']);
 Router::get('/admin/candidatures', [AdminController::class, 'candidatures']);
 Router::post('/admin/candidatures/[i:id]/statut', [AdminController::class, 'updateCandidature']);

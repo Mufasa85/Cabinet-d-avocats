@@ -36,7 +36,7 @@
   <!-- Navbar -->
   <nav id="navbar" class="navbar">
     <div class="navbar-container">
-      <a href="index.php" class="navbar-logo">
+      <a href="/" class="navbar-logo">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 3v18M3 12h18M5.5 5.5l13 13M5.5 18.5l13-13" />
           <circle cx="12" cy="3" r="1" fill="currentColor" />
@@ -47,13 +47,13 @@
 
       <!-- Desktop Menu -->
       <div class="navbar-links">
-        <a href="index.php" class="nav-link">Accueil</a>
-        <a href="index.php#cabinet" class="nav-link">Le Cabinet</a>
-        <a href="index.php#expertises" class="nav-link">Expertises</a>
-        <a href="index.php#equipe" class="nav-link">Équipe</a>
-        <a href="articles" class="nav-link active">Actualités</a>
-        <a href="index.php#contact" class="nav-link">Contact</a>
-        <a href="connexion.php" class="nav-link nav-link-highlight">Connexion</a>
+        <a href="/" class="nav-link">Accueil</a>
+        <a href="/#cabinet" class="nav-link">Le Cabinet</a>
+        <a href="/#expertises" class="nav-link">Expertises</a>
+        <a href="/#equipe" class="nav-link">Équipe</a>
+        <a href="/articles" class="nav-link active">Actualités</a>
+        <a href="/#contact" class="nav-link">Contact</a>
+        <a href="/login" class="nav-link nav-link-highlight">Connexion</a>
       </div>
 
       <!-- Theme Switcher -->
@@ -89,37 +89,37 @@
         </button>
       </div>
       <div class="mobile-menu-links">
-        <a href="index.php" class="mobile-link">
+        <a href="/" class="mobile-link">
           <span>Accueil</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.php#cabinet" class="mobile-link">
+        <a href="/#cabinet" class="mobile-link">
           <span>Le Cabinet</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.php#expertises" class="mobile-link">
+        <a href="/#expertises" class="mobile-link">
           <span>Expertises</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.php#equipe" class="mobile-link">
+        <a href="/#equipe" class="mobile-link">
           <span>Équipe</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="articles" class="mobile-link">
+        <a href="/articles" class="mobile-link">
           <span>Actualités</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="index.php#contact" class="mobile-link">
+        <a href="/#contact" class="mobile-link">
           <span>Contact</span>
           <span class="mobile-link-arrow">→</span>
         </a>
-        <a href="connexion.php" class="mobile-link">
+        <a href="/login" class="mobile-link">
           <span>Connexion</span>
           <span class="mobile-link-arrow">→</span>
         </a>
       </div>
       <div class="mobile-menu-footer">
-        <a href="index.php#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
+        <a href="/#contact" class="btn-premium mobile-cta">Prendre Rendez-vous</a>
       </div>
     </div>
   </div>
@@ -135,10 +135,10 @@
 
   <!-- Articles Filters -->
   <div class="articles-filters">
-    <a href="articles" class="filter-btn <?= empty($activeCategory) ? 'active' : '' ?>">Tous</a>
+    <a href="/articles" class="filter-btn <?= empty($activeCategory) ? 'active' : '' ?>">Tous</a>
     <?php if (isset($categories) && is_array($categories)): ?>
       <?php foreach ($categories as $cat): ?>
-        <a href="articles?categorie=<?= htmlspecialchars($cat['slug']) ?>"
+        <a href="/articles?categorie=<?= htmlspecialchars($cat['slug']) ?>"
           class="filter-btn <?= (isset($activeCategory) && $activeCategory === $cat['slug']) ? 'active' : '' ?>">
           <?= htmlspecialchars($cat['nom']) ?>
         </a>
@@ -183,7 +183,7 @@
                 </span>
               <?php endif; ?>
               <h2 class="article-title">
-                <a href="articles/<?= htmlspecialchars($article['id']) ?>">
+                <a href="/articles/<?= htmlspecialchars($article['slug'] ?? $article['id']) ?>">
                   <?= htmlspecialchars($article['titre']) ?>
                 </a>
               </h2>
@@ -214,7 +214,7 @@
                   </svg>
                   <?= isset($article['contenu']) ? max(5, min(15, strlen(strip_tags($article['contenu'])) / 500)) . ' min de lecture' : '5 min de lecture' ?>
                 </span>
-                <a href="articles/<?= htmlspecialchars($article['id']) ?>" class="article-link">
+                <a href="/articles/<?= htmlspecialchars($article['slug'] ?? $article['id']) ?>" class="article-link">
                   Lire l'article
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="5" y1="12" x2="19" y2="12" />
@@ -273,24 +273,24 @@
         <div class="footer-links">
           <h4>Navigation</h4>
           <ul>
-            <li><a href="index.php">Accueil</a></li>
-            <li><a href="index.php#cabinet">Le Cabinet</a></li>
-            <li><a href="index.php#expertises">Expertises</a></li>
-            <li><a href="index.php#equipe">Équipe</a></li>
-            <li><a href="articles">Actualités</a></li>
-            <li><a href="stages.php">Stages</a></li>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/#cabinet">Le Cabinet</a></li>
+            <li><a href="/#expertises">Expertises</a></li>
+            <li><a href="/#equipe">Équipe</a></li>
+            <li><a href="/articles">Actualités</a></li>
+            <li><a href="/stages">Stages</a></li>
           </ul>
         </div>
 
         <div class="footer-links">
           <h4>Domaines</h4>
           <ul>
-            <li><a href="administration-affaires.php">Droit des Affaires</a></li>
-            <li><a href="droit-minier.php">Droit Minier</a></li>
-            <li><a href="droit-fiscal.php">Droit Fiscal</a></li>
-            <li><a href="droit-travail.php">Droit du Travail</a></li>
-            <li><a href="droit-ohada.php">Droit OHADA</a></li>
-            <li><a href="autres-domaines.php">Autres Domaines</a></li>
+            <li><a href="/administration-affaires">Droit des Affaires</a></li>
+            <li><a href="/droit-minier">Droit Minier</a></li>
+            <li><a href="/droit-fiscal">Droit Fiscal</a></li>
+            <li><a href="/droit-travail">Droit du Travail</a></li>
+            <li><a href="/droit-ohada">Droit OHADA</a></li>
+            <li><a href="/autres-domaines">Autres Domaines</a></li>
           </ul>
         </div>
 

@@ -1324,7 +1324,7 @@ img {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translateX(-50%) scale(0.9);
     width: 90%;
     max-width: 560px;
     max-height: 85vh;
@@ -1442,11 +1442,10 @@ img {
 /* Improve modal visibility on small screens */
 @media (max-width: 640px) {
     .modal {
-        top: 4vh;
         transform: translate(-50%, 0) scale(1);
         width: 96%;
         max-width: 96%;
-        max-height: 92vh;
+        max-height: 100%;
         border-radius: 12px;
     }
 
@@ -1479,8 +1478,16 @@ img {
 .modal textarea {
     width: 100%;
     box-sizing: border-box;
-}
+    background: var(--secondary-black);
 
+}
+.form-select, .filter-select option {
+  background: var(--secondary-black);
+  color: var(--white);
+  padding: 12px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
 /* Modal Footer */
 .modal-footer {
     padding: var(--space-md);
@@ -1517,15 +1524,25 @@ img {
 .form-input,
 .form-select,
 .form-textarea {
-    width: 100%;
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    border-radius: var(--radius-md);
-    color: var(--white);
-    font-size: 0.875rem;
-    transition: var(--transition-base);
+ width: 100%;
+  height: 44px;
+  min-width: 160px;
+  padding: 0 var(--space-xl) 0 var(--space-md);
+  background: var(--secondary-black);
+  border: 2px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-base);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23C9A227' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
+
 
 .form-input::placeholder,
 .form-textarea::placeholder {
@@ -2374,7 +2391,7 @@ img {
         bottom: auto;
         transform: translate(-50%, -50%) scale(0.9);
         width: 90%;
-        max-height: 85vh;
+        max-height: 100%;
         border-radius: var(--radius-2xl);
     }
     
@@ -2672,7 +2689,7 @@ img {
     /* Modal Desktop */
     .modal {
         max-width: 560px;
-        max-height: 90vh;
+        max-height: 100vh;
     }
     
     .modal-header {
