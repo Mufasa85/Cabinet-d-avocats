@@ -81,6 +81,7 @@ Router::post('/admin/settings/theme', [AdminController::class, 'saveTheme']);
 Router::get('/admin/reports', [AdminController::class, 'reports']);
 Router::get('/admin/candidatures', [AdminController::class, 'candidatures']);
 Router::post('/admin/candidatures/[i:id]/statut', [AdminController::class, 'updateCandidature']);
+Router::post('/admin/candidatures/[i:id]/delete', [AdminController::class, 'deleteCandidature']);
 Router::get('/admin/notifications', [AdminController::class, 'notifications']);
 Router::post('/admin/notifications/read/[i:id]', [AdminController::class, 'markNotificationRead']);
 Router::post('/admin/notifications/read-all', [AdminController::class, 'markAllNotificationsRead']);

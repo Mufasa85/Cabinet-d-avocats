@@ -8,9 +8,8 @@ class InternshipDocumentModel extends Model
 
     public function findById(int $id): ?array
     {
-        $stmt = $this->db()->prepare('SELECT * FROM internship_documents WHERE id = ?');
-        $stmt->execute([$id]);
-        return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+        $stmt = $this->db()->prepare('SELECT * FROM internship_documents WHERE id = :id LIMIT 1', [':id' => $id]);
+        return $stmt->fetch() ?: null;
     }
 
     public function byApplicationId(int $applicationId): array
@@ -36,5 +35,13 @@ class InternshipDocumentModel extends Model
             ]
         );
         return (int) $this->db()->lastInsertId();
+    }
+
+    public function delete(int $id): void
+    {
+        $this->db()->prepare(
+            'DELETE FROM internship_documents WHERE id = :id',
+            [':id' => $id]
+        );
     }
 }

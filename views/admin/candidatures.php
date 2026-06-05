@@ -46,7 +46,7 @@ $applications = $applications ?? [];
                     </div>
                 </div>n
                 <div class="header-actions">
-                    <button class="btn btn-primary" id="exportPdfBtn"><i class="fas fa-download"></i> Exporter PDF</button>
+
                 </div>
             </header>
 
@@ -114,7 +114,6 @@ $applications = $applications ?? [];
                                             <td>
                                                 <div class="flex gap-sm">
                                                     <button class="btn btn-sm btn-ghost view-app-btn" data-app='<?= json_encode($appData) ?>' title="Voir"><i class="fas fa-eye"></i></button>
-                                                    <button class="btn btn-sm btn-ghost edit-app-btn" data-app='<?= json_encode($appData) ?>' title="Modifier"><i class="fas fa-edit"></i></button>
                                                     <button class="btn btn-sm btn-ghost delete-app-btn" data-app='<?= json_encode($appData) ?>' title="Supprimer"><i class="fas fa-trash"></i></button>
                                                 </div>
                                             </td>
@@ -168,13 +167,24 @@ $applications = $applications ?? [];
                     </div>
                 </div>
                 <div>
-                    <h4 style="color: var(--white);">Domaine</h4>
+                    <h4 style="color: var(--white); margin-bottom: 0.5rem;">Domaine souhaité</h4>
                     <span class="badge badge-info" id="viewAppDomaine"></span>
-                    <h4 style="color: var(--white); margin-top: 1.5rem;">Documents</h4>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem;">
-                        <i class="fas fa-file-pdf" style="color: var(--danger);"></i>
-                        <span style="flex: 1; color: var(--gray-300);">CV_Candidat.pdf</span>
-                        <button class="btn btn-sm btn-ghost"><i class="fas fa-download"></i></button>
+
+                    <h4 style="color: var(--white); margin-top: 1.5rem; margin-bottom: 0.5rem;">Niveau d'étude</h4>
+                    <p id="viewAppNiveau" style="color: var(--gray-300);"></p>
+
+                    <h4 style="color: var(--white); margin-top: 1.5rem; margin-bottom: 0.5rem;">Filiere</h4>
+                    <p id="viewAppFiliere" style="color: var(--gray-300);"></p>
+
+                    <h4 style="color: var(--white); margin-top: 1.5rem; margin-bottom: 0.5rem;">Département souhaité</h4>
+                    <p id="viewAppDepartement" style="color: var(--gray-300);"></p>
+
+                    <h4 style="color: var(--white); margin-top: 1.5rem; margin-bottom: 0.5rem;">Motivation</h4>
+                    <div id="viewAppMotivation" style="color: var(--gray-300); background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 0.5rem; max-height: 150px; overflow-y: auto; font-size: 0.875rem; line-height: 1.5;"></div>
+
+                    <h4 style="color: var(--white); margin-top: 1.5rem; margin-bottom: 0.5rem;">Documents</h4>
+                    <div id="viewAppDocuments">
+                        <!-- Documents will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -333,33 +343,71 @@ $applications = $applications ?? [];
                 document.body.style.overflow = '';
             };
 
-            // Export PDF button
-            document.getElementById('exportPdfBtn').addEventListener('click', function() {
-                alert('Export PDF - À implémenter');
-            });
 
-            // View application
+            // Document type labels
+            const docLabels = {
+                'cv': 'Curriculum Vitae',
+                'lettre': 'Lettre de Motivation',
+                'academique': 'Documents Académiques'
+            };
+
+            // Render documents list
+            function renderDocuments(documents) {
+                const container = document.getElementById('viewAppDocuments');
+                if (!documents || documents.length === 0) {
+                    container.innerHTML = '<p style="color: var(--gray-500); font-style: italic;">Aucun document uploadé</p>';
+                    return;
+                }
+
+                let html = '';
+                documents.forEach(function(doc) {
+                    const label = docLabels[doc.type] || doc.type;
+                    const docId = doc.id || 'N/A';
+                    html += '<div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 0.5rem; margin-bottom: 0.5rem;">';
+                    html += '<i class="fas fa-file-pdf" style="color: var(--danger); font-size: 1.25rem;"></i>';
+                    html += '<div style="flex: 1;">';
+                    html += '<span style="color: var(--gray-300); display: block;">' + label + '</span>';
+                    if (doc.taille) {
+                        const sizeKB = Math.round(doc.taille / 1024);
+                        html += '<span style="color: var(--gray-500); font-size: 0.7rem;">' + sizeKB + ' Ko</span>';
+                    }
+                    html += '</div>';
+                    html += '<a href="/resources/' + doc.fichier + '" class="btn btn-sm btn-ghost" title="Télécharger" target="_blank"><i class="fas fa-download"></i></a>';
+                    html += '</div>';
+                });
+                container.innerHTML = html;
+            }
+
+            // View application - FIXED
             document.querySelectorAll('.view-app-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     currentApp = JSON.parse(this.dataset.app);
+                    // Populate view modal
                     document.getElementById('viewAppAvatar').textContent = currentApp.initials || '??';
-                    document.getElementById('viewAppTitle').textContent = currentApp.fullname;
-                    document.getElementById('viewAppName').textContent = currentApp.fullname;
-                    document.getElementById('viewAppNiveau').textContent = currentApp.niveau || '';
+                    document.getElementById('viewAppTitle').textContent = (currentApp.nom || '') + ' ' + (currentApp.prenom || '');
+                    document.getElementById('viewAppName').textContent = (currentApp.nom || '') + ' ' + (currentApp.prenom || '');
+                    document.getElementById('viewAppNiveau').textContent = currentApp.niveau || '-';
                     document.getElementById('viewAppEmail').textContent = currentApp.email || '-';
                     document.getElementById('viewAppTelephone').textContent = currentApp.telephone || '-';
                     document.getElementById('viewAppUniversite').textContent = currentApp.universite || '-';
                     document.getElementById('viewAppDomaine').textContent = currentApp.domaine || '-';
+                    // New fields
+                    document.getElementById('viewAppFiliere').textContent = currentApp.filiere || '-';
+                    document.getElementById('viewAppDepartement').textContent = currentApp.departement || '-';
+                    document.getElementById('viewAppMotivation').textContent = currentApp.motivation || 'Aucune motivation fournie';
+                    // Render documents
+                    const documents = currentApp.documents || [];
+                    renderDocuments(documents);
                     openModal('view-application');
                 });
             });
 
-            // Edit application
+            // Edit application - FIXED
             document.querySelectorAll('.edit-app-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     currentApp = JSON.parse(this.dataset.app);
-                    document.getElementById('editAppId').value = currentApp.id;
-                    document.getElementById('editAppTitle').textContent = currentApp.fullname;
+                    document.getElementById('editAppId').value = currentApp.id || '';
+                    document.getElementById('editAppTitle').textContent = currentApp.fullname || '';
                     document.getElementById('editFullname').value = currentApp.fullname || '';
                     document.getElementById('editEmail').value = currentApp.email || '';
                     document.getElementById('editTelephone').value = currentApp.telephone || '';
@@ -367,7 +415,7 @@ $applications = $applications ?? [];
                     document.getElementById('editDomaine').value = currentApp.domaine || '';
                     document.getElementById('editNiveau').value = currentApp.niveau || '';
                     document.getElementById('editStatut').value = currentApp.statut || 'en_attente';
-                    document.getElementById('editAppForm').action = '<?= Router\Router::route('/admin/candidatures') ?>/' + currentApp.id + '/update';
+                    document.getElementById('editAppForm').action = '<?= Router\Router::route('/admin/candidatures') ?>/' + (currentApp.id || '') + '/update';
                     openModal('edit-application');
                 });
             });
@@ -376,24 +424,49 @@ $applications = $applications ?? [];
             document.querySelectorAll('.delete-app-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     currentApp = JSON.parse(this.dataset.app);
-                    document.getElementById('deleteAppName').textContent = currentApp.fullname;
-                    document.getElementById('deleteAppForm').action = '<?= Router\Router::route('/admin/candidatures') ?>/' + currentApp.id + '/delete';
+                    const fullname = (currentApp.nom || '') + ' ' + (currentApp.prenom || '');
+                    document.getElementById('deleteAppName').textContent = fullname;
+                    document.getElementById('deleteAppForm').action = '<?= Router\Router::route('/admin/candidatures') ?>/' + (currentApp.id || '') + '/delete';
                     openModal('delete-application');
                 });
             });
 
             // Accept / Reject buttons
             document.getElementById('acceptAppBtn').addEventListener('click', function() {
-                if (currentApp) {
-                    alert('Candidature acceptée: ' + currentApp.fullname);
-                    closeAllModals();
+                if (currentApp && currentApp.id) {
+                    fetch('<?= Router\Router::route('/admin/candidatures') ?>/' + currentApp.id + '/statut', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')?.value || ''
+                        },
+                        body: 'statut=retenu'
+                    }).then(() => {
+                        alert('Candidature acceptée: ' + currentApp.fullname);
+                        closeAllModals();
+                        location.reload();
+                    }).catch(() => {
+                        alert('Erreur lors de l\'acceptation');
+                    });
                 }
             });
 
             document.getElementById('rejectAppBtn').addEventListener('click', function() {
-                if (currentApp) {
-                    alert('Candidature refusée: ' + currentApp.fullname);
-                    closeAllModals();
+                if (currentApp && currentApp.id) {
+                    fetch('<?= Router\Router::route('/admin/candidatures') ?>/' + currentApp.id + '/statut', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]')?.value || ''
+                        },
+                        body: 'statut=refuse'
+                    }).then(() => {
+                        alert('Candidature refusée: ' + currentApp.fullname);
+                        closeAllModals();
+                        location.reload();
+                    }).catch(() => {
+                        alert('Erreur lors du refus');
+                    });
                 }
             });
 

@@ -96,4 +96,12 @@ class InternshipApplicationModel extends Model
         );
         return $stmt->fetchAll() ?: [];
     }
+
+    public function delete(int $id): void
+    {
+        $this->db()->prepare(
+            'DELETE FROM internship_applications WHERE id = :id',
+            [':id' => $id]
+        );
+    }
 }

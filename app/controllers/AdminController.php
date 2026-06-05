@@ -530,6 +530,42 @@ class AdminController extends Controller
         $this->redirect(Router::route('/admin/candidatures'));
     }
 
+    public function deleteCandidature($params)
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !Security::verify_csrf_token()) {
+            $this->redirect(Router::route('/admin/candidatures'));
+            return;
+        }
+
+        $id = (int) ($params['id'] ?? 0);
+        if ($id <= 0) {
+            $_SESSION['error'] = 'ID invalide.';
+            $this->redirect(Router::route('/admin/candidatures'));
+            return;
+        }
+
+        $appModel = new InternshipApplicationModel();
+        $docModel = new InternshipDocumentModel();
+
+        // Récupérer les documents pour supprimer les fichiers
+        $documents = $docModel->byApplicationId($id);
+        foreach ($documents as $doc) {
+            // Supprimer le fichier physique
+            $filePath = dirname(__DIR__, 2) . '/resources/' . ltrim($doc['fichier'], '/');
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            // Supprimer l'enregistrement du document
+            $docModel->delete($doc['id']);
+        }
+
+        // Supprimer la candidature
+        $appModel->delete($id);
+
+        $_SESSION['success'] = 'Candidature supprimée avec succès.';
+        $this->redirect(Router::route('/admin/candidatures'));
+    }
+
     private function createStagiaireFromCandidature(array $candidature): void
     {
         $userModel = new UserModel();
@@ -1048,7 +1084,7 @@ class AdminController extends Controller
     public function saveTheme()
     {
         header('Content-Type: application/json');
-        
+
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
             echo json_encode(['error' => 'Method not allowed']);
