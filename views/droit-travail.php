@@ -92,14 +92,14 @@
 
   <section class="section domain-content-section">
     <div class="container">
-      <div class="domain-intro animate-on-scroll">
-        <p class="domain-intro-text">
+      <div class="about-content animate-on-scroll">
+        <p class="about-text">
           Le droit du travail est une matière très vivante qui est, à tort ou à raison, victime d'une forte inflation législative. D'un côté, tous les dirigeants d'entreprises doivent maîtriser l'entretien d'embauche, la rédaction des contrats de travail, les domaines et limites de leurs pouvoirs et autorités hiérarchique et disciplinaire. Ainsi, les relations sociales influent fortement sur le quotidien des entreprises et peuvent constituer tant un moteur qu'un frein à l'activité.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           D'un autre côté, tous les salariés doivent franchir les étapes professionnelles du recrutement, de la négociation du contrat de travail dans ses clauses les plus spécifiques, patrimoniales et extra-patrimoniales, jusqu'à la rupture de leur relation conventionnelle par exemple par démission ou licenciement. En définitive, pour les dirigeants de petites ou de moyennes entreprises, comme pour les salariés, la connaissance ou l'application de l'ensemble des dispositions du Code du travail relève de l'illusion tant le législateur a complexifié et multiplié les textes.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Faire le choix d'un Avocat vous permettra de cerner les risques qui peuvent vous menacer ou encore de faire face à un contentieux imminent.
         </p>
       </div>

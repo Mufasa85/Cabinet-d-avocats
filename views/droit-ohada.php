@@ -92,8 +92,8 @@
 
   <section class="section domain-content-section">
     <div class="container">
-      <div class="domain-intro animate-on-scroll">
-        <p class="domain-intro-text">
+      <div class="about-content animate-on-scroll">
+        <p class="about-text">
           Le Cabinet d'Avocats Etude Laurent MBAKO accompagne les entreprises, investisseurs et entrepreneurs dans l'ensemble des problématiques liées au droit OHADA, applicable en République Démocratique du Congo.
         </p>
       </div>

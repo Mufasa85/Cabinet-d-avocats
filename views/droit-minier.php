@@ -92,11 +92,11 @@
 
   <section class="section domain-content-section">
     <div class="container">
-      <div class="domain-intro animate-on-scroll">
-        <p class="domain-intro-text">
+      <div class="about-content animate-on-scroll">
+        <p class="about-text">
           Le cabinet ELMD assiste les entreprises et les investisseurs dans le traitement des problématiques juridiques relatives au secteur des mines et des ressources naturelles en Afrique (forêts, agro-foncier, eau, environnement…). Il traite également différentes problématiques juridiques liées au secteur de l'énergie en Afrique.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Le cabinet ELMD intervene dans la gestion des droits et titres miniers ainsi que dans l'analyse et l'élaboration des contrats miniers. Il accompagne aussi bien les États africains dans l'élaboration des législations et des réglementations minières, que les entreprises et les investisseurs dans la réalisation de leurs projets miniers en R.D. Congo et en Afrique. Les prestations du cabinet incluent les opérations de due diligence juridique et fiscale et les grandes phases des opérations minières.
         </p>
       </div>

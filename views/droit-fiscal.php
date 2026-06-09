@@ -92,11 +92,11 @@
 
   <section class="section domain-content-section">
     <div class="container">
-      <div class="domain-intro animate-on-scroll">
-        <p class="domain-intro-text">
+      <div class="about-content animate-on-scroll">
+        <p class="about-text">
           Notre cabinet aide nos clients à optimiser et maîtriser le poids de la fiscalité dans le cadre de leur activité ou de leurs investissements. Il assure également leur défense face à l'administration fiscale ou douanière, tant au stade des opérations de contrôle que devant les instances ou juridictions nationales et/ou européennes.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Notre cabinet accompagne également de nombreuses entreprises et investisseurs étrangers pour leurs investissements en République Démocratique du Congo ainsi que des opérateurs Congolais pour leurs investissements à l'étranger.
         </p>
       </div>

@@ -92,14 +92,14 @@
 
   <section class="section domain-content-section">
     <div class="container">
-      <div class="domain-intro animate-on-scroll">
-        <p class="domain-intro-text">
+      <div class="about-content animate-on-scroll">
+        <p class="about-text">
           Le cabinet ELMD assure conseil, assistance et représentation dans l'ensemble des litiges et procédures relevant du droit civil congolais, tant en phase précontentieuse que contentieuse.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Il intervient à tous les stades de la procédure pénale, pour la défense des intérêts des prévenus, victimes et parties civiles.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Le cabinet ELMD intervient également dans les litiges fonciers et dans les contentieux relevant du droit de la famille en RDC.
         </p>
       </div>

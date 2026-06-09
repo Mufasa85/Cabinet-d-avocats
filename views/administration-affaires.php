@@ -92,14 +92,14 @@
 
   <section class="section domain-content-section">
     <div class="container">
-      <div class="domain-intro animate-on-scroll">
-        <p class="domain-intro-text">
+      <div class="about-content animate-on-scroll">
+        <p class="about-text">
           Notre cabinet conseille au niveau national et international tant des sociétés multinationales que des PME et appréhende l'ensemble des problématiques juridiques relatives à l'activité quotidienne des entreprises (p.ex. suivi du juridique courant, conventions d'actionnaires, différends entre actionnaires/partenaires…) ainsi que dans le cadre des opérations de fusion, d'acquisition, de cession et plus généralement de toute restructuration et/ou réorganisation des pouvoirs.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Notre cabinet conseille et assiste une clientèle d'entreprises également dans le cadre de leur création, développement, ainsi que pour leurs rapports contractuels avec leurs différents partenaires, clients, prestataires, et/ou fournisseurs.
         </p>
-        <p class="domain-intro-text">
+        <p class="about-text">
           Notre expérience dans le domaine de droit des sociétés nous permet d'assister et défendre les groupes d'entreprises, les entreprises, les dirigeants d'entreprises, les associés lors des contentieux mettant en œuvre le droit des sociétés tant en matière de conseil que de contentieux.
         </p>
       </div>
