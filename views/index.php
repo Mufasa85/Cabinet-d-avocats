@@ -191,12 +191,12 @@
         <div class="hero-slide-overlay"></div>
         <div class="hero-slide-content">
           <span class="hero-subtitle">Tradition & Innovation</span>
-            <?php
-            $cabinetAge = (int)date('Y') - 2007; 
-            if (isset($settings['cabinet_founding_year'])) {
-                $cabinetAge = (int)date('Y') - (int)$settings['cabinet_founding_year'];
-            }
-            ?>
+          <?php
+          $cabinetAge = (int)date('Y') - 2007;
+          if (isset($settings['cabinet_founding_year'])) {
+            $cabinetAge = (int)date('Y') - (int)$settings['cabinet_founding_year'];
+          }
+          ?>
           <h1 class="hero-title"><?= $cabinetAge ?> Ans<br>d'Excellence<br>Juridique</h1>
           <p class="hero-description">Un cabinet fondé sur des valeurs d'intégrité, de rigueur et d'engagement envers nos clients.</p>
           <div class="hero-buttons">
@@ -271,8 +271,8 @@
         </div>
 
         <div class="about-image animate-on-scroll">
-          <div class="themes-showcase">
-            <div class="theme-item" data-theme-default>
+          <div class="themes-showcase active">
+            <div class="theme-item active" data-theme-default>
               <img src="/assets/images/sombre.png" alt="Thème Sombre">
             </div>
             <div class="theme-item" data-theme-light>

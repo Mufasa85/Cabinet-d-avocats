@@ -341,15 +341,11 @@
                         <div class="stagiaire-card animate-on-scroll">
                             <a href="#" class="stagiaire-card-link">
                                 <div class="stagiaire-image">
-                                    <img src="images/placeholder-user.jpg" alt="<?= htmlspecialchars($stagiaire['fullname'] ?? $stagiaire['nom'] ?? 'Stagiaire') ?>">
-                                    <div class="stagiaire-overlay">
-                                        <div class="stagiaire-social">
-                                            <span class="social-link view-profile">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                                </svg>
-                                            </span>
-                                        </div>
+                                    <div class="stagiaire-avatar">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
                                     </div>
                                 </div>
                                 <div class="stagiaire-info">
